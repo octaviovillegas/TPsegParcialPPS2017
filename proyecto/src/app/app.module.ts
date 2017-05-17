@@ -13,6 +13,7 @@ import {Administrador} from "../pages/administrador/administrador";
 import {Administrativo} from "../pages/administrativo/administrativo";
 import {Estadisticas} from "../pages/estadisticas/estadisticas";
 import { HttpModule } from '@angular/http';
+import { servicioAuth } from '../pages/servicioAuth/servicioAuth';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { HttpModule } from '@angular/http';
     Login,
     Administrador,
     Administrativo,
-    Estadisticas
+    Estadisticas,
+    
   ],
   imports: [
     BrowserModule,
@@ -48,6 +50,7 @@ import { HttpModule } from '@angular/http';
     StatusBar,
     SplashScreen,
     HttpModule,
+    servicioAuth,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

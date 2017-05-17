@@ -26,10 +26,13 @@
       
       <ion-row>
         <ion-col class="signup-col">
-          <button ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.form.valid">Login</button>
+        <button ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.form.valid">Login</button>
         </ion-col>
       </ion-row>
-      
     </form>
+     <input type="submit"  (click)="EscribirCredenciales('Administrador')" value="Administrador">
+        <input type="submit" (click)="EscribirCredenciales('Administrativo')" value="Administrativo" >
+        <input type="submit" (click)="EscribirCredenciales('Alumno')" value="Alumno" >
+        <input type="submit" (click)="EscribirCredenciales('Profesor')" value="Profesor"  >
   </div>
 </ion-content>
