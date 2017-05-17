@@ -25,17 +25,18 @@ constructor(private http: Http) {
 
   public login(credenciales) {
    let access =false;
+   let tipo ="";
     if (credenciales.usuario === null || credenciales.clave === null) {
       return Observable.throw("Por favor inserte las credenciales");
     } else {
       return Observable.create(observer => {
          for (let entry of this.ListaUsuarios) {
-           console.log(credenciales);
-          if(credenciales.usuario == entry["usuario"] && credenciales.clave == entry["clave"] )
-            access = true;
+          if(credenciales.usuario === entry["usuario"] && credenciales.clave === entry["clave"] ){
+             access = true;
+             tipo = entry["descripcion"];
+          }
                 }
-        console.info(access);
-        this.currentUser = new User(credenciales.usuario, credenciales.clave);
+        this.currentUser = new User(credenciales.usuario, credenciales.clave,tipo);
         observer.next(access);
         observer.complete();
       });

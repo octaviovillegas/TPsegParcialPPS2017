@@ -3,6 +3,7 @@ import { NavController, AlertController, LoadingController, Loading, IonicPage }
 import { servicioAuth } from '../servicioAuth/servicioAuth';
 import {Usuario} from "../usuario/usuario";
 import {Http} from '@angular/http';
+import {User} from '../servicioAuth/user';
 import 'rxjs/Rx'; 
 
 @Component({
@@ -12,19 +13,14 @@ import 'rxjs/Rx';
 
 export class Login {
 
-listaBD = {};
+usuarioLogueado : User;
 
    Login = {
  usuario: "",
   clave: ""
    } 
-  constructor(public navCtrl: NavController,public http: Http,private auth: servicioAuth, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
-    this.http.get("http://localhost/ws1/usuarios")
-  .map(res => res.json())
-  .subscribe((quote) =>{
-    this.listaBD = quote;
-    console.info(this.listaBD);
-  });
+  constructor(public navCtrl: NavController,private auth: servicioAuth, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  
 }
 
 
@@ -36,9 +32,9 @@ listaBD = {};
     this.auth.login(this.Login).subscribe(allowed => {
       if (allowed) {        
         //this.navCtrl.setRoot('Inicio');
-        console.log("bienvenido");
+        this.usuarioLogueado = this.auth.getUserInfo();
+        console.log("bienvenido",this.usuarioLogueado.usuario,this.usuarioLogueado.tipo);
       } else {
-        console.log("hola");
         this.showError("Acceso denegado");
       }
     },
@@ -78,7 +74,6 @@ EscribirCredenciales(tipo){
   }else if(tipo == "Profesor" ){
      this.Login.usuario = "Profesor";
     this.Login.clave ="Profesor";
-    
   }
 }
 
