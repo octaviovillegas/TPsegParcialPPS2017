@@ -4,6 +4,7 @@ import { servicioAuth } from '../servicioAuth/servicioAuth';
 import {Usuario} from "../usuario/usuario";
 import {Http} from '@angular/http';
 import {User} from '../servicioAuth/user';
+import {Administrador} from "../administrador/administrador";
 import 'rxjs/Rx'; 
 
 @Component({
@@ -24,42 +25,58 @@ usuarioLogueado : User;
 }
 
 
-  loading: Loading;
   
  
-  public login() {
-    this.showLoading()
-    this.auth.login(this.Login).subscribe(allowed => {
-      if (allowed) {        
-        //this.navCtrl.setRoot('Inicio');
-        this.usuarioLogueado = this.auth.getUserInfo();
-        console.log("bienvenido",this.usuarioLogueado.usuario,this.usuarioLogueado.tipo);
-      } else {
-        this.showError("Acceso denegado");
-      }
-    },
-      error => {
-        this.showError(error);
-      });
-  }
- 
-  showLoading() {
-    this.loading = this.loadingCtrl.create({
-      content: 'Por favor espere...',
-      dismissOnPageChange: true
+ public loading: Loading;
+
+public login() {
+    this.showLoading().then(() => { // Show the loading before making the request
+
+        this.auth.login(this.Login).subscribe(allowed => { // Make the http request
+
+            this.loading.dismiss().then(() => { // Hide the loading
+
+                if (allowed) {
+
+                    // this.navCtrl.setRoot('Inicio');
+                    this.usuarioLogueado = this.auth.getUserInfo();
+
+                    if (this.usuarioLogueado.tipo == "Administrador") {
+                        this.navCtrl.setRoot(Administrador);
+                    }
+
+                    console.log("bienvenido", this.usuarioLogueado.usuario, this.usuarioLogueado.tipo);
+
+                } else {
+                    this.showError("Acceso denegado");
+                }
+            });
+        }, error => {
+            this.loading.dismiss().then(() => { // Hide the loading
+                this.showError(error);
+            });
+        });
     });
-    this.loading.present().then(() => this.loading.dismiss());
-  }
- 
-  showError(text) {
-this.loading.dismiss().catch(() => console.log('ERROR: Control de loading fallo'));
+
+}
+
+showLoading(): Promise<any> { // <- Return the promise
+    this.loading = this.loadingCtrl.create({
+        content: 'Por favor espere...',
+        dismissOnPageChange: true
+    });
+    return this.loading.present(); // <- Added the return keyword here
+}
+
+showError(text) {
     let alert = this.alertCtrl.create({
-      title: 'Fallo',
-      subTitle: text,
-      buttons: ['OK']
+        title: 'Fallo',
+        subTitle: text,
+        buttons: ['OK']
     });
     alert.present(prompt);
-  }
+}
+
 
 EscribirCredenciales(tipo){
   if(tipo == "Administrador" ){
