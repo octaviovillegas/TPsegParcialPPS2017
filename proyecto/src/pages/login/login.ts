@@ -30,11 +30,11 @@ usuarioLogueado : User;
  public loading: Loading;
 
 public login() {
-    this.showLoading().then(() => { // Show the loading before making the request
+    this.showLoading().then(() => { 
 
-        this.auth.login(this.Login).subscribe(allowed => { // Make the http request
+        this.auth.login(this.Login).subscribe(allowed => { 
 
-            this.loading.dismiss().then(() => { // Hide the loading
+            this.loading.dismiss().then(() => { 
 
                 if (allowed) {
 
@@ -52,7 +52,7 @@ public login() {
                 }
             });
         }, error => {
-            this.loading.dismiss().then(() => { // Hide the loading
+            this.loading.dismiss().then(() => { 
                 this.showError(error);
             });
         });
@@ -60,12 +60,12 @@ public login() {
 
 }
 
-showLoading(): Promise<any> { // <- Return the promise
+showLoading(): Promise<any> { 
     this.loading = this.loadingCtrl.create({
         content: 'Por favor espere...',
         dismissOnPageChange: true
     });
-    return this.loading.present(); // <- Added the return keyword here
+    return this.loading.present(); 
 }
 
 showError(text) {
