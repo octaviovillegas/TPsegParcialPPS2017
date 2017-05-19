@@ -15,15 +15,17 @@ export class servicioAuth {
 ListaUsuarios = "";
 
 constructor(private http: Http) {
-    this.http.get("http://localhost/ws1/usuarios")
+    this.http.get("http://tppps2.hol.es/ws1/usuarios")
   .map(res => res.json())
   .subscribe((quote) =>{
     this.ListaUsuarios = quote;
+    console.info(quote);
   });
 }
 
 
   public login(credenciales) {
+    console.info(credenciales);
    let access =false;
    let tipo ="";
     if (credenciales.usuario === null || credenciales.clave === null) {
@@ -31,6 +33,7 @@ constructor(private http: Http) {
     } else {
       return Observable.create(observer => {
          for (let entry of this.ListaUsuarios) {
+           console.info(entry);
           if(credenciales.usuario === entry["usuario"] && credenciales.clave === entry["clave"] ){
              access = true;
              tipo = entry["descripcion"];
