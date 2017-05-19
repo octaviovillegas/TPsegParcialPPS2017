@@ -14,7 +14,8 @@ import {Administrativo} from "../pages/administrativo/administrativo";
 import {Estadisticas} from "../pages/estadisticas/estadisticas";
 import { HttpModule } from '@angular/http';
 import { servicioAuth } from '../pages/servicioAuth/servicioAuth';
-
+import {Alumno} from "../pages/alumno/alumno";
+import {Profesor} from "../pages/profesor/profesor";
 
 @NgModule({
   declarations: [
@@ -27,6 +28,8 @@ import { servicioAuth } from '../pages/servicioAuth/servicioAuth';
     Administrador,
     Administrativo,
     Estadisticas,
+    Alumno,
+    Profesor
     
   ],
   imports: [
@@ -44,7 +47,9 @@ import { servicioAuth } from '../pages/servicioAuth/servicioAuth';
     Login,
     Administrador,
     Administrativo,
-    Estadisticas
+    Estadisticas,
+    Alumno,
+    Profesor
   ],
   providers: [
     StatusBar,

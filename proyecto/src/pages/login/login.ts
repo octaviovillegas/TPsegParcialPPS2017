@@ -5,6 +5,10 @@ import {Usuario} from "../usuario/usuario";
 import {Http} from '@angular/http';
 import {User} from '../servicioAuth/user';
 import {Administrador} from "../administrador/administrador";
+import {Administrativo} from "../Administrativo/Administrativo";
+import {Alumno} from "../alumno/alumno";
+import {Profesor} from "../profesor/profesor";
+
 import 'rxjs/Rx'; 
 
 @Component({
@@ -42,11 +46,24 @@ public login() {
                     this.usuarioLogueado = this.auth.getUserInfo();
 
                     if (this.usuarioLogueado.tipo == "Administrador") {
-                        this.navCtrl.setRoot(Administrador);
+                        this.navCtrl.setRoot(Administrador,this.usuarioLogueado);
+                    } else 
+                    if (this.usuarioLogueado.tipo == "Administrativo") {
+                        this.navCtrl.setRoot(Administrativo,this.usuarioLogueado);
+                    }else
+                    if (this.usuarioLogueado.tipo == "Alumno") {
+                        this.navCtrl.setRoot(Alumno,this.usuarioLogueado);
+                    }
+                    if (this.usuarioLogueado.tipo == "Profesor") {
+                        this.navCtrl.setRoot(Profesor, this.usuarioLogueado);
                     }
 
                     console.log("bienvenido", this.usuarioLogueado.usuario, this.usuarioLogueado.tipo);
-
+                    console.info(this.usuarioLogueado);
+                    if (this.usuarioLogueado.tipo == "Administrador")
+                    {
+                         this.navCtrl.push(Administrador,this.usuarioLogueado);
+                    }
                 } else {
                     this.showError("Acceso denegado");
                 }
