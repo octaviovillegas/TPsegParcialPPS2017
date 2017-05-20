@@ -10,8 +10,9 @@ import {Alumno} from "../alumno/alumno";
 import {Profesor} from "../profesor/profesor";
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import { AuthData } from '../../providers/auth-data';
+import { Menu } from '../menu/menu';
 
-import 'rxjs/Rx'; 
+import 'rxjs/Rx';
 
 @Component({
   selector: 'page-contact',
@@ -25,62 +26,53 @@ usuarioLogueado : User;
    Login = {
  usuario: "",
   clave: ""
-   } 
-   
+   }
+
   constructor(public navCtrl: NavController,
   private auth: servicioAuth, private alertCtrl: AlertController, private loadingCtrl: LoadingController,
   public authData: AuthData) {
-  
+
 }
 
 
-  
- 
+
+
  public loading: Loading;
 
 
 
 public login() {
 
-     
 
-    
-    this.showLoading().then(() => { 
 
-        this.auth.login(this.Login).subscribe(allowed => { 
 
-            this.loading.dismiss().then(() => { 
+    this.showLoading().then(() => {
+
+        this.auth.login(this.Login).subscribe(allowed => {
+
+            this.loading.dismiss().then(() => {
 
                 if (allowed) {
-
-                    // this.navCtrl.setRoot('Inicio');
                     this.usuarioLogueado = this.auth.getUserInfo();
 
-                    if (this.usuarioLogueado.tipo == "Administrador") {
-                        this.navCtrl.setRoot(Administrador,this.usuarioLogueado);
-                    } else 
-                    if (this.usuarioLogueado.tipo == "Administrativo") {
-                        this.navCtrl.setRoot(Administrativo,this.usuarioLogueado);
+                    if (this.usuarioLogueado.tipo_usuario == "Administrador") {
+                        this.navCtrl.setRoot(Menu, this.usuarioLogueado);
+                    } else
+                    if (this.usuarioLogueado.tipo_usuario == "Administrativo") {
+                        this.navCtrl.setRoot(Menu, this.usuarioLogueado);
                     }else
-                    if (this.usuarioLogueado.tipo == "Alumno") {
-                        this.navCtrl.setRoot(Alumno,this.usuarioLogueado);
+                    if (this.usuarioLogueado.tipo_usuario == "Alumno") {
+                        this.navCtrl.setRoot(Menu, this.usuarioLogueado);
                     }
-                    if (this.usuarioLogueado.tipo == "Profesor") {
-                        this.navCtrl.setRoot(Profesor, this.usuarioLogueado);
-                    }
-
-                    console.log("bienvenido", this.usuarioLogueado.usuario, this.usuarioLogueado.tipo);
-                    console.info(this.usuarioLogueado);
-                    if (this.usuarioLogueado.tipo == "Administrador")
-                    {
-                         this.navCtrl.push(Administrador,this.usuarioLogueado);
+                    if (this.usuarioLogueado.tipo_usuario == "Profesor") {
+                        this.navCtrl.setRoot(Menu, this.usuarioLogueado);
                     }
                 } else {
                     this.showError("Acceso denegado");
                 }
             });
         }, error => {
-            this.loading.dismiss().then(() => { 
+            this.loading.dismiss().then(() => {
                 this.showError(error);
             });
         });
@@ -88,12 +80,12 @@ public login() {
 
 }
 
-showLoading(): Promise<any> { 
+showLoading(): Promise<any> {
     this.loading = this.loadingCtrl.create({
         content: 'Por favor espere...',
         dismissOnPageChange: true
     });
-    return this.loading.present(); 
+    return this.loading.present();
 }
 
 showError(text) {
@@ -123,8 +115,3 @@ EscribirCredenciales(tipo){
 }
 
 }
-
-
-
-
-
