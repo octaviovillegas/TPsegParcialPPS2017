@@ -12,9 +12,26 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <button *ngIf="usuarioLogueado.tipo_usuario == 'Alumno'"ion-item (click)="openPage(alumno)">
+      <!-- alumno-->
+      <button *ngIf="usuarioLogueado.tipo_usuario == 'Alumno'"ion-item (click)="openPage(alumnoPage)">
         Mis encuestas
       </button>
+      <!-- fin alumno -->
+
+      <!-- administrador-->
+      <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'"ion-item (click)="openPage(administradorPage)">
+       ABM Profesores
+      </button>
+       <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'"ion-item (click)="openPage(administradorPage)">
+       ABM Alumnos
+       </button>
+        <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'"ion-item (click)="openPage(administradorPage)">
+        ABM Administrativos
+       </button>
+        <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'"ion-item (click)="openPage(administradorPage)">
+        ABM Administradores
+       </button>
+      <!-- fin administrador -->
       <button ion-item (click)="cerrarSesion()">
         Cerrar sesion
       </button>

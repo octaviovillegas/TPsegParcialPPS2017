@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import {Alumno} from "../alumno/alumno";
 import {Administrativo} from '../administrativo/administrativo';
-
+import {Administrador} from '../administrador/administrador';
+import {Profesor} from '../profesor/profesor';
 /**
 * Generated class for the Menu page.
 *
@@ -18,6 +19,8 @@ export class Menu {
     private rootPage;
     private administrativoPage;
     private alumnoPage;
+    private administradorPage;
+    private profesorPage;
     private usuarioLogueado;
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -29,6 +32,8 @@ export class Menu {
 
         this.administrativoPage = Administrativo;
         this.alumnoPage = Alumno;
+        this.administradorPage = Administrador;
+        this.profesorPage = Profesor;
 
         this.openPage(Alumno)
     }
