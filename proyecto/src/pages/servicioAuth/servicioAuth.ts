@@ -15,8 +15,8 @@ export class servicioAuth {
 ListaUsuarios = "";
 
 constructor(private http: Http) {
-    //this.http.get("http://tppps2.hol.es/ws1/usuarios")
-        this.http.get("http://localhost/facultad/ws1/usuarios")
+    this.http.get("http://tppps2.hol.es/ws1/usuarios")
+    //this.http.get("http://localhost/facultad/ws1/usuarios")
   .map(res => res.json())
   .subscribe((quote) =>{
     this.ListaUsuarios = quote;

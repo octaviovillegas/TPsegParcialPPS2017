@@ -7,8 +7,10 @@ import {  NavController, NavParams,MenuController } from 'ionic-angular';
 })
 export class Administrador {
 
+  private usuarioLogueado;
   constructor(public navCtrl: NavController, public navParams: NavParams,menu: MenuController) {
-    menu.enable(true);
+    
+    this.usuarioLogueado = navParams.data;
   }
 
 

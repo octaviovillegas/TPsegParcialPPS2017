@@ -1,25 +1,14 @@
-<ion-menu [content]="content">
+ 
   <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
+  <ion-navbar>
+      <button ion-button menuToggle left>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+    <ion-title>Administrador: {{usuarioLogueado.usuario}}</ion-title>
+  </ion-navbar>
   </ion-header>
   <ion-content>
-    <ion-list>
-      <button ion-item (click)="openPage(homePage)">
-        ABM Profesores
-      </button>
-      <button ion-item (click)="openPage(friendsPage)">
-        ABM Alumnos
-      </button>
-      <button ion-item (click)="openPage(eventsPage)">
-        ABM Administrativos
-      </button>
-      <button ion-item (click)="closeMenu()">
-        ABM Administradores
-      </button>
-    </ion-list>
+ 
   </ion-content>
-</ion-menu>
-
-<ion-nav id="nav" #content [root]="rootPage"></ion-nav>
+ 
+ 
