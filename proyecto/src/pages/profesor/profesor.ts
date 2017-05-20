@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import 'rxjs/Rx'; 
 import { NavController,ViewController,NavParams,ModalController } from 'ionic-angular';
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
-import {modalEncuesta} from '../modalEncuesta/modalEncuesta';
+import {Encuestas} from '../encuestas/encuestas';
 
 @Component({
   selector: 'page-Profesor',
@@ -22,18 +22,8 @@ export class Profesor {
          this.usuarioLogueado = NavParams.data;
     }
 
-AbrirModal(queHago){
-  if(queHago == "Generar"){
-      let modal = this.modalCtrl.create(modalEncuesta,this.usuarioLogueado);
-      modal.present();
-  }else  if(queHago == "Enviar"){
-
-  }
    
 }
    
-   dismiss() {
-    this.viewCtrl.dismiss();
-  }
+  
 
-}

@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController,ViewController, NavParams,ModalController } from 'ionic-angular';
 
 import {Alumno} from "../alumno/alumno";
 import {Administrativo} from '../administrativo/administrativo';
 import {Administrador} from '../administrador/administrador';
 import {Profesor} from '../profesor/profesor';
 import {Login} from '../login/login';
-
+import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 import {GrillaAdministrador} from "../grillas/grilla-administrador/grilla-administrador";
 import {GrillaAdministrativo} from "../grillas/grilla-administrativo/grilla-administrativo";
 import {GrillaAlumno} from "../grillas/grilla-alumno/grilla-alumno";
 import {GrillaProfesor} from "../grillas/grilla-profesor/grilla-profesor";
+import {Encuestas} from '../encuestas/encuestas';
 
 /**
 * Generated class for the Menu page.
@@ -28,13 +29,19 @@ export class Menu {
     private alumnoPage;
     private administradorPage;
     private profesorPage;
-    private usuarioLogueado;
+    private usuarioLogueado: {
+        usuario:string,
+        clave:string,
+        queHago:string,
+        tipo_usuario:string
+    };
     private grillaProfesor;
     private grillaAlumno;
     private grillaAdministrador;
     private grillaAdministrativo;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
+    constructor(public navCtrl: NavController,public viewCtrl:ViewController,
+     public navParams: NavParams,public af: AngularFire,public modalCtrl: ModalController) {
 
  
         this.usuarioLogueado = navParams.data;
@@ -61,6 +68,16 @@ export class Menu {
         }
     }
 
+Encuestas(queHago){
+        if(queHago == "profesorGenerar"){
+            this.usuarioLogueado.queHago = "GenerarEncuesta";
+        }else{
+            this.usuarioLogueado.queHago = "EnviarEncuesta";
+        }
+  
+         this.navCtrl.setRoot(Encuestas, this.usuarioLogueado);
+
+}
     ionViewDidLoad() {
         console.log('ionViewDidLoad Menu');
     }
@@ -75,6 +92,7 @@ export class Menu {
      */
     cerrarSesion() {
         /** Ejecutar funcion para desloguear usuario. */
+        this.af.auth.logout();
         this.navCtrl.setRoot(Login, this.usuarioLogueado);
     }
 

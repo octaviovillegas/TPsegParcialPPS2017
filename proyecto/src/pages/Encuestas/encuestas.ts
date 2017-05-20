@@ -5,15 +5,11 @@ import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import { ModalController, ViewController } from 'ionic-angular';
 
 @Component({
-  selector: 'page-Profesor',
-  templateUrl: 'modalEncuesta.html'
+  selector: 'page-Encuestas',
+  templateUrl: 'encuestas.html'
 })
-export class modalEncuesta {
-         usuarioLogueado = {
- usuario: "",
-  clave: "",
-  tipo: ""
-   } 
+export class Encuestas {
+        private usuarioLogueado;
 
 
 

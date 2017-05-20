@@ -1,21 +1,14 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Ultimos jugados</ion-title>
+   <ion-navbar>
+      <button ion-button menuToggle left>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+    <ion-title>Profesor: {{usuarioLogueado.usuario}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-list>
-    <ion-list-header>
-      Ultimos Jugadores
-    </ion-list-header>
-    <a ion-item (click)="AbrirModal('Generar')">
-      Generar encuesta
-    </a>
-    <a ion-item (click)="AbrirModal('Enviar')">
-      Enviar encuesta
-    </a>
-  </ion-list>
+  
 
 </ion-content>

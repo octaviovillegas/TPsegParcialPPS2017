@@ -26,6 +26,13 @@
         <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(grillaAdministrador)" menuClose>
         ABM Administradores
        </button>
+       <button *ngIf="usuarioLogueado.tipo_usuario == 'Profesor'" ion-item (click)="Encuestas('profesorGenerar')" menuClose>
+        Generar encuesta
+       </button>
+       <button *ngIf="usuarioLogueado.tipo_usuario == 'Profesor'" ion-item (click)="Encuestas('profesorEnviar')" menuClose>
+        Enviar encuesta
+       </button>
+       
       <!-- fin administrador -->
       <button ion-item (click)="cerrarSesion()">
         Cerrar sesion
