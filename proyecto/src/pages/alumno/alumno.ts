@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { servicioAuth } from '../servicioAuth/servicioAuth';
 
 /**
  * Generated class for the Alumno page.
@@ -17,8 +18,8 @@ export class Alumno {
     private usuarioLogueado;
     private encuestas = [];
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
-        this.usuarioLogueado = navParams.data;
+    constructor(public navCtrl: NavController, private auth: servicioAuth, public navParams: NavParams) {
+        this.usuarioLogueado = this.auth.getUserInfo();
     }
 
     ionViewDidLoad() {
