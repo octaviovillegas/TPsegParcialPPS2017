@@ -18,10 +18,7 @@ export class Alumno {
     private encuestas = [];
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
-
-        console.log('this.usuarioLogueado');
         this.usuarioLogueado = navParams.data;
-        console.log(this.usuarioLogueado);
     }
 
     ionViewDidLoad() {
