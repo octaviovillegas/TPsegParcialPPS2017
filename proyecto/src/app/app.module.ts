@@ -22,6 +22,10 @@ import {AngularFireModule} from 'angularfire2';
 import { AuthData } from '../providers/auth-data';
 import {Menu} from "../pages/menu/menu";
 import {Encuestas} from '../pages/encuestas/encuestas';
+import {GrillaAdministrador} from "../pages/grillas/grilla-administrador/grilla-administrador";
+import {GrillaAdministrativo} from "../pages/grillas/grilla-administrativo/grilla-administrativo";
+import {GrillaAlumno} from "../pages/grillas/grilla-alumno/grilla-alumno";
+import {GrillaProfesor} from "../pages/grillas/grilla-profesor/grilla-profesor";
 
 @NgModule({
   declarations: [
@@ -37,7 +41,11 @@ import {Encuestas} from '../pages/encuestas/encuestas';
     Alumno,
     Profesor,
     Menu,
-    Encuestas
+    Encuestas,
+    GrillaProfesor,
+    GrillaAlumno,
+    GrillaAdministrativo,
+    GrillaAdministrador
   ],
   imports: [
     BrowserModule,
@@ -59,7 +67,11 @@ import {Encuestas} from '../pages/encuestas/encuestas';
     Alumno,
     Profesor,
     Menu,
-    Encuestas
+    Encuestas,
+    GrillaProfesor,
+    GrillaAlumno,
+    GrillaAdministrativo,
+    GrillaAdministrador    
       ],
   providers: [
     StatusBar,
