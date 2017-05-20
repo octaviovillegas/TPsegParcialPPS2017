@@ -10,7 +10,7 @@
       <button ion-button menuToggle left>
           <ion-icon name="menu"></ion-icon>
       </button>
-      
+
       <ion-title>Alumno: {{usuarioLogueado.usuario}}</ion-title>
   </ion-navbar>
 
@@ -21,8 +21,18 @@
 
     <ion-list>
         <ion-list-header>
-            Mis encuetas
+            Mis encuestas
         </ion-list-header>
+        <button ion-item padding>
+            <h2>Encuestas pendientes</h2>
+            <p>Muestra las encuestas todavia no se hicieron.</p>
+            <ion-icon name="ios-arrow-forward" item-right></ion-icon>
+        </button>
+        <button ion-item padding>
+            <h2>Encuestas terminadas</h2>
+            <p>Muestra las encuestas que ya se hicieron.</p>
+            <ion-icon name="ios-arrow-forward" item-right></ion-icon>
+        </button>
     </ion-list>
 
 </ion-content>
