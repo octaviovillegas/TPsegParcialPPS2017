@@ -20,7 +20,12 @@ import {modalEncuesta} from '../pages/modalEncuesta/modalEncuesta';
 import {firebaseconfig} from '../pages/firebase/firebase-config';
 import {AngularFireModule} from 'angularfire2';
 import { AuthData } from '../providers/auth-data';
-import {Menu} from "../pages/menu/menu"
+import {Menu} from "../pages/menu/menu";
+import {GrillaAdministrador} from "../pages/grillas/grilla-administrador/grilla-administrador";
+import {GrillaAdministrativo} from "../pages/grillas/grilla-administrativo/grilla-administrativo";
+import {GrillaAlumno} from "../pages/grillas/grilla-alumno/grilla-alumno";
+import {GrillaProfesor} from "../pages/grillas/grilla-profesor/grilla-profesor";
+
 @NgModule({
   declarations: [
     MyApp,
@@ -34,7 +39,11 @@ import {Menu} from "../pages/menu/menu"
     Estadisticas,
     Alumno,
     Profesor,
-    Menu
+    Menu,
+    GrillaProfesor,
+    GrillaAlumno,
+    GrillaAdministrativo,
+    GrillaAdministrador
   ],
   imports: [
     BrowserModule,
@@ -55,7 +64,11 @@ import {Menu} from "../pages/menu/menu"
     Estadisticas,
     Alumno,
     Profesor,
-    Menu    
+    Menu,
+    GrillaProfesor,
+    GrillaAlumno,
+    GrillaAdministrativo,
+    GrillaAdministrador    
       ],
   providers: [
     StatusBar,
