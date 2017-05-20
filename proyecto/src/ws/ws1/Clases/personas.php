@@ -5,9 +5,11 @@ class Usuario
 //--------------------------------------------------------------------------------//
 //--ATRIBUTOS
 	public $id_usuario;
-	public $nombre_usuario;
-	public $pass_usuario;
-	public $id_rol;
+	public $usuario;
+	public $clave;
+	public $id_tipo;
+	public $nombre;
+	public $tipo_usuario;
 //--------------------------------------------------------------------------------//
 
 //--------------------------------------------------------------------------------//
@@ -18,53 +20,63 @@ class Usuario
 	}
 	public function GetNombre_usuario()
 	{
-		return $this->nombre_usuario;
+		return $this->usuario;
 	}
 	public function GetPass_usuario()
 	{
-		return $this->pass_usuario;
+		return $this->clave;
 	}
 	public function Getrol()
 	{
-		return $this->id_rol;
+		return $this->id_tipo;
 	}
-	
+
+	public function Getnombre()
+	{
+		return $this->nombre;
+	}
+
+	public function Setnombre($parametro)
+	{
+		 $this->nombre = $parametro;
+	}
+
 	public function Setid_usuario($parametro)
 	{
 		 $this->id_usuario = $parametro;
 	}
 	public function SetNombre_usuario($parametro)
 	{
-		$this->nombre_usuario = $parametro;
+		$this->usuario = $parametro;
 	}
 	public function SetPass_usuario($parametro)
 	{
-		$this->pass_usuario = $parametro;
+		$this->clave = $parametro;
 	}
 	public function Setrol($parametro)
 	{
-		 $this->id_rol = $parametro;
+		 $this->id_tipo = $parametro;
 	}
-	
 
-	
+
+
 //--------------------------------------------------------------------------------//
 //--CONSTRUCTOR
 	public function __construct($dni=NULL)
 	{
 		if($dni != NULL){
 			$obj = Persona::TraerUnaPersona($dni);
-			
+
 			$this->apellido = $obj->apellido;
 			$this->nombre = $obj->nombre;
 			$this->dni = $dni;
 			$this->foto = $obj->foto;
-			
+
 		}
 	}
 
 //--------------------------------------------------------------------------------//
-//--TOSTRING	
+//--TOSTRING
   	public function ToString()
 	{
 	  	return $this->apellido."-".$this->nombre."-".$this->dni."-".$this->foto;
@@ -73,92 +85,98 @@ class Usuario
 
 //--------------------------------------------------------------------------------//
 //--METODO DE CLASE
-	public static function TraerUnUsuario($usuario) 
-	{	
+	public static function TraerUnUsuario($usuario)
+	{
 
 
-		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("select * from usuario u  join rol r on u.id_rol = r.id_rol where u.nombre_usuario =:nombre_usuario");
-		$consulta->bindValue(':nombre_usuario', $usuario, PDO::PARAM_STR);
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+		$consulta =$objetoAccesoDato->RetornarConsulta("select * from usuario u  join rol r on u.id_tipo = r.id_tipo where u.usuario =:usuario");
+		$consulta->bindValue(':usuario', $usuario, PDO::PARAM_STR);
 		$consulta->execute();
 		$personaBuscada= $consulta->fetchObject('Usuario');
-		return $personaBuscada;	
-					
+		return $personaBuscada;
+
 	}
-	
+
 	public static function TraerTodasLasPersonas()
 	{
-		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 		//$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona");
-	$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM usuario usu JOIN rol ro ON usu.id_rol=ro.id_rol WHERE 1");
-		$consulta->execute();			
-		$arrEmpleado= $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");	
+	$consulta =$objetoAccesoDato->RetornarConsulta("SELECT u.id_usuario, t.descripcion tipo_usuario, u.nombre, u.usuario, u.clave FROM usuarios u, tipos_usuarios t where u.id_tipo=t.id_tipo");
+		$consulta->execute();
+		$arrEmpleado= $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");
 		return $arrEmpleado;
 	}
+
+	public static function traeralgo()
+	{
+		return "hola";
+	}
+
 public static function TraerTodosLosClientes()
 	{
-		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 		//$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona");
-	$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM usuario usu JOIN rol ro ON usu.id_rol=ro.id_rol WHERE usu.id_rol = 3");
-		$consulta->execute();			
-		$arrEmpleado= $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");	
+	$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM usuario usu JOIN rol ro ON usu.id_tipo=ro.id_tipo WHERE usu.id_tipo = 3");
+		$consulta->execute();
+		$arrEmpleado= $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");
 		return $arrEmpleado;
-	}	
+	}
 public static function TraerClientesEmpleados()
 	{
-		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 		//$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona");
-	$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM usuario usu JOIN rol ro ON usu.id_rol=ro.id_rol WHERE (usu.id_rol = 3 XOR usu.id_rol = 2)");
-		$consulta->execute();			
-		$arrEmpleado= $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");	
+	$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM usuario usu JOIN rol ro ON usu.id_tipo=ro.id_tipo WHERE (usu.id_tipo = 3 XOR usu.id_tipo = 2)");
+		$consulta->execute();
+		$arrEmpleado= $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");
 		return $arrEmpleado;
-	}	
+	}
 
 
 
 	public static function BorrarUsuario($idParametro)
-	{	
-		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		//$consulta =$objetoAccesoDato->RetornarConsulta("delete from persona	WHERE id=:id");	
-		$consulta =$objetoAccesoDato->RetornarConsulta("delete 
-				from usuario 				
-				WHERE id_usuario=:id");	
-		$consulta->bindValue(':id',$idParametro, PDO::PARAM_INT);		
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+		//$consulta =$objetoAccesoDato->RetornarConsulta("delete from persona	WHERE id=:id");
+		$consulta =$objetoAccesoDato->RetornarConsulta("delete
+				from usuario
+				WHERE id_usuario=:id");
+		$consulta->bindValue(':id',$idParametro, PDO::PARAM_INT);
 		$consulta->execute();
 		return $consulta->rowCount();
-		
+
 	}
-	
+
 	public static function ModificarUsuario($usuario)
 	{
 		var_dump($usuario);
 		if($usuario->descripcion_rol == "ADMINISTRADOR")
 		{
-			$usuario->id_rol = 1;
+			$usuario->id_tipo = 1;
 		}else if($usuario->descripcion_rol == "CLIENTE")
 		{
-			$usuario->id_rol = 3;
+			$usuario->id_tipo = 3;
 		}if($usuario->descripcion_rol == "ENCARGADO")
 		{
-			$usuario->id_rol = 4;
+			$usuario->id_tipo = 4;
 		}if($usuario->descripcion_rol == "EMPLEADO")
 		{
-			$usuario->id_rol = 2;
+			$usuario->id_tipo = 2;
 		}
 
-	
-			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+
+			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 			$consulta =$objetoAccesoDato->RetornarConsulta("
-				update usuario 
-				set nombre_usuario=:nombre_usuario,
-				pass_usuario=:pass_usuario,
-				id_rol=:id_rol
+				update usuario
+				set usuario=:usuario,
+				clave=:clave,
+				id_tipo=:id_tipo
 				WHERE id_usuario=:id");
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 			$consulta->bindValue(':id',$usuario->id_usuario, PDO::PARAM_INT);
-			$consulta->bindValue(':nombre_usuario',$usuario->nombre_usuario, PDO::PARAM_STR);
-			$consulta->bindValue(':pass_usuario', $usuario->pass_usuario, PDO::PARAM_STR);
-			$consulta->bindValue(':id_rol', $usuario->id_rol, PDO::PARAM_INT);
+			$consulta->bindValue(':usuario',$usuario->usuario, PDO::PARAM_STR);
+			$consulta->bindValue(':clave', $usuario->clave, PDO::PARAM_STR);
+			$consulta->bindValue(':id_tipo', $usuario->id_tipo, PDO::PARAM_INT);
 			return $consulta->execute();
 	}
 
@@ -168,22 +186,22 @@ public static function TraerClientesEmpleados()
 
 	public static function Insertar($persona)
 	{
-		
-	
-		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 
-	
+
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+
+
 		//$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into persona (nombre,apellido,dni,foto)values(:nombre,:apellido,:dni,:foto)");
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into usuario (nombre_usuario,pass_usuario,id_rol)values(:nombre_usuario,:pass_usuario,:id_rol)");
-		$consulta->bindValue(':nombre_usuario',$persona->nombre_usuario, PDO::PARAM_STR);
-		$consulta->bindValue(':pass_usuario', $persona->pass_usuario, PDO::PARAM_STR);
-		$consulta->bindValue(':id_rol', $persona->id_rol, PDO::PARAM_INT);
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into usuario (usuario,clave,id_tipo)values(:usuario,:clave,:id_tipo)");
+		$consulta->bindValue(':usuario',$persona->usuario, PDO::PARAM_STR);
+		$consulta->bindValue(':clave', $persona->clave, PDO::PARAM_STR);
+		$consulta->bindValue(':id_tipo', $persona->id_tipo, PDO::PARAM_INT);
 
-		$consulta->execute();		
+		$consulta->execute();
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();
-	
-				
-	}	
+
+
+	}
 //--------------------------------------------------------------------------------//
 
 
@@ -218,12 +236,12 @@ public static function TraerClientesEmpleados()
 		$arrayDePersonas[]=$persona;
 		$arrayDePersonas[]=$persona2;
 		$arrayDePersonas[]=$persona3;
-		 
-		
+
+
 
 		return  $arrayDePersonas;
-				
-	}	
+
+	}
 
 
 }

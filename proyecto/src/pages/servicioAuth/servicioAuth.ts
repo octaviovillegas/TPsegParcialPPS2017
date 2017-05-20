@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Http} from '@angular/http';
 import {User} from '../servicioAuth/user';
-import 'rxjs/Rx'; 
+import 'rxjs/Rx';
 
  @Component({
   selector: 'page-contact',
@@ -15,7 +15,8 @@ export class servicioAuth {
 ListaUsuarios = "";
 
 constructor(private http: Http) {
-    this.http.get("http://tppps2.hol.es/ws1/usuarios")
+    //this.http.get("http://tppps2.hol.es/ws1/usuarios")
+        this.http.get("http://localhost/facultad/ws1/usuarios")
   .map(res => res.json())
   .subscribe((quote) =>{
     this.ListaUsuarios = quote;
@@ -36,7 +37,7 @@ constructor(private http: Http) {
            console.info(entry);
           if(credenciales.usuario === entry["usuario"] && credenciales.clave === entry["clave"] ){
              access = true;
-             tipo = entry["descripcion"];
+             tipo = entry["tipo_usuario"];
           }
                 }
         this.currentUser = new User(credenciales.usuario, credenciales.clave,tipo);
@@ -45,13 +46,13 @@ constructor(private http: Http) {
       });
     }
   }
- 
-  
- 
+
+
+
   public getUserInfo() : User {
     return this.currentUser;
   }
- 
+
   public logout() {
     return Observable.create(observer => {
       this.currentUser = null;
