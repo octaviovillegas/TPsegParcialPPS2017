@@ -17,6 +17,9 @@ import { servicioAuth } from '../pages/servicioAuth/servicioAuth';
 import {Alumno} from "../pages/alumno/alumno";
 import {Profesor} from "../pages/profesor/profesor";
 import {modalEncuesta} from '../pages/modalEncuesta/modalEncuesta';
+import {firebaseconfig} from '../pages/firebase/firebase-config';
+import {AngularFireModule} from 'angularfire2';
+import { AuthData } from '../providers/auth-data';
 
 @NgModule({
   declarations: [
@@ -30,14 +33,14 @@ import {modalEncuesta} from '../pages/modalEncuesta/modalEncuesta';
     Administrativo,
     Estadisticas,
     Alumno,
-    Profesor
-    
+    Profesor  
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule
-  ],
+    HttpModule,
+   AngularFireModule.initializeApp(firebaseconfig)
+      ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
@@ -50,14 +53,14 @@ import {modalEncuesta} from '../pages/modalEncuesta/modalEncuesta';
     Administrativo,
     Estadisticas,
     Alumno,
-    Profesor,
-    modalEncuesta
-  ],
+    Profesor
+      ],
   providers: [
     StatusBar,
     SplashScreen,
     HttpModule,
     servicioAuth,
+    AuthData,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

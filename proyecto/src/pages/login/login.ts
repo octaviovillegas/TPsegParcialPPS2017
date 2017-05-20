@@ -8,6 +8,8 @@ import {Administrador} from "../administrador/administrador";
 import {Administrativo} from "../administrativo/administrativo";
 import {Alumno} from "../alumno/alumno";
 import {Profesor} from "../profesor/profesor";
+import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import { AuthData } from '../../providers/auth-data';
 
 import 'rxjs/Rx'; 
 
@@ -26,7 +28,8 @@ usuarioLogueado : User;
    } 
    
   constructor(public navCtrl: NavController,
-  private auth: servicioAuth, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  private auth: servicioAuth, private alertCtrl: AlertController, private loadingCtrl: LoadingController,
+  public authData: AuthData) {
   
 }
 
@@ -35,7 +38,13 @@ usuarioLogueado : User;
  
  public loading: Loading;
 
+
+
 public login() {
+
+     
+
+    
     this.showLoading().then(() => { 
 
         this.auth.login(this.Login).subscribe(allowed => { 

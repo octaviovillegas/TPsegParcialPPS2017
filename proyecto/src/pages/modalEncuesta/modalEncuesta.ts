@@ -6,7 +6,7 @@ import { ModalController, ViewController } from 'ionic-angular';
 
 @Component({
   selector: 'page-Profesor',
-  templateUrl: 'profesor.html'
+  templateUrl: 'modalEncuesta.html'
 })
 export class modalEncuesta {
          usuarioLogueado = {
