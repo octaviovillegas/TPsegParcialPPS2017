@@ -40,12 +40,9 @@ usuarioLogueado : User;
  public loading: Loading;
 
 
-
 public login() {
 
-
-
-
+this.authData.loginUser(this.Login.usuario,this.Login.clave).then( authData => {
     this.showLoading().then(() => {
 
         this.auth.login(this.Login).subscribe(allowed => {
@@ -77,6 +74,17 @@ public login() {
             });
         });
     });
+ },error => {
+            let alert = this.alertCtrl.create({
+              message: error.message,
+              buttons: [{
+                text: "Ok",
+                role: 'cancel'
+              }]
+            });
+          alert.present();
+          });
+      
 
 }
 
@@ -100,17 +108,17 @@ showError(text) {
 
 EscribirCredenciales(tipo){
   if(tipo == "Administrador" ){
-    this.Login.usuario = "Administrador";
-    this.Login.clave ="Administrador";
+    this.Login.usuario = "testAdmin@escuelita.com";
+    this.Login.clave ="admin123";
   }else if(tipo == "Administrativo" ){
-    this.Login.usuario = "Administrativo";
-    this.Login.clave ="Administrativo";
+    this.Login.usuario = "testAdministrativo@escuelita.com";
+    this.Login.clave ="admini123";
   }else if(tipo == "Alumno" ){
-    this.Login.usuario = "Alumno";
-    this.Login.clave ="Alumno";
+    this.Login.usuario = "testAlumno@escuelita.com";
+    this.Login.clave ="alumno123";
   }else if(tipo == "Profesor" ){
-     this.Login.usuario = "Profesor";
-    this.Login.clave ="Profesor";
+     this.Login.usuario = "testProfe@escuelita.com";
+    this.Login.clave ="profe123";
   }
 }
 
