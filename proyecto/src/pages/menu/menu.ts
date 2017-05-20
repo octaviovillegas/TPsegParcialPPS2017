@@ -5,6 +5,7 @@ import {Alumno} from "../alumno/alumno";
 import {Administrativo} from '../administrativo/administrativo';
 import {Administrador} from '../administrador/administrador';
 import {Profesor} from '../profesor/profesor';
+import {Login} from '../login/login';
 /**
 * Generated class for the Menu page.
 *
@@ -30,12 +31,20 @@ export class Menu {
         console.log('this.usuario');
         console.log(this.usuarioLogueado);
 
-        this.administrativoPage = Administrativo;
         this.alumnoPage = Alumno;
+        this.administrativoPage = Administrativo;
         this.administradorPage = Administrador;
         this.profesorPage = Profesor;
 
-        this.openPage(Alumno)
+        if (this.usuarioLogueado.tipo_usuario == 'Alumno') {
+            this.openPage(this.alumnoPage);
+        } else if (this.usuarioLogueado.tipo_usuario == 'Administrativo') {
+            this.openPage(this.administrativoPage);
+        } else if (this.usuarioLogueado.tipo_usuario == 'Administrador') {
+            this.openPage(this.administradorPage);
+        } else if (this.usuarioLogueado.tipo_usuario == 'Profesor') {
+            this.openPage(this.profesorPage);
+        }
     }
 
     ionViewDidLoad() {
@@ -50,6 +59,9 @@ export class Menu {
      * Funcion para cerrar la sesion del usuario
      * @return void
      */
-    cerrarSesion() {}
+    cerrarSesion() {
+        /** Ejecutar funcion para desloguear usuario. */
+        this.navCtrl.setRoot(Login, this.usuarioLogueado);
+    }
 
 }
