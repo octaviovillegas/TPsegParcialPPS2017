@@ -6,6 +6,12 @@ import {Administrativo} from '../administrativo/administrativo';
 import {Administrador} from '../administrador/administrador';
 import {Profesor} from '../profesor/profesor';
 import {Login} from '../login/login';
+
+import {GrillaAdministrador} from "../grillas/grilla-administrador/grilla-administrador";
+import {GrillaAdministrativo} from "../grillas/grilla-administrativo/grilla-administrativo";
+import {GrillaAlumno} from "../grillas/grilla-alumno/grilla-alumno";
+import {GrillaProfesor} from "../grillas/grilla-profesor/grilla-profesor";
+
 /**
 * Generated class for the Menu page.
 *
@@ -23,10 +29,14 @@ export class Menu {
     private administradorPage;
     private profesorPage;
     private usuarioLogueado;
+    private grillaProfesor;
+    private grillaAlumno;
+    private grillaAdministrador;
+    private grillaAdministrativo;
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
 
-
+ 
         this.usuarioLogueado = navParams.data;
         console.log('this.usuario');
         console.log(this.usuarioLogueado);
@@ -35,6 +45,10 @@ export class Menu {
         this.administrativoPage = Administrativo;
         this.administradorPage = Administrador;
         this.profesorPage = Profesor;
+        this.grillaProfesor = GrillaProfesor;
+        this.grillaAlumno = GrillaAlumno;
+        this.grillaAdministrador = GrillaAdministrador;
+        this.grillaAdministrativo = GrillaAdministrativo; 
 
         if (this.usuarioLogueado.tipo_usuario == 'Alumno') {
             this.openPage(this.alumnoPage);

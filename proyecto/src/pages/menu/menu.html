@@ -19,16 +19,16 @@
       <!-- fin alumno -->
 
       <!-- administrador-->
-      <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(administradorPage)" menuClose>
+      <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(GrillaProfesor)" menuClose>
        ABM Profesores
       </button>
-       <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(administradorPage)" menuClose>
+       <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(GrillaAlumno)" menuClose>
        ABM Alumnos
        </button>
-        <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(administradorPage)" menuClose>
+        <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(GrillaAdministrativo)" menuClose>
         ABM Administrativos
        </button>
-        <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(administradorPage)" menuClose>
+        <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(GrillaAdministrador)" menuClose>
         ABM Administradores
        </button>
       <!-- fin administrador -->
