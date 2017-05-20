@@ -16,6 +16,7 @@ import { HttpModule } from '@angular/http';
 import { servicioAuth } from '../pages/servicioAuth/servicioAuth';
 import {Alumno} from "../pages/alumno/alumno";
 import {Profesor} from "../pages/profesor/profesor";
+import {modalEncuesta} from '../pages/modalEncuesta/modalEncuesta';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {Profesor} from "../pages/profesor/profesor";
     Administrativo,
     Estadisticas,
     Alumno,
-    Profesor
+    Profesor,
+    modalEncuesta
   ],
   providers: [
     StatusBar,

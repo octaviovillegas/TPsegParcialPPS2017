@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, Loading, IonicPage } from 'ionic-angular';
+import { NavController, AlertController, LoadingController,NavParams, Loading, IonicPage } from 'ionic-angular';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
 import {Usuario} from "../usuario/usuario";
 import {Http} from '@angular/http';
@@ -24,7 +24,9 @@ usuarioLogueado : User;
  usuario: "",
   clave: ""
    } 
-  constructor(public navCtrl: NavController,private auth: servicioAuth, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+   
+  constructor(public navCtrl: NavController,
+  private auth: servicioAuth, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
   
 }
 
@@ -45,7 +47,18 @@ public login() {
                     // this.navCtrl.setRoot('Inicio');
                     this.usuarioLogueado = this.auth.getUserInfo();
 
-                  
+                    if (this.usuarioLogueado.tipo == "Administrador") {
+                        this.navCtrl.setRoot(Administrador,this.usuarioLogueado);
+                    } else 
+                    if (this.usuarioLogueado.tipo == "Administrativo") {
+                        this.navCtrl.setRoot(Administrativo,this.usuarioLogueado);
+                    }else
+                    if (this.usuarioLogueado.tipo == "Alumno") {
+                        this.navCtrl.setRoot(Alumno,this.usuarioLogueado);
+                    }
+                    if (this.usuarioLogueado.tipo == "Profesor") {
+                        this.navCtrl.setRoot(Profesor, this.usuarioLogueado);
+                    }
 
                     console.log("bienvenido", this.usuarioLogueado.usuario, this.usuarioLogueado.tipo);
                     console.info(this.usuarioLogueado);

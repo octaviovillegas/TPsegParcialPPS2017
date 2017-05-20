@@ -1,18 +1,21 @@
-<!--
-  Generated template for the Profesor page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>profesor</ion-title>
+    <ion-title>Ultimos jugados</ion-title>
   </ion-navbar>
-
 </ion-header>
 
+<ion-content>
 
-<ion-content padding>
+  <ion-list>
+    <ion-list-header>
+      Ultimos Jugadores
+    </ion-list-header>
+    <a ion-item (click)="AbrirModal('Generar')">
+      Generar encuesta
+    </a>
+    <a ion-item (click)="AbrirModal('Enviar')">
+      Enviar encuesta
+    </a>
+  </ion-list>
 
 </ion-content>
