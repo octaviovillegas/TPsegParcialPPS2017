@@ -14,11 +14,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class Alumno {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+    private usuarioLogueado;
+    private encuestas = [];
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad Alumno');
-  }
+    constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+        console.log('this.usuarioLogueado');
+        this.usuarioLogueado = navParams.data;
+        console.log(this.usuarioLogueado);
+    }
+
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad Alumno');
+    }
 
 }

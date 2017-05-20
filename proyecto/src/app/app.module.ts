@@ -20,6 +20,7 @@ import {modalEncuesta} from '../pages/modalEncuesta/modalEncuesta';
 import {firebaseconfig} from '../pages/firebase/firebase-config';
 import {AngularFireModule} from 'angularfire2';
 import { AuthData } from '../providers/auth-data';
+import {Menu} from '../pages/menu/menu';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AuthData } from '../providers/auth-data';
     Administrativo,
     Estadisticas,
     Alumno,
-    Profesor  
+    Profesor,
+    Menu
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,8 @@ import { AuthData } from '../providers/auth-data';
     Administrativo,
     Estadisticas,
     Alumno,
-    Profesor
+    Profesor,
+    Menu
       ],
   providers: [
     StatusBar,
