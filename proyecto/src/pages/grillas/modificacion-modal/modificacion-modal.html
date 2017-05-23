@@ -22,15 +22,15 @@
   <ion-item>
     <ion-label>Tipo</ion-label>
     <ion-select [(ngModel)]="t">
-      <ion-option value="Administrador">Administrador</ion-option>
-      <ion-option value="Alumno">Alumno</ion-option>
-      <ion-option value="Profesor">Profesor</ion-option>
-      <ion-option value="Administrativo">Administrativo</ion-option>
+      <ion-option value="1">Administrador</ion-option>
+      <ion-option value="3">Alumno</ion-option>
+      <ion-option value="4">Profesor</ion-option>
+      <ion-option value="2">Administrativo</ion-option>
     </ion-select>
   </ion-item>
 </ion-list>
 
-<button ion-button color=light (click)="Modificar(n,c,t)"> Modificar </button>
+<button ion-button color=light (click)="Modificar(id_usuario, n, u, c, t)"> Modificar </button>
 
 
 

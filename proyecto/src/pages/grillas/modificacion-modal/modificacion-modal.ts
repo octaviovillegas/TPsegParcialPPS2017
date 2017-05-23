@@ -12,34 +12,38 @@ import {Http, URLSearchParams} from '@angular/http';
   templateUrl: 'modificacion-modal.html',
 })
 export class ModificacionModal {
+
   n;
   t;
   c;
   u;
+  id_usuario;
   http;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, htt:Http) {
     console.info(navParams.data);
     this.c = navParams.data['clave'];
     this.n=navParams.data['nombre'];
-    this.t=navParams.data['tipo'];
+    this.t=navParams.data['id_tipo'];
     this.u=navParams.data['usuario'];
+    this.id_usuario = navParams.data['id_usuario'];
     this.http=htt;
   }
 
- Modificar(n,c,t)
+ Modificar(id_usuario, nombre, usuario, clave, id_tipo)
  {
-
-   let data = new URLSearchParams();
-   data.append('clave',c);
-   data.append('nombre',n);
-   data.append('tipo',t);
-
  //var obj = {"clave":c,"nombre":n,"tipo":t};
 
-     this.http.post("http://tppps2.hol.es/ws1/usuarios/modificar/" + data)
+     this.http.post("http://tppps2.hol.es/ws1/usuarios/modificar", {
+         id_usuario: id_usuario,
+         clave: clave,
+         nombre: nombre,
+         usuario: usuario,
+         id_tipo: id_tipo
+     })
     .map(res => res.json())
     .subscribe((quote) =>{
-    //console.info(quote);
+        console.info(quote);
      });
  }
 }
