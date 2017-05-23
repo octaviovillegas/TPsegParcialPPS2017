@@ -9,7 +9,7 @@ import { GrillaAdministrador } from '../pages/grillas/grilla-administrador/grill
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = GrillaAdministrador;//= Login; 
+  rootPage:any = Login;//= Login; 
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
