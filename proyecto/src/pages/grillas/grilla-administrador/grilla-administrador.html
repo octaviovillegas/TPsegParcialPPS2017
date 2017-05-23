@@ -10,32 +10,29 @@
       <button ion-button menuToggle left>
           <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title>grillaAdministrador</ion-title>
+      <ion-title>Administradores</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
 
-  <!--  <ion-grid>
-      <ion-row>
-        <ion-col>
-         Nombre
-        </ion-col>
-        <ion-col>
-         Usuario
-        </ion-col>
-           <ion-col>
-         Clave
-        </ion-col>
-           <ion-col>
-         Tipo de Usuario
-        </ion-col>
-      </ion-row>
-       
-    </ion-grid>
--->
 
-
+<div *ngFor="let usr of UssAdm">
+<ion-card >
+  <ion-card-content>
+    <ion-card-title>
+        {{usr.nombre}}
+      </ion-card-title>
+    <p>
+        {{usr.usuario}}<br>
+         {{usr.clave}}<br>
+         {{usr.tipo_usuario}}<br>
+         <button ion-button color=danger>eliminar</button>
+         <button ion-button color=warning (click)="Modificar(usr.usuario,usr.nombre,usr.clave,usr.tipo_usuario)">modificar</button>
+    </p>
+  </ion-card-content>
+</ion-card>
+</div>
 
 </ion-content>

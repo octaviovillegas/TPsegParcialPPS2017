@@ -1,0 +1,38 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>modificacionModal</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+<ion-item><h1>{{u}}</h1></ion-item>
+
+ <ion-item>
+    <ion-label floating>Nombre</ion-label>
+    <ion-input type="text" [(ngModel)]="n"></ion-input>
+  </ion-item>
+<ion-item>
+    <ion-label  floating >Clave</ion-label>
+    <ion-input type="text" [(ngModel)]="c"></ion-input>
+  </ion-item>
+
+<ion-list>
+  <ion-item>
+    <ion-label>Tipo</ion-label>
+    <ion-select [(ngModel)]="t">
+      <ion-option value="Administrador">Administrador</ion-option>
+      <ion-option value="Alumno">Alumno</ion-option>
+      <ion-option value="Profesor">Profesor</ion-option>
+      <ion-option value="Administrativo">Administrativo</ion-option>
+    </ion-select>
+  </ion-item>
+</ion-list>
+
+<button ion-button color=light (click)="Modificar(n,c,t)"> Modificar </button>
+
+
+
+
+</ion-content>

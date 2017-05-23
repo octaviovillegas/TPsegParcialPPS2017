@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the GrillaAdministrador page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import {Http} from '@angular/http';
+import { ModificacionModal } from '../modificacion-modal/modificacion-modal';
+import { ModalController } from 'ionic-angular';
+  
  
 @Component({
   selector: 'page-grilla-administrador',
@@ -14,11 +11,51 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class GrillaAdministrador {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+ Usuarios;
+ UssAdm : Array<any> =[];
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public modalCtrl: ModalController) {
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad GrillaAdministrador');
-  }
+  this.http.get("http://tppps2.hol.es/ws1/usuarios")
+    .map(res => res.json())
+    .subscribe((quote) =>{
+    this.Usuarios = quote;
+     
+    
+     for(let us of this.Usuarios)
+      {
+        if(us['tipo_usuario'] == "Administrador")
+        {this.UssAdm.push(us);}
+      } 
+    
+    });
 
+ 
+   
+
+  }
+jsonper= [ {
+      nombre:"aixa",
+      usuario:"aixa@aixa.com",
+      clave:"aixa123",
+      tipo_usuario:"admin"},
+      { nombre:"pepe",
+      usuario:"aixa@aixa.com",
+      clave:"aixa123",
+      tipo_usuario:"admin"},
+      { nombre:"jose",
+      usuario:"aixa@aixa.com",
+      clave:"aixa123",
+      tipo_usuario:"admin"},
+      { nombre:"maria",
+      usuario:"aixa@aixa.com",
+      clave:"aixa123",
+      tipo_usuario:"admin"}
+    ];
+
+    Modificar(u,n,c,t)
+    {
+    let usM={usuario:u,nombre:n,tipo:t,clave:c};
+     let modal = this.modalCtrl.create(ModificacionModal,usM);
+    modal.present();
+    }
 }
