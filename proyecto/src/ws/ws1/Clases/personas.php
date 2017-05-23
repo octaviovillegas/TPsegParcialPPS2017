@@ -102,7 +102,7 @@ class Usuario
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 		//$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona");
-	$consulta =$objetoAccesoDato->RetornarConsulta("SELECT u.id_usuario, t.descripcion tipo_usuario, u.nombre, u.usuario, u.clave FROM usuarios u, tipos_usuarios t where u.id_tipo=t.id_tipo");
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT u.id_usuario, t.descripcion tipo_usuario, u.nombre, u.usuario, u.clave, u.id_tipo FROM usuarios u, tipos_usuarios t where u.id_tipo=t.id_tipo");
 		$consulta->execute();
 		$arrEmpleado= $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");
 		return $arrEmpleado;
@@ -149,35 +149,17 @@ public static function TraerClientesEmpleados()
 
 	public static function ModificarUsuario($usuario)
 	{
-		var_dump($usuario);
-		if($usuario->descripcion_rol == "ADMINISTRADOR")
-		{
-			$usuario->id_tipo = 1;
-		}else if($usuario->descripcion_rol == "CLIENTE")
-		{
-			$usuario->id_tipo = 3;
-		}if($usuario->descripcion_rol == "ENCARGADO")
-		{
-			$usuario->id_tipo = 4;
-		}if($usuario->descripcion_rol == "EMPLEADO")
-		{
-			$usuario->id_tipo = 2;
-		}
+	    $sql = 'UPDATE usuarios SET usuario = :usuario, nombre = :nombre, clave = :clave, id_tipo = :id_tipo WHERE id_usuario = :id_usuario';
 
-
-			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-			$consulta =$objetoAccesoDato->RetornarConsulta("
-				update usuario
-				set usuario=:usuario,
-				clave=:clave,
-				id_tipo=:id_tipo
-				WHERE id_usuario=:id");
-			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-			$consulta->bindValue(':id',$usuario->id_usuario, PDO::PARAM_INT);
-			$consulta->bindValue(':usuario',$usuario->usuario, PDO::PARAM_STR);
-			$consulta->bindValue(':clave', $usuario->clave, PDO::PARAM_STR);
-			$consulta->bindValue(':id_tipo', $usuario->id_tipo, PDO::PARAM_INT);
-			return $consulta->execute();
+	    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+	    $consulta =$objetoAccesoDato->RetornarConsulta($sql);
+	    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+	    $consulta->bindValue(':id_usuario',$usuario->id_usuario, PDO::PARAM_INT);
+	    $consulta->bindValue(':usuario',$usuario->usuario, PDO::PARAM_STR);
+	    $consulta->bindValue(':nombre', $usuario->nombre, PDO::PARAM_STR);
+	    $consulta->bindValue(':clave', $usuario->clave, PDO::PARAM_STR);
+	    $consulta->bindValue(':id_tipo', $usuario->id_tipo, PDO::PARAM_INT);
+	    return $consulta->execute();
 	}
 
 //--------------------------------------------------------------------------------//
