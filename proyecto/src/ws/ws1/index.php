@@ -122,6 +122,31 @@ $app->post('/usuarios/modificar', function ($request, $response, $args) {
 });
 
 
+$app->post('/usuarios/eliminar', function ($request, $response, $args) {
+
+    // Obtengo la data enviada. Es recibida como un array.
+    $usuario = $request->getParsedBody();
+
+    // convierto el array en un objecto
+    $usuario = (object)$usuario;
+
+    $ret = Usuario::EliminarUsuario($usuario);
+
+    $hayError = false;
+
+    if ($ret) {
+        $hayError = false;
+    } else {
+        $hayError = true;
+    }
+
+    $response->withHeader('Content-Type', 'application/json');
+    $response->write(json_encode(array('error' => $hayError, 'usuario' => $usuario)));
+
+    return $response;
+
+});
+
 $app->get('/usuarios/traer/{objeto}', function ($request, $response, $args) {
 
   $usuario=json_decode($args['objeto']);
@@ -144,6 +169,12 @@ $app->delete('/usuarios/borrar/{objeto}', function ($request, $response, $args) 
 
 });
 
+/**
+ * Devuelve las encuestas del id_usuario.
+ * Si se pasa el parametro "?estado=" (pendiente o completada)
+ * devuelve las encuetas en esos estados sino trae todas.
+ * @var [type]
+ */
 $app->get('/usuarios/{id_usuario}/encuestas', function ($request, $response, $args) {
 
     $params = $request->getQueryParams();
@@ -157,7 +188,6 @@ $app->get('/usuarios/{id_usuario}/encuestas', function ($request, $response, $ar
     $response->write(json_encode(array('encuestas' => $encuestas)));
 
 });
-
 
 
 $app->post('/archivos', function ($request, $response, $args) {
