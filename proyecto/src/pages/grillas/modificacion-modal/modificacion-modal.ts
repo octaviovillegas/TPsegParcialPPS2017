@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, NavOptions} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, NavOptions, ViewController} from 'ionic-angular';
 import {Http, URLSearchParams} from '@angular/http';
 /**
  * Generated class for the ModificacionModal page.
@@ -20,7 +20,7 @@ export class ModificacionModal {
   id_usuario;
   http;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, htt:Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, htt:Http, public viewCtrl: ViewController) {
     console.info(navParams.data);
     this.c = navParams.data['clave'];
     this.n=navParams.data['nombre'];
@@ -32,8 +32,6 @@ export class ModificacionModal {
 
  Modificar(id_usuario, nombre, usuario, clave, id_tipo)
  {
- //var obj = {"clave":c,"nombre":n,"tipo":t};
-
      this.http.post("http://tppps2.hol.es/ws1/usuarios/modificar", {
          id_usuario: id_usuario,
          clave: clave,
@@ -45,5 +43,8 @@ export class ModificacionModal {
     .subscribe((quote) =>{
         console.info(quote);
      });
+       
+      this.viewCtrl.dismiss();
  }
+ 
 }

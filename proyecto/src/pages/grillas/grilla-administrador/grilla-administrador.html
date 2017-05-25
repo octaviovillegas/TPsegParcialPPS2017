@@ -28,7 +28,7 @@
         {{usr.usuario}}<br>
          {{usr.clave}}<br>
          {{usr.tipo_usuario}}<br>
-         <button ion-button color=danger>eliminar</button>
+         <button ion-button color=danger (click)="Eliminar(usr.id_usuario, usr.usuario, usr.nombre, usr.clave, usr.id_tipo)">eliminar</button>
          <button ion-button color=warning (click)="Modificar(usr.id_usuario, usr.usuario, usr.nombre, usr.clave, usr.id_tipo)">modificar</button>
     </p>
   </ion-card-content>

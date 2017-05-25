@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import {Http} from '@angular/http';
 import { ModificacionModal } from '../modificacion-modal/modificacion-modal';
 import { ModalController } from 'ionic-angular';
-
+import { Menu } from '../../menu/menu';
+import { servicioAuth } from '../../servicioAuth/servicioAuth';
 
 @Component({
   selector: 'page-grilla-administrador',
@@ -13,8 +14,8 @@ export class GrillaAdministrador {
 
  Usuarios;
  UssAdm : Array<any> =[];
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public modalCtrl: ModalController) {
-
+  constructor(public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController) {
+    console.info("pasaaa");
   this.http.get("http://tppps2.hol.es/ws1/usuarios")
     .map(res => res.json())
     .subscribe((quote) =>{
@@ -33,7 +34,7 @@ export class GrillaAdministrador {
 
 
   }
-jsonper= [ {
+/*jsonper= [ {
       nombre:"aixa",
       usuario:"aixa@aixa.com",
       clave:"aixa123",
@@ -50,7 +51,7 @@ jsonper= [ {
       usuario:"aixa@aixa.com",
       clave:"aixa123",
       tipo_usuario:"admin"}
-    ];
+    ];*/
 
     Modificar(id_usuario, usuario, nombre, clave, id_tipo)
     {
@@ -62,6 +63,27 @@ jsonper= [ {
             id_tipo: id_tipo
         };
         let modal = this.modalCtrl.create(ModificacionModal, usM);
+        /*modal.onDidDismiss(data=>{
+          window.location.reload(true);
+        });*/
         modal.present();
+        
     }
+
+        Eliminar(id_usuario, usuario, nombre, clave, id_tipo)
+        {
+          console.info(id_usuario,usuario,nombre,clave,id_tipo);
+              this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
+                  id_usuario: id_usuario,
+                  clave: clave,
+                  nombre: nombre,
+                  usuario: usuario,
+                  id_tipo: id_tipo
+              })
+              .map(res => res.json())
+              .subscribe((quote) =>{
+                  console.info(quote);
+              });
+        }
+
 }
