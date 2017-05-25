@@ -5,6 +5,7 @@ require_once('Clases/local.php');
 require_once('Clases/pizza.php');
 require_once('Clases/promocion.php');
 require_once('Clases/pedido.php');
+require_once('Clases/encuesta.php');
 
 
 require 'vendor/autoload.php';
@@ -19,6 +20,33 @@ $configuration = [
 $c = new \Slim\Container($configuration);
 $app = new \Slim\App($c);
 
+$app->add(function($request, $response, $next) {
+    $route = $request->getAttribute("route");
+
+    $methods = [];
+
+    if (!empty($route)) {
+        $pattern = $route->getPattern();
+
+        foreach ($this->router->getRoutes() as $route) {
+            if ($pattern === $route->getPattern()) {
+                $methods = array_merge_recursive($methods, $route->getMethods());
+            }
+        }
+        //Methods holds all of the HTTP Verbs that a particular route handles.
+    } else {
+        $methods[] = $request->getMethod();
+    }
+
+    $response = $next($request, $response);
+
+    return $response->withHeader("Access-Control-Allow-Methods", implode(",", $methods));
+});
+
+$app->add(function($request, $response, $next) {
+    $response = $next($request, $response);
+    return $response->withHeader('Access-Control-Allow-Origin', '*');
+});
 
 
 $app->get('/', function ($request, $response, $args) {
@@ -94,6 +122,31 @@ $app->post('/usuarios/modificar', function ($request, $response, $args) {
 });
 
 
+$app->post('/usuarios/eliminar', function ($request, $response, $args) {
+
+    // Obtengo la data enviada. Es recibida como un array.
+    $usuario = $request->getParsedBody();
+
+    // convierto el array en un objecto
+    $usuario = (object)$usuario;
+
+    $ret = Usuario::EliminarUsuario($usuario);
+
+    $hayError = false;
+
+    if ($ret) {
+        $hayError = false;
+    } else {
+        $hayError = true;
+    }
+
+    $response->withHeader('Content-Type', 'application/json');
+    $response->write(json_encode(array('error' => $hayError, 'usuario' => $usuario)));
+
+    return $response;
+
+});
+
 $app->get('/usuarios/traer/{objeto}', function ($request, $response, $args) {
 
   $usuario=json_decode($args['objeto']);
@@ -115,8 +168,6 @@ $app->delete('/usuarios/borrar/{objeto}', function ($request, $response, $args) 
           return Usuario::BorrarUsuario($usuario);
 
 });
-
-
 
 $app->post('/archivos', function ($request, $response, $args) {
 
@@ -263,6 +314,6 @@ $app->get('/pedidos', function ($request, $response, $args) {
 
 });
 
-
+require_once __DIR__.'/ws_alejo.php';
 
 $app->run();

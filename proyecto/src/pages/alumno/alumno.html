@@ -23,13 +23,13 @@
         <ion-list-header>
             Mis encuestas
         </ion-list-header>
-        <button ion-item padding>
+        <button (click)="verEncuestas(AlumnoEncuestasPage.ESTADO_PENDIENTE)" ion-item padding>
             <h2>Encuestas pendientes</h2>
             <p>Muestra las encuestas todavia no se hicieron.</p>
             <ion-icon name="ios-arrow-forward" item-right></ion-icon>
         </button>
-        <button ion-item padding>
-            <h2>Encuestas terminadas</h2>
+        <button (click)="verEncuestas(AlumnoEncuestasPage.ESTADO_COMPLETADA)" ion-item padding>
+            <h2>Encuestas completadas</h2>
             <p>Muestra las encuestas que ya se hicieron.</p>
             <ion-icon name="ios-arrow-forward" item-right></ion-icon>
         </button>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
 
+import { AlumnoEncuestasPage } from "../alumno-encuestas/alumno-encuestas";
 /**
  * Generated class for the Alumno page.
  *
@@ -24,6 +25,15 @@ export class Alumno {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad Alumno');
+    }
+
+    public verEncuestas(tipo): void {
+
+        this.navCtrl.push(AlumnoEncuestasPage, tipo, {
+            direction: 'forward',
+            animation: 'ios-transition'
+        });
+
     }
 
 }
