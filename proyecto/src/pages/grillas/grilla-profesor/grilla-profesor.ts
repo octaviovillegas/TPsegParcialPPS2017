@@ -16,6 +16,7 @@ export class GrillaProfesor {
     Usuarios;
     Uss : Array<any> =[];
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController) {
+
   this.CargaGrilla();
 
   }
@@ -28,11 +29,13 @@ export class GrillaProfesor {
     .map(res => res.json())
     .subscribe((quote) =>{
     this.Usuarios = quote;
+  
 
      for(let us of this.Usuarios)
       {
         if(us['tipo_usuario'] == "Profesor")
         {this.Uss.push(us);
+       
         }
       }
 
@@ -51,6 +54,7 @@ export class GrillaProfesor {
         };
         let modal = this.modalCtrl.create(ModificacionModal, usM);
         modal.onDidDismiss(data=>{
+         
           this.CargaGrilla();
         });
         modal.present();
@@ -83,6 +87,7 @@ export class GrillaProfesor {
                     })
                     .map(res => res.json())
                     .subscribe((quote) =>{
+                          
                     });
                    this.CargaGrilla();
                   }
