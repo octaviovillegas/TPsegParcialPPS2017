@@ -12,46 +12,36 @@ import { servicioAuth } from '../../servicioAuth/servicioAuth';
 })
 export class GrillaAdministrador {
 
- Usuarios;
- UssAdm : Array<any> =[];
+ 
+    Usuarios;
+    UssAdm : Array<any> =[];
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController) {
     console.info("pasaaa");
-  this.http.get("http://tppps2.hol.es/ws1/usuarios")
+  this.CargaGrilla();
+
+  }
+
+  CargaGrilla(){
+    console.info("entro");
+  this.Usuarios=null;
+  this.UssAdm=[];
+    this.http.get("http://tppps2.hol.es/ws1/usuarios")
     .map(res => res.json())
     .subscribe((quote) =>{
     this.Usuarios = quote;
-
+    console.info(this.Usuarios);
 
      for(let us of this.Usuarios)
       {
         if(us['tipo_usuario'] == "Administrador")
-        {this.UssAdm.push(us);}
+        {this.UssAdm.push(us);
+        console.info(us);
+        }
       }
 
     });
 
-
-
-
   }
-/*jsonper= [ {
-      nombre:"aixa",
-      usuario:"aixa@aixa.com",
-      clave:"aixa123",
-      tipo_usuario:"admin"},
-      { nombre:"pepe",
-      usuario:"aixa@aixa.com",
-      clave:"aixa123",
-      tipo_usuario:"admin"},
-      { nombre:"jose",
-      usuario:"aixa@aixa.com",
-      clave:"aixa123",
-      tipo_usuario:"admin"},
-      { nombre:"maria",
-      usuario:"aixa@aixa.com",
-      clave:"aixa123",
-      tipo_usuario:"admin"}
-    ];*/
 
     Modificar(id_usuario, usuario, nombre, clave, id_tipo)
     {
@@ -63,9 +53,10 @@ export class GrillaAdministrador {
             id_tipo: id_tipo
         };
         let modal = this.modalCtrl.create(ModificacionModal, usM);
-        /*modal.onDidDismiss(data=>{
-          window.location.reload(true);
-        });*/
+        modal.onDidDismiss(data=>{
+          console.info("paso por aca!!");
+          this.CargaGrilla();
+        });
         modal.present();
         
     }
@@ -98,13 +89,13 @@ export class GrillaAdministrador {
                     .subscribe((quote) =>{
                           console.info(quote);
                     });
-                   
+                   this.CargaGrilla();
                   }
                 }
               ]
             });
             alert.present();
-       
+             
         }
 
 }
