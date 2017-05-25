@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, AlertController  } from 'ionic-angular';
 import {Http} from '@angular/http';
 import { ModificacionModal } from '../modificacion-modal/modificacion-modal';
+import { AltaModal } from '../alta-modal/alta-modal';
 import { ModalController } from 'ionic-angular';
 import { Menu } from '../../menu/menu';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
@@ -21,25 +22,26 @@ export class GrillaAdministrador {
 
   }
 
-  CargaGrilla(){
-    console.info("entro");
-  this.Usuarios=null;
-  this.UssAdm=[];
-    this.http.get("http://tppps2.hol.es/ws1/usuarios")
-    .map(res => res.json())
-    .subscribe((quote) =>{
-    this.Usuarios = quote;
-    console.info(this.Usuarios);
+  CargaGrilla()
+  {
+        console.info("entro");
+        this.Usuarios=null;
+        this.UssAdm=[];
+          this.http.get("http://tppps2.hol.es/ws1/usuarios")
+          .map(res => res.json())
+          .subscribe((quote) =>{
+          this.Usuarios = quote;
+          console.info(this.Usuarios);
 
-     for(let us of this.Usuarios)
-      {
-        if(us['tipo_usuario'] == "Administrador")
-        {this.UssAdm.push(us);
-        console.info(us);
-        }
-      }
+          for(let us of this.Usuarios)
+            {
+              if(us['tipo_usuario'] == "Administrador")
+              {this.UssAdm.push(us);
+              console.info(us);
+              }
+            }
 
-    });
+          });
 
   }
 
@@ -59,6 +61,16 @@ export class GrillaAdministrador {
         });
         modal.present();
         
+    }
+
+    Alta()
+    {
+        let modal2 = this.modalCtrl.create(AltaModal,{"tipo":"administrador"});
+        modal2.onDidDismiss(data=>{
+          console.info("paso por aca!!");
+          this.CargaGrilla();
+        });
+        modal2.present();
     }
 
         Eliminar(id_usuario, usuario, nombre, clave, id_tipo)

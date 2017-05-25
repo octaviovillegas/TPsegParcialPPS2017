@@ -27,6 +27,7 @@ import {GrillaAdministrativo} from "../pages/grillas/grilla-administrativo/grill
 import {GrillaAlumno} from "../pages/grillas/grilla-alumno/grilla-alumno";
 import {GrillaProfesor} from "../pages/grillas/grilla-profesor/grilla-profesor";
 import {ModificacionModal} from "../pages/grillas/modificacion-modal/modificacion-modal";
+import {AltaModal} from "../pages/grillas/alta-modal/alta-modal";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {ModificacionModal} from "../pages/grillas/modificacion-modal/modificacio
     GrillaAlumno,
     GrillaAdministrativo,
     GrillaAdministrador,
-    ModificacionModal
+    ModificacionModal,
+    AltaModal
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,8 @@ import {ModificacionModal} from "../pages/grillas/modificacion-modal/modificacio
     GrillaAlumno,
     GrillaAdministrativo,
     GrillaAdministrador,
-    ModificacionModal
+    ModificacionModal,
+    AltaModal
       ],
   providers: [
     StatusBar,

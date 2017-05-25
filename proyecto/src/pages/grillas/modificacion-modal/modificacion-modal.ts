@@ -46,5 +46,9 @@ export class ModificacionModal {
        
       this.viewCtrl.dismiss();
  }
+
+ Cancelar(){
+    this.viewCtrl.dismiss();
+ }
  
 }
