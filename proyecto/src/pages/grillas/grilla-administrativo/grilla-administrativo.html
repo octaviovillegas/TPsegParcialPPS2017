@@ -1,5 +1,5 @@
 <!--
-  Generated template for the GrillaAdministrativo page.
+  Generated template for the GrillaAdministrador page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -10,11 +10,29 @@
       <button ion-button menuToggle left>
           <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title>grillaAdministrativo</ion-title>
+      <ion-title>Administrativos</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
+
+
+<div *ngFor="let usr of UssAdm">
+<ion-card >
+  <ion-card-content>
+    <ion-card-title>
+        {{usr.nombre}}
+      </ion-card-title>
+    <p>
+        {{usr.usuario}}<br>
+         {{usr.clave}}<br>
+         {{usr.tipo_usuario}}<br>
+         <button ion-button color=danger (click)="Eliminar(usr.id_usuario, usr.usuario, usr.nombre, usr.clave, usr.id_tipo)">eliminar</button>
+         <button ion-button color=warning (click)="Modificar(usr.id_usuario, usr.usuario, usr.nombre, usr.clave, usr.id_tipo)">modificar</button>
+    </p>
+  </ion-card-content>
+</ion-card>
+</div>
 
 </ion-content>
