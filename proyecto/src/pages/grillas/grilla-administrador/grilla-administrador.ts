@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, AlertController  } from 'ionic-angular';
 import {Http} from '@angular/http';
 import { ModificacionModal } from '../modificacion-modal/modificacion-modal';
 import { ModalController } from 'ionic-angular';
@@ -14,7 +14,7 @@ export class GrillaAdministrador {
 
  Usuarios;
  UssAdm : Array<any> =[];
-  constructor(public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController) {
+  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController) {
     console.info("pasaaa");
   this.http.get("http://tppps2.hol.es/ws1/usuarios")
     .map(res => res.json())
@@ -72,18 +72,39 @@ export class GrillaAdministrador {
 
         Eliminar(id_usuario, usuario, nombre, clave, id_tipo)
         {
-          console.info(id_usuario,usuario,nombre,clave,id_tipo);
-              this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
-                  id_usuario: id_usuario,
-                  clave: clave,
-                  nombre: nombre,
-                  usuario: usuario,
-                  id_tipo: id_tipo
-              })
-              .map(res => res.json())
-              .subscribe((quote) =>{
-                  console.info(quote);
-              });
+              let alert = this.alertCtrl.create({
+              title: 'Eliminacion de usuario',
+              message: 'Confirma eliminar usuario '+ usuario,
+              buttons: [
+                {
+                  text: 'Cancelar',
+                  role: 'cancel',
+                  handler: () => {
+                    console.log('Cancelar clicked');
+                  }
+                },
+                {
+                  text: 'Aceptar',
+                  handler: () => {
+                    console.log('Aceptar clicked');
+                    this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
+                           id_usuario: id_usuario,
+                           clave: clave,
+                           nombre: nombre,
+                           usuario: usuario,
+                           id_tipo: id_tipo
+                    })
+                    .map(res => res.json())
+                    .subscribe((quote) =>{
+                          console.info(quote);
+                    });
+                   
+                  }
+                }
+              ]
+            });
+            alert.present();
+       
         }
 
 }
