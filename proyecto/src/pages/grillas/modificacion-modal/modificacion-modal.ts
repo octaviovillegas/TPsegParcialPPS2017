@@ -41,7 +41,7 @@ export class ModificacionModal {
      })
     .map(res => res.json())
     .subscribe((quote) =>{
-        console.info(quote);
+       
      });
        
       this.viewCtrl.dismiss();
