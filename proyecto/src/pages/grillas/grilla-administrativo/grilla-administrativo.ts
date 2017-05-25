@@ -5,12 +5,7 @@ import { ModificacionModal } from '../modificacion-modal/modificacion-modal';
 import { ModalController } from 'ionic-angular';
 import { Menu } from '../../menu/menu';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
-/**
- * Generated class for the GrillaAdministrativo page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+ 
 
 @Component({
   selector: 'page-grilla-administrativo',
