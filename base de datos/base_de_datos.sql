@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `preguntas` (
   `id_pregunta` int(11) NOT NULL AUTO_INCREMENT,
   `id_encuesta` int(11) NOT NULL,
   `descripcion` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `tipo` ENUM('radio', 'checkbox', 'text', 'select') NULL,
   PRIMARY KEY (`id_pregunta`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -97,7 +98,6 @@ CREATE TABLE IF NOT EXISTS `respuestas` (
   `id_respuesta` int(11) NOT NULL AUTO_INCREMENT,
   `id_pregunta` int(11) NOT NULL,
   `descripcion` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `tipo` varchar(255) CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`id_respuesta`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -148,6 +148,19 @@ INSERT INTO `usuarios` (`id_usuario`, `id_tipo`, `nombre`, `usuario`, `clave`) V
 (2, 2, 'Administrativo', 'Administrativo\n', 'Administrativo\n'),
 (3, 3, 'Alumno', 'Alumno', 'Alumno'),
 (4, 4, 'Profesor', 'Profesor', 'Profesor');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario_respuestas`
+--
+
+CREATE TABLE IF NOT EXISTS `usuario_respuestas` (
+    `id_usuario` INT NOT NULL,
+    `id_encuesta` INT NOT NULL,
+    `id_respuesta` INT NOT NULL,
+    PRIMARY KEY (`id_usuario`, `id_encuesta`, `id_respuesta`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
