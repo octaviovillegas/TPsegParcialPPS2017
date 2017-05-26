@@ -3,13 +3,35 @@
       <button ion-button menuToggle left>
           <ion-icon name="menu"></ion-icon>
       </button>
-    <ion-title>Profesor: {{usuarioLogueado.usuario}}</ion-title>
+    <ion-title>Profesor: </ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content>
   <ion-list>
-      
-     
+      <h1> Bienvenido al creador de encuestas</h1>
+            <div *ngFor="let item of listaPreguntas" >   
+        <label>{{item.pregunta}}</label>
+          </div>
+      <div *ngFor="let item of listaTipo" >
+        <input [type]="item" name="item"><input>
+      </div>
+
+      <input type="submit" (click)="agregarTextbox()" value="Agregar textBox">
+      <input type="submit" (click)="agregarSelect()" value="Agregar select">
   </ion-list>
+  
+  <div>
+   <ion-item *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: descripcion">
+		<ion-label stacked primary>An item</ion-label>
+		<ion-input type="text" [(ngModel)]="encuestaSelect[i]"></ion-input>
+	</ion-item>
+  </div>
+
+  <div>
+  <!--<ion-item>
+    <ion-select [(ngModel)]="cursoSeleccionado" multiple>
+      <ion-option *ngFor="#curso of listaCursos" [value] = "curso.descripcion" [checked]="false">{{curso.descripcion}}</ion-option>
+    </ion-select>
+  </ion-item>-->
+  </div>
 </ion-content>
