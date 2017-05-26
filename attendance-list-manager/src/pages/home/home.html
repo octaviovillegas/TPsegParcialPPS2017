@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form [formGroup]="form" padding>
+    <ion-list>
+      <ion-item>
+        <ion-label floating>E-mail</ion-label>
+        <ion-input type="email" formControlName="email" maxlength="50"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Contraseña</ion-label>
+        <ion-input type="password" formControlName="password" maxlength="50"></ion-input>
+      </ion-item>
+    </ion-list>
+    <div [hidden]="!hideSpinner">
+      <button ion-button full [disabled]="!form.valid" (click)="login()" round>Ingresar</button>
+    </div>
+    <div [hidden]="hideSpinner">
+      <div>
+        <ion-spinner></ion-spinner>
+      </div>
+      <div>
+        <p>Validando la información enviada. Espere por favor.</p>
+      </div>
+    </div>
+  </form>
+  
+</ion-content>
