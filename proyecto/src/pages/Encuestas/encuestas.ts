@@ -51,6 +51,11 @@ private cursoSeleccionado;
       
     }
 
+    cursoSelecionado(){
+      
+   console.log(this.cursoSeleccionado);
+    }
+
 
 }
 

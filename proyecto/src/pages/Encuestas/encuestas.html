@@ -19,19 +19,23 @@
       <input type="submit" (click)="agregarTextbox()" value="Agregar textBox">
       <input type="submit" (click)="agregarSelect()" value="Agregar select">
   </ion-list>
-  
-  <div>
-   <ion-item *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: descripcion">
-		<ion-label stacked primary>An item</ion-label>
-		<ion-input type="text" [(ngModel)]="encuestaSelect[i]"></ion-input>
-	</ion-item>
-  </div>
-
-  <div>
-  <!--<ion-item>
-    <ion-select [(ngModel)]="cursoSeleccionado" multiple>
-      <ion-option *ngFor="#curso of listaCursos" [value] = "curso.descripcion" [checked]="false">{{curso.descripcion}}</ion-option>
+    <div>
+  <ion-item>
+    seleccionar encuensta
+    <ion-select [(ngModel)]="encuestaSeleccionada" multiple>
+      <ion-option *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: descripcion" [value] = "encuesta.descripcion">{{encuesta.descripcion}}</ion-option>
     </ion-select>
-  </ion-item>-->
+  </ion-item>
+        <input type="submit" (click)="cursoSelecionado()" value="Agregar select">
+  </div>
+  <div>
+  <ion-item>
+        seleccionar curso
+    <ion-select [(ngModel)]="cursoSeleccionado" multiple>
+      <ion-option *ngFor="let curso of listaCursos; let i = index; trackBy: descripcion" [value] = "curso.descripcion">{{curso.descripcion}}</ion-option>
+    </ion-select>
+  </ion-item>
+        <input type="submit" (click)="cursoSelecionado()" value="Agregar select">
+
   </div>
 </ion-content>
