@@ -4,6 +4,9 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Response } from "@angular/http";
 import { AppService } from "../../providers/app-service";
 import { HomePage } from "../../pages/home/home";
+import {gestionalumno } from "../../pages/gestionalumno/gestionalumno";
+import {gestionprofesor } from "../../pages/gestionprofesor/gestionprofesor";
+import { generarencuesta } from "../../pages/generarencuesta/generarencuesta";
 
 @Component({
   selector: 'page-registered-user',
@@ -42,5 +45,13 @@ export class RegisteredUserPage {
     this.navCtrl.setRoot(HomePage);
     this.navCtrl.popToRoot();
   }
+accedera(a){
 
+if(a="Gestionar Alumno"){this.navCtrl.setRoot(gestionalumno);}
+if(a="Gestionar Profesor"){this.navCtrl.setRoot(gestionprofesor);}
+if(a="Gestionar Encuesta"){this.navCtrl.setRoot(generarencuesta);}
+
+
+
+}
 }
