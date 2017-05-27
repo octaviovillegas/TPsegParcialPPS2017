@@ -12,8 +12,13 @@
 
 <ion-content padding>
 
+    <button ion-button icon-left color=light (click)="Alta()" round >
+  <ion-icon name="person-add" ></ion-icon>
+  Nuevo usuario
+</button>
 
-<div *ngFor="let usr of Uss"> 
+
+<div *ngFor="let usr of Uss">
 <ion-card >
   <ion-card-content>
     <ion-card-title>
