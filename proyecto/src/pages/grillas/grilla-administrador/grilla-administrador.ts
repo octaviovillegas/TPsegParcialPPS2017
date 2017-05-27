@@ -11,39 +11,38 @@ import { servicioAuth } from '../../servicioAuth/servicioAuth';
   selector: 'page-grilla-administrador',
   templateUrl: 'grilla-administrador.html',
 })
-export class GrillaAdministrador {
+export class GrillaAdministrador 
+{
 
  
     Usuarios;
     UssAdm : Array<any> =[];
-  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController) {
-    console.info("pasaaa");
-  this.CargaGrilla();
+  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController)
+   {
+      this.CargaGrilla();
+   }
 
-  }
+    CargaGrilla()
+    {
+          console.info("entro");
+          this.Usuarios=null;
+          this.UssAdm=[];
+            this.http.get("http://tppps2.hol.es/ws1/usuarios")
+            .map(res => res.json())
+            .subscribe((quote) =>{
+            this.Usuarios = quote;
 
-  CargaGrilla()
-  {
-        console.info("entro");
-        this.Usuarios=null;
-        this.UssAdm=[];
-          this.http.get("http://tppps2.hol.es/ws1/usuarios")
-          .map(res => res.json())
-          .subscribe((quote) =>{
-          this.Usuarios = quote;
-          console.info(this.Usuarios);
-
-          for(let us of this.Usuarios)
-            {
-              if(us['tipo_usuario'] == "Administrador")
-              {this.UssAdm.push(us);
-              console.info("cargargrilla",us);
+            for(let us of this.Usuarios)
+              {
+                if(us['tipo_usuario'] == "Administrador")
+                {
+                  this.UssAdm.push(us);
+                }
               }
-            }
 
-          });
+            });
 
-  }
+    }
 
     Modificar(id_usuario, usuario, nombre, clave, id_tipo)
     {
@@ -56,7 +55,6 @@ export class GrillaAdministrador {
         };
         let modal = this.modalCtrl.create(ModificacionModal, usM);
         modal.onDidDismiss(data=>{
-          console.info("paso por aca!!");
           this.CargaGrilla();
         });
         modal.present();
@@ -67,14 +65,13 @@ export class GrillaAdministrador {
     {
         let modal2 = this.modalCtrl.create(AltaModal,{"tipo":"Administrador"});
         modal2.onDidDismiss(data=>{
-          console.info("paso por aca!!");
           this.CargaGrilla();
         });
         modal2.present();
     }
 
-        Eliminar(id_usuario, usuario, nombre, clave, id_tipo)
-        {
+    Eliminar(id_usuario, usuario, nombre, clave, id_tipo)
+    {
               let alert = this.alertCtrl.create({
               title: 'Eliminacion de usuario',
               message: 'Confirma eliminar usuario '+ usuario,
@@ -90,14 +87,12 @@ export class GrillaAdministrador {
                   text: 'Aceptar',
                   handler: () => {
                     console.log('Aceptar clicked');
-                    console.info(id_usuario,clave,nombre,usuario,id_tipo);
                     this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
                            id_usuario: id_usuario
             
                     })
                     .map(res => res.json())
                     .subscribe((quote) =>{
-                          console.info(quote);
                            this.CargaGrilla();
                     });
                   
@@ -107,6 +102,8 @@ export class GrillaAdministrador {
             });
             alert.present();
              
-        }
+    }
+
+
 
 }

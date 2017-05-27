@@ -11,7 +11,8 @@ import {Http, URLSearchParams} from '@angular/http';
   selector: 'page-modificacion-modal',
   templateUrl: 'modificacion-modal.html',
 })
-export class ModificacionModal {
+export class ModificacionModal 
+{
 
   n;
   t;
@@ -20,8 +21,8 @@ export class ModificacionModal {
   id_usuario;
   http;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, htt:Http, public viewCtrl: ViewController) {
-    console.info(navParams.data);
+  constructor(public navCtrl: NavController, public navParams: NavParams, htt:Http, public viewCtrl: ViewController)
+  {
     this.c = navParams.data['clave'];
     this.n=navParams.data['nombre'];
     this.t=navParams.data['id_tipo'];
@@ -30,25 +31,26 @@ export class ModificacionModal {
     this.http=htt;
   }
 
- Modificar(id_usuario, nombre, usuario, clave, id_tipo)
- {
-     this.http.post("http://tppps2.hol.es/ws1/usuarios/modificar", {
-         id_usuario: id_usuario,
-         clave: clave,
-         nombre: nombre,
-         usuario: usuario,
-         id_tipo: id_tipo
-     })
-    .map(res => res.json())
-    .subscribe((quote) =>{
-       this.viewCtrl.dismiss();
-     });
-       
-      
- }
+  Modificar(id_usuario, nombre, usuario, clave, id_tipo)
+  {
+      this.http.post("http://tppps2.hol.es/ws1/usuarios/modificar", {
+          id_usuario: id_usuario,
+          clave: clave,
+          nombre: nombre,
+          usuario: usuario,
+          id_tipo: id_tipo
+      })
+      .map(res => res.json())
+      .subscribe((quote) =>{
+        this.viewCtrl.dismiss();
+      });
+        
+        
+  }
 
- Cancelar(){
-    this.viewCtrl.dismiss();
- }
+  Cancelar()
+  {
+      this.viewCtrl.dismiss();
+  }
  
 }
