@@ -41,10 +41,10 @@ export class ModificacionModal {
      })
     .map(res => res.json())
     .subscribe((quote) =>{
-       
+       this.viewCtrl.dismiss();
      });
        
-      this.viewCtrl.dismiss();
+      
  }
 
  Cancelar(){

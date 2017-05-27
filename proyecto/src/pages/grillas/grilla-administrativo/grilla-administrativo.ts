@@ -22,25 +22,26 @@ export class GrillaAdministrativo {
 
   }
 
-  CargaGrilla(){
-    console.info("entro");
-  this.Usuarios=null;
-  this.UssAdm=[];
-    this.http.get("http://tppps2.hol.es/ws1/usuarios")
-    .map(res => res.json())
-    .subscribe((quote) =>{
-    this.Usuarios = quote;
-    console.info(this.Usuarios);
+  CargaGrilla()
+  {
+          console.info("entro");
+        this.Usuarios=null;
+        this.UssAdm=[];
+          this.http.get("http://tppps2.hol.es/ws1/usuarios")
+          .map(res => res.json())
+          .subscribe((quote) =>{
+          this.Usuarios = quote;
+          console.info(this.Usuarios);
 
-     for(let us of this.Usuarios)
-      {
-        if(us['tipo_usuario'] == "Administrativo")
-        {this.UssAdm.push(us);
-        console.info(us);
-        }
-      }
+          for(let us of this.Usuarios)
+            {
+              if(us['tipo_usuario'] == "Administrativo")
+              {this.UssAdm.push(us);
+              console.info(us);
+              }
+            }
 
-    });
+          });
 
   }
 

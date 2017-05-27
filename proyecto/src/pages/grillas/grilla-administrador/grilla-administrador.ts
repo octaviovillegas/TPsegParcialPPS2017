@@ -37,7 +37,7 @@ export class GrillaAdministrador {
             {
               if(us['tipo_usuario'] == "Administrador")
               {this.UssAdm.push(us);
-              console.info(us);
+              console.info("cargargrilla",us);
               }
             }
 
@@ -65,7 +65,7 @@ export class GrillaAdministrador {
 
     Alta()
     {
-        let modal2 = this.modalCtrl.create(AltaModal,{"tipo":"administrador"});
+        let modal2 = this.modalCtrl.create(AltaModal,{"tipo":"Administrador"});
         modal2.onDidDismiss(data=>{
           console.info("paso por aca!!");
           this.CargaGrilla();
@@ -90,18 +90,17 @@ export class GrillaAdministrador {
                   text: 'Aceptar',
                   handler: () => {
                     console.log('Aceptar clicked');
+                    console.info(id_usuario,clave,nombre,usuario,id_tipo);
                     this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
-                           id_usuario: id_usuario,
-                           clave: clave,
-                           nombre: nombre,
-                           usuario: usuario,
-                           id_tipo: id_tipo
+                           id_usuario: id_usuario
+            
                     })
                     .map(res => res.json())
                     .subscribe((quote) =>{
                           console.info(quote);
+                           this.CargaGrilla();
                     });
-                   this.CargaGrilla();
+                  
                   }
                 }
               ]

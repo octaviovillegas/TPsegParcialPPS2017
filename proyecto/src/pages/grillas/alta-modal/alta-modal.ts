@@ -18,14 +18,14 @@ export class AltaModal {
   c;
   u;
   id_usuario;
- 
+  id_tip;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http, public viewCtrl: ViewController) {
   this.t = navParams.data['tipo'];
   console.info(navParams.data['tipo']);
   }
 
- Alta(id_usuario, nombre, usuario, clave, id_tipo)
+ Alta(nombre, usuario, clave, id_tipo)
  {
      this.http.post("http://tppps2.hol.es/ws1/usuarios/alta", {
          clave: this.c,
@@ -35,10 +35,12 @@ export class AltaModal {
      })
     .map(res => res.json())
     .subscribe((quote) =>{
-       
+       console.info(quote);
+       this.viewCtrl.dismiss();
      });
        
-      this.viewCtrl.dismiss();
+      
+ 
  }
  
 
