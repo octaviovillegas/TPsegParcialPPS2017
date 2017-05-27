@@ -26,6 +26,7 @@ export class GrillaAlumno {
     {
           console.info("entro");
           this.Usuarios=null;
+          this.Uss=[];
             this.http.get("http://tppps2.hol.es/ws1/usuarios")
             .map(res => res.json())
             .subscribe((quote) =>{
@@ -35,6 +36,7 @@ export class GrillaAlumno {
               {
                 if(us['tipo_usuario'] == "Alumno")
                 {
+                  this.Uss.push(us);
                 }
               }
 
