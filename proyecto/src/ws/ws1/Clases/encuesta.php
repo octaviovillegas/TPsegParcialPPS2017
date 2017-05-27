@@ -55,4 +55,21 @@ class Encuesta
         return $consulta->fetchAll(PDO::FETCH_CLASS, "Encuesta");
     }
 
+    	public static function TraerTodasLasEncuestas()
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+	    $consulta =$objetoAccesoDato->RetornarConsulta("select * from encuestas");
+		$consulta->execute();			
+		$arrCurso= $consulta->fetchAll(PDO::FETCH_CLASS, "Encuesta");	
+		return $arrCurso;
+	}
+       	public static function TraerIdEncuestas()
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+	    $consulta =$objetoAccesoDato->RetornarConsulta("select id_encuesta from encuestas");
+		$consulta->execute();			
+		$arrCurso= $consulta->fetchAll(PDO::FETCH_CLASS, "Encuesta");	
+		return $arrCurso;
+	}
+
 }

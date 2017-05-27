@@ -130,17 +130,6 @@ public static function TraerTodosLosClientes()
 		return $tipobusc;
 
 	}
-		public static function TraerIdTipo2($tipo)
-	{
-		 
-		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT id_tipo FROM tipos_usuarios WHERE descripcion = :tipo");
-		$consulta->bindValue(':tipo', $tipo, PDO::PARAM_STR);
-		$consulta->execute();
-		$tipobusc= $consulta->fetchObject('tipos_usuarios');
-		return $tipobusc;
-
-	}
 
 
 public static function TraerClientesEmpleados()
@@ -155,15 +144,17 @@ public static function TraerClientesEmpleados()
 
 
 
-	public static function EliminarUsuario($id_usuario)
+	public static function BorrarUsuario($idParametro)
 	{
-	    $sql = 'DELETE FROM usuarios WHERE id_usuario = :id_usuario';
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+		//$consulta =$objetoAccesoDato->RetornarConsulta("delete from persona	WHERE id=:id");
+		$consulta =$objetoAccesoDato->RetornarConsulta("delete
+				from usuario
+				WHERE id_usuario=:id");
+		$consulta->bindValue(':id',$idParametro, PDO::PARAM_INT);
+		$consulta->execute();
+		return $consulta->rowCount();
 
-	    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-	    $consulta =$objetoAccesoDato->RetornarConsulta($sql);
-	    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-	    $consulta->bindValue(':id_usuario',$id_usuario, PDO::PARAM_INT);
-	    return $consulta->execute();
 	}
 
 	public static function ModificarUsuario($usuario)
@@ -181,23 +172,6 @@ public static function TraerClientesEmpleados()
 	    return $consulta->execute();
 	}
 
-
-
-
-	public static function AltaUsuario($usuario)
-	{
-	    $sql = 'INSERT INTO usuarios (id_tipo, nombre, usuario, clave) VALUES(:id_tipo, :nombre, :usuario,  :clave)';
-
-	    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-	    $consulta =$objetoAccesoDato->RetornarConsulta($sql);
-	    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-	   //$consulta->bindValue(':id_usuario',$usuario->id_usuario, PDO::PARAM_INT);
-	    $consulta->bindValue(':usuario',$usuario->usuario, PDO::PARAM_STR);
-	    $consulta->bindValue(':nombre', $usuario->nombre, PDO::PARAM_STR);
-	    $consulta->bindValue(':clave', $usuario->clave, PDO::PARAM_STR);
-	    $consulta->bindValue(':id_tipo', $usuario->id_tipo, PDO::PARAM_INT);
-	    return $consulta->execute();
-	}
 //--------------------------------------------------------------------------------//
 
 //--------------------------------------------------------------------------------//

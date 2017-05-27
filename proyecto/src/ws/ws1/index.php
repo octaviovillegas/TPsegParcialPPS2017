@@ -6,6 +6,7 @@ require_once('Clases/pizza.php');
 require_once('Clases/promocion.php');
 require_once('Clases/pedido.php');
 require_once('Clases/encuesta.php');
+require_once('Clases/curso.php');
 
 
 require 'vendor/autoload.php';
@@ -64,6 +65,8 @@ $app->get('/algo', function ($request, $response, $args) {
 
 });
 
+
+
 /*
 $app->get('/usuarios/validar/{objeto}', function ($request, $response, $args) {
 
@@ -83,6 +86,7 @@ $app->get('/usuarios/validar/{objeto}', function ($request, $response, $args) {
 
 */
 
+
 $app->get('/usuarios', function ($request, $response, $args) {
 
 
@@ -94,6 +98,10 @@ $app->get('/usuarios', function ($request, $response, $args) {
 
 
 });
+
+//--aixa------------------------------------------
+
+ 
 
 
 $app->post('/usuarios/modificar', function ($request, $response, $args) {
@@ -130,7 +138,7 @@ $app->post('/usuarios/eliminar', function ($request, $response, $args) {
     // convierto el array en un objecto
     $usuario = (object)$usuario;
 
-    $ret = Usuario::EliminarUsuario($usuario);
+    $ret = Usuario::EliminarUsuario($usuario->id_usuario);
 
     $hayError = false;
 
@@ -147,6 +155,42 @@ $app->post('/usuarios/eliminar', function ($request, $response, $args) {
 
 });
 
+$app->post('/usuarios/alta', function ($request, $response, $args) {
+
+     
+        $usuario = $request->getParsedBody();
+
+        // convierto el array en un objecto
+        $usuario = (object)$usuario;
+ 
+        $tipo = $usuario->id_tipo;
+
+        $result = Usuario::TraerIdTipo2($tipo);
+       
+        $usuario->id_tipo = $result->id_tipo;
+
+        $ret = Usuario::AltaUsuario($usuario);
+
+         
+        $hayError = false;
+
+        if ($ret) {
+            $hayError = false;
+        } else {
+            $hayError = true;
+        }
+
+        $response->withHeader('Content-Type', 'application/json');
+        $response->write(json_encode(array('error' => $hayError, 'ok' => $ret)));
+      
+        
+        return $response;
+     
+});
+
+
+//-------------------------------------------------------
+
 $app->get('/usuarios/traer/{objeto}', function ($request, $response, $args) {
 
   $usuario=json_decode($args['objeto']);
@@ -159,6 +203,19 @@ $app->get('/usuarios/traer/{objeto}', function ($request, $response, $args) {
 
 });
 
+$app->get('/cursos', function ($request, $response, $args) {
+
+
+
+  $cursos=curso::TraerTodosLosCursos();
+
+ return json_encode($cursos);
+
+
+});
+
+
+
 $app->delete('/usuarios/borrar/{objeto}', function ($request, $response, $args) {
 
         $usuario=json_decode($args['objeto']);
@@ -168,6 +225,7 @@ $app->delete('/usuarios/borrar/{objeto}', function ($request, $response, $args) 
           return Usuario::BorrarUsuario($usuario);
 
 });
+
 
 $app->post('/archivos', function ($request, $response, $args) {
 
@@ -192,6 +250,28 @@ $app->get('/locales', function ($request, $response, $args) {
 
 
    return json_encode($arrAdmin);
+
+
+});
+
+$app->get('/curso', function ($request, $response, $args) {
+
+
+
+  $cursos=Curso::TraerTodosLosCursos();
+
+ return json_encode($cursos);
+
+
+});
+
+$app->get('/encuestas', function ($request, $response, $args) {
+
+
+
+  $encuestas=Encuesta::TraerTodasLasEncuestas();
+
+ return json_encode($encuestas);
 
 
 });
