@@ -22,7 +22,8 @@ class Encuesta
                         LEFT JOIN encuestas_usuarios eu ON (eu.id_encuesta = e.id_encuesta)
                         WHERE eu.id_usuario = :id_usuario
                         AND eu.id_encuesta IN (
-                            SELECT id_encuesta FROM usuario_respuestas WHERE id_usuario = :id_usuario2 GROUP BY id_encuesta
+                            SELECT id_encuesta FROM preguntas p
+                            LEFT JOIN usuario_respuestas ur ON (p.id_pregunta = ur.id_pregunta) WHERE ur.id_usuario = :id_usuario2 GROUP BY p.id_encuesta
                         )';
 
             $consulta = $cnx->RetornarConsulta($sql);
@@ -34,7 +35,8 @@ class Encuesta
                         LEFT JOIN encuestas_usuarios eu ON (eu.id_encuesta = e.id_encuesta)
                         WHERE eu.id_usuario = :id_usuario
                         AND eu.id_encuesta NOT IN (
-                            SELECT id_encuesta FROM usuario_respuestas WHERE id_usuario = :id_usuario2 GROUP BY id_encuesta
+                            SELECT id_encuesta FROM preguntas p
+                            LEFT JOIN usuario_respuestas ur ON (p.id_pregunta = ur.id_pregunta) WHERE ur.id_usuario = :id_usuario2 GROUP BY p.id_encuesta
                         )';
 
             $consulta = $cnx->RetornarConsulta($sql);
