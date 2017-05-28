@@ -72,4 +72,18 @@ class Encuesta
 		return $arrCurso;
 	}
 
+      public static function nuevaEncuesta($encuesta)
+	{
+    
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("insert into encuestas (descripcion,fecha_inicio,fecha_fin) 
+		VALUES (:descripcion,:fecha_inicio,:fecha_fin)");
+		$consulta->bindValue(':descripcion',$encuesta->descripcion, PDO::PARAM_STR);
+		$consulta->bindValue(':fecha_inicio',$encuesta->fechaInicio, PDO::PARAM_STR);
+		$consulta->bindValue(':fecha_fin',$encuesta->fechaFin, PDO::PARAM_STR);
+		$consulta->execute();		
+		return $objetoAccesoDato->RetornarUltimoIdInsertado();		
+	}	
+
+
 }
