@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
 
 import { AlumnoEncuestasPage } from "../alumno-encuestas/alumno-encuestas";
+import { EncuestaPage } from '../encuesta/encuesta';
 /**
  * Generated class for the Alumno page.
  *
@@ -12,7 +13,7 @@ import { AlumnoEncuestasPage } from "../alumno-encuestas/alumno-encuestas";
 
 @Component({
   selector: 'page-alumno',
-  templateUrl: 'alumno.html',
+  templateUrl: 'alumno.html'
 })
 export class Alumno {
 

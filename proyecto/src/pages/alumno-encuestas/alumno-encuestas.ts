@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Http } from '@angular/http';
+import { servicioAuth } from '../servicioAuth/servicioAuth';
+import { EncuestaPage } from '../encuesta/encuesta';
 
 /**
 * Generated class for the AlumnoEncuestasPage.
@@ -13,18 +16,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AlumnoEncuestasPage {
 
-    public ESTADO_PENDIENTE = 'pendiente';
-    public ESTADO_COMPLETADA = 'completada';
-
     private titulo: string;
-    private tipo: string;
+    private estado: string;
+    private encuestas;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
-        this.tipo = navParams.data;
+    constructor(public navCtrl: NavController, public navParams: NavParams, private auth: servicioAuth, private http: Http) {
+        this.estado = navParams.data;
 
-        if (this.tipo == this.ESTADO_PENDIENTE) {
+        if (this.estado == EncuestaPage.ESTADO_PENDIENTE) {
             this.titulo = 'Pendientes';
-        } else if (this.tipo == this.ESTADO_COMPLETADA) {
+        } else if (this.estado == EncuestaPage.ESTADO_COMPLETADA) {
             this.titulo = 'Completadas';
         } else {
             this.titulo = 'Todas';
@@ -33,6 +34,46 @@ export class AlumnoEncuestasPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad AlumnoEncuestasPage');
+
+        this.getEncuestasByEstado(this.estado).subscribe((encuestas) => {
+            console.log(encuestas);
+            this.encuestas = encuestas;
+        });
+    }
+
+    getEncuestasByEstado(estado) {
+
+        let user = this.auth.getUserInfo();
+
+        return this.http.get('http://localhost/facultad/ws1/usuarios/'+user.id_usuario+'/encuestas?estado=' + estado).map(
+            res => res.json().encuestas
+        );
+
+    }
+
+    verOResponderEncuesta(encuesta) {
+
+        if (this.estado == EncuestaPage.ESTADO_PENDIENTE) {
+            this.comenzarEncuesta(encuesta);
+        } else if (this.estado == EncuestaPage.ESTADO_COMPLETADA) {
+            this.verEncuesta(encuesta);
+        }
+
+    }
+
+    comenzarEncuesta(encuesta) {
+        this.navCtrl.push(EncuestaPage, {encuesta: encuesta, accion: EncuestaPage.ACCION_RESPONDER}, {
+            direction: 'forward',
+            animation: 'ios-transition'
+        });
+    }
+
+    verEncuesta(encuesta) {
+        this.navCtrl.push(EncuestaPage, {encuesta: encuesta, accion: EncuestaPage.ACCION_VER}, {
+            direction: 'forward',
+            animation: 'ios-transition'
+        });
+
     }
 
     back() {

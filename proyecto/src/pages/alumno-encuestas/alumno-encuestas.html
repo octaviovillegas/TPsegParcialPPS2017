@@ -20,4 +20,12 @@
 
 <ion-content padding>
 
+    <ion-list>
+        <button ion-item *ngFor="let encuesta of encuestas" (click)="verOResponderEncuesta(encuesta)">
+            <h2>{{ encuesta.descripcion }}</h2>
+            <p>Fecha: {{ encuesta.fecha_inicio }} - {{ encuesta.fecha_fin }}</p>
+            <ion-icon name="ios-arrow-forward" item-right></ion-icon>
+        </button>
+    </ion-list>
+
 </ion-content>

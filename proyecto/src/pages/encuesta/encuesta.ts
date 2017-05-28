@@ -22,6 +22,7 @@ export class EncuestaPage {
     public static readonly ACCION_RESPONDER = 'responder';
 
     private encuesta;
+    private preguntas;
     private accion;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private auth: servicioAuth, private http: Http) {
@@ -31,6 +32,22 @@ export class EncuestaPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad Encuesta');
+        this.traerPreguntas(this.encuesta.id_encuesta).subscribe((preguntas) => this.preguntas = preguntas);
+    }
+
+    traerPreguntas(id_encuesta) {
+
+        return this.http.get('http://localhost/facultad/ws1/encuestas/'+id_encuesta+'/preguntas').map(
+            res => res.json().preguntas
+        );
+
+    }
+
+    back() {
+        this.navCtrl.pop({
+            direction: 'back',
+            animation: 'ios-transition'
+        });
     }
 
 }
