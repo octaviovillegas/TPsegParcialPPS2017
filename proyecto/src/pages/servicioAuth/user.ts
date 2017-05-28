@@ -6,11 +6,13 @@ import { NavController } from 'ionic-angular';
 })
 
 export class User {
+    id_usuario: number;
   usuario: string;
   clave: string;
   tipo_usuario: string;
 
-  constructor(usuario: string, clave: string, tipo_usuario:string) {
+  constructor(id_usuario: number, usuario: string, clave: string, tipo_usuario:string) {
+      this.id_usuario = id_usuario;
     this.usuario = usuario;
     this.clave = clave;
     this.tipo_usuario = tipo_usuario;
