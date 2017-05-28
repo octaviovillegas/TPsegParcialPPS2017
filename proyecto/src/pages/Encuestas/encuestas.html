@@ -9,24 +9,39 @@
 <ion-content>
   <ion-list>
       <h1> Bienvenido al creador de encuestas</h1>
-            <div *ngFor="let item of listaPreguntas" >   
-        <label>{{item.pregunta}}</label>
-          </div>
-      <div *ngFor="let item of listaTipo" >
-        <input [type]="item" name="item"><input>
-      </div>
-
-      <input type="submit" (click)="agregarTextbox()" value="Agregar textBox">
-      <input type="submit" (click)="agregarSelect()" value="Agregar select">
   </ion-list>
+  <div>
+  </div>
+
+
+<ion-list>
+  <ion-item-sliding *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: descripcion">
+    <ion-item>
+      <ion-avatar item-left>
+      </ion-avatar>
+      <h2>{{encuesta.descripcion}}</h2>
+    </ion-item>
+    <ion-item-options side="right">
+      <button ion-button color="primary" (click)="agregarPregunta(encuesta.id_encuesta)">
+        <ion-icon name="plus"></ion-icon>
+        Agregar Pregunta
+      </button>
+    </ion-item-options>
+      <ion-icon ios="ios-add" md="md-add"></ion-icon>
+  </ion-item-sliding>
+</ion-list>
+ <button ion-button icon-left color=light (click)="nuevaEncuesta()" round >
+  <ion-icon ios="ios-create" md="md-create"></ion-icon>
+  Nueva encuesta
+</button>
+
     <div>
   <ion-item>
-    seleccionar encuensta
+    seleccionar encuesta
     <ion-select [(ngModel)]="encuestaSeleccionada" multiple>
       <ion-option *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: descripcion" [value] = "encuesta.descripcion">{{encuesta.descripcion}}</ion-option>
     </ion-select>
   </ion-item>
-        <input type="submit" (click)="cursoSelecionado()" value="Agregar select">
   </div>
   <div>
   <ion-item>
@@ -35,7 +50,6 @@
       <ion-option *ngFor="let curso of listaCursos; let i = index; trackBy: descripcion" [value] = "curso.descripcion">{{curso.descripcion}}</ion-option>
     </ion-select>
   </ion-item>
-        <input type="submit" (click)="cursoSelecionado()" value="Agregar select">
 
   </div>
 </ion-content>
