@@ -16,6 +16,7 @@ import { HttpModule } from '@angular/http';
 import { servicioAuth } from '../pages/servicioAuth/servicioAuth';
 import { Alumno } from "../pages/alumno/alumno";
 import { AlumnoEncuestasPage } from '../pages/alumno-encuestas/alumno-encuestas';
+import { EncuestaPage } from '../pages/encuesta/encuesta';
 import {Profesor} from "../pages/profesor/profesor";
 import {modalEncuesta} from '../pages/modalEncuesta/modalEncuesta';
 import {firebaseconfig} from '../pages/firebase/firebase-config';
@@ -44,6 +45,7 @@ import {Modales} from '../pages/encuestas/modales/modales';
     Estadisticas,
     Alumno,
     AlumnoEncuestasPage,
+    EncuestaPage,
     Profesor,
     Menu,
     Encuestas,
@@ -74,6 +76,7 @@ import {Modales} from '../pages/encuestas/modales/modales';
     Estadisticas,
     Alumno,
     AlumnoEncuestasPage,
+    EncuestaPage,
     Profesor,
     Menu,
     Encuestas,
