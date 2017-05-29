@@ -3,17 +3,17 @@
       <button ion-button menuToggle left>
           <ion-icon name="menu"></ion-icon>
       </button>
-    <ion-title>Profesor: </ion-title>
+    <ion-title>Profesor: {{usuarioLogueado.usuario}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
   <ion-list>
-      <h1> Bienvenido al creador de encuestas</h1>
+      <h1> {{titulo}}</h1>
   </ion-list>
   <div>
   </div>
 
-
+<div *ngIf="generarEncuesta">
 <ion-list>
   <ion-item-sliding *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: descripcion">
     <ion-item>
@@ -34,22 +34,25 @@
   <ion-icon ios="ios-create" md="md-create"></ion-icon>
   Nueva encuesta
 </button>
+</div>
 
-    <div>
+    <div *ngIf="enviarEncuesta">
   <ion-item>
     seleccionar encuesta
-    <ion-select [(ngModel)]="encuestaSeleccionada" multiple>
-      <ion-option *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: descripcion" [value] = "encuesta.descripcion">{{encuesta.descripcion}}</ion-option>
+    <ion-select [(ngModel)]="encuestaSeleccionada" >
+      <ion-option *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: id_encuesta" [value] = "encuesta.id_encuesta">{{encuesta.descripcion}}</ion-option>
     </ion-select>
   </ion-item>
-  </div>
-  <div>
+ 
   <ion-item>
         seleccionar curso
-    <ion-select [(ngModel)]="cursoSeleccionado" multiple>
-      <ion-option *ngFor="let curso of listaCursos; let i = index; trackBy: descripcion" [value] = "curso.descripcion">{{curso.descripcion}}</ion-option>
+    <ion-select [(ngModel)]="cursoSeleccionado" >
+      <ion-option *ngFor="let curso of listaCursos; let i = index; trackBy: id_curso" [value] = "curso.id_curso">{{curso.descripcion}}</ion-option>
     </ion-select>
   </ion-item>
-
+<button ion-button color="primary" (click)="EnviarEncuesta()">
+        <ion-icon name="plus"></ion-icon>
+        Enviar encuesta 
+      </button>
   </div>
 </ion-content>

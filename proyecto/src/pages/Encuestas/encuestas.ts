@@ -22,18 +22,29 @@ private listaEncuestas;
 private listaCursos;
 private cursoSeleccionado;
 private encuestaSeleccionada;
-
+private generarEncuesta =false;
+private enviarEncuesta = true;
+private titulo;
  constructor(public navCtrl: NavController,public viewCtrl:ViewController,public modalCtrl: ModalController
 ,public NavParams: NavParams,private http: Http,public af: AngularFire)
   {
+    this.usuarioLogueado=NavParams.data;
+    console.info(this.usuarioLogueado);
+    if(this.usuarioLogueado.queHago == "GenerarEncuesta"){
+      this.generarEncuesta =true;
+      this.enviarEncuesta=false;
+      this.titulo = "Bienvenido al generador de encuestas";
+    }else{
+      this.generarEncuesta =false;
+      this.enviarEncuesta=true;
+       this.titulo = "Bienvenido al asignador de encuestas";
+    }
   this.http.get("http://tppps2.hol.es/ws1/cursos")
   .map(res => res.json())
   .subscribe((quote) =>{
     this.listaCursos = quote;
     console.info(this.listaCursos);
   });
-
-    this.usuarioLogueado = NavParams;
   this.http.get("http://tppps2.hol.es/ws1/encuestas")
   .map(res => res.json())
   .subscribe((quote) =>{
@@ -56,11 +67,20 @@ private encuestaSeleccionada;
       modal.present(); 
    }
 
-    cursoSelecionado(){
-      
-   console.log(this.cursoSeleccionado);
-    }
+   
 
+EnviarEncuesta(){
+  this.http.post("http://tppps2.hol.es/ws1/encuestas/enviar", {
+     idEncuesta:this.encuestaSeleccionada,
+     idCurso:this.cursoSeleccionado
+     })
+    .map(res => res.json())
+    .subscribe((quote) =>{
+      console.info(quote);
+     });
+
+
+}
 
 }
 
