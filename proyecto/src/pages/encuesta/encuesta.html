@@ -35,18 +35,24 @@
                 {{ pregunta.descripcion }}
             </ion-card-header>
 
+            <ion-card-content>
+
             <ion-list *ngIf="pregunta.tipo == 'radio'" [(ngModel)]="pregunta.respuesta_opcion" radio-group>
-                <ion-item *ngFor="let opcion of [1,2,3,4]">
-                    <ion-label>{{ pregunta['opcion'+opcion] }}</ion-label>
-                    <ion-radio value="opcion{{opcion}}"></ion-radio>
-                </ion-item>
+                <ng-container *ngFor="let opcion of [1,2,3,4]">
+                    <ion-item *ngIf="pregunta['opcion'+opcion]">
+                        <ion-label>{{ pregunta['opcion'+opcion] }}</ion-label>
+                        <ion-radio value="opcion{{opcion}}"></ion-radio>
+                    </ion-item>
+                </ng-container>
             </ion-list>
 
             <ion-list *ngIf="pregunta.tipo == 'checkbox'">
-                <ion-item *ngFor="let opcion of [1,2,3,4]">
-                    <ion-label>{{ pregunta['opcion'+opcion] }}</ion-label>
-                    <ion-checkbox (ionChange)="onChecked($event, opcion, pregunta)"></ion-checkbox>
-                </ion-item>
+                <ng-container *ngFor="let opcion of [1,2,3,4]">
+                    <ion-item *ngIf="pregunta['opcion'+opcion]">
+                        <ion-label>{{ pregunta['opcion'+opcion] }} {{ pregunta['opcion'+opcion]}}</ion-label>
+                        <ion-checkbox (ionChange)="onChecked($event, opcion, pregunta)"></ion-checkbox>
+                    </ion-item>
+                </ng-container>
             </ion-list>
 
             <ion-item *ngIf="pregunta.tipo == 'text'">
@@ -63,6 +69,8 @@
                     </ion-select>
                 </ion-item>
             </ion-list>
+
+        </ion-card-content>
 
         </ion-card>
     </div>
