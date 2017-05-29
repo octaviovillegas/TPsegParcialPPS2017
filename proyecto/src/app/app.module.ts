@@ -16,7 +16,6 @@ import { HttpModule } from '@angular/http';
 import { servicioAuth } from '../pages/servicioAuth/servicioAuth';
 import { Alumno } from "../pages/alumno/alumno";
 import { AlumnoEncuestasPage } from '../pages/alumno-encuestas/alumno-encuestas';
-import { EncuestaPage } from '../pages/encuesta/encuesta';
 import {Profesor} from "../pages/profesor/profesor";
 import {modalEncuesta} from '../pages/modalEncuesta/modalEncuesta';
 import {firebaseconfig} from '../pages/firebase/firebase-config';
@@ -31,6 +30,8 @@ import {GrillaProfesor} from "../pages/grillas/grilla-profesor/grilla-profesor";
 import {ModificacionModal} from "../pages/grillas/modificacion-modal/modificacion-modal";
 import {AltaModal} from "../pages/grillas/alta-modal/alta-modal";
 import {Modales} from '../pages/encuestas/modales/modales';
+import {GenerarEncuesta} from '../pages/encuestas/generarencuesta/generarencuesta';
+import {EnviarEncuesta} from '../pages/encuestas/enviarencuesta/enviarencuesta';
 
 @NgModule({
   declarations: [
@@ -45,17 +46,17 @@ import {Modales} from '../pages/encuestas/modales/modales';
     Estadisticas,
     Alumno,
     AlumnoEncuestasPage,
-    EncuestaPage,
     Profesor,
     Menu,
-    Encuestas,
     GrillaProfesor,
     GrillaAlumno,
     GrillaAdministrativo,
     GrillaAdministrador,
     ModificacionModal,
     AltaModal,
-    Modales
+    Modales,
+    GenerarEncuesta,
+    EnviarEncuesta
   ],
   imports: [
     BrowserModule,
@@ -76,17 +77,17 @@ import {Modales} from '../pages/encuestas/modales/modales';
     Estadisticas,
     Alumno,
     AlumnoEncuestasPage,
-    EncuestaPage,
     Profesor,
     Menu,
-    Encuestas,
     GrillaProfesor,
     GrillaAlumno,
     GrillaAdministrativo,
     GrillaAdministrador,
     ModificacionModal,
     AltaModal,
-    Modales
+    Modales,
+   GenerarEncuesta,
+    EnviarEncuesta
       ],
   providers: [AlumnoEncuestasPage,
     StatusBar,

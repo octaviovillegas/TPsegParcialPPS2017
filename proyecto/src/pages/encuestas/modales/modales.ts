@@ -3,7 +3,6 @@ import 'rxjs/Rx';
 import { NavController,NavParams } from 'ionic-angular';
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import { ModalController, ViewController } from 'ionic-angular';
-import {Encuestas} from "../encuestas";
 import {Http} from '@angular/http';
 
 @Component({

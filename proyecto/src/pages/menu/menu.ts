@@ -12,6 +12,8 @@ import {GrillaAdministrativo} from "../grillas/grilla-administrativo/grilla-admi
 import {GrillaAlumno} from "../grillas/grilla-alumno/grilla-alumno";
 import {GrillaProfesor} from "../grillas/grilla-profesor/grilla-profesor";
 import {Encuestas} from '../encuestas/encuestas';
+import {GenerarEncuesta} from '../encuestas/generarencuesta/generarencuesta';
+import {EnviarEncuesta} from '../encuestas/enviarencuesta/enviarencuesta';
 
 /**
 * Generated class for the Menu page.
@@ -69,13 +71,15 @@ export class Menu {
     }
 
 Encuestas(queHago){
+    console.info(queHago);
         if(queHago == "profesorGenerar"){
-            this.usuarioLogueado.queHago = "GenerarEncuesta";
+          console.info(this.usuarioLogueado);
+         this.openPage(GenerarEncuesta);
         }else{
-            this.usuarioLogueado.queHago = "EnviarEncuesta";
+         console.info(this.usuarioLogueado);
+         this.openPage(EnviarEncuesta);
         }
-  
-         this.navCtrl.setRoot(Encuestas, this.usuarioLogueado);
+    
 
 }
     ionViewDidLoad() {

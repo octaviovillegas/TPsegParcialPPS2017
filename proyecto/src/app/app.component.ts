@@ -5,11 +5,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {Login} from "../pages/login/login";
 import { TabsPage } from '../pages/tabs/tabs';
 import { GrillaAdministrador } from '../pages/grillas/grilla-administrador/grilla-administrador';
+import {Profesor} from "../pages/profesor/profesor";
+import {Encuestas} from '../pages/encuestas/encuestas';
+
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = Login;//= Login; 
+  rootPage:any =  Login; 
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

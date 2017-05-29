@@ -1,0 +1,34 @@
+<ion-header>
+   <ion-navbar>
+      <button ion-button menuToggle left>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+    <ion-title>Profesor: {{usuarioLogueado.usuario}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+      <h1> Bienvenido al asignador de encuestas</h1>
+  </ion-list>
+  <div>
+  </div>
+
+  <ion-item>
+    seleccionar encuesta
+    <ion-select [(ngModel)]="encuestaSeleccionada" >
+      <ion-option *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: id_encuesta" [value] = "encuesta.id_encuesta">{{encuesta.descripcion}}</ion-option>
+    </ion-select>
+  </ion-item>
+ 
+  <ion-item>
+        seleccionar curso
+    <ion-select [(ngModel)]="cursoSeleccionado" >
+      <ion-option *ngFor="let curso of listaCursos; let i = index; trackBy: id_curso" [value] = "curso.id_curso">{{curso.descripcion}}</ion-option>
+    </ion-select>
+  </ion-item>
+<button ion-button color="primary" (click)="EnviarEncuesta()">
+        <ion-icon name="plus"></ion-icon>
+        Enviar encuesta 
+      </button>
+
+</ion-content>
