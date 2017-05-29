@@ -132,7 +132,7 @@ public static function TraerTodosLosClientes()
 	}
 		public static function TraerIdTipo2($tipo)
 	{
-		 
+
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT id_tipo FROM tipos_usuarios WHERE descripcion = :tipo");
 		$consulta->bindValue(':tipo', $tipo, PDO::PARAM_STR);
@@ -259,6 +259,20 @@ public static function TraerClientesEmpleados()
 
 		return  $arrayDePersonas;
 
+	}
+
+	public static function traerPreguntas($id_usuario, $id_encuesta) {
+
+		$sql = 'SELECT p.*, ur.opcion respuesta_opcion FROM preguntas p
+		INNER JOIN usuario_respuestas ur ON (ur.id_pregunta = p.id_pregunta)
+		WHERE ur.id_usuario = :id_usuario AND p.id_encuesta = :id_encuesta';
+
+		$cnx = AccesoDatos::dameUnObjetoAcceso();
+		$consulta = $cnx->RetornarConsulta($sql);
+		$consulta->bindValue(':id_usuario', $id_usuario, PDO::PARAM_INT);
+		$consulta->bindValue(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
+		$consulta->execute();
+		return $consulta->fetchAll(PDO::FETCH_CLASS, "Pregunta");
 	}
 
 
