@@ -45,7 +45,7 @@ export class AlumnoEncuestasPage {
 
         let user = this.auth.getUserInfo();
 
-        return this.http.get('http://localhost/facultad/ws1/usuarios/'+user.id_usuario+'/encuestas?estado=' + estado).map(
+        return this.http.get('http://tppps2.hol.es/ws1/usuarios/'+user.id_usuario+'/encuestas?estado=' + estado).map(
             res => res.json().encuestas
         );
 

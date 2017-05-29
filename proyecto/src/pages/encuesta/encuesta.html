@@ -12,7 +12,7 @@
     <ion-icon name="arrow-back"></ion-icon>
     </button>
     </ion-buttons>
-    <ion-title>Encuesta: {{ encuesta.descripcion }}</ion-title>
+    <ion-title>Encuesta: {{ encuesta.descripcion }} {{accion}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -20,12 +20,51 @@
 
 <ion-content padding>
 
-    <ion-list>
+    <ion-list *ngIf="accion == 'ver'">
         <ion-list-header>Preguntas</ion-list-header>
         <button ion-item *ngFor="let pregunta of preguntas">
             <h2>{{ pregunta.descripcion }}</h2>
-            <ion-icon name="ios-arrow-forward" item-right></ion-icon>
+            <p>Repuesta: {{ getRespuesta(pregunta) }}</p>
         </button>
     </ion-list>
+
+    <div *ngIf="accion == 'responder'">
+        <h1>Preguntas</h1>
+        <ion-card *ngFor="let pregunta of preguntas">
+            <ion-card-header>
+                {{ pregunta.descripcion }}
+            </ion-card-header>
+
+            <ion-list *ngIf="pregunta.tipo == 'radio'" [(ngModel)]="pregunta.respuesta_opcion" radio-group>
+                <ion-item *ngFor="let opcion of [1,2,3,4]">
+                    <ion-label>{{ pregunta['opcion'+opcion] }}</ion-label>
+                    <ion-radio value="opcion{{opcion}}"></ion-radio>
+                </ion-item>
+            </ion-list>
+
+            <ion-list *ngIf="pregunta.tipo == 'checkbox'">
+                <ion-item *ngFor="let opcion of [1,2,3,4]">
+                    <ion-label>{{ pregunta['opcion'+opcion] }}</ion-label>
+                    <ion-checkbox (ionChange)="onChecked($event, opcion, pregunta)"></ion-checkbox>
+                </ion-item>
+            </ion-list>
+
+            <ion-item *ngIf="pregunta.tipo == 'text'">
+                <ion-label fixed>Escriba su respuesta</ion-label>
+                <ion-input type="text" [(ngModel)]="pregunta.respuesta_opcion"></ion-input>
+            </ion-item>
+
+            <ion-list *ngIf="pregunta.tipo == 'select'">
+                <ion-item>
+                    <ion-label>Seleccione una opción</ion-label>
+                    <ion-select [(ngModel)]="pregunta.respuesta_opcion">
+                        <ion-option  value="">Seleccione una opción</ion-option>
+                        <ion-option *ngFor="let opcion of [1,2,3,4]">{{ pregunta['opcion'+opcion] }}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-list>
+
+        </ion-card>
+    </div>
 
 </ion-content>
