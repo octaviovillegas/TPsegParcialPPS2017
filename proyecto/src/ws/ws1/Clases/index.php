@@ -5,6 +5,8 @@ require_once('Clases/local.php');
 require_once('Clases/pizza.php');
 require_once('Clases/promocion.php');
 require_once('Clases/pedido.php');
+require_once('Clases/encuesta.php');
+require_once('Clases/curso.php');
 
 
 require 'vendor/autoload.php';
@@ -19,6 +21,33 @@ $configuration = [
 $c = new \Slim\Container($configuration);
 $app = new \Slim\App($c);
 
+$app->add(function($request, $response, $next) {
+    $route = $request->getAttribute("route");
+
+    $methods = [];
+
+    if (!empty($route)) {
+        $pattern = $route->getPattern();
+
+        foreach ($this->router->getRoutes() as $route) {
+            if ($pattern === $route->getPattern()) {
+                $methods = array_merge_recursive($methods, $route->getMethods());
+            }
+        }
+        //Methods holds all of the HTTP Verbs that a particular route handles.
+    } else {
+        $methods[] = $request->getMethod();
+    }
+
+    $response = $next($request, $response);
+
+    return $response->withHeader("Access-Control-Allow-Methods", implode(",", $methods));
+});
+
+$app->add(function($request, $response, $next) {
+    $response = $next($request, $response);
+    return $response->withHeader('Access-Control-Allow-Origin', '*');
+});
 
 
 $app->get('/', function ($request, $response, $args) {
@@ -30,78 +59,135 @@ $app->get('/', function ($request, $response, $args) {
 
 $app->get('/algo', function ($request, $response, $args) {
 
-   $var = Usuario:traeralgo();
+   $var = Usuario::traeralgo();
    echo $var;
 
 
 });
 
 
+
+/*
 $app->get('/usuarios/validar/{objeto}', function ($request, $response, $args) {
 
   $usuario=json_decode($args['objeto']);
-   $validador = false;   
+   $validador = false;
    $arrAdmin = Usuario::TraerTodasLasPersonas();
    foreach ($arrAdmin as $adm) {
         if($adm->nombre_usuario == $usuario->nombre_usuario)
             if($adm->pass_usuario == $usuario->pass_usuario)
                  $validador=true;
-   
+
    }
    echo  $validador;
 
 
 });
 
+*/
 
 $app->get('/usuarios', function ($request, $response, $args) {
 
- 
+
    $arrAdmin = Usuario::TraerTodasLasPersonas();
 
 
-   
+
    return json_encode($arrAdmin);
 
 
 });
 
 
+$app->post('/usuarios/modificar', function ($request, $response, $args) {
+
+    // Obtengo la data enviada. Es recibida como un array.
+    $usuario = $request->getParsedBody();
+
+    // convierto el array en un objecto
+    $usuario = (object)$usuario;
+
+    $ret = Usuario::ModificarUsuario($usuario);
+
+    $hayError = false;
+
+    if ($ret) {
+        $hayError = false;
+    } else {
+        $hayError = true;
+    }
+
+    $response->withHeader('Content-Type', 'application/json');
+    $response->write(json_encode(array('error' => $hayError, 'usuario' => $usuario)));
+
+    return $response;
+
+});
+
+
+$app->post('/usuarios/eliminar', function ($request, $response, $args) {
+
+    // Obtengo la data enviada. Es recibida como un array.
+    $usuario = $request->getParsedBody();
+
+    // convierto el array en un objecto
+    $usuario = (object)$usuario;
+
+    $ret = Usuario::EliminarUsuario($usuario);
+
+    $hayError = false;
+
+    if ($ret) {
+        $hayError = false;
+    } else {
+        $hayError = true;
+    }
+
+    $response->withHeader('Content-Type', 'application/json');
+    $response->write(json_encode(array('error' => $hayError, 'usuario' => $usuario)));
+
+    return $response;
+
+});
+
 $app->get('/usuarios/traer/{objeto}', function ($request, $response, $args) {
 
   $usuario=json_decode($args['objeto']);
-  
+
 
   $usuarioBuscado=Usuario::TraerUnUsuario($usuario->nombre_usuario);
- 
+
  return json_encode($usuarioBuscado);
-   
- 
+
+
 });
+
+$app->get('/cursos', function ($request, $response, $args) {
+
+
+
+  $cursos=curso::TraerTodosLosCursos();
+
+ return json_encode($cursos);
+
+
+});
+
+
 
 $app->delete('/usuarios/borrar/{objeto}', function ($request, $response, $args) {
-        
-        $usuario=json_decode($args['objeto']);  
-        
+
+        $usuario=json_decode($args['objeto']);
 
 
-          return Usuario::BorrarUsuario($usuario); 
-    
-});
 
-$app->post('/usuarios/modificar/{objeto}', function ($request, $response, $args) {
-        
-        $usuario=json_decode($args['objeto']);  
-        
-         var_dump($usuario);
+          return Usuario::BorrarUsuario($usuario);
 
-          return Usuario::ModificarUsuario($usuario); 
-    
 });
 
 
 $app->post('/archivos', function ($request, $response, $args) {
-    
+
     if ( !empty( $_FILES ) ) {
     $tempPath = $_FILES[ 'file' ][ 'tmp_name' ];
     $uploadPath = "fotos" . DIRECTORY_SEPARATOR . $_FILES[ 'file' ][ 'name' ];
@@ -117,12 +203,34 @@ $app->post('/archivos', function ($request, $response, $args) {
 
 $app->get('/locales', function ($request, $response, $args) {
 
- 
+
    $arrAdmin = Local::TraerTodasLosLocales();
 
 
-   
+
    return json_encode($arrAdmin);
+
+
+});
+
+$app->get('/curso', function ($request, $response, $args) {
+
+
+
+  $cursos=Curso::TraerTodosLosCursos();
+
+ return json_encode($cursos);
+
+
+});
+
+$app->get('/encuestas', function ($request, $response, $args) {
+
+
+
+  $encuestas=Encuesta::TraerTodasLasEncuestas();
+
+ return json_encode($encuestas);
 
 
 });
@@ -140,44 +248,44 @@ $local=json_decode($args['objeto']);
             copy($rutaVieja, "fotos/".$rutaNueva);
             unlink($rutaVieja);
             $arrayFoto[]='http://localhost:8080/pizzeriaTP/ws1/fotos/'.$rutaNueva;
-        } 
+        }
 
-        $local->foto_local=json_encode($arrayFoto); 
+        $local->foto_local=json_encode($arrayFoto);
 
     }
-          return $response->write(Local::InsertarLocal($local)); 
-    
+          return $response->write(Local::InsertarLocal($local));
+
 });
 
 $app->delete('/local/BorrarLocal/{objeto}', function ($request, $response, $args) {
-        
-        $local=json_decode($args['objeto']);  
-        
+
+        $local=json_decode($args['objeto']);
 
 
-          return Local::BorrarLocal($local); 
-    
+
+          return Local::BorrarLocal($local);
+
 });
 
 $app->post('/local/modificar/{objeto}', function ($request, $response, $args) {
-        
-        $local=json_decode($args['objeto']);  
 
-          return Local::ModificarLocal($local); 
-    
+        $local=json_decode($args['objeto']);
+
+          return Local::ModificarLocal($local);
+
 });
 
 $app->post('/usuarios/alta/{objeto}', function ($request, $response, $args) {
 
-          return $response->write(Usuario::Insertar(json_decode($args['objeto']))); 
-    
+          return $response->write(Usuario::Insertar(json_decode($args['objeto'])));
+
 });
 
 $app->get('/producto', function ($request, $response, $args) {
 
 
-          return json_encode(Pizza::TraerTodasLasPizzas()); 
-    
+          return json_encode(Pizza::TraerTodasLasPizzas());
+
 });
 
 
@@ -194,13 +302,13 @@ $pizza=json_decode($args['objeto']);
             copy($rutaVieja, "fotos/".$rutaNueva);
             unlink($rutaVieja);
             $arrayFoto[]="http://prog4jaguirre.esy.es/".$rutaNueva;
-        } 
+        }
 
-        $pizza->foto_pizza=json_encode($arrayFoto); 
+        $pizza->foto_pizza=json_encode($arrayFoto);
 
     }
-          return $response->write(Pizza::InsertarPizza($pizza)); 
-    
+          return $response->write(Pizza::InsertarPizza($pizza));
+
 });
 
 
@@ -208,43 +316,43 @@ $app->post('/promocion/{objeto}', function ($request, $response, $args) {
 
 $promocion=json_decode($args['objeto']);
 
-          return $response->write(Promocion::InsertarPromocion($promocion)); 
-    
+          return $response->write(Promocion::InsertarPromocion($promocion));
+
 });
 
 $app->get('/promociones', function ($request, $response, $args) {
 
-          return json_encode(Promocion::TraerTodasLasPromociones()); 
-    
+          return json_encode(Promocion::TraerTodasLasPromociones());
+
 });
 
 $app->get('/clientes', function ($request, $response, $args) {
 
-          return json_encode(Usuario::TraerTodosLosClientes()); 
-    
+          return json_encode(Usuario::TraerTodosLosClientes());
+
 });
 
 
 $app->get('/clientesEmpleados', function ($request, $response, $args) {
 
-          return json_encode(Usuario::TraerClientesEmpleados()); 
-    
+          return json_encode(Usuario::TraerClientesEmpleados());
+
 });
 $app->get('/pedidos/alta/{objeto}', function ($request, $response, $args) {
 
 $promocion=json_decode($args['objeto']);
 var_dump($promocion);
 
-          return $response->write(Pedido::InsertarPedido($promocion)); 
-    
+          return $response->write(Pedido::InsertarPedido($promocion));
+
 });
 
 $app->get('/pedidos', function ($request, $response, $args) {
 
-          return json_encode(Pedido::TraerTodosLosPedidos()); 
-    
+          return json_encode(Pedido::TraerTodosLosPedidos());
+
 });
 
-
+require_once __DIR__.'/ws_alejo.php';
 
 $app->run();

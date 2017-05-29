@@ -38,9 +38,10 @@ constructor(private http: Http) {
           if(credenciales.usuario === entry["usuario"] && credenciales.clave === entry["clave"] ){
              access = true;
              tipo = entry["tipo_usuario"];
+                    credenciales.id_usuario = entry['id_usuario'];
           }
                 }
-        this.currentUser = new User(credenciales.usuario, credenciales.clave,tipo);
+            this.currentUser = new User(credenciales.id_usuario, credenciales.usuario, credenciales.clave,tipo);
         observer.next(access);
         observer.complete();
       });

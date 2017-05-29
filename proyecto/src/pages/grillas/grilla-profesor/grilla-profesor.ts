@@ -5,6 +5,7 @@ import { ModificacionModal } from '../modificacion-modal/modificacion-modal';
 import { ModalController } from 'ionic-angular';
 import { Menu } from '../../menu/menu';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
+import { AltaModal } from '../alta-modal/alta-modal';
 
 
 @Component({
@@ -16,32 +17,32 @@ export class GrillaProfesor {
     Usuarios;
     Uss : Array<any> =[];
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController) {
-
-  this.CargaGrilla();
-
-  }
-
-  CargaGrilla(){
-    console.info("entro");
-  this.Usuarios=null;
-  this.Uss=[];
-    this.http.get("http://tppps2.hol.es/ws1/usuarios")
-    .map(res => res.json())
-    .subscribe((quote) =>{
-    this.Usuarios = quote;
-  
-
-     for(let us of this.Usuarios)
-      {
-        if(us['tipo_usuario'] == "Profesor")
-        {this.Uss.push(us);
-       
-        }
-      }
-
-    });
+    this.CargaGrilla();
 
   }
+
+
+      CargaGrilla()
+    {
+          console.info("entro");
+          this.Usuarios=null;
+          this.Uss=[];
+            this.http.get("http://tppps2.hol.es/ws1/usuarios")
+            .map(res => res.json())
+            .subscribe((quote) =>{
+            this.Usuarios = quote;
+
+            for(let us of this.Usuarios)
+              {
+                if(us['tipo_usuario'] == "Alumno")
+                {
+                  this.Uss.push(us);
+                }
+              }
+
+            });
+
+    }
 
     Modificar(id_usuario, usuario, nombre, clave, id_tipo)
     {
@@ -54,15 +55,23 @@ export class GrillaProfesor {
         };
         let modal = this.modalCtrl.create(ModificacionModal, usM);
         modal.onDidDismiss(data=>{
-         
           this.CargaGrilla();
         });
         modal.present();
         
     }
 
-        Eliminar(id_usuario, usuario, nombre, clave, id_tipo)
-        {
+    Alta()
+    {
+        let modal2 = this.modalCtrl.create(AltaModal,{"tipo":"Alumno"});
+        modal2.onDidDismiss(data=>{
+          this.CargaGrilla();
+        });
+        modal2.present();
+    }
+
+    Eliminar(id_usuario, usuario, nombre, clave, id_tipo)
+    {
               let alert = this.alertCtrl.create({
               title: 'Eliminacion de usuario',
               message: 'Confirma eliminar usuario '+ usuario,
@@ -79,23 +88,21 @@ export class GrillaProfesor {
                   handler: () => {
                     console.log('Aceptar clicked');
                     this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
-                           id_usuario: id_usuario,
-                           clave: clave,
-                           nombre: nombre,
-                           usuario: usuario,
-                           id_tipo: id_tipo
+                           id_usuario: id_usuario
+            
                     })
                     .map(res => res.json())
                     .subscribe((quote) =>{
-                          
+                           this.CargaGrilla();
                     });
-                   this.CargaGrilla();
+                  
                   }
                 }
               ]
             });
             alert.present();
              
-        }
+    }
+
 
 }

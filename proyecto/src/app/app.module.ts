@@ -14,7 +14,9 @@ import {Administrativo} from "../pages/administrativo/administrativo";
 import {Estadisticas} from "../pages/estadisticas/estadisticas";
 import { HttpModule } from '@angular/http';
 import { servicioAuth } from '../pages/servicioAuth/servicioAuth';
-import {Alumno} from "../pages/alumno/alumno";
+import { Alumno } from "../pages/alumno/alumno";
+import { AlumnoEncuestasPage } from '../pages/alumno-encuestas/alumno-encuestas';
+import { EncuestaPage } from '../pages/encuesta/encuesta';
 import {Profesor} from "../pages/profesor/profesor";
 import {modalEncuesta} from '../pages/modalEncuesta/modalEncuesta';
 import {firebaseconfig} from '../pages/firebase/firebase-config';
@@ -42,6 +44,8 @@ import {Modales} from '../pages/encuestas/modales/modales';
     Administrativo,
     Estadisticas,
     Alumno,
+    AlumnoEncuestasPage,
+    EncuestaPage,
     Profesor,
     Menu,
     Encuestas,
@@ -71,6 +75,8 @@ import {Modales} from '../pages/encuestas/modales/modales';
     Administrativo,
     Estadisticas,
     Alumno,
+    AlumnoEncuestasPage,
+    EncuestaPage,
     Profesor,
     Menu,
     Encuestas,
@@ -82,7 +88,7 @@ import {Modales} from '../pages/encuestas/modales/modales';
     AltaModal,
     Modales
       ],
-  providers: [
+  providers: [AlumnoEncuestasPage,
     StatusBar,
     SplashScreen,
     HttpModule,

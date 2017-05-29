@@ -10,22 +10,22 @@
 
  <ion-item>
     <ion-label floating>Usuario</ion-label> 
-    <ion-input type="email" [(ngModel)]="u" clearInput></ion-input>
+    <ion-input type="email" [(ngModel)]="u" clearInput required></ion-input> 
   </ion-item>
  
 
  <ion-item>
     <ion-label floating>Nombre</ion-label>
-    <ion-input type="text" [(ngModel)]="n" clearInput></ion-input>
+    <ion-input type="text" [(ngModel)]="n" clearInput required ></ion-input>
   </ion-item>
 
 <ion-item>
     <ion-label  floating >Clave</ion-label>
-    <ion-input type="password" [(ngModel)]="c" clearInput></ion-input>
+    <ion-input type="password" [(ngModel)]="c" clearInput required> </ion-input>
  </ion-item>
 
 
-<button ion-button color=light (click)="Alta(n, u, c, t)"> Modificar </button>
+<button ion-button color=light (click)="Alta(n, u, c, t)"> Alta </button>
 <button ion-button color=light (click)="cancelar()"> Cancelar </button>
 
 
