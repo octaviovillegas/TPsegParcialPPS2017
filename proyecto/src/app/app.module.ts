@@ -16,6 +16,7 @@ import { HttpModule } from '@angular/http';
 import { servicioAuth } from '../pages/servicioAuth/servicioAuth';
 import { Alumno } from "../pages/alumno/alumno";
 import { AlumnoEncuestasPage } from '../pages/alumno-encuestas/alumno-encuestas';
+import { EncuestaPage } from '../pages/encuesta/encuesta';
 import {Profesor} from "../pages/profesor/profesor";
 import {modalEncuesta} from '../pages/modalEncuesta/modalEncuesta';
 import {firebaseconfig} from '../pages/firebase/firebase-config';
@@ -47,6 +48,7 @@ import {GrillaComision} from "../pages/grillas/grilla-comision/grilla-comision";
     Estadisticas,
     Alumno,
     AlumnoEncuestasPage,
+    EncuestaPage,
     Profesor,
     Menu,
     GrillaProfesor,
@@ -80,6 +82,7 @@ import {GrillaComision} from "../pages/grillas/grilla-comision/grilla-comision";
     Estadisticas,
     Alumno,
     AlumnoEncuestasPage,
+    EncuestaPage,
     Profesor,
     Menu,
     GrillaProfesor,
