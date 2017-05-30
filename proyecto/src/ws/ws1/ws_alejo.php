@@ -26,8 +26,6 @@ $app->get('/usuarios/{id_usuario}/encuestas', function ($request, $response, $ar
  */
 $app->get('/encuestas/{id_encuesta}/preguntas', function($request, $response, $args) {
 
-    $params = $request->getQueryParams();
-
     $id_encuesta = (int)$request->getAttribute('id_encuesta');
 
     $preguntas = Pregunta::traerPreguntasByIdEncuesta($id_encuesta);
@@ -39,12 +37,10 @@ $app->get('/encuestas/{id_encuesta}/preguntas', function($request, $response, $a
 
 /**
  * Devuelve las preguntas con las respuestas de una encuesta (id_encuesta)
- * de un usuario (id_usuario) 
+ * de un usuario (id_usuario)
  * @var [type]
  */
 $app->get('/usuarios/{id_usuario}/encuestas/{id_encuesta}/preguntas', function($request, $response, $args) {
-
-    $params = $request->getQueryParams();
 
     $id_usuario = (int)$request->getAttribute('id_usuario');
     $id_encuesta = (int)$request->getAttribute('id_encuesta');
@@ -53,5 +49,27 @@ $app->get('/usuarios/{id_usuario}/encuestas/{id_encuesta}/preguntas', function($
 
     $response->withHeader('Content-Type', 'application/json');
     $response->write(json_encode(array('preguntas' => $preguntas)));
+
+});
+
+/**
+ * Inserta una respuesta segun el id_usuario, id_pregunta y opcion.
+ * @var [type]
+ */
+$app->post('/usuarios/{id_usuario}/encuestas/respuestas', function($request, $response, $args) {
+
+    $id_usuario = (int)$request->getAttribute('id_usuario');
+    $data = $request->getParsedBody();
+    $respuestas = $data['respuestas'];
+
+    $id_respuestas = [];
+    foreach ($respuestas as $respuesta) {
+        $o_respuesta = (object)$respuesta;
+        $o_respuesta->id_usuario = $id_usuario;
+        $id_respuestas[] = UsuarioRespuestas::agregarRespuesta($o_respuesta);
+    }
+
+    $response->withHeader('Content-Type', 'application/json');
+    $response->write(json_encode(array('id_respuestas' => $id_respuestas)));
 
 });

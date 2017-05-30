@@ -6,6 +6,7 @@ require_once('Clases/pizza.php');
 require_once('Clases/promocion.php');
 require_once('Clases/pedido.php');
 require_once('Clases/encuesta.php');
+require_once('Clases/usuariorespuestas.php');
 require_once('Clases/curso.php');
 require_once('Clases/preguntas.php');
 
