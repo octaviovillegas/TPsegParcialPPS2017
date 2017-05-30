@@ -32,7 +32,8 @@ import {AltaModal} from "../pages/grillas/alta-modal/alta-modal";
 import {Modales} from '../pages/encuestas/modales/modales';
 import {GenerarEncuesta} from '../pages/encuestas/generarencuesta/generarencuesta';
 import {EnviarEncuesta} from '../pages/encuestas/enviarencuesta/enviarencuesta';
-
+import {GrillaCurso} from "../pages/grillas/grilla-curso/grilla-curso";
+import {GrillaComision} from "../pages/grillas/grilla-comision/grilla-comision";
 @NgModule({
   declarations: [
     MyApp,
@@ -56,7 +57,9 @@ import {EnviarEncuesta} from '../pages/encuestas/enviarencuesta/enviarencuesta';
     AltaModal,
     Modales,
     GenerarEncuesta,
-    EnviarEncuesta
+    EnviarEncuesta,
+    GrillaCurso,
+    GrillaComision
   ],
   imports: [
     BrowserModule,
@@ -87,7 +90,9 @@ import {EnviarEncuesta} from '../pages/encuestas/enviarencuesta/enviarencuesta';
     AltaModal,
     Modales,
    GenerarEncuesta,
-    EnviarEncuesta
+    EnviarEncuesta,
+    GrillaCurso,
+    GrillaComision
       ],
   providers: [AlumnoEncuestasPage,
     StatusBar,

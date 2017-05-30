@@ -4,7 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {Login} from "../pages/login/login";
 import { TabsPage } from '../pages/tabs/tabs';
-import { GrillaAdministrador } from '../pages/grillas/grilla-administrador/grilla-administrador';
+import { GrillaComision } from '../pages/grillas/grilla-comision/grilla-comision';
 import {Profesor} from "../pages/profesor/profesor";
 import {Encuestas} from '../pages/encuestas/encuestas';
 
@@ -12,7 +12,7 @@ import {Encuestas} from '../pages/encuestas/encuestas';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any =  Login; 
+  rootPage:any = GrillaComision; //Login; 
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
