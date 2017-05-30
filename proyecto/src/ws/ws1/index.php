@@ -9,7 +9,7 @@ require_once('Clases/encuesta.php');
 require_once('Clases/usuariorespuestas.php');
 require_once('Clases/curso.php');
 require_once('Clases/preguntas.php');
-
+require_once('Clases/comision.php');
 
 require 'vendor/autoload.php';
 
@@ -64,29 +64,11 @@ $app->get('/algo', function ($request, $response, $args) {
    $var = Usuario::traeralgo();
    echo $var;
 
-
 });
 
 
 
-/*
-$app->get('/usuarios/validar/{objeto}', function ($request, $response, $args) {
-
-  $usuario=json_decode($args['objeto']);
-   $validador = false;
-   $arrAdmin = Usuario::TraerTodasLasPersonas();
-   foreach ($arrAdmin as $adm) {
-        if($adm->nombre_usuario == $usuario->nombre_usuario)
-            if($adm->pass_usuario == $usuario->pass_usuario)
-                 $validador=true;
-
-   }
-   echo  $validador;
-
-
-});
-
-*/
+ 
 
 
 $app->get('/usuarios', function ($request, $response, $args) {
@@ -100,6 +82,8 @@ $app->get('/usuarios', function ($request, $response, $args) {
 
 
 });
+
+ 
 
 //--aixa------------------------------------------
 
@@ -191,6 +175,97 @@ $app->post('/usuarios/alta', function ($request, $response, $args) {
 });
 
 
+$app->get('/comisiones', function ($request, $response, $args) {
+
+
+
+  $comisiones=comision::TraerTodosLasComisiones();
+
+ return json_encode($comisiones);
+
+
+});
+$app->post('/comisiones/modificar', function ($request, $response, $args) {
+
+
+     // Obtengo la data enviada. Es recibida como un array.
+    $comision = $request->getParsedBody();
+
+    // convierto el array en un objecto
+    $comision = (object)$comision;
+
+    $res = comision::ModificarComision($comision);
+
+    $hayError = false;
+
+    if ($res) {
+        $hayError = false;
+    } else {
+        $hayError = true;
+    }
+
+    $response->withHeader('Content-Type', 'application/json');
+    $response->write(json_encode(array('error' => $hayError, 'comision' => $comision)));
+
+    return $response;
+
+});
+
+$app->post('/comisiones/eliminar', function ($request, $response, $args) {
+
+
+     // Obtengo la data enviada. Es recibida como un array.
+    $comision = $request->getParsedBody();
+
+    // convierto el array en un objecto
+    $comision = (object)$comision;
+
+    $res = comision::EliminarComision($comision);
+
+    $hayError = false;
+
+    if ($res) {
+        $hayError = false;
+    } else {
+        $hayError = true;
+    }
+
+    $response->withHeader('Content-Type', 'application/json');
+    $response->write(json_encode(array('error' => $hayError, 'comision' => $comision)));
+
+    return $response;
+
+});
+
+$app->post('/comisiones/alta', function ($request, $response, $args) {
+
+
+        $comision = $request->getParsedBody();
+
+        // convierto el array en un objecto
+        $comision = (object)$comision;
+
+        $res = comision::AltaComision($comision);
+
+
+        $hayError = false;
+
+        if ($res) {
+            $hayError = false;
+        } else {
+            $hayError = true;
+        }
+
+        $response->withHeader('Content-Type', 'application/json');
+        $response->write(json_encode(array('error' => $hayError, 'ok' => $ret)));
+
+
+        return $response;
+
+});
+
+
+
 //-------------------------------------------------------
 
 $app->get('/usuarios/traer/{objeto}', function ($request, $response, $args) {
@@ -215,7 +290,6 @@ $app->get('/cursos', function ($request, $response, $args) {
 
 
 });
-
 
 
 $app->delete('/usuarios/borrar/{objeto}', function ($request, $response, $args) {
@@ -264,6 +338,21 @@ $app->post('/encuestas/alta', function ($request, $response, $args) {
         $encuesta = (object)$encuesta;
 
   $encuestas=Encuesta::nuevaEncuesta($encuesta);
+
+ return json_encode($encuestas);
+
+
+});
+
+$app->post('/encuestas/enviar', function ($request, $response, $args) {
+
+
+        $encuesta = $request->getParsedBody();
+
+        // convierto el array en un objecto
+        $encuesta = (object)$encuesta;
+
+  $encuestas=Encuesta::enviarEncuesta($encuesta);
 
  return json_encode($encuestas);
 
