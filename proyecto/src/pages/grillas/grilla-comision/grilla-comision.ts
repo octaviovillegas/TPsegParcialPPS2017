@@ -44,8 +44,8 @@ export class GrillaComision {
   
  
 
- Modificar(id_comision, descripcion)
- {
+  Modificar(id_comision, descripcion)
+  {
           let alert = this.alertCtrl.create({
             title: 'Modificar descripcion',
             inputs: [
@@ -89,11 +89,42 @@ export class GrillaComision {
 
     Alta(descripcion)
     {
-        let modal2 = this.modalCtrl.create(AltaModal,{"tipo":"Alumno"});
-        modal2.onDidDismiss(data=>{
-          this.CargaGrilla();
-        });
-        modal2.present();
+       
+          let alert = this.alertCtrl.create({
+            title: 'Nueva comision',
+            inputs: [
+              {
+                name: 'descripcion',
+                placeholder: 'descripcion'
+              } 
+            ],
+            buttons: [
+              {
+                text: 'Cancelar',
+                role: 'cancel',
+                handler: data => {
+                  console.log('Cancel clicked');
+                }
+              },
+              {
+                text: 'Aceptar',
+                handler: data => {
+                  console.info(data);
+                   
+                          this.http.post("http://tppps2.hol.es/ws1/comisiones/alta", {
+                            descripcion:data['descripcion']
+                        })
+                        .map(res => res.json())
+                        .subscribe((quote) =>{
+                          this.CargaGrilla();
+                        });
+
+                         
+                }
+              }
+            ]
+          });
+          alert.present();
     }
 
     Eliminar(id_comision, descripcion)

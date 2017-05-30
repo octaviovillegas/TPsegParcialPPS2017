@@ -5,6 +5,7 @@
       <button ion-button menuToggle left>
           <ion-icon name="menu"></ion-icon>
       </button>
+      <ion-title>Comisiones</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -14,15 +15,20 @@
 
     <button ion-button icon-left color=light (click)="Alta()" round >
   <ion-icon name="person-add" ></ion-icon>
+  Nueva Comision
 </button>
 
 
+<div *ngFor="let c of Com">
 <ion-card >
   <ion-card-content>
     <ion-card-title>
+        Id de comision: {{c.id_comision}}
       </ion-card-title>
     <p>
         {{c.descripcion}}<br>        
+         <button ion-button color=danger (click)="Eliminar(c.id_comision, c.descripcion)">eliminar</button>
+         <button ion-button color=secondary (click)="Modificar(c.id_comision, c.descripcion)">modificar</button>
     </p>
   </ion-card-content>
 </ion-card>
