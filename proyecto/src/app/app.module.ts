@@ -33,7 +33,6 @@ import {AltaModal} from "../pages/grillas/alta-modal/alta-modal";
 import {Modales} from '../pages/encuestas/modales/modales';
 import {GenerarEncuesta} from '../pages/encuestas/generarencuesta/generarencuesta';
 import {EnviarEncuesta} from '../pages/encuestas/enviarencuesta/enviarencuesta';
-import {GrillaCurso} from "../pages/grillas/grilla-curso/grilla-curso";
 import {GrillaComision} from "../pages/grillas/grilla-comision/grilla-comision";
 
 import { Device } from '@ionic-native/device';
@@ -63,7 +62,6 @@ import { Device } from '@ionic-native/device';
     Modales,
     GenerarEncuesta,
     EnviarEncuesta,
-    GrillaCurso,
     GrillaComision
   ],
   imports: [
@@ -97,7 +95,6 @@ import { Device } from '@ionic-native/device';
     Modales,
    GenerarEncuesta,
     EnviarEncuesta,
-    GrillaCurso,
     GrillaComision
       ],
   providers: [

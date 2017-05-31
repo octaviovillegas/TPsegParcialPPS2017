@@ -14,7 +14,6 @@ import {GrillaProfesor} from "../grillas/grilla-profesor/grilla-profesor";
 import {Encuestas} from '../encuestas/encuestas';
 import {GenerarEncuesta} from '../encuestas/generarencuesta/generarencuesta';
 import {EnviarEncuesta} from '../encuestas/enviarencuesta/enviarencuesta';
-import {GrillaCurso} from "../grillas/grilla-curso/grilla-curso";
 import {GrillaComision} from "../grillas/grilla-comision/grilla-comision";
 /**
 * Generated class for the Menu page.
@@ -42,7 +41,6 @@ export class Menu {
     private grillaAlumno;
     private grillaAdministrador;
     private grillaAdministrativo;
-    private grillaCurso;
     private grillaComision;
 
     constructor(public navCtrl: NavController,public viewCtrl:ViewController,
@@ -61,7 +59,6 @@ export class Menu {
         this.grillaAlumno = GrillaAlumno;
         this.grillaAdministrador = GrillaAdministrador;
         this.grillaAdministrativo = GrillaAdministrativo; 
-         this.grillaCurso = GrillaCurso;
         this.grillaComision = GrillaComision;
         if (this.usuarioLogueado.tipo_usuario == 'Alumno') {
             this.openPage(this.alumnoPage);
