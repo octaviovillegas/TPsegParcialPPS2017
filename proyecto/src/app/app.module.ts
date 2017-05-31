@@ -34,8 +34,9 @@ import {Modales} from '../pages/encuestas/modales/modales';
 import {GenerarEncuesta} from '../pages/encuestas/generarencuesta/generarencuesta';
 import {EnviarEncuesta} from '../pages/encuestas/enviarencuesta/enviarencuesta';
 import {GrillaComision} from "../pages/grillas/grilla-comision/grilla-comision";
-
 import { Device } from '@ionic-native/device';
+import {GrillaCurso} from "../pages/grillas/grilla-curso/grilla-curso";
+import {ModificacionModalCursos} from "../pages/grillas/modificacion-modal-cursos/modificacion-modal-cursos";
 
 @NgModule({
   declarations: [
@@ -62,7 +63,9 @@ import { Device } from '@ionic-native/device';
     Modales,
     GenerarEncuesta,
     EnviarEncuesta,
-    GrillaComision
+    GrillaComision,
+    GrillaCurso,
+    ModificacionModalCursos
   ],
   imports: [
     BrowserModule,
@@ -95,7 +98,9 @@ import { Device } from '@ionic-native/device';
     Modales,
    GenerarEncuesta,
     EnviarEncuesta,
-    GrillaComision
+    GrillaComision,
+    GrillaCurso,
+    ModificacionModalCursos
       ],
   providers: [
     StatusBar,

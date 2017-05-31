@@ -1,0 +1,35 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>modificacionModal</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+
+ <ion-item>
+    <ion-label floating>Descripcion</ion-label>
+    <ion-input type="text" [(ngModel)]="d"></ion-input>
+  </ion-item>
+ 
+
+
+<ion-list>
+  <ion-item>
+    <ion-label>Tipo</ion-label>
+    <ion-select [(ngModel)]="desc_comi">
+      <div *ngFor="let c of comisiones">
+      <ion-option value={{c.id_comision}} ng-selected="true" >{{c.descripcion}} - {{desc_comi==c.descripcion}} </ion-option> 
+      
+      </div>
+    </ion-select>
+  </ion-item>
+</ion-list>
+
+<button ion-button color=light (click)="Modificar(id_usuario, n, u, c, t)"> Modificar </button>
+<button ion-button color=light (click)="Cancelar()"> Cancelar </button>
+
+
+
+</ion-content>

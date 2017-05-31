@@ -1,0 +1,37 @@
+
+<ion-header>
+
+  <ion-navbar>
+      <button ion-button menuToggle left>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Cursos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+ 
+
+<ion-content padding>
+
+    <button ion-button icon-left color=light (click)="Alta()" round >
+  <ion-icon name="person-add" ></ion-icon>
+  Nuevo usuario
+</button>
+
+
+<div *ngFor="let c of Cur">
+<ion-card >
+  <ion-card-content>
+    <ion-card-title>
+        {{c.descripcion}}
+      </ion-card-title>
+    <p>
+        Comision: {{c.comision_descripcion}}<br><br>
+         <button ion-button color=danger (click)="Eliminar(c.id_curso)">eliminar</button>
+         <button ion-button color=secondary (click)="Modificar(c.id_curso, c.descripcion, c.comision_descripcion)">modificar</button>
+    </p>
+  </ion-card-content>
+</ion-card>
+</div>
+
+</ion-content>
