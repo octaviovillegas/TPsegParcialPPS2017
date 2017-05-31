@@ -11,28 +11,36 @@
       <ion-row>
         <ion-col>
           <ion-list inset>
-            
+
             <ion-item>
               <ion-input type="text" placeholder="Usuario" name="usuario" [(ngModel)]="Login.usuario" required></ion-input>
             </ion-item>
-            
+
             <ion-item>
               <ion-input type="password" placeholder="Clave" name="clave" [(ngModel)]="Login.clave" required></ion-input>
             </ion-item>
-            
+
           </ion-list>
         </ion-col>
       </ion-row>
-      
+
       <ion-row>
         <ion-col class="signup-col">
         <button ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.form.valid">Login</button>
         </ion-col>
       </ion-row>
     </form>
-     <input type="submit"  (click)="EscribirCredenciales('Administrador')" value="Administrador">
-        <input type="submit" (click)="EscribirCredenciales('Administrativo')" value="Administrativo" >
-        <input type="submit" (click)="EscribirCredenciales('Alumno')" value="Alumno" >
-        <input type="submit" (click)="EscribirCredenciales('Profesor')" value="Profesor"  >
+
+    <br><br>
+    <button ion-button small color="dark" (click)="EscribirCredenciales('Administrador')">Administrador</button>
+    <button ion-button small color="dark" (click)="EscribirCredenciales('Administrativo')">Administrativo</button>
+    <button ion-button small color="dark" (click)="EscribirCredenciales('Alumno')">Alumno</button>
+    <button ion-button small color="dark" (click)="EscribirCredenciales('Profesor')">Profesor</button>
   </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>{{device.model}} - {{device.platform}}</ion-title>
+  </ion-toolbar>
+</ion-footer>

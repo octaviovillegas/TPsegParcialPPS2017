@@ -35,6 +35,9 @@ import {GenerarEncuesta} from '../pages/encuestas/generarencuesta/generarencuest
 import {EnviarEncuesta} from '../pages/encuestas/enviarencuesta/enviarencuesta';
 import {GrillaCurso} from "../pages/grillas/grilla-curso/grilla-curso";
 import {GrillaComision} from "../pages/grillas/grilla-comision/grilla-comision";
+
+import { Device } from '@ionic-native/device';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -97,12 +100,13 @@ import {GrillaComision} from "../pages/grillas/grilla-comision/grilla-comision";
     GrillaCurso,
     GrillaComision
       ],
-  providers: [AlumnoEncuestasPage,
+  providers: [
     StatusBar,
     SplashScreen,
     HttpModule,
     servicioAuth,
     AuthData,
+    Device,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
