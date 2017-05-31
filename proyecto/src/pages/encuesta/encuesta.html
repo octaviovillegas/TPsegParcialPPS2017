@@ -12,7 +12,7 @@
     <ion-icon name="arrow-back"></ion-icon>
     </button>
     </ion-buttons>
-    <ion-title>Encuesta: {{ encuesta.descripcion }} {{accion}}</ion-title>
+    <ion-title>Encuesta: {{ encuesta.descripcion }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -24,7 +24,7 @@
         <ion-list-header>Preguntas</ion-list-header>
         <button ion-item *ngFor="let pregunta of preguntas">
             <h2>{{ pregunta.descripcion }}</h2>
-            <p>Repuesta: {{ getRespuesta(pregunta) }}</p>
+            <p>Repuesta: {{ pregunta.respuesta_opcion }}</p>
         </button>
     </ion-list>
 

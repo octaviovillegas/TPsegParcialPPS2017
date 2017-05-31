@@ -65,13 +65,6 @@ export class EncuestaPage {
 
     }
 
-    getRespuesta(pregunta) {
-        console.log('respuesta_opcion: ' + pregunta.respuesta_opcion);
-        console.log(pregunta['opcion'+pregunta.respuesta_opcion]);
-
-        return pregunta['opcion'+pregunta.respuesta_opcion];
-    }
-
     private checkboxs_checked = [false, false, false, false];
     onChecked(value, i, pregunta) {
 
