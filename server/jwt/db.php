@@ -24,6 +24,26 @@ class DB{
     { 
         return $this->_instancePDO->prepare($sql); 
     }
+
+    public function beginTransaction()
+    { 
+        return $this->_instancePDO->beginTransaction(); 
+    }
+
+    public function commit()
+    { 
+        return $this->_instancePDO->commit(); 
+    }
+
+    public function rollBack()
+    { 
+        return $this->_instancePDO->rollBack(); 
+    }
+    
+    public function lastInsertId()
+    { 
+        return $this->_instancePDO->lastInsertId(); 
+    }
     
     public static function getInstance()
     { 

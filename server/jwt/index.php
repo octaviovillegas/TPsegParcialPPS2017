@@ -43,5 +43,15 @@ $app->post('/permissions',function(Request $request, Response $response){
     return $response;
 });
 
+$app->post('/newsurvey',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $survey = $params["survey"];
+    $jwt = $params["jwt"];
+    $tm = new TokenManager();
+    $userid = $tm->getIdByJWT($jwt);
+    GenericDAO::newSurvey($survey,$userid);
+    return $response;
+});
+
 $app->run();
 ?>
