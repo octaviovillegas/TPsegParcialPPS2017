@@ -6,6 +6,7 @@ import { ModalController } from 'ionic-angular';
 import { Menu } from '../../menu/menu';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import { AltaModal } from '../alta-modal/alta-modal';
+import { AltaModalCursos } from '../alta-modal-cursos/alta-modal-cursos';
 
 
 @Component({
@@ -60,12 +61,14 @@ export class GrillaCurso {
 
     Alta()
     {
-        let modal2 = this.modalCtrl.create(AltaModal,{"tipo":"Alumno"});
-        modal2.onDidDismiss(data=>{
+      
+        let modal = this.modalCtrl.create(AltaModalCursos);
+        modal.onDidDismiss(data=>{
           this.CargaGrilla();
         });
-        modal2.present();
-    }
+        modal.present();
+        
+    } 
 
     Eliminar(id_usuario, usuario, nombre, clave, id_tipo)
     {

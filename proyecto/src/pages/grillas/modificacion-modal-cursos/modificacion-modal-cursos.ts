@@ -18,15 +18,14 @@ export class ModificacionModalCursos
   
   id_curso;
   http;
-  desc_comi
-
+  
+  comisi:number;
   comisiones;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, htt:Http, public viewCtrl: ViewController)
   {
-    this.d = navParams.data['descripcion'];
-    this.desc_comi=navParams.data['comision'];
-    console.info(navParams.data['comision']);
+    this.d= navParams.data['descripcion'];
+    this.comisi=navParams.data['comision'];
     this.id_curso=navParams.data['id_curso'];
     this.http=htt;
     this.TraerComisiones();
@@ -34,14 +33,33 @@ export class ModificacionModalCursos
     
   }
 
-  Modificar(id_usuario, nombre, usuario, clave, id_tipo)
+  onChange(event)
   {
-      this.http.post("http://tppps2.hol.es/ws1/usuarios/modificar", {
-          id_usuario: id_usuario,
-          clave: clave,
-          nombre: nombre,
-          usuario: usuario,
-          id_tipo: id_tipo
+    console.info(event);
+    console.info(this.comisi);
+  }
+
+  Modificar(des_curso,com_des,usuario)
+  {
+    let micomi;
+    usuario=1;
+    for(let comi of this.comisiones)
+    {
+      if(comi.descripcion==com_des)
+      {
+        micomi=comi.id_comision;
+      }
+    }
+    console.info("curso_id:",this.id_curso);
+    console.info("comision:",micomi);
+    console.info("desc_curso:",des_curso);
+    console.info("idusuario:",usuario);
+
+      this.http.post("http://tppps2.hol.es/ws1/cursos/modificar", {
+           id_curso:this.id_curso,
+           id_comision:micomi,
+           descripcion:des_curso,
+           id_usuario:usuario
       })
       .map(res => res.json())
       .subscribe((quote) =>{
@@ -58,7 +76,6 @@ TraerComisiones(){
             .subscribe((quote) =>{
                    this.comisiones = quote;  
                    console.info(this.comisiones);
-                   console.info(this.desc_comi);
                      
 
             });

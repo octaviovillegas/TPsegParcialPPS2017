@@ -37,6 +37,7 @@ import {GrillaComision} from "../pages/grillas/grilla-comision/grilla-comision";
 import { Device } from '@ionic-native/device';
 import {GrillaCurso} from "../pages/grillas/grilla-curso/grilla-curso";
 import {ModificacionModalCursos} from "../pages/grillas/modificacion-modal-cursos/modificacion-modal-cursos";
+import {AltaModalCursos} from "../pages/grillas/alta-modal-cursos/alta-modal-cursos";
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import {ModificacionModalCursos} from "../pages/grillas/modificacion-modal-curso
     EnviarEncuesta,
     GrillaComision,
     GrillaCurso,
-    ModificacionModalCursos
+    ModificacionModalCursos,
+    AltaModalCursos
   ],
   imports: [
     BrowserModule,
@@ -100,7 +102,8 @@ import {ModificacionModalCursos} from "../pages/grillas/modificacion-modal-curso
     EnviarEncuesta,
     GrillaComision,
     GrillaCurso,
-    ModificacionModalCursos
+    ModificacionModalCursos,
+    AltaModalCursos
       ],
   providers: [
     StatusBar,
