@@ -43,5 +43,16 @@ class TokenManager{
         return $rv;
     }
 
+    function getIdByJWT($jwt){
+        $key = "soydyos";
+        try{
+            $decode = JWT::decode($jwt,$key,array('HS256'));
+            $rv = $decode->uid;
+        }catch(Exception $ex){
+
+        }
+        return $rv;
+    }
+
 }
 ?>

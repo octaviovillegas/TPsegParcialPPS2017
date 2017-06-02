@@ -4,6 +4,7 @@ import { Http, RequestOptions, Headers } from "@angular/http";
 import "rxjs/add/operator/toPromise";
 
 import { LoginData } from "../app/entities/loginData";
+import { Survey } from "../app/entities/survey";
 
 @Injectable()
 export class AppService {
@@ -34,4 +35,13 @@ export class AppService {
   logOut(){
     this.clearStorageData();
   }
+
+  newSurvey(survey:Survey,jwt) {
+    let data = {survey, jwt };   
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/newsurvey", jsonData, options).toPromise();
+  }
+
 }

@@ -12,6 +12,7 @@ class GenericDAO
 
 	public static function validateUserByEmailAndPassword($params){
 		try{
+			$rv = null;
 			$db = GenericDAO::getPDO();
 
 			$sql = "select u.userid, r.code 
@@ -23,9 +24,15 @@ class GenericDAO
 			$statement->bindValue(":email", $params['email'], PDO::PARAM_STR);
 			$statement->bindValue(":password", $params['password'], PDO::PARAM_STR);
 			$statement->execute();
-            $rv = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $data = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-			if(count($rv) == 1){ $rv = $rv[0];}else{ $rv = null;}
+			if(count($data) == 1)
+			{
+				 $rv = array(
+					 "userid" => $data[0]["userid"],
+					 "code" => $data[0]["code"]
+				 );
+			}
 			return $rv;
 		}catch(Exception $ex){
 			die("Error: " . $ex->getMessage());
@@ -55,5 +62,63 @@ class GenericDAO
 			die("Error: " . $ex->getMessage());
 		}
 	}
+
+
+	//Survey
+	public static function newSurvey($survey,$userid){
+
+		try{
+			//simulation of data from parameters
+			
+			//survey
+			$title = $survey["title"];
+			$survey["creationDate"] = date("Y-m-d");
+			$endDate = $survey["endDate"];
+
+
+			//question
+			$text= $survey["question"]["text"];
+
+			$db = GenericDAO::getPDO();
+
+			$couldBegin = $db->beginTransaction();
+			
+			$sql = "insert into surveys
+					(title,creationdate,enddate,ownerid) 
+					values (:title,:creationdate,:enddate,:ownerid)";
+
+			$statement = $db->sendQuery($sql);
+			$statement->bindValue(":title", $survey["title"], PDO::PARAM_STR);
+			$statement->bindValue(":creationdate", $survey["creationDate"], PDO::PARAM_STR);
+			$statement->bindValue(":enddate", $survey["endDate"], PDO::PARAM_STR);
+			$statement->bindValue(":ownerid", $userid, PDO::PARAM_INT);
+
+			$statement->execute();
+
+			$survey["question"]["surveyId"] = $db->lastInsertId();
+
+
+			$sql2 = "insert into questions
+					(text,surveyid)
+					values(:text,:surveyid)";
+
+			$statement = $db->sendQuery($sql2);
+			$statement->bindValue(":text", $survey["question"]["text"], PDO::PARAM_STR);
+			$statement->bindValue(":surveyid", $survey["question"]["surveyId"], PDO::PARAM_INT);
+
+			$statement->execute();
+
+			if(count($survey["question"]["options"]) > 0){
+        	
+				//guardar también las opciones.
+			}
+
+			$db->commit();
+		}catch(Exception $ex){
+			$db->rollBack();
+		}
+		
+	}
+
 }
 ?>
