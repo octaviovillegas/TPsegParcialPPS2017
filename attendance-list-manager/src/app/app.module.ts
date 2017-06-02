@@ -10,10 +10,13 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import {RegisteredUserPage } from "../pages/registered-user/registered-user";
-
+import {gestionalumno} from "../pages/gestionalumno/gestionalumno";
+import {gestionprofesor} from "../pages/gestionprofesor/gestionprofesor";
+import {generarencuesta} from "../pages/generarencuesta/generarencuesta";
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppService } from "../providers/app-service";
+
 
 @NgModule({
   declarations: [
@@ -22,13 +25,17 @@ import { AppService } from "../providers/app-service";
     ContactPage,
     HomePage,
     TabsPage,
-    RegisteredUserPage
+    RegisteredUserPage,
+    gestionalumno,
+    gestionprofesor,
+    generarencuesta
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule,
+    HttpModule, 
     IonicStorageModule.forRoot()
+     
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -37,7 +44,10 @@ import { AppService } from "../providers/app-service";
     ContactPage,
     HomePage,
     TabsPage,
-    RegisteredUserPage
+    RegisteredUserPage,
+    gestionalumno,
+    gestionprofesor,
+    generarencuesta
   ],
   providers: [
     StatusBar,
