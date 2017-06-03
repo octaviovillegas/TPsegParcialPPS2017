@@ -85,7 +85,7 @@ export class EncuestaPage {
             }
         }
 
-        pregunta.respuesta_opcion = valor.join(', ');
+        pregunta.respuesta_opcion = valor.join(',');
     }
 
     estaSinResponder(pregunta: Pregunta) {
@@ -111,7 +111,7 @@ export class EncuestaPage {
         for (let i = 0; i < this.checkboxs_checked.length; i++) {
             this.checkboxs_checked[i] = false;
         }
-        
+
         let indice_actual = this.preguntas.indexOf(this.pregunta_actual);
 
         if (indice_actual < this.preguntas.length - 1) {
