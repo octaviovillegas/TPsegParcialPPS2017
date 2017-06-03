@@ -20,7 +20,11 @@
 
 <ion-content padding>
 
-    <ion-list *ngIf="accion == 'ver'">
+    <div *ngIf="cargando" text-center>
+        <ion-spinner text-center name="bubbles"></ion-spinner>
+    </div>
+
+    <ion-list *ngIf="!cargando && accion == 'ver'">
         <ion-list-header>Preguntas</ion-list-header>
         <button ion-item *ngFor="let pregunta of preguntas">
             <h2>{{ pregunta.descripcion }}</h2>
@@ -28,7 +32,7 @@
         </button>
     </ion-list>
 
-    <div *ngIf="accion == 'responder'">
+    <div *ngIf="!cargando && accion == 'responder'">
         <h1>Preguntas</h1>
         <ion-card no-padding class="animated pulse" *ngIf="pregunta_actual != null">
             <ion-card-header>

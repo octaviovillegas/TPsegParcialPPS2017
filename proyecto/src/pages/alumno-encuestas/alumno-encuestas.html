@@ -20,7 +20,11 @@
 
 <ion-content padding>
 
-    <ion-list>
+    <div *ngIf="cargando" text-center>
+        <ion-spinner text-center name="bubbles"></ion-spinner>
+    </div>
+
+    <ion-list *ngIf="!cargando">
         <button ion-item *ngFor="let encuesta of encuestas" (click)="verOResponderEncuesta(encuesta)">
             <h2>{{ encuesta.descripcion }}</h2>
             <p>Fecha: {{ encuesta.fecha_inicio }} - {{ encuesta.fecha_fin }}</p>

@@ -19,6 +19,7 @@ export class AlumnoEncuestasPage {
     private titulo: string;
     private estado: string;
     private encuestas;
+    private cargando = false;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private auth: servicioAuth, private http: Http) {
         this.estado = navParams.data;
@@ -34,10 +35,11 @@ export class AlumnoEncuestasPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad AlumnoEncuestasPage');
-
+        this.cargando = true;
         this.getEncuestasByEstado(this.estado).subscribe((encuestas) => {
             console.log(encuestas);
             this.encuestas = encuestas;
+            this.cargando = false;
         });
     }
 

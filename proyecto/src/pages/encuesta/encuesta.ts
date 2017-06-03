@@ -26,6 +26,7 @@ export class EncuestaPage {
     private preguntas;
     private pregunta_actual: Pregunta = null;
     private accion;
+    private cargando = false;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private auth: servicioAuth, private http: Http, public toastCtrl: ToastController) {
         this.encuesta = navParams.data.encuesta;
@@ -34,11 +35,17 @@ export class EncuestaPage {
 
     ionViewDidLoad() {
         if (this.accion == EncuestaPage.ACCION_VER) {
+            this.cargando = true;
             let usuario = this.auth.getUserInfo();
-            this.traerPreguntasConRespuestas(this.encuesta.id_encuesta, usuario.id_usuario).subscribe((preguntas) => this.preguntas = preguntas);
+            this.traerPreguntasConRespuestas(this.encuesta.id_encuesta, usuario.id_usuario).subscribe((preguntas) => {
+                this.preguntas = preguntas;
+                this.cargando = false;
+            });
         } else if (this.accion == EncuestaPage.ACCION_RESPONDER) {
+            this.cargando = true;
             this.traerPreguntas(this.encuesta.id_encuesta).subscribe((preguntas) => {
                 this.preguntas = preguntas;
+                    this.cargando = false;
 
                 if (this.preguntas.length > 0) {
                     this.pregunta_actual = this.preguntas[0];
@@ -68,15 +75,6 @@ export class EncuestaPage {
     private checkboxs_checked = [false, false, false, false];
     onChecked(value, i, pregunta) {
 
-        console.log(value);
-        console.log(i);
-        console.log(pregunta);
-
-        /*if (typeof pregunta.respuesta_opcion == 'undefined') {
-            pregunta.respuesta_opcion = [false, false, false, false];
-        }*/
-
-        /*pregunta.respuesta_opcion[i-1] = value.checked;*/
         this.checkboxs_checked[i-1] = value.checked;
 
         let valor = [];
@@ -100,7 +98,6 @@ export class EncuestaPage {
             return isUndefined || pregunta.respuesta_opcion == null;
         } else if (pregunta.tipo == 'checkbox') {
             return isUndefined || pregunta.respuesta_opcion.length <= 0;
-            //return isUndefined || pregunta.respuesta_opcion.indexOf(true) == -1;
         } else if (pregunta.tipo == 'select') {
             return isUndefined || pregunta.respuesta_opcion == null;
         }
