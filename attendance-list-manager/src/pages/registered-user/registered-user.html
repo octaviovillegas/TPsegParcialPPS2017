@@ -31,7 +31,36 @@
     </ion-list>
   </ion-content>
 </ion-menu>
-<ion-content padding>
-  Contenido dentro de la pagina
+<ion-content padding >
+  <div [ngSwitch]="Tipodeusuario">
+    <template [ngSwitchCase]='Administrator'>
+        <div>1</div>
+    </template>
+    <template [ngSwitchCase]='Teacher'>
+        <div><ion-title>Profesor</ion-title>
+     <ion-toolbar>
+    <button ion-button small>Nueva Encuesta</button>
+    <button ion-button small>Borrar Encuesta</button>
+    <button ion-button small>Editar Encuesta</button>
+     </ion-toolbar>
+     <button ion-button small (click)="gAsistencia()">Asistencia</button></div> 
+    </template>
+    <template [ngSwitchCase]="Student">
+         <div>
+
+ 
+  <ion-title>  Alumno</ion-title>
+    <button ion-button round  (click)="asistencias()">Materia y Asistencias</button>
+    <button ion-button round>Materia X</button>
+    <button ion-button round>Materia z</button>
+    <button ion-button round>Encuestas</button>
+    
+ 
+
+
+</div>
+    </template>
+</div>
+  
 </ion-content>
 <ion-nav #mycontent [root]="rootPage"></ion-nav>
