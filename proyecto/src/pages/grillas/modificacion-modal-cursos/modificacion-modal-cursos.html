@@ -9,7 +9,7 @@
 <ion-content padding>
 
  <ion-item>
-    <ion-label floating>Descripcion</ion-label>
+    <ion-label floating>Nombre del curso:</ion-label>
     <ion-input type="text" [(ngModel)]="d"></ion-input>
   </ion-item>
  
@@ -17,17 +17,29 @@
 
 <ion-list>
   <ion-item>
-    <ion-label>Tipo</ion-label>
+    <ion-label>Comision:</ion-label>
     <ion-select [(ngModel)]="comisi">
         <ion-option *ngFor="let c of comisiones" ng-value="comisi">{{c.descripcion}}</ion-option>  
     </ion-select>
   </ion-item>
 </ion-list>
 
-<button ion-button color=light (click)="Modificar(d,comisi,usuario)"> Modificar </button>
+<ion-list>
+  <ion-item>
+    <ion-label>Profesor:</ion-label>
+    <ion-select [(ngModel)]="profe" >
+        <div *ngFor="let p of UssP" >
+        <ion-option ng-value=profe>{{p.nombre}}</ion-option> 
+        </div>      
+    </ion-select>
+  </ion-item>
+</ion-list>
+
+
+<button ion-button color=light (click)="Modificar(d,comisi,profe)"> Modificar </button>
 <button ion-button color=light (click)="Cancelar()"> Cancelar </button>
 
- {{id_comisi}}
+ 
 
  
 </ion-content>

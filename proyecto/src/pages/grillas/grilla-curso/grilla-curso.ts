@@ -18,10 +18,38 @@ export class GrillaCurso {
     Cursos;
     Cur : Array<any> =[];
     comisiones;
+    profesores=null;
+    UssP=[];
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController) {
     this.CargaGrilla();
- 
+    this.TraerProfesores();
+    
+
   }
+
+
+  
+      TraerProfesores()
+      {
+          this.profesores=null;
+          this.UssP=[];
+            this.http.get("http://tppps2.hol.es/ws1/usuarios")
+            .map(res => res.json())
+            .subscribe((quote) =>{
+            this.profesores = quote;
+
+            for(let us of this.profesores)
+              {
+                if(us['tipo_usuario'] == "Profesor")
+                {
+                  this.UssP.push(us);
+                }
+              }
+              console.info(this.UssP);
+
+            });
+
+      }
 
 
       CargaGrilla()
@@ -43,12 +71,15 @@ export class GrillaCurso {
 
     }
 
-    Modificar(id_curso, descripcion, comision)
+    Modificar(id_curso, descripcion, comision,id_usuario)
     {
+      console.info(id_curso, descripcion, comision,id_usuario);
+   
         let curs = {
             id_curso: id_curso,
             comision: comision,
             descripcion: descripcion,
+            id_usuario:id_usuario
       
         };
         let modal = this.modalCtrl.create(ModificacionModalCursos, curs);

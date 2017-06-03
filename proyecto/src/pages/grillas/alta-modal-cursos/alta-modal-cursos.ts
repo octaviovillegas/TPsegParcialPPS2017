@@ -34,16 +34,19 @@ export class AltaModalCursos
 
       Alta(descCurso, id_comi, prof)
       {
-        console.info(prof);
-            this.http.post("http://tppps2.hol.es/ws1/cursos/alta", {
-                descripcion: descCurso,
-                id_comision:this.id_comi,
-                id_profe:1
-            })
-            .map(res => res.json())
-            .subscribe((quote) =>{
-              this.viewCtrl.dismiss();
-            });
+            console.info("id_profesor:",prof);
+            console.info("id_comision:",id_comi);
+            console.info("descripcioncurso:",descCurso);
+               this.http.post("http://tppps2.hol.es/ws1/cursos/alta", {
+              id_comision: id_comi,
+              id_usuario: prof,
+              descripcion: descCurso
+          })
+          .map(res => res.json())
+          .subscribe((quote) =>{
+            console.info(quote);
+            this.viewCtrl.dismiss();
+          });
         
 
       }

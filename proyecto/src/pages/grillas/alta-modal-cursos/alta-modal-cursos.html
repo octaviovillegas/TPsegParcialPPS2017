@@ -28,7 +28,7 @@
 
 <ion-list>
   <ion-item>
-    <ion-label>Profesor</ion-label>
+    <ion-label>Profesor:</ion-label>
     <ion-select [(ngModel)]="profe" >
         <div *ngFor="let p of UssP" >
         <ion-option value={{p.id_usuario}} >{{p.nombre}}</ion-option> 
@@ -38,7 +38,7 @@
 </ion-list>
 
 <button ion-button color=light (click)="Alta(d,desc_comi,profe)"> Dar de alta </button>
-<button ion-button color=light (click)="Cancelar()"> Cancelar </button>
+<button ion-button color=light (click)="cancelar()"> Cancelar </button>
 
 
 

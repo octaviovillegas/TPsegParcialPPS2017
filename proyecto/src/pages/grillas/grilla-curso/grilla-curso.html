@@ -25,11 +25,19 @@
     <ion-card-title>
         {{c.descripcion}}
       </ion-card-title>
-    <p>
+   
         Comision: {{c.comision_descripcion}}<br><br>
+        <div *ngFor="let pro of profesores">
+          <div *ngIf="pro.id_usuario==c.id_usuario">
+            Profesor: {{pro.nombre}}<br><br>
+          </div>
+         
+        </div>
          <button ion-button color=danger (click)="Eliminar(c.id_curso)">eliminar</button>
-         <button ion-button color=secondary (click)="Modificar(c.id_curso, c.descripcion, c.comision_descripcion)">modificar</button>
-    </p>
+         <button ion-button color=secondary (click)="Modificar(c.id_curso, c.descripcion, c.comision_descripcion, c.id_usuario)">modificar</button>
+
+ 
+
   </ion-card-content>
 </ion-card>
 </div>
