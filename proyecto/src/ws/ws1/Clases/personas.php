@@ -132,7 +132,7 @@ public static function TraerTodosLosClientes()
 	}
 		public static function TraerIdTipo2($tipo)
 	{
-
+		 
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT id_tipo FROM tipos_usuarios WHERE descripcion = :tipo");
 		$consulta->bindValue(':tipo', $tipo, PDO::PARAM_STR);

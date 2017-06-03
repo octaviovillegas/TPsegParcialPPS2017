@@ -87,5 +87,15 @@ class Encuesta
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	}
 
+          public static function enviarEncuesta($encuesta)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+		$consulta =$objetoAccesoDato->RetornarConsulta("update encuestas set `id_curso`=:id_curso WHERE id_encuesta=:id_encuesta");
+		$consulta->bindValue(':id_encuesta',$encuesta->idEncuesta, PDO::PARAM_STR);
+		$consulta->bindValue(':id_curso',$encuesta->idCurso, PDO::PARAM_STR);
+		$consulta->execute();
+		return $consulta->execute();
+	}
+
 
 }
