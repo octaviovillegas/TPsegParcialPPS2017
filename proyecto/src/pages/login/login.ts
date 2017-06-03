@@ -81,14 +81,19 @@ export class Login {
                 });
             },
             error => {
-                let alert = this.alertCtrl.create({
-                    message: error.message,
-                    buttons: [{
-                        text: "Ok",
-                        role: 'cancel'
-                    }]
+
+                this.loading.dismiss().then(() => {
+
+                    let alert = this.alertCtrl.create({
+                        message: error.message,
+                        buttons: [{
+                            text: "Ok",
+                            role: 'cancel'
+                        }]
+                    });
+                    alert.present();
+                    
                 });
-                alert.present();
             });
         });
 
