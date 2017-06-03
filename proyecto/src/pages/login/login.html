@@ -39,7 +39,7 @@
   </div>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="device.model">
   <ion-toolbar>
     <ion-title>{{device.model}} - {{device.platform}}</ion-title>
   </ion-toolbar>
