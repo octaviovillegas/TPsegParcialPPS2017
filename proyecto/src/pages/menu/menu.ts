@@ -15,6 +15,9 @@ import {Encuestas} from '../encuestas/encuestas';
 import {GenerarEncuesta} from '../encuestas/generarencuesta/generarencuesta';
 import {EnviarEncuesta} from '../encuestas/enviarencuesta/enviarencuesta';
 import {GrillaComision} from "../grillas/grilla-comision/grilla-comision";
+import {grafico1} from "../graficos/grafico1/grafico1";
+import {grafico2} from "../graficos/grafico2/grafico2";
+import {grafico3} from "../graficos/grafico3/grafico3";
 /**
 * Generated class for the Menu page.
 *
