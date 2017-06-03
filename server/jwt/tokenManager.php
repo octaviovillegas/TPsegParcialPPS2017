@@ -29,6 +29,7 @@ class TokenManager{
     function isValidToken($jwt){
         $rv = array(
             "isValidToken"=>false,
+            "code"=>array()
         );
         $key = "soydyos";
         try{

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-06-2017 a las 03:40:24
+-- Tiempo de generación: 03-06-2017 a las 03:12:51
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -38,9 +38,15 @@ CREATE TABLE `options` (
 --
 
 INSERT INTO `options` (`optionid`, `text`, `isright`, `questionid`) VALUES
-(1, 'Soy respuesta correcta', 1, 1),
-(2, 'Soy respuesta incorrecta', 0, 1),
-(3, 'Soy otra respuesta incorrecta', 0, 1);
+(13, 'Soy el texto de una opción correcta', 1, 52),
+(14, 'Soy el texto de una opción incorrecta', 0, 52),
+(15, 'Soy el texto de una opción correcta', 1, 53),
+(16, 'Soy el texto de una opción correcta', 1, 53),
+(17, 'Soy el texto de una opción correcta', 1, 54),
+(18, 'Soy el texto de una opción incorrecta', 0, 54),
+(19, 'Soy el texto de una opción correcta', 1, 55),
+(20, 'Soy el texto de una opción incorrecta', 0, 55),
+(21, 'Soy el texto de una opción correcta', 1, 55);
 
 -- --------------------------------------------------------
 
@@ -111,9 +117,10 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`questionid`, `text`, `surveyid`) VALUES
-(1, '¿Pregunta numero uno?', 1),
-(2, '¿Pregunta numero dos?', 1),
-(3, '¿Pregunta numero tres?', 1);
+(52, '¿Una pregunta?', 50),
+(53, '¿Una pregunta?', 51),
+(54, '¿Una pregunta?', 52),
+(55, '¿Una pregunta?', 53);
 
 -- --------------------------------------------------------
 
@@ -147,15 +154,19 @@ CREATE TABLE `surveys` (
   `title` text NOT NULL,
   `creationdate` date NOT NULL,
   `enddate` date NOT NULL,
-  `ownerid` bigint(20) NOT NULL
+  `ownerid` bigint(20) NOT NULL,
+  `waseliminated` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `surveys`
 --
 
-INSERT INTO `surveys` (`surveyid`, `title`, `creationdate`, `enddate`, `ownerid`) VALUES
-(1, 'Encuesta Numero 1', '2017-05-31', '2017-06-20', 1);
+INSERT INTO `surveys` (`surveyid`, `title`, `creationdate`, `enddate`, `ownerid`, `waseliminated`) VALUES
+(50, 'Titulo de la encuesta', '2017-05-02', '2017-06-01', 3, 0),
+(51, 'Titulo de la encuesta', '2017-06-02', '2030-08-04', 2, 0),
+(52, 'Titulo de la encuesta', '2017-06-02', '0000-00-00', 1, 0),
+(53, 'Titulo de la encuesta', '2017-06-02', '2030-08-04', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -241,7 +252,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `options`
 --
 ALTER TABLE `options`
-  MODIFY `optionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `optionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT de la tabla `permissions`
 --
@@ -256,12 +267,12 @@ ALTER TABLE `permissionsbyrol`
 -- AUTO_INCREMENT de la tabla `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `questionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `questionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 --
 -- AUTO_INCREMENT de la tabla `surveys`
 --
 ALTER TABLE `surveys`
-  MODIFY `surveyid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `surveyid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --

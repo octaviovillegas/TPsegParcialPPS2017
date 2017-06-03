@@ -44,6 +44,11 @@ class DB{
     { 
         return $this->_instancePDO->lastInsertId(); 
     }
+    public function setAttribute($param1,$param2)
+    { 
+        return $this->_instancePDO->setAttribute($param1,$param2); 
+    }
+    
     
     public static function getInstance()
     { 
@@ -52,7 +57,7 @@ class DB{
         } 
         return self::$instance;        
     }
- 
+    
     // Prevents the object from being cloned
     public function __clone()
     { 
