@@ -68,22 +68,29 @@ $app->get('/algo', function ($request, $response, $args) {
 
 
 
- 
+
 
 
 $app->get('/usuarios', function ($request, $response, $args) {
 
+    $params = $request->getQueryParams();
 
-   $arrAdmin = Usuario::TraerTodasLasPersonas();
+    $usuario = isset($params['usuario']) ? $params['usuario'] : null;
+    $clave= isset($params['clave']) ? $params['clave'] : null;
+
+    if (!is_null($usuario) && !is_null($clave)) {
+        $usuarios = Usuario::TraerUnUsuarioPorUsuarioYClave($usuario, $clave);
+    } else {
+        $usuarios = Usuario::TraerTodasLasPersonas();
+    }
 
 
-
-   return json_encode($arrAdmin);
+    return json_encode($usuarios);
 
 
 });
 
- 
+
 
 //--aixa------------------------------------------
 
