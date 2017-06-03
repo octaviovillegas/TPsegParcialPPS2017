@@ -27,7 +27,7 @@
       <ion-list-header>
         Acciones
       </ion-list-header>
-      <button ion-item *ngFor="let action of actions">{{action}}</button>
+      <button ion-item *ngFor="let action of actions" (click)="accedera(action)">{{action}}</button>
     </ion-list>
   </ion-content>
 </ion-menu>
