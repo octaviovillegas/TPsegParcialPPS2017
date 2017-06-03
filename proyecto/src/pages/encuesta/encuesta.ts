@@ -107,13 +107,17 @@ export class EncuestaPage {
     }
 
     siguientePregunta() {
-        this.checkboxs_checked = [false, false, false, false];
+
+        for (let i = 0; i < this.checkboxs_checked.length; i++) {
+            this.checkboxs_checked[i] = false;
+        }
+        
         let indice_actual = this.preguntas.indexOf(this.pregunta_actual);
 
         if (indice_actual < this.preguntas.length - 1) {
             this.pregunta_actual = this.preguntas[++indice_actual];
+
         } else {
-            console.log(this.preguntas);
             let usuario = this.auth.getUserInfo();
 
             this.guardarEncuesta(usuario.id_usuario, this.preguntas).subscribe(response => {

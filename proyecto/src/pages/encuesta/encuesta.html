@@ -51,10 +51,10 @@
                 </ion-list>
 
                 <ion-list *ngIf="pregunta_actual.tipo == 'checkbox'">
-                    <ng-container *ngFor="let opcion of [1,2,3,4]">
+                    <ng-container *ngFor="let opcion of [1,2,3,4]; let i = index;">
                         <ion-item *ngIf="pregunta_actual['opcion'+opcion]">
-                            <ion-label>{{ pregunta_actual['opcion'+opcion] }}</ion-label>
-                            <ion-checkbox (ionChange)="onChecked($event, opcion, pregunta_actual)"></ion-checkbox>
+                            <ion-label>{{ pregunta_actual['opcion'+opcion] }} {{ i }}</ion-label>
+                            <ion-checkbox [checked]="checkboxs_checked[i]" (ionChange)="onChecked($event, opcion, pregunta_actual)"></ion-checkbox>
                         </ion-item>
                     </ng-container>
                 </ion-list>
