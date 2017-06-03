@@ -101,11 +101,12 @@ export class GrillaCurso {
         
     } 
 
-    Eliminar(id_usuario, usuario, nombre, clave, id_tipo)
+    Eliminar(id_curso, desc_curso)
     {
+      console.info(desc_curso);
               let alert = this.alertCtrl.create({
-              title: 'Eliminacion de usuario',
-              message: 'Confirma eliminar usuario '+ usuario,
+              title: 'Eliminacion de Curso',
+              message: 'Confirma eliminar Curso: '+ desc_curso,
               buttons: [
                 {
                   text: 'Cancelar',
@@ -118,8 +119,8 @@ export class GrillaCurso {
                   text: 'Aceptar',
                   handler: () => {
                     console.log('Aceptar clicked');
-                    this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
-                           id_usuario: id_usuario
+                    this.http.post("http://tppps2.hol.es/ws1/cursos/eliminar", {
+                           id_curso: id_curso
             
                     })
                     .map(res => res.json())
