@@ -31,4 +31,31 @@ export class AuthData {
     return this.af.auth.createUser({ email: newEmail, password: newPassword });
   }
 
+  updateUserNombre(nombre: string): firebase.Promise<any> {
+
+      let user = firebase.auth().currentUser;
+      return user.updateProfile({
+          displayName: nombre,
+          photoURL: ''
+      });
+
+  }
+
+  removeUser(email: string) {
+
+      return new Promise((resolve, reject) => {
+
+          let usersRef = firebase.database().ref().child("users");
+          let userQuery = usersRef.orderByChild('email').equalTo(email);
+
+          userQuery.on("child_added", function (snapshot) {
+              snapshot.ref.remove().then( _ => {
+                  resolve(true);
+              });
+          })
+
+      });
+
+  }
+
 }
