@@ -2,7 +2,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Modificacion de cursos</ion-title>
+    <ion-title>Alta de cursos</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,8 +18,10 @@
 <ion-list>
   <ion-item>
     <ion-label>Comision:</ion-label>
-    <ion-select [(ngModel)]="comisi">
-        <ion-option *ngFor="let c of comisiones" ng-value="comisi">{{c.descripcion}}</ion-option>  
+    <ion-select [(ngModel)]="desc_comi" >
+        <div *ngFor="let c of comisiones" >
+        <ion-option value={{c.id_comision}} >{{c.descripcion}}</ion-option> 
+        </div>      
     </ion-select>
   </ion-item>
 </ion-list>
@@ -29,17 +31,15 @@
     <ion-label>Profesor:</ion-label>
     <ion-select [(ngModel)]="profe" >
         <div *ngFor="let p of UssP" >
-        <ion-option ng-value=profe>{{p.nombre}}</ion-option> 
+        <ion-option value={{p.id_usuario}} >{{p.nombre}}</ion-option> 
         </div>      
     </ion-select>
   </ion-item>
 </ion-list>
 
+<button ion-button color=light (click)="Alta(d,desc_comi,profe)"> Dar de alta </button>
+<button ion-button color=light (click)="cancelar()"> Cancelar </button>
 
-<button ion-button color=light (click)="Modificar(d,comisi,profe)"> Modificar </button>
-<button ion-button color=light (click)="Cancelar()"> Cancelar </button>
 
- 
 
- 
 </ion-content>

@@ -34,7 +34,7 @@ export class GrillaProfesor {
 
             for(let us of this.Usuarios)
               {
-                if(us['tipo_usuario'] == "Alumno")
+                if(us['tipo_usuario'] == "Profesor")
                 {
                   this.Uss.push(us);
                 }

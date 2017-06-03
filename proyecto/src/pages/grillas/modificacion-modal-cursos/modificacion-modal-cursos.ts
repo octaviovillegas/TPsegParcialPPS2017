@@ -15,33 +15,59 @@ export class ModificacionModalCursos
 {
 
   d;
-  
   id_curso;
   http;
-  desc_comi
-
+  profesores;
+  UssP;
+  comisi:number;
   comisiones;
-
+  profe_id;
+  profe;
   constructor(public navCtrl: NavController, public navParams: NavParams, htt:Http, public viewCtrl: ViewController)
   {
-    this.d = navParams.data['descripcion'];
-    this.desc_comi=navParams.data['comision'];
-    console.info(navParams.data['comision']);
+    this.d= navParams.data['descripcion'];
+    this.comisi=navParams.data['comision'];
     this.id_curso=navParams.data['id_curso'];
+    this.profe_id=navParams.data['id_usuario'];
+    console.info(this.profe_id);
+
     this.http=htt;
-    this.TraerComisiones();
-    
-    
+    this.TraerComisiones()
+    this.TraerProfesores();
+    console.info(this.profe);
   }
 
-  Modificar(id_usuario, nombre, usuario, clave, id_tipo)
+ 
+
+  Modificar(des_curso,com_des,usuario)
   {
-      this.http.post("http://tppps2.hol.es/ws1/usuarios/modificar", {
-          id_usuario: id_usuario,
-          clave: clave,
-          nombre: nombre,
-          usuario: usuario,
-          id_tipo: id_tipo
+
+    console.info(des_curso,com_des,usuario);
+    let micomi;
+    let miusu;
+
+    for(let us of this.profesores)
+    {
+      if(us.nombre==usuario)
+      {
+        miusu=us.id_usuario;
+      }
+    }
+    
+    console.info(miusu);
+    for(let comi of this.comisiones)
+    {
+      if(comi.descripcion==com_des)
+      {
+        micomi=comi.id_comision;
+      }
+    }
+
+      this.http.post("http://tppps2.hol.es/ws1/cursos/modificar", {
+           id_curso:this.id_curso,
+           id_comision:micomi,
+           descripcion:des_curso,
+           id_usuario:miusu
       })
       .map(res => res.json())
       .subscribe((quote) =>{
@@ -58,13 +84,39 @@ TraerComisiones(){
             .subscribe((quote) =>{
                    this.comisiones = quote;  
                    console.info(this.comisiones);
-                   console.info(this.desc_comi);
                      
 
             });
 }
 
+      TraerProfesores()
+      {
+          this.profesores=null;
+          this.UssP=[];
+            this.http.get("http://tppps2.hol.es/ws1/usuarios")
+            .map(res => res.json())
+            .subscribe((quote) =>{
+            this.profesores = quote;
+            console.info(this.profesores);
+            for(let us of this.profesores)
+              {
+                if(us['tipo_usuario'] == "Profesor")
+                {
+                  this.UssP.push(us);
+                }
+                if(us['id_usuario']==this.profe_id)
+                {
+                  console.info(us['id_usuario']);
+                  console.info(us['nombre']);
+                  this.profe=us['nombre'];
+                  console.info( this.profe);
+                }
+              }
+               
 
+            });
+            
+      }
 
   Cancelar()
   {

@@ -6,6 +6,7 @@ import { ModalController } from 'ionic-angular';
 import { Menu } from '../../menu/menu';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import { AltaModal } from '../alta-modal/alta-modal';
+import { AltaModalCursos } from '../alta-modal-cursos/alta-modal-cursos';
 
 
 @Component({
@@ -17,10 +18,38 @@ export class GrillaCurso {
     Cursos;
     Cur : Array<any> =[];
     comisiones;
+    profesores=null;
+    UssP=[];
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController) {
     this.CargaGrilla();
- 
+    this.TraerProfesores();
+    
+
   }
+
+
+  
+      TraerProfesores()
+      {
+          this.profesores=null;
+          this.UssP=[];
+            this.http.get("http://tppps2.hol.es/ws1/usuarios")
+            .map(res => res.json())
+            .subscribe((quote) =>{
+            this.profesores = quote;
+
+            for(let us of this.profesores)
+              {
+                if(us['tipo_usuario'] == "Profesor")
+                {
+                  this.UssP.push(us);
+                }
+              }
+              console.info(this.UssP);
+
+            });
+
+      }
 
 
       CargaGrilla()
@@ -42,12 +71,15 @@ export class GrillaCurso {
 
     }
 
-    Modificar(id_curso, descripcion, comision)
+    Modificar(id_curso, descripcion, comision,id_usuario)
     {
+      console.info(id_curso, descripcion, comision,id_usuario);
+   
         let curs = {
             id_curso: id_curso,
             comision: comision,
             descripcion: descripcion,
+            id_usuario:id_usuario
       
         };
         let modal = this.modalCtrl.create(ModificacionModalCursos, curs);
@@ -60,12 +92,14 @@ export class GrillaCurso {
 
     Alta()
     {
-        let modal2 = this.modalCtrl.create(AltaModal,{"tipo":"Alumno"});
-        modal2.onDidDismiss(data=>{
+      
+        let modal = this.modalCtrl.create(AltaModalCursos);
+        modal.onDidDismiss(data=>{
           this.CargaGrilla();
         });
-        modal2.present();
-    }
+        modal.present();
+        
+    } 
 
     Eliminar(id_usuario, usuario, nombre, clave, id_tipo)
     {
