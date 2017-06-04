@@ -17,13 +17,17 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppService } from "../providers/app-service";
 import {gestionarasistencia} from "../pages/gestionarasistencia/gestionarasistencia";
+import { UpdateQuizContainerPage } from "../pages/update-quiz-container-page/update-quiz-container-page";
 
 //Custom components
 import { QuestionListViewerComponentModule } from "../components/question-list-viewer-component/question-list-viewer-component.module";
 import { QuizManagerComponentModule } from "../components/quiz-manager-component/quiz-manager-component.module";
 import { SubjectListComponentModule } from "../components/subject-list-component/subject-list-component.module";
 import { AttendanceListManagerComponentModule } from "../components/attendance-list-manager-component/attendance-list-manager-component.module";
-
+import { NewQuizComponentModule } from "../components/new-quiz-component/new-quiz-component.module";
+import { DeleteQuizComponentModule } from "../components/delete-quiz-component/delete-quiz-component.module";
+import { ModifyQuizComponentModule } from "../components/modify-quiz-component/modify-quiz-component.module";
+import { UpdateQuizComponentModule } from "../components/update-quiz-component/update-quiz-component.module";
 @NgModule({
   declarations: [
     MyApp,
@@ -36,6 +40,7 @@ import { AttendanceListManagerComponentModule } from "../components/attendance-l
     generarencuesta,
     assistAndAbsences,
     gestionarasistencia,
+    UpdateQuizContainerPage,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +50,10 @@ import { AttendanceListManagerComponentModule } from "../components/attendance-l
     QuizManagerComponentModule,
     QuestionListViewerComponentModule,
     SubjectListComponentModule,
-    AttendanceListManagerComponentModule
+    AttendanceListManagerComponentModule,
+    NewQuizComponentModule,
+    DeleteQuizComponentModule,
+    ModifyQuizComponentModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -58,7 +66,8 @@ import { AttendanceListManagerComponentModule } from "../components/attendance-l
     gestionprofesor,
     generarencuesta,
     assistAndAbsences,
-    gestionarasistencia 
+    gestionarasistencia,
+    UpdateQuizContainerPage, 
   ],
   providers: [
     StatusBar,
