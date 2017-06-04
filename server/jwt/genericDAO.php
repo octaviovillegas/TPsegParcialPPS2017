@@ -68,18 +68,12 @@ class GenericDAO
 	public static function newSurvey($survey,$userid){
 
 		try{
-			//simulation of data from parameters
 			
-			//survey
-			$title = $survey["title"];
+			//survey creation date taked by the server clock
 			$survey["creationDate"] = date("Y-m-d");
-			$endDate = $survey["endDate"];
-
-
-			//question
-			$text= $survey["question"]["text"];
 
 			$db = GenericDAO::getPDO();
+			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			$couldBegin = $db->beginTransaction();
 			
@@ -93,9 +87,9 @@ class GenericDAO
 			$statement->bindValue(":enddate", $survey["endDate"], PDO::PARAM_STR);
 			$statement->bindValue(":ownerid", $userid, PDO::PARAM_INT);
 
-			$statement->execute();
+			$couldInsertSurvey = $statement->execute();
 
-			$survey["question"]["surveyId"] = $db->lastInsertId();
+			$surveyId = $db->lastInsertId();
 
 
 			$sql2 = "insert into questions
@@ -104,13 +98,21 @@ class GenericDAO
 
 			$statement = $db->sendQuery($sql2);
 			$statement->bindValue(":text", $survey["question"]["text"], PDO::PARAM_STR);
-			$statement->bindValue(":surveyid", $survey["question"]["surveyId"], PDO::PARAM_INT);
+			$statement->bindValue(":surveyid", $surveyId, PDO::PARAM_INT);
 
-			$statement->execute();
+			$couldInsertQuestion = $statement->execute();
+
+			$questionId = $db->lastInsertId();
 
 			if(count($survey["question"]["options"]) > 0){
-        	
-				//guardar también las opciones.
+				for ($i = 0; $i < count($survey["question"]["options"]); $i++) {
+					$option = $survey["question"]["options"][$i];
+					$sql3 = "insert into options (text,isright,questionid) values (?,?,?)";
+					
+					$statement = $db->sendQuery($sql3);
+					
+					$couldInsertOptions = $statement->execute(array($option['text'],$option['isRight'],$questionId));
+				}
 			}
 
 			$db->commit();
@@ -118,6 +120,36 @@ class GenericDAO
 			$db->rollBack();
 		}
 		
+	}
+
+	public static function getSurveysList(){
+		try
+		{	
+			
+			$db = GenericDAO::getPDO();
+			$today = date("Y-m-d");
+			$sql = "select s.title, u.username, u.userid, s.creationdate, s.enddate
+					from surveys as s
+					join users as u on u.userid = s.ownerid
+					where s.enddate >= " . $today . " or s.enddate = 0000-00-00 and s.waseliminated = false" ;
+
+			$statement = $db->sendQuery($sql);
+
+			 $statement->execute();
+
+			 $rv = $statement->fetchAll(PDO::PARAM_STR);
+
+			 return $rv;
+		}catch(Exception $ex){
+
+		}
+
+	}
+
+	public static function eliminateSurvey($surveyId){
+		$db = GenericDAO::getPDO();
+		$sql = "update surveys set waseliminated = true
+				where surveyid = " . $surveyId;
 	}
 
 }

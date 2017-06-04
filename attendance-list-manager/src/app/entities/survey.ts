@@ -8,6 +8,7 @@ export class Survey {
     endDate:string;
     question:Question;
     ownerid:number;
+    wasEliminated:boolean;
 
     constructor() {
         this.title = "";
@@ -16,5 +17,6 @@ export class Survey {
         this.endDate = "";
         this.question = new Question();
         this.ownerid = 0;
+        this.wasEliminated = false;
     }
 }

@@ -3,15 +3,20 @@ import { Storage } from "@ionic/storage";
 import { NavController, NavParams } from 'ionic-angular';
 import { Response } from "@angular/http";
 import { AppService } from "../../providers/app-service";
+import { MenuController } from 'ionic-angular';
+
+//Pages
 import { HomePage } from "../../pages/home/home";
 
+//Classes, Wrappers
 import { Survey } from "../../app/entities/survey";
-import {assistAndAbsences} from "../../pages/assistAndAbsences/assistAndAbsences";
-import {gestionarasistencia } from "../../pages/gestionarasistencia/gestionarasistencia";
-import {gestionalumno } from "../../pages/gestionalumno/gestionalumno";
-import {gestionprofesor } from "../../pages/gestionprofesor/gestionprofesor";
-import { generarencuesta } from "../../pages/generarencuesta/generarencuesta";
-import {  NgSwitch,  NgSwitchDefault} from "@angular/common";
+import { Option } from "../../app/entities/option"
+
+//Components
+import { QuizManagerComponent } from "../../components/quiz-manager-component/quiz-manager-component";
+import { QuestionListViewerComponent } from "../../components/question-list-viewer-component/question-list-viewer-component";
+import { SubjectListComponent } from "../../components/subject-list-component/subject-list-component";
+import { AttendanceListManagerComponent } from "../../components/attendance-list-manager-component/attendance-list-manager-component";
 
 @Component({
   selector: 'page-registered-user',
@@ -20,30 +25,57 @@ import {  NgSwitch,  NgSwitchDefault} from "@angular/common";
 export class RegisteredUserPage {
   title: string;
   actions: any[];
-  Tipousuario: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private appService: AppService) {
+  rootComponent: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private appService: AppService, private menuCtrl: MenuController) {
     this.title = "Menu";
     this.actions = [];
-    this.fillPermissionList();
   }
 
   ionViewDidLoad() {
+    this.fillPermissionList();
   }
 
   fillPermissionList() {
-    this.storage.get("jwt").then((value) => {
-      this.appService.getPermissionsByUserRol(value).then(
-        (response: Response) => {
+    this.storage.get("jwt")
+      .then((jwt) => {
+        this.getPermissionsByUserRol(jwt)
+      }) //Si encuentra las credenciales
+      .catch((error) => this.logOutOnClick()); //Si no cuenta con credenciales
+
+  }
+
+  getPermissionsByUserRol(jwt) {
+    this.appService.getPermissionsByUserRol(jwt)
+      .then((response: Response) => {
+
+        if (response.status == 200) {
           let body = JSON.parse(response["_body"]);
-          if (body.isValidToken) {
-            this.actions = body.permissions;
-          } else {
-            console.log("El jwt corrupto");
-          }
-        }).catch(error => console.log(error));
-    }).catch((error) => {
-      console.log("Log out here!...");
-    });
+
+          this.setRootComponent(body["code"]);
+
+          this.actions = body['permissions'];
+        } else {
+          this.logOutOnClick(); //No tiene permisos.
+        }
+      })
+      .catch(() => this.logOutOnClick()); //Si por alguna razón el servidor no responde.
+  }
+
+  setRootComponent(rol) {
+    switch (rol) {
+      case "Administrator":
+        this.rootComponent = QuizManagerComponent;
+        break;
+      case "Teacher":
+        this.rootComponent = QuizManagerComponent;
+        break;
+      case "Student":
+        this.rootComponent = QuestionListViewerComponent;
+        break;
+      default:
+        this.rootComponent = QuizManagerComponent;
+        break;
+    }
   }
 
   logOutOnClick() {
@@ -51,62 +83,62 @@ export class RegisteredUserPage {
     this.navCtrl.setRoot(HomePage);
     this.navCtrl.popToRoot();
   }
-accedera(a){
 
-  //*******************************************************************************/
-  //*******************************************************************************/
-  //Mover éste código al componente para dar de alta una nueva encuesta (New Quiz).
-  // getJwtForNewSurvey(){
-  //   this.storage.get("jwt")
-  //         .then(jwt=>this.newSurvey(jwt))
-  //         .catch(()=>this.appService.logOut());
-  // }
-  // newSurvey(jwt){
-  //   let survey = new Survey();
-  //   survey.endDate = "2030/8/4";
-  //   survey.title = "Titulo de la encuesta";
-  //   survey.question.text = "¿Una pregunta?";
-  //   console.log(survey);
-  //   this.appService.newSurvey(survey,jwt)
-  //         .then(val=>console.log("Dejar de mostrar el spinner, habilitar los botones, etc..."))
-  //         .catch(error=>console.log("Los datos no pudieron ser procesados, intentelo nuevamente..."));
-  // }
-  // //*******************************************************************************/
-  // //*******************************************************************************/
+  getJwtForNewSurvey() {
+    this.storage.get("jwt")
+      .then(jwt => this.newSurvey(jwt))
+      .catch(() => {
+        this.logOutOnClick()
+      });
+  }
+  newSurvey(jwt) {
+    //Encuesta
+    let survey = new Survey();
+    survey.endDate = "2030/8/4";
+    survey.title = "Titulo de la encuesta";
+    //Pregunta
+    survey.question.text = "¿Una pregunta?";
+    //Opciones
 
-// switch (a) {
-//   case (a="Gestionar Alumno"):
-//     this.navCtrl.setRoot(gestionalumno);
-//     break;
-//  case (a="Gestionar Profesor"):
-//     this.navCtrl.setRoot(gestionprofesor);
-//     break;
-//     case (a="Gestionar Encuesta"):
-//     this.navCtrl.setRoot(generarencuesta);
-//     break;
-//   default:
-//     break;
-// }    
-// if(a="Gestionar Alumno"){this.navCtrl.setRoot(gestionalumno);}
-// if(a="Gestionar Profesor"){this.navCtrl.setRoot(gestionprofesor);}
-// if(a="Gestionar Encuesta"){this.navCtrl.setRoot(generarencuesta);}
+    let option = new Option();
+    option.isRight = true;
+    option.text = "Soy el texto de una opción correcta";
 
+    let option2 = new Option();
+    option2.isRight = false;
+    option2.text = "Soy el texto de una opción incorrecta";
 
-}
-asistencias(){
+    let option3 = new Option();
+    option3.isRight = true;
+    option3.text = "Soy el texto de una opción correcta";
 
-this.navCtrl.setRoot(assistAndAbsences);
+    survey.question.options.push(option);
+    survey.question.options.push(option2);
+    survey.question.options.push(option3);
+    console.log(survey);
+    this.appService.newSurvey(survey, jwt)
+      .then(val => console.log("Dejar de mostrar el spinner, habilitar los botones, etc..."))
+      .catch(error => console.log("Los datos no pudieron ser procesados, intentelo nuevamente..."));
+  }
 
-
-
-
-}
-gAsistencia(){this.navCtrl.setRoot(gestionarasistencia);}
-
-insertar()
-{this.storage.get("rol").then(val=>{this.Tipousuario=val});
-
-if(this.Tipousuario=='Administrator'){
-  console.log ("todo ok");
-}}
+  selectedActionOnChange(selectedAction) {
+    switch (selectedAction) {
+      case "Ver encuestas":
+        this.rootComponent = QuestionListViewerComponent;
+        break;
+      case "Gestionar encuestas":
+        this.rootComponent = QuizManagerComponent;
+        break;
+      case "Ver faltas y asistencias":
+        this.rootComponent = SubjectListComponent;
+        break;
+      case "Tomar asistencia":
+        this.rootComponent = AttendanceListManagerComponent;
+        break;
+      default:
+        this.rootComponent = QuestionListViewerComponent;
+        break;
+    }
+    this.menuCtrl.close();
+  }
 }

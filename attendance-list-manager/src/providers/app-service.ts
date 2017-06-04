@@ -22,7 +22,9 @@ export class AppService {
 
   //use when you need logout to clear the user data.
   clearStorageData() {
-    this.storage.clear().then(() => console.log("Storage data has been deleted"));
+    this.storage.clear()
+      .then(() => console.log("Storage data has been deleted"))
+      .catch(() => console.log("No data to delete"));
   }
 
   getPermissionsByUserRol(jwt) {
@@ -32,12 +34,12 @@ export class AppService {
     return this.http.post("http://localhost:80/jwt/permissions", options).toPromise();
   }
 
-  logOut(){
+  logOut() {
     this.clearStorageData();
   }
 
-  newSurvey(survey:Survey,jwt) {
-    let data = {survey, jwt };   
+  newSurvey(survey: Survey, jwt) {
+    let data = { survey, jwt };
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
