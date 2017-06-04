@@ -3,12 +3,20 @@ import { Storage } from "@ionic/storage";
 import { NavController, NavParams } from 'ionic-angular';
 import { Response } from "@angular/http";
 import { AppService } from "../../providers/app-service";
+import { MenuController } from 'ionic-angular';
+
+//Pages
 import { HomePage } from "../../pages/home/home";
 
+//Classes, Wrappers
 import { Survey } from "../../app/entities/survey";
-import { Option } from "../../app/entities/option";import {gestionalumno } from "../../pages/gestionalumno/gestionalumno";
-import {gestionprofesor } from "../../pages/gestionprofesor/gestionprofesor";
-import { generarencuesta } from "../../pages/generarencuesta/generarencuesta";
+import { Option } from "../../app/entities/option"
+
+//Components
+import { QuizManagerComponent } from "../../components/quiz-manager-component/quiz-manager-component";
+import { QuestionListViewerComponent } from "../../components/question-list-viewer-component/question-list-viewer-component";
+import { SubjectListComponent } from "../../components/subject-list-component/subject-list-component";
+import { AttendanceListManagerComponent } from "../../components/attendance-list-manager-component/attendance-list-manager-component";
 
 @Component({
   selector: 'page-registered-user',
@@ -17,35 +25,57 @@ import { generarencuesta } from "../../pages/generarencuesta/generarencuesta";
 export class RegisteredUserPage {
   title: string;
   actions: any[];
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private appService: AppService) {
+  rootComponent: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private appService: AppService, private menuCtrl: MenuController) {
     this.title = "Menu";
     this.actions = [];
-    this.fillPermissionList();
   }
 
   ionViewDidLoad() {
+    this.fillPermissionList();
   }
 
   fillPermissionList() {
     this.storage.get("jwt")
-      .then((jwt) => this.getPermissionsByUserRol(jwt)) //Si encuentra las credenciales
-      .catch(() => this.logOutOnClick()); //Si no cuenta con credenciales
+      .then((jwt) => {
+        this.getPermissionsByUserRol(jwt)
+      }) //Si encuentra las credenciales
+      .catch((error) => this.logOutOnClick()); //Si no cuenta con credenciales
 
   }
 
   getPermissionsByUserRol(jwt) {
     this.appService.getPermissionsByUserRol(jwt)
       .then((response: Response) => {
-        
+
         if (response.status == 200) {
           let body = JSON.parse(response["_body"]);
 
+          this.setRootComponent(body["code"]);
+
           this.actions = body['permissions'];
-        }else{
-          console.log("usted no tiene permisos para realizar ésta acción"); //No tiene permisos.
+        } else {
+          this.logOutOnClick(); //No tiene permisos.
         }
       })
       .catch(() => this.logOutOnClick()); //Si por alguna razón el servidor no responde.
+  }
+
+  setRootComponent(rol) {
+    switch (rol) {
+      case "Administrator":
+        this.rootComponent = QuizManagerComponent;
+        break;
+      case "Teacher":
+        this.rootComponent = QuizManagerComponent;
+        break;
+      case "Student":
+        this.rootComponent = QuestionListViewerComponent;
+        break;
+      default:
+        this.rootComponent = QuizManagerComponent;
+        break;
+    }
   }
 
   logOutOnClick() {
@@ -53,16 +83,11 @@ export class RegisteredUserPage {
     this.navCtrl.setRoot(HomePage);
     this.navCtrl.popToRoot();
   }
-accedera(a){
 
-  //*******************************************************************************/
-  //*******************************************************************************/
-  //Mover éste código al componente para dar de alta una nueva encuesta (New Quiz).
   getJwtForNewSurvey() {
     this.storage.get("jwt")
       .then(jwt => this.newSurvey(jwt))
       .catch(() => {
-        console.log("No hay credenciales");
         this.logOutOnClick()
       });
   }
@@ -95,15 +120,25 @@ accedera(a){
       .then(val => console.log("Dejar de mostrar el spinner, habilitar los botones, etc..."))
       .catch(error => console.log("Los datos no pudieron ser procesados, intentelo nuevamente..."));
   }
-  //*******************************************************************************/
-  //*******************************************************************************/
-=======
-if(a="Gestionar Alumno"){this.navCtrl.setRoot(gestionalumno);}
-if(a="Gestionar Profesor"){this.navCtrl.setRoot(gestionprofesor);}
-if(a="Gestionar Encuesta"){this.navCtrl.setRoot(generarencuesta);}
 
-
-
-}
-
+  selectedActionOnChange(selectedAction) {
+    switch (selectedAction) {
+      case "Ver encuestas":
+        this.rootComponent = QuestionListViewerComponent;
+        break;
+      case "Gestionar encuestas":
+        this.rootComponent = QuizManagerComponent;
+        break;
+      case "Ver faltas y asistencias":
+        this.rootComponent = SubjectListComponent;
+        break;
+      case "Tomar asistencia":
+        this.rootComponent = AttendanceListManagerComponent;
+        break;
+      default:
+        this.rootComponent = QuestionListViewerComponent;
+        break;
+    }
+    this.menuCtrl.close();
+  }
 }

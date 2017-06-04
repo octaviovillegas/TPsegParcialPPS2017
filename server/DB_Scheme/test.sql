@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-06-2017 a las 03:12:51
+-- Tiempo de generación: 04-06-2017 a las 03:45:20
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -67,10 +67,11 @@ INSERT INTO `permissions` (`permissionid`, `description`) VALUES
 (1, 'Gestionar profesor'),
 (2, 'Gestionar administrativo'),
 (3, 'Gestionar alumno'),
-(4, 'Generar encuesta'),
+(4, 'Gestionar encuestas'),
 (5, 'Ver encuestas'),
 (6, 'Tomar asistencia'),
-(7, 'Ver estadísticas');
+(7, 'Ver estadísticas'),
+(8, 'Ver faltas y asistencias');
 
 -- --------------------------------------------------------
 
@@ -98,7 +99,8 @@ INSERT INTO `permissionsbyrol` (`permissionbyrolid`, `permissionid`, `rolid`) VA
 (7, 2, 1),
 (8, 1, 1),
 (9, 3, 1),
-(10, 7, 1);
+(10, 7, 1),
+(11, 8, 4);
 
 -- --------------------------------------------------------
 
@@ -257,12 +259,12 @@ ALTER TABLE `options`
 -- AUTO_INCREMENT de la tabla `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `permissionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `permissionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `permissionsbyrol`
 --
 ALTER TABLE `permissionsbyrol`
-  MODIFY `permissionbyrolid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `permissionbyrolid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `questions`
 --

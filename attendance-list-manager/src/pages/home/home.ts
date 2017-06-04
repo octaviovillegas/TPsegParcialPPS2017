@@ -43,10 +43,9 @@ export class HomePage {
             
             let body = JSON.parse(response["_body"]); //convert JSON to Object
 
-            this.storage.set("jwt", body.jwt); //set data into storage
+            this.storage.set("jwt", body.jwt).then(()=> this.navCtrl.setRoot(RegisteredUserPage)); //set data into storage
             this.storage.set("rol", body.rol);
-            this.navCtrl.setRoot(RegisteredUserPage);
-
+            
           } else {
             this.showErrorMessage("El usuario no ha sido encontrado"); //If the user is not found, the status is 204.
           }
@@ -71,6 +70,11 @@ export class HomePage {
       this.form.get("email").value,
       this.form.get("password").value
     );
+  }
+
+  setSelectedLoginData(value){
+    this.form.get("email").setValue(value);
+    this.form.get("password").setValue(123456);
   }
 
 }
