@@ -63,6 +63,26 @@ class GenericDAO
 		}
 	}
 
+	public static function getUserProfileData($userId,$rv){
+		try{
+			$db = GenericDAO::getPDO();
+
+			$sql = "select r.code, u.username, u.email  FROM users as u
+					join roles as r on r.rolid = u.rolid
+					where u.userid = :userid;";
+
+			$statement = $db->sendQuery($sql);
+			$statement->bindValue(":userid", $userId, PDO::PARAM_STR);
+			$statement->execute();
+			$rv['profile'] = array();
+			$rv['profile'] = $statement->fetch(PDO::PARAM_STR);
+
+			return $rv;
+		}catch(Exception $ex){
+			die("Error: " . $ex->getMessage());
+		}
+	}	
+
 
 	//Survey
 	public static function newSurvey($survey,$userid){

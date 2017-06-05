@@ -18,6 +18,14 @@
 <ion-menu [content]="mycontent">
   <ion-content>
     <ion-list>
+      <ion-item class="user-info">
+        <ion-icon name="contact" class="user-icon"></ion-icon>
+        <h1>{{rol}}</h1>
+        <h2>{{username}}</h2>
+        <h3>{{email}}</h3>
+      </ion-item>
+    </ion-list>
+    <ion-list>
       <ion-list-header>
         Acciones
       </ion-list-header>
