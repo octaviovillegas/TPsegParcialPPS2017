@@ -13,7 +13,7 @@ export class NewUserData {
     number: string;
     city:string;
     floor: string;
-    departament: string;
+    department: string;
     clarification: string;
 
     constructor() {
@@ -29,7 +29,7 @@ export class NewUserData {
         this.number = "";
         this.city = "";
         this.floor = "";
-        this.departament = "";
+        this.department = "";
         this.clarification = "";
     }
 }

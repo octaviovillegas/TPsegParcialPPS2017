@@ -5,6 +5,7 @@ import "rxjs/add/operator/toPromise";
 
 import { LoginData } from "../app/entities/loginData";
 import { Survey } from "../app/entities/survey";
+import { NewUserData } from "../app/entities/newUserData";
 
 @Injectable()
 export class AppService {
@@ -44,6 +45,14 @@ export class AppService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/newsurvey", jsonData, options).toPromise();
+  }
+
+  newUser(user: NewUserData, jwt) {
+    let data = { user, jwt };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/newuser", jsonData, options).toPromise();
   }
 
 }

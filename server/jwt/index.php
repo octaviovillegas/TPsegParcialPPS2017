@@ -35,7 +35,6 @@ $app->post('/permissions',function(Request $request, Response $response){
     $params = $request->getParams();
     $jwt = $params['headers']['jwt']['0'];
     $tm = new TokenManager();
-    //$jwt = $jwt . "321321";
     $rv = $tm->isValidToken($jwt);
     if($rv['isValidToken'] == true){
         $rv = GenericDAO::getPermissionsByUserRol($rv);
@@ -53,6 +52,22 @@ $app->post('/newsurvey',function(Request $request, Response $response){
     $tm->isValidToken($jwt);
     $userid = $tm->getIdByJWT($jwt);
     GenericDAO::newSurvey($survey,$userid);
+    return $response;
+});
+
+$app->post('/newuser',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $survey = $params["user"];
+    $jwt = $params["jwt"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $userid = $tm->getIdByJWT($jwt);
+    if(GenericDAO::newUser($survey,$userid)){
+        $response = $response->withStatus(200);
+    }else{
+        $response = $response->withStatus(204);
+    }
+    return $response;
     return $response;
 });
 
