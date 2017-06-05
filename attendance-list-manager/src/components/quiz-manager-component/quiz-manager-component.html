@@ -1,4 +1,26 @@
-<!-- Generated template for the QuizManagerComponent component -->
-<div>
-  {{text}}
-</div>
+<ion-content>
+
+  <ion-segment [(ngModel)]="wichComponent">
+    <ion-segment-button value="new">
+      Nueva
+    </ion-segment-button>
+    <ion-segment-button value="delete">
+      Eliminar
+    </ion-segment-button>
+    <ion-segment-button value="update">
+      Modificar
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="wichComponent">
+    <div *ngSwitchCase="'new'">
+      <new-quiz-component></new-quiz-component>
+    </div>
+    <div *ngSwitchCase="'delete'">
+      <delete-quiz-component></delete-quiz-component>
+    </div>
+    <div *ngSwitchCase="'update'">
+      <modify-quiz-component></modify-quiz-component>
+    </div>
+  </div>
+</ion-content>

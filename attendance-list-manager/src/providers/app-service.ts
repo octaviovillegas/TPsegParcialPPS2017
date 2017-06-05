@@ -39,6 +39,12 @@ export class AppService {
     this.clearStorageData();
   }
 
+  getSurveys() {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/getsurveyslist", options).toPromise();
+  }
+
   newSurvey(survey: Survey, jwt) {
     let data = { survey, jwt };
     let jsonData = JSON.stringify(data);

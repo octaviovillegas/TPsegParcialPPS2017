@@ -36,8 +36,13 @@ $app->post('/permissions',function(Request $request, Response $response){
     $jwt = $params['headers']['jwt']['0'];
     $tm = new TokenManager();
     $rv = $tm->isValidToken($jwt);
+    $userid = $tm->getIdByJWT($jwt);
     if($rv['isValidToken'] == true){
         $rv = GenericDAO::getPermissionsByUserRol($rv);
+        $rv = GenericDAO::getUserProfileData($userid,$rv);
+        $response = $response->withStatus(200);
+    }else{
+        $response = $response->withStatus(204);
     }
     $datos = json_encode($rv);
     $response->getBody()->write($datos);

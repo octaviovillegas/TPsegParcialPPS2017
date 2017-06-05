@@ -27,9 +27,15 @@ export class RegisteredUserPage {
   title: string;
   actions: any[];
   rootComponent: any;
+  rol:string;
+  username:string;
+  email:string;
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private appService: AppService, private menuCtrl: MenuController) {
     this.title = "Menu";
     this.actions = [];
+    this.rol ="Tipo de usuario";
+    this.username = "Nombre de usuario";
+    this.email = "email@emai.com";
   }
 
   ionViewDidLoad() {
@@ -53,8 +59,10 @@ export class RegisteredUserPage {
           let body = JSON.parse(response["_body"]);
 
           this.setRootComponent(body["code"]);
-
+          
           this.actions = body['permissions'];
+          //Set user profile data
+          this.setProfileData(body["profile"]);
         } else {
           this.logOutOnClick(); //No tiene permisos.
         }
@@ -144,5 +152,24 @@ export class RegisteredUserPage {
         break;
     }
     this.menuCtrl.close();
+  }
+
+  setProfileData(profile){
+    switch (profile.code) {
+      case "Administrator":
+        this.rol = "Administrador";
+        break;
+      case "Teacher":
+        this.rol = "Profesor";
+        break;
+      case "Administrative":
+        this.rol = "Administrativo";
+        break;
+      default:
+        this.rol = "Alumno";
+        break;
+    }
+    this.username = profile.username;
+    this.email = profile.email;
   }
 }
