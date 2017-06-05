@@ -20,14 +20,19 @@ import {gestionarasistencia} from "../pages/gestionarasistencia/gestionarasisten
 import { UpdateQuizContainerPage } from "../pages/update-quiz-container-page/update-quiz-container-page";
 
 //Custom components
-import { QuestionListViewerComponentModule } from "../components/question-list-viewer-component/question-list-viewer-component.module";
-import { QuizManagerComponentModule } from "../components/quiz-manager-component/quiz-manager-component.module";
-import { SubjectListComponentModule } from "../components/subject-list-component/subject-list-component.module";
-import { AttendanceListManagerComponentModule } from "../components/attendance-list-manager-component/attendance-list-manager-component.module";
-import { NewQuizComponentModule } from "../components/new-quiz-component/new-quiz-component.module";
-import { DeleteQuizComponentModule } from "../components/delete-quiz-component/delete-quiz-component.module";
-import { ModifyQuizComponentModule } from "../components/modify-quiz-component/modify-quiz-component.module";
-import { UpdateQuizComponentModule } from "../components/update-quiz-component/update-quiz-component.module";
+import { QuestionListViewerComponent } from "../components/question-list-viewer-component/question-list-viewer-component";
+import { QuizManagerComponent } from "../components/quiz-manager-component/quiz-manager-component";
+import { SubjectListComponent } from "../components/subject-list-component/subject-list-component";
+import { AttendanceListManagerComponent } from "../components/attendance-list-manager-component/attendance-list-manager-component";
+import { NewQuizComponent } from "../components/new-quiz-component/new-quiz-component";
+import { DeleteQuizComponent } from "../components/delete-quiz-component/delete-quiz-component";
+import { ModifyQuizComponent } from "../components/modify-quiz-component/modify-quiz-component";
+import { UpdateQuizComponent } from "../components/update-quiz-component/update-quiz-component";
+import { UserManagerComponent } from "../components/user-manager-component/user-manager-component";
+import { NewUserComponent } from "../components/new-user-component/new-user-component";
+import { DeleteUserComponent } from "../components/delete-user-component/delete-user-component";
+import { ModifyUserComponent } from "../components/modify-user-component/modify-user-component";
+
 @NgModule({
   declarations: [
     MyApp,
@@ -40,20 +45,24 @@ import { UpdateQuizComponentModule } from "../components/update-quiz-component/u
     generarencuesta,
     assistAndAbsences,
     gestionarasistencia,
+    QuestionListViewerComponent,
+    NewUserComponent,
     UpdateQuizContainerPage,
+    UserManagerComponent,
+    QuizManagerComponent,
+    SubjectListComponent,
+    AttendanceListManagerComponent,
+    NewQuizComponent,
+    DeleteQuizComponent,
+    ModifyQuizComponent,
+    DeleteUserComponent,
+    ModifyUserComponent,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule, 
     IonicStorageModule.forRoot(),
-    QuizManagerComponentModule,
-    QuestionListViewerComponentModule,
-    SubjectListComponentModule,
-    AttendanceListManagerComponentModule,
-    NewQuizComponentModule,
-    DeleteQuizComponentModule,
-    ModifyQuizComponentModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -67,7 +76,18 @@ import { UpdateQuizComponentModule } from "../components/update-quiz-component/u
     generarencuesta,
     assistAndAbsences,
     gestionarasistencia,
-    UpdateQuizContainerPage, 
+    QuestionListViewerComponent,
+    NewUserComponent,
+    UpdateQuizContainerPage,
+    UserManagerComponent,
+    QuizManagerComponent,
+    SubjectListComponent,
+    AttendanceListManagerComponent,
+    NewQuizComponent,
+    DeleteQuizComponent,
+    ModifyQuizComponent,
+    DeleteUserComponent,
+    ModifyUserComponent,
   ],
   providers: [
     StatusBar,

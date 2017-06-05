@@ -17,6 +17,7 @@ import { QuizManagerComponent } from "../../components/quiz-manager-component/qu
 import { QuestionListViewerComponent } from "../../components/question-list-viewer-component/question-list-viewer-component";
 import { SubjectListComponent } from "../../components/subject-list-component/subject-list-component";
 import { AttendanceListManagerComponent } from "../../components/attendance-list-manager-component/attendance-list-manager-component";
+import { UserManagerComponent } from "../../components/user-manager-component/user-manager-component";
 
 @Component({
   selector: 'page-registered-user',
@@ -73,7 +74,7 @@ export class RegisteredUserPage {
         this.rootComponent = QuestionListViewerComponent;
         break;
       default:
-        this.rootComponent = QuizManagerComponent;
+        this.rootComponent = AttendanceListManagerComponent;
         break;
     }
   }
@@ -134,6 +135,9 @@ export class RegisteredUserPage {
         break;
       case "Tomar asistencia":
         this.rootComponent = AttendanceListManagerComponent;
+        break;
+      case "Gestionar usuarios":
+        this.rootComponent = UserManagerComponent;
         break;
       default:
         this.rootComponent = QuestionListViewerComponent;
