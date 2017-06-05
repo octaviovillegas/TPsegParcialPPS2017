@@ -1,0 +1,26 @@
+<ion-content>
+
+  <ion-segment [(ngModel)]="wichComponent">
+    <ion-segment-button value="new">
+      Nuevo
+    </ion-segment-button>
+    <ion-segment-button value="delete">
+      Eliminar
+    </ion-segment-button>
+    <ion-segment-button value="update">
+      Modificar
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="wichComponent">
+    <div *ngSwitchCase="'new'">
+      <new-user-component></new-user-component>
+    </div>
+    <div *ngSwitchCase="'delete'">
+      <delete-user-component></delete-user-component>
+    </div>
+    <div *ngSwitchCase="'update'">
+      <modify-user-component></modify-user-component>
+    </div>
+  </div>
+</ion-content>
