@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-06-2017 a las 03:45:20
+-- Tiempo de generación: 05-06-2017 a las 07:55:51
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -19,6 +19,32 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `test`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `addresses`
+--
+
+CREATE TABLE `addresses` (
+  `addressid` bigint(18) NOT NULL,
+  `street` text NOT NULL,
+  `number` varchar(50) NOT NULL,
+  `floor` varchar(50) NOT NULL,
+  `department` varchar(50) NOT NULL,
+  `clarification` text NOT NULL,
+  `city` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `addresses`
+--
+
+INSERT INTO `addresses` (`addressid`, `street`, `number`, `floor`, `department`, `clarification`, `city`) VALUES
+(0, 'Calle', '12357184', 'Piso', 'Departamento', 'Aclaración', 'Localidad'),
+(1, '9 de Julio', '2722', 'PB', '', 'Es un Bar', 'Lanus'),
+(2, '9 de Julio', '1510', 'PB', 'Local', 'Es un local', 'Lanus'),
+(12, 'Falsa', '231', 'PB', 'A', 'Aclaración', 'Lanus');
 
 -- --------------------------------------------------------
 
@@ -66,7 +92,7 @@ CREATE TABLE `permissions` (
 INSERT INTO `permissions` (`permissionid`, `description`) VALUES
 (1, 'Gestionar profesor'),
 (2, 'Gestionar administrativo'),
-(3, 'Gestionar alumno'),
+(3, 'Gestionar usuarios'),
 (4, 'Gestionar encuestas'),
 (5, 'Ver encuestas'),
 (6, 'Tomar asistencia'),
@@ -181,22 +207,32 @@ CREATE TABLE `users` (
   `username` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `rolid` bigint(18) NOT NULL
+  `rolid` bigint(18) NOT NULL,
+  `firstname` varchar(100) NOT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `addressid` bigint(18) NOT NULL,
+  `filenumber` bigint(18) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`userid`, `username`, `email`, `password`, `rolid`) VALUES
-(1, 'EjemploAdministrator', 'admin@admin.com', '123456', 1),
-(2, 'EjemploTeacher', 'teacher@teacher.com', '123456', 2),
-(3, 'EjemploAdministrative', 'administrative@administrative.com', '123456', 3),
-(4, 'EjemploStudent', 'student@student.com', '123456', 4);
+INSERT INTO `users` (`userid`, `username`, `email`, `password`, `rolid`, `firstname`, `lastname`, `addressid`, `filenumber`) VALUES
+(1, 'EjemploAdministrator', 'admin@admin.com', '123456', 1, 'Ejemplo', 'Administrador', 0, 111111),
+(2, 'EjemploTeacher', 'teacher@teacher.com', '123456', 2, 'Ejemplo', 'Profesor', 1, 2222),
+(3, 'EjemploAdministrative', 'administrative@administrative.com', '123456', 3, 'Ejemplo', 'Administrativo', 2, 0),
+(4, 'EjemploStudent', 'student@student.com', '123456', 4, 'Ejemplo', 'Alumno', 12, 35468);
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `addresses`
+--
+ALTER TABLE `addresses`
+  ADD PRIMARY KEY (`addressid`);
 
 --
 -- Indices de la tabla `options`
@@ -244,12 +280,18 @@ ALTER TABLE `surveys`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`userid`),
-  ADD KEY `rolid` (`rolid`);
+  ADD KEY `rolid` (`rolid`),
+  ADD KEY `addressid` (`addressid`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
+--
+-- AUTO_INCREMENT de la tabla `addresses`
+--
+ALTER TABLE `addresses`
+  MODIFY `addressid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT de la tabla `options`
 --
@@ -279,7 +321,7 @@ ALTER TABLE `surveys`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `userid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- Restricciones para tablas volcadas
 --
@@ -313,7 +355,8 @@ ALTER TABLE `surveys`
 -- Filtros para la tabla `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`rolid`) REFERENCES `roles` (`rolid`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`rolid`) REFERENCES `roles` (`rolid`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`addressid`) REFERENCES `addresses` (`addressid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

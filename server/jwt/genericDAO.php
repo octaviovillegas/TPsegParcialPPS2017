@@ -122,6 +122,66 @@ class GenericDAO
 		
 	}
 
+
+	//User
+	public static function newUser($user,$userid){
+
+		try{
+			
+			$user["creationDate"] = date("Y-m-d");
+
+			$db = GenericDAO::getPDO();
+			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			$couldBegin = $db->beginTransaction();
+			
+			$sql =	"insert into addresses
+					(street,number,floor,department,clarification,city)
+					values
+					(:street,:number,:floor,:department,:clarification,:city)";
+			$statement = $db->sendQuery($sql);
+			$statement->bindValue(":street", $user["street"], PDO::PARAM_STR);
+			$statement->bindValue(":number", $user["number"], PDO::PARAM_INT);
+			$statement->bindValue(":floor", $user["floor"], PDO::PARAM_STR);
+			$statement->bindValue(":department", $user["department"], PDO::PARAM_STR);
+			$statement->bindValue(":clarification", $user["clarification"], PDO::PARAM_STR);
+			$statement->bindValue(":city", $user["city"], PDO::PARAM_STR);
+
+			$couldInsertUser = $statement->execute();
+
+			$addressId = $db->lastInsertId();
+
+			//find rol id by code
+			$findRolId = "select rolid from roles where code = '" .  $user["rol"] . "'"; 
+			$statement = $db->sendQuery($findRolId);
+			$couldFindRolId = $statement->execute();
+			$rolId = $statement->fetchAll(PDO::PARAM_STR);
+
+			$sql2 = "insert into users(username,email,password,rolid,firstname,lastname,addressid,filenumber) 
+					 values (:username,:email,:password,:rolid,:firstname,:lastname,:addressid,:filenumber)";
+
+			$statement = $db->sendQuery($sql2);
+			$statement->bindValue(":username", $user["username"], PDO::PARAM_STR);
+			$statement->bindValue(":firstname", $user["firstname"], PDO::PARAM_STR);
+			$statement->bindValue(":lastname", $user["lastname"], PDO::PARAM_STR);
+			$statement->bindValue(":email", $user["email"], PDO::PARAM_INT);
+			$statement->bindValue(":password", $user["password"], PDO::PARAM_STR);
+			$statement->bindValue(":filenumber", $user["filenumber"], PDO::PARAM_STR);
+			$statement->bindValue(":rolid", $rolId[0]["rolid"], PDO::PARAM_STR);
+			$statement->bindValue(":addressid", $addressId, PDO::PARAM_STR);
+			
+
+			$couldSaveUser = $statement->execute();
+
+			$db->commit();
+			return true;
+		}catch(Exception $ex){
+			$db->rollBack();
+			return false;
+		}
+		
+	}
+
 	public static function getSurveysList(){
 		try
 		{	

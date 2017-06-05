@@ -36,7 +36,7 @@
       <ion-input placeholder="Departamento" formControlName="department"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-textarea placeholder="Aclaración" formControlName="clarification"></ion-textarea>
+      <ion-textarea placeholder="Aclaración" formControlName="clarification"></ion-textarea>
     </ion-item>
     <ion-item-divider color="light">Tipo de usuario</ion-item-divider>
     <ion-list radio-group formControlName="rol">
@@ -45,6 +45,16 @@
         <ion-radio [value]="item"></ion-radio>
       </ion-item>
     </ion-list>
-    <button ion-button full [disabled]="!form.valid" (click)="createNewUser()">Enviar</button>
+    <div [hidden]="!hideSpinner">
+      <button ion-button full [disabled]="!form.valid" (click)="getJwtForCreateUser()">Enviar</button>
+    </div>
+    <div [hidden]="hideSpinner">
+      <div>
+        <ion-spinner></ion-spinner>
+      </div>
+      <div>
+        <p>Validando la información enviada. Espere por favor.</p>
+      </div>
+    </div>
   </ion-list>
 </form>
