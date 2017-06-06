@@ -16,14 +16,15 @@ export class DeleteQuizComponent {
 
   text: string;
  Encuestas:any;
- actions: any[];
+ surveys:Array<any>;
+ 
   constructor(private appService: AppService) {
     console.log('Hello DeleteQuizComponent Component');
     this.text = 'Estás viendo el contenido del componente DeleteQuizComponent';
- this.appService.getSurveysList().then((response: Response) => {
+ this.appService.getSurveys().then((response: Response) => {
 
         if (response.status == 200) {
-          let body = JSON.parse(response["_body"]);
+         this.surveys = JSON.parse(response["_body"]);
 
          
         } else {
@@ -33,7 +34,25 @@ export class DeleteQuizComponent {
        .catch((error) =>console.log("error")); //Si por alguna razón el servidor no responde.
   }
 
+// eliminar(){
 
+
+// this.appService.eliminatesurvey().then((response: Response) => {
+
+//         if (response.status == 200) {
+//          this.surveys = JSON.parse(response["_body"]);
+
+         
+//         } else {
+//           console.log("error"); //No tiene permisos.
+//         }
+//       })
+//        .catch((error) =>console.log("error")); //Si por alguna razón el servidor no responde.
+//   }
+
+
+
+// }
 
 
 
