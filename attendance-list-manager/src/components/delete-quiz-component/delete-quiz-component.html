@@ -1,4 +1,14 @@
-<!-- Generated template for the DeleteQuizComponent component -->
+<!-- Generated template for the DeleteUserComponent component -->
+<div> 
+ <ion-list>
+    <div ion-item *ngFor="let item of  surveys" >
+      <div>
+     Titulo: {{item.title}}</div>
+     <div>Autor:{{item.username}}</div>
+     <div>Fecha de Creación:{{item.creationdate}}</div>
 <div>
-  {{text}}
+     Fecha de Termino:{{item.enddate}}</div>
+     <button ion-button>Eliminar</button>
+    </div>
+  </ion-list>
 </div>
