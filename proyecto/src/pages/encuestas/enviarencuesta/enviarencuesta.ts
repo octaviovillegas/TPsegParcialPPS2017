@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import 'rxjs/Rx'; 
-import { NavController,NavParams } from 'ionic-angular';
+import { NavController,NavParams,ToastController } from 'ionic-angular';
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import {Http} from '@angular/http';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
+import { Toast } from '@ionic-native/toast';
 
 @Component({
   selector: 'page-Encuestas',
@@ -21,9 +22,9 @@ private listaEncuestas;
 private listaCursos;
 private cursoSeleccionado;
 private encuestaSeleccionada;
-
+private toast;
  constructor(public navCtrl: NavController,public NavParams: NavParams,private http: Http,public af: AngularFire
- ,servAuth:servicioAuth)
+ ,servAuth:servicioAuth,private toastCtrl: ToastController)
   {
 this.usuarioLogueado=servAuth.getUserInfo();
     console.info(this.usuarioLogueado);
@@ -40,7 +41,12 @@ this.usuarioLogueado=servAuth.getUserInfo();
     this.listaEncuestas = quote;
     console.info(this.listaEncuestas);
   });
-  
+     
+        this.toast = this.toastCtrl.create({
+        message: 'La encuesta se envio correctamente',
+        duration: 3000,
+        position: 'top'});
+         
   }
   
 
@@ -51,6 +57,7 @@ EnviarEncuesta(){
      })
     .map(res => res.json())
     .subscribe((quote) =>{
+      this.toast.present();
       console.info(quote);
      });
 

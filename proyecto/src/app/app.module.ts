@@ -34,6 +34,7 @@ import {Modales} from '../pages/encuestas/modales/modales';
 import {GenerarEncuesta} from '../pages/encuestas/generarencuesta/generarencuesta';
 import {EnviarEncuesta} from '../pages/encuestas/enviarencuesta/enviarencuesta';
 import {GrillaComision} from "../pages/grillas/grilla-comision/grilla-comision";
+import { Toast } from '@ionic-native/toast';
 
 import { Device } from '@ionic-native/device';
 
@@ -104,6 +105,7 @@ import { Device } from '@ionic-native/device';
     servicioAuth,
     AuthData,
     Device,
+    Toast,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

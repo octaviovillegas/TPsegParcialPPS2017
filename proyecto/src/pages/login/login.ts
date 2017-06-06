@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController,NavParams, Loading, IonicPage } from 'ionic-angular';
+import { NavController, AlertController, LoadingController,NavParams, Loading, IonicPage  } from 'ionic-angular';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
 import {Usuario} from "../usuario/usuario";
 import {Http} from '@angular/http';
@@ -31,11 +31,12 @@ export class Login {
 
     private device: Device;
 
-    constructor(public navCtrl: NavController, private auth: servicioAuth, private alertCtrl: AlertController, private loadingCtrl: LoadingController, public authData: AuthData, private dev: Device) {
-        this.device = dev;;
+    constructor(public navCtrl: NavController, private auth: servicioAuth, 
+    private alertCtrl: AlertController, private loadingCtrl: LoadingController,
+     public authData: AuthData, private dev: Device)
+      {
+     this.device = dev;
     }
-
-
 
 
     public loading: Loading;
