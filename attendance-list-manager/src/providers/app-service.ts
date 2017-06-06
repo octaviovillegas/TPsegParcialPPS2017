@@ -60,5 +60,12 @@ export class AppService {
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/newuser", jsonData, options).toPromise();
   }
+getSurveysList()
+{
+  let headers = new Headers({ 'Content-Type': 'application/json' });
+  let options = new RequestOptions({ headers: headers });
+  return this.http.post("http://localhost:80/jwt/getsurveyslist",options).toPromise();
+
+}
 
 }
