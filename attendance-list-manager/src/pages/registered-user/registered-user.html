@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -26,6 +26,9 @@
       </ion-item>
     </ion-list>
     <ion-list>
+      <ion-fab right middle class="over-over">
+        <button ion-fab color="secondary" (click)="closeSideMenu()"><ion-icon name="arrow-dropleft"></ion-icon></button>
+      </ion-fab>
       <ion-list-header>
         Acciones
       </ion-list-header>

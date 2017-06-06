@@ -27,13 +27,13 @@ export class RegisteredUserPage {
   title: string;
   actions: any[];
   rootComponent: any;
-  rol:string;
-  username:string;
-  email:string;
+  rol: string;
+  username: string;
+  email: string;
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private appService: AppService, private menuCtrl: MenuController) {
     this.title = "Menu";
     this.actions = [];
-    this.rol ="Tipo de usuario";
+    this.rol = "Tipo de usuario";
     this.username = "Nombre de usuario";
     this.email = "email@emai.com";
   }
@@ -59,7 +59,7 @@ export class RegisteredUserPage {
           let body = JSON.parse(response["_body"]);
 
           this.setRootComponent(body["code"]);
-          
+
           this.actions = body['permissions'];
           //Set user profile data
           this.setProfileData(body["profile"]);
@@ -151,10 +151,14 @@ export class RegisteredUserPage {
         this.rootComponent = QuestionListViewerComponent;
         break;
     }
+    this.closeSideMenu();
+  }
+
+  closeSideMenu() {
     this.menuCtrl.close();
   }
 
-  setProfileData(profile){
+  setProfileData(profile) {
     switch (profile.code) {
       case "Administrator":
         this.rol = "Administrador";
