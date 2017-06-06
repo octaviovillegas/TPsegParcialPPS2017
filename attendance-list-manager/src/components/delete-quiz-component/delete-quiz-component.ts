@@ -34,26 +34,27 @@ export class DeleteQuizComponent {
        .catch((error) =>console.log("error")); //Si por alguna razón el servidor no responde.
   }
 
-// eliminar(){
+eliminar(surveyid){
+console.log(surveyid);
 
+  this.appService.eliminatesurvey(surveyid).then((response: Response) => {
 
-// this.appService.eliminatesurvey().then((response: Response) => {
+     this.appService.getSurveys().then((response: Response) => {
 
-//         if (response.status == 200) {
-//          this.surveys = JSON.parse(response["_body"]);
+        if (response.status == 200) {
+         this.surveys = JSON.parse(response["_body"]);
 
          
-//         } else {
-//           console.log("error"); //No tiene permisos.
-//         }
-//       })
-//        .catch((error) =>console.log("error")); //Si por alguna razón el servidor no responde.
-//   }
+        } else {
+          console.log("error"); //No tiene permisos.
+        }
+      })
+       .catch((error) =>console.log("error")); //Si por alguna razón el servidor no responde.
+   });}
 
 
 
-// }
+ 
 
 
-
-}
+ }

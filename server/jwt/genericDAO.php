@@ -226,10 +226,16 @@ class GenericDAO
 
 	}
 
-	public static function eliminateSurvey($surveyId){
-		$db = GenericDAO::getPDO();
+	public static function eliminateSurvey($surveyid){
+	try
+		{		$db = GenericDAO::getPDO();
 		$sql = "update surveys set waseliminated = true
-				where surveyid = " . $surveyId;
+				where surveyid = " . $surveyid;
+					$statement = $db->sendQuery($sql);
+
+			$couldDeleteuser= $statement->execute();
+			return $couldDeleteuser;
+		}catch(Exeption $ex){}
 	}
 
 }

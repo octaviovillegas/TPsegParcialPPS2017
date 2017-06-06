@@ -61,11 +61,12 @@ export class AppService {
     return this.http.post("http://localhost:80/jwt/newuser", jsonData, options).toPromise();
   }
 
-eliminatesurvey(Survey)
-{
+eliminatesurvey(surveyid)
+{let data = {surveyid };
+  let jsonData=JSON.stringify(data);
  let headers = new Headers({ 'Content-Type': 'application/json' });
   let options = new RequestOptions({ headers: headers });
-  return this.http.post("http://localhost:80/jwt/eliminatesurvey",options).toPromise();
+  return this.http.post("http://localhost:80/jwt/eliminatesurvey",jsonData,options).toPromise();
 
 
 

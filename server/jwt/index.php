@@ -83,7 +83,9 @@ $app->post('/getsurveyslist',function(Request $request, Response $response){
 });
 
 $app->post('/eliminatesurvey',function(Request $request, Response $response){
-    $rv = GenericDAO::eliminateSurvey();
+    $params = $request->getParams();
+    $surveyid = $params["surveyid"];
+    $rv = GenericDAO::eliminateSurvey($surveyid);
     $response->getBody()->write(json_encode($rv));
     return $response;
 });
