@@ -35,8 +35,15 @@ import {GenerarEncuesta} from '../pages/encuestas/generarencuesta/generarencuest
 import {EnviarEncuesta} from '../pages/encuestas/enviarencuesta/enviarencuesta';
 import {GrillaComision} from "../pages/grillas/grilla-comision/grilla-comision";
 import { Toast } from '@ionic-native/toast';
-
 import { Device } from '@ionic-native/device';
+import {GrillaCurso} from "../pages/grillas/grilla-curso/grilla-curso";
+import {ModificacionModalCursos} from "../pages/grillas/modificacion-modal-cursos/modificacion-modal-cursos";
+import {AltaModalCursos} from "../pages/grillas/alta-modal-cursos/alta-modal-cursos";
+import {grafico1} from "../pages/graficos/grafico1/grafico1";
+import {grafico2} from "../pages/graficos/grafico2/grafico2";
+import {grafico3} from "../pages/graficos/grafico3/grafico3";
+import {ChartsModule} from 'ng2-charts/charts/charts';
+import '../../node_modules/chart.js/dist/Chart.bundle.min.js'; 
 
 @NgModule({
   declarations: [
@@ -63,12 +70,19 @@ import { Device } from '@ionic-native/device';
     Modales,
     GenerarEncuesta,
     EnviarEncuesta,
-    GrillaComision
+    GrillaComision,
+    GrillaCurso,
+    ModificacionModalCursos,
+    AltaModalCursos,
+    grafico1,
+    grafico2,
+    grafico3
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
+    ChartsModule,
    AngularFireModule.initializeApp(firebaseconfig)
       ],
   bootstrap: [IonicApp],
@@ -96,7 +110,13 @@ import { Device } from '@ionic-native/device';
     Modales,
    GenerarEncuesta,
     EnviarEncuesta,
-    GrillaComision
+    GrillaComision,
+    GrillaCurso,
+    ModificacionModalCursos,
+    AltaModalCursos,
+    grafico1,
+    grafico2,
+    grafico3
       ],
   providers: [
     StatusBar,

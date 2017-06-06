@@ -20,7 +20,11 @@
 
 <ion-content padding>
 
-    <ion-list *ngIf="accion == 'ver'">
+    <div *ngIf="cargando" text-center>
+        <ion-spinner text-center name="bubbles"></ion-spinner>
+    </div>
+
+    <ion-list *ngIf="!cargando && accion == 'ver'">
         <ion-list-header>Preguntas</ion-list-header>
         <button ion-item *ngFor="let pregunta of preguntas">
             <h2>{{ pregunta.descripcion }}</h2>
@@ -28,7 +32,7 @@
         </button>
     </ion-list>
 
-    <div *ngIf="accion == 'responder'">
+    <div *ngIf="!cargando && accion == 'responder'">
         <h1>Preguntas</h1>
         <ion-card no-padding class="animated pulse" *ngIf="pregunta_actual != null">
             <ion-card-header>
@@ -47,10 +51,10 @@
                 </ion-list>
 
                 <ion-list *ngIf="pregunta_actual.tipo == 'checkbox'">
-                    <ng-container *ngFor="let opcion of [1,2,3,4]">
+                    <ng-container *ngFor="let opcion of [1,2,3,4]; let i = index;">
                         <ion-item *ngIf="pregunta_actual['opcion'+opcion]">
-                            <ion-label>{{ pregunta_actual['opcion'+opcion] }}</ion-label>
-                            <ion-checkbox (ionChange)="onChecked($event, opcion, pregunta_actual)"></ion-checkbox>
+                            <ion-label>{{ pregunta_actual['opcion'+opcion] }} {{ i }}</ion-label>
+                            <ion-checkbox [checked]="checkboxs_checked[i]" (ionChange)="onChecked($event, opcion, pregunta_actual)"></ion-checkbox>
                         </ion-item>
                     </ng-container>
                 </ion-list>

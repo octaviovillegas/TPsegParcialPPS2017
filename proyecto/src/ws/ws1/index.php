@@ -68,22 +68,29 @@ $app->get('/algo', function ($request, $response, $args) {
 
 
 
- 
+
 
 
 $app->get('/usuarios', function ($request, $response, $args) {
 
+    $params = $request->getQueryParams();
 
-   $arrAdmin = Usuario::TraerTodasLasPersonas();
+    $usuario = isset($params['usuario']) ? $params['usuario'] : null;
+    $clave= isset($params['clave']) ? $params['clave'] : null;
+
+    if (!is_null($usuario) && !is_null($clave)) {
+        $usuarios = Usuario::TraerUnUsuarioPorUsuarioYClave($usuario, $clave);
+    } else {
+        $usuarios = Usuario::TraerTodasLasPersonas();
+    }
 
 
-
-   return json_encode($arrAdmin);
+    return json_encode($usuarios);
 
 
 });
 
- 
+
 
 //--aixa------------------------------------------
 
@@ -288,6 +295,91 @@ $app->get('/cursos', function ($request, $response, $args) {
 
  return json_encode($cursos);
 
+
+});
+
+$app->post('/cursos/alta', function ($request, $response, $args) {
+
+
+  $curso = $request->getParsedBody();
+
+        // convierto el array en un objecto
+        $curso = (object)$curso;
+
+        $res = curso::AltaCurso($curso);
+
+
+        $hayError = false;
+
+        if ($res) {
+            $hayError = false;
+        } else {
+            $hayError = true;
+        }
+
+        $response->withHeader('Content-Type', 'application/json');
+        $response->write(json_encode(array('error' => $hayError, 'ok' => $ret)));
+
+
+        return $response;
+
+
+
+});
+
+
+$app->post('/cursos/modificar', function ($request, $response, $args) {
+
+
+  $curso = $request->getParsedBody();
+
+        // convierto el array en un objecto
+        $curso = (object)$curso;
+
+        $res = curso::ModificarCurso($curso);
+
+
+        $hayError = false;
+
+        if ($res) {
+            $hayError = false;
+        } else {
+            $hayError = true;
+        }
+
+        $response->withHeader('Content-Type', 'application/json');
+        $response->write(json_encode(array('error' => $hayError, 'ok' => $ret)));
+
+
+        return $response;
+
+
+
+});
+
+$app->post('/cursos/eliminar', function ($request, $response, $args) {
+
+
+     // Obtengo la data enviada. Es recibida como un array.
+    $curso = $request->getParsedBody();
+
+    // convierto el array en un objecto
+    $curso = (object)$curso;
+
+    $res = Curso::EliminarCurso($curso);
+
+    $hayError = false;
+
+    if ($res) {
+        $hayError = false;
+    } else {
+        $hayError = true;
+    }
+
+    $response->withHeader('Content-Type', 'application/json');
+    $response->write(json_encode(array('error' => $hayError, 'comision' => $comision)));
+
+    return $response;
 
 });
 

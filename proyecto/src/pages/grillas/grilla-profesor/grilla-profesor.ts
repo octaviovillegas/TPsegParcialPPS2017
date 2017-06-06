@@ -6,6 +6,7 @@ import { ModalController } from 'ionic-angular';
 import { Menu } from '../../menu/menu';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import { AltaModal } from '../alta-modal/alta-modal';
+import { AuthData } from '../../../providers/auth-data';
 
 
 @Component({
@@ -16,7 +17,9 @@ export class GrillaProfesor {
 
     Usuarios;
     Uss : Array<any> =[];
-  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController) {
+  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth,
+      public navParams: NavParams, public viewCtrl: ViewController,
+      private http: Http, public modalCtrl: ModalController, public authData: AuthData) {
     this.CargaGrilla();
 
   }
@@ -34,7 +37,7 @@ export class GrillaProfesor {
 
             for(let us of this.Usuarios)
               {
-                if(us['tipo_usuario'] == "Alumno")
+                if(us['tipo_usuario'] == "Profesor")
                 {
                   this.Uss.push(us);
                 }
@@ -58,7 +61,7 @@ export class GrillaProfesor {
           this.CargaGrilla();
         });
         modal.present();
-        
+
     }
 
     Alta()
@@ -87,21 +90,22 @@ export class GrillaProfesor {
                   text: 'Aceptar',
                   handler: () => {
                     console.log('Aceptar clicked');
-                    this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
-                           id_usuario: id_usuario
-            
-                    })
-                    .map(res => res.json())
-                    .subscribe((quote) =>{
-                           this.CargaGrilla();
+                    this.authData.removeUser(usuario).then( success => {
+                        this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
+                            id_usuario: id_usuario
+                        })
+                        .map(res => res.json())
+                        .subscribe((quote) =>{
+                            this.CargaGrilla();
+                        });
                     });
-                  
+
                   }
                 }
               ]
             });
             alert.present();
-             
+
     }
 
 
