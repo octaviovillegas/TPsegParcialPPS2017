@@ -33,15 +33,6 @@ export class Login {
     public loading: Loading;
 
 
-    constructor(public navCtrl: NavController, private auth: servicioAuth, 
-    private alertCtrl: AlertController, private loadingCtrl: LoadingController,
-     public authData: AuthData, private dev: Device)
-      {
-     this.device = dev;
-    }
-
-
-    public loading: Loading;
 
 
 
