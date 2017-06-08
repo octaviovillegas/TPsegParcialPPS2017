@@ -77,22 +77,50 @@ $app->post('/newuser',function(Request $request, Response $response){
 });
 
 $app->post('/getsurveyslist',function(Request $request, Response $response){
-    $rv = GenericDAO::getSurveysList();
+     $params = $request->getParams();
+    $jwt = $params["jwt"];
+    
+    $tm = new TokenManager();
+    // $tm->isValidToken($jwt);
+     
+    $userid = $tm->getIdByJWT($jwt);
+
+    $rv = GenericDAO::getSurveysList($userid);
     $response->getBody()->write(json_encode($rv));
     return $response;
 });
 
 $app->post('/eliminatesurvey',function(Request $request, Response $response){
+    
     $params = $request->getParams();
+   
     $surveyid = $params["surveyid"];
+    
+ 
+    
     $rv = GenericDAO::eliminateSurvey($surveyid);
     $response->getBody()->write(json_encode($rv));
     return $response;
 });
 
 $app->post('/getsurveybyid',function(Request $request, Response $response){
-    $rv = GenericDAO::eliminateSurvey();
+
+   
+    $rv = GenericDAO::getSurveysList();
     $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+$app->post('/getuserid',function(Request $request, Response $response){
+     $params = $request->getParams();
+    $jwt = $params["jwt"];
+    
+    $tm = new TokenManager();
+  
+     
+    $userid = $tm->getIdByJWT($jwt);
+
+    
+    $response->getBody()->write(json_encode($userid));
     return $response;
 });
 

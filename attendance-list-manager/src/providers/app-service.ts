@@ -39,10 +39,12 @@ export class AppService {
     this.clearStorageData();
   }
 
-  getSurveys() {
+  getSurveys(jwt) {
+    let data = {jwt};
+  let jsonData=JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getsurveyslist", options).toPromise();
+    return this.http.post("http://localhost:80/jwt/getsurveyslist",jsonData, options).toPromise();
   }
 
   newSurvey(survey: Survey, jwt) {
@@ -60,9 +62,16 @@ export class AppService {
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/newuser", jsonData, options).toPromise();
   }
+getuserid(jwt){
+   let data = {jwt };
+  let jsonData=JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/getuserid",jsonData, options).toPromise();
 
+}
 eliminatesurvey(surveyid)
-{let data = {surveyid };
+{let data = {surveyid};
   let jsonData=JSON.stringify(data);
  let headers = new Headers({ 'Content-Type': 'application/json' });
   let options = new RequestOptions({ headers: headers });

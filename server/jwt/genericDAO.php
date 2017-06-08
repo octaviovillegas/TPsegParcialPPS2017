@@ -202,16 +202,16 @@ class GenericDAO
 		
 	}
 
-	public static function getSurveysList(){
+	public static function getSurveysList($usuarioid){
 		try
 		{	
 			
 			$db = GenericDAO::getPDO();
 			$today = date("Y-m-d");
-			$sql = "select s.surveyid , s.title, u.username, u.userid, s.creationdate, s.enddate
+			$sql = "select s.surveyid , s.title, u.username, u.userid, s.creationdate, s.enddate,s.waseliminated
 					from surveys as s
 					join users as u on u.userid = s.ownerid
-					where s.enddate >= " . $today . " or s.enddate = 0000-00-00 and s.waseliminated = false" ;
+					where  s.waseliminated=False and (s.enddate >= " . $today . " or s.enddate = 0000-00-00)and s.ownerid=".$usuarioid ;
 
 			$statement = $db->sendQuery($sql);
 
@@ -230,7 +230,7 @@ class GenericDAO
 	try
 		{		$db = GenericDAO::getPDO();
 		$sql = "update surveys set waseliminated = true
-				where surveyid = " . $surveyid;
+			     where surveyid = " . $surveyid;
 					$statement = $db->sendQuery($sql);
 
 			$couldDeleteuser= $statement->execute();

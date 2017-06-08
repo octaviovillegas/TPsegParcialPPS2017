@@ -2,13 +2,16 @@
 <div> 
  <ion-list>
     <div ion-item *ngFor="let item of  surveys" >
-      <div>
-     Titulo: {{item.title}}</div>
+      
+  
+    <div>Titulo: {{item.title}}</div>
      <div>Autor:{{item.username}}</div>
      <div>Fecha de Creación:{{item.creationdate}}</div>
-<div>
-     Fecha de Termino:{{item.enddate}}</div>
+    <div>Fecha de Termino:{{item.enddate}}</div>
     <button ion-button (click)="eliminar(item.surveyid)">Eliminar</button>
-    </div>
-  </ion-list>
+     
+   
+    
 </div>
+
+  </ion-list>
