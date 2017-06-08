@@ -144,15 +144,6 @@ $app->post('/saveanswer',function(Request $request, Response $response){
     return $response;
 });
 
-$app->post('/divisionslist',function(Request $request, Response $response){
-    $params = $request->getParams();
-    $jwt = $params["jwt"];
-    $tm = new TokenManager();
-    $tm->isValidToken($jwt);
-    $rv = GenericDAO::getDivisions();
-    $response->getBody()->write(json_encode($rv));
-    return $response;
-});
 
 $app->post('/divisionslist',function(Request $request, Response $response){
     $params = $request->getParams();
