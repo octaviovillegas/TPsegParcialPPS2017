@@ -271,6 +271,36 @@ $app->post('/comisiones/alta', function ($request, $response, $args) {
 
 });
 
+ 
+ $app->get('/GrafRespuestasDePreguntas', function ($request, $response, $args) {
+
+
+  $resp=UsuarioRespuestas::respuestasDePreguntas();
+
+ return json_encode($resp);
+
+
+});
+
+  $app->get('/GrafEncuestasPorCurso', function ($request, $response, $args) {
+
+
+  $resp=UsuarioRespuestas::encuestasPorCurso();
+
+ return json_encode($resp);
+
+
+});
+
+   $app->get('/GrafAlumnosPorCurso', function ($request, $response, $args) {
+
+
+  $resp=UsuarioRespuestas::alumnosPorCurso();
+
+ return json_encode($resp);
+
+
+});
 
 
 //-------------------------------------------------------
