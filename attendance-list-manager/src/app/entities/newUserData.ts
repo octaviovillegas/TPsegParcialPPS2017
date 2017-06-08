@@ -1,5 +1,3 @@
-import { Address } from "./address";
-
 export class NewUserData {
     username: string;
     email: string;
