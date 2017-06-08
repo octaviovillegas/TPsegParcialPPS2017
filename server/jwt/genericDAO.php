@@ -212,6 +212,24 @@ class GenericDAO
 					from surveys as s
 					join users as u on u.userid = s.ownerid
 					where s.enddate >= " . $today . " or s.enddate = 0000-00-00 and s.waseliminated = false" ;
+			$statement = $db->sendQuery($sql);
+			 $statement->execute();
+			 $rv = $statement->fetchAll(PDO::PARAM_STR);
+			 return $rv;
+		}catch(Exception $ex){
+		}
+	}
+
+	public static function getSurveysListToEliminate($usuarioid){
+		try
+		{	
+			
+			$db = GenericDAO::getPDO();
+			$today = date("Y-m-d");
+			$sql = "select s.surveyid , s.title, u.username, u.userid, s.creationdate, s.enddate,s.waseliminated
+					from surveys as s
+					join users as u on u.userid = s.ownerid
+					where  s.waseliminated=False and (s.enddate >= " . $today . " or s.enddate = 0000-00-00)and s.ownerid=".$usuarioid ;
 
 			$statement = $db->sendQuery($sql);
 
@@ -226,10 +244,16 @@ class GenericDAO
 
 	}
 
-	public static function eliminateSurvey($surveyId){
-		$db = GenericDAO::getPDO();
+	public static function eliminateSurvey($surveyid){
+	try
+		{		$db = GenericDAO::getPDO();
 		$sql = "update surveys set waseliminated = true
-				where surveyid = " . $surveyId;
+			     where surveyid = " . $surveyid;
+					$statement = $db->sendQuery($sql);
+
+			$couldDeleteuser= $statement->execute();
+			return $couldDeleteuser;
+		}catch(Exeption $ex){}
 	}
 
 	public static function getSurveyById($surveyId){

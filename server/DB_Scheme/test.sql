@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-06-2017 a las 04:33:12
+-- Tiempo de generación: 08-06-2017 a las 06:19:53
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -271,8 +271,6 @@ INSERT INTO `permissionsbyrol` (`permissionbyrolid`, `permissionid`, `rolid`) VA
 (4, 5, 4),
 (5, 6, 3),
 (6, 3, 3),
-(7, 2, 1),
-(8, 1, 1),
 (9, 3, 1),
 (10, 7, 1),
 (11, 8, 4);
@@ -398,7 +396,7 @@ CREATE TABLE `surveys` (
 --
 
 INSERT INTO `surveys` (`surveyid`, `title`, `creationdate`, `enddate`, `ownerid`, `waseliminated`) VALUES
-(51, 'Titulo de la encuesta Pofesor', '2017-06-02', '2030-08-04', 2, 1),
+(51, 'Titulo de la encuesta Pofesor', '2017-06-02', '2030-08-04', 2, 0),
 (52, 'Titulo de la encuesta Administrador', '2017-06-02', '0000-00-00', 1, 0),
 (54, 'Titulo de otra encuesta Administrador', '2017-06-06', '0000-00-00', 1, 0);
 

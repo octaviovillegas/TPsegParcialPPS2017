@@ -81,8 +81,30 @@ $app->post('/getsurveyslist',function(Request $request, Response $response){
     return $response;
 });
 
+$app->post('/getsurveyslisttoeliminate',function(Request $request, Response $response){
+    
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    
+    $tm = new TokenManager();
+    // $tm->isValidToken($jwt);
+     
+    $userid = $tm->getIdByJWT($jwt);
+
+    $rv = GenericDAO::getSurveysListToEliminate($userid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
 $app->post('/eliminatesurvey',function(Request $request, Response $response){
-    $rv = GenericDAO::eliminateSurvey();
+    
+    $params = $request->getParams();
+   
+    $surveyid = $params["surveyid"];
+    
+ 
+    
+    $rv = GenericDAO::eliminateSurvey($surveyid);
     $response->getBody()->write(json_encode($rv));
     return $response;
 });
@@ -94,7 +116,19 @@ $app->post('/getsurveybyid',function(Request $request, Response $response){
     $response->getBody()->write(json_encode($rv));
     return $response;
 });
+$app->post('/getuserid',function(Request $request, Response $response){
+     $params = $request->getParams();
+    $jwt = $params["jwt"];
+    
+    $tm = new TokenManager();
+  
+     
+    $userid = $tm->getIdByJWT($jwt);
 
+
+    $response->getBody()->write(json_encode($userid));
+    return $response;
+});
 $app->post('/saveanswer',function(Request $request, Response $response){
     $params = $request->getParams();
     $answer = $params["answer"];
@@ -107,6 +141,16 @@ $app->post('/saveanswer',function(Request $request, Response $response){
     }else{
         $response = $response->withStatus(204);
     }
+    return $response;
+});
+
+$app->post('/divisionslist',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getDivisions();
+    $response->getBody()->write(json_encode($rv));
     return $response;
 });
 
@@ -154,5 +198,6 @@ $app->post('/saveattendancelist',function(Request $request, Response $response){
     $response->getBody()->write(json_encode($rv));
     return $response;
 });
+
 $app->run();
 ?>
