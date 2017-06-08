@@ -58,12 +58,15 @@ export class GrillaAlumno {
           this.CargaGrilla();
         });
         modal.present();
-        
+
     }
 
     Alta()
     {
-        let modal2 = this.modalCtrl.create(AltaModal,{"tipo":"Alumno"});
+        let modal2 = this.modalCtrl.create(AltaModal, {
+            "tipo": "Alumno",
+            id_tipo: 3
+        });
         modal2.onDidDismiss(data=>{
           this.CargaGrilla();
         });
@@ -89,19 +92,19 @@ export class GrillaAlumno {
                     console.log('Aceptar clicked');
                     this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
                            id_usuario: id_usuario
-            
+
                     })
                     .map(res => res.json())
                     .subscribe((quote) =>{
                            this.CargaGrilla();
                     });
-                  
+
                   }
                 }
               ]
             });
             alert.present();
-             
+
     }
 
 }
