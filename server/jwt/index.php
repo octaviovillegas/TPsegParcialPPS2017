@@ -51,7 +51,7 @@ $app->post('/permissions',function(Request $request, Response $response){
 
 $app->post('/newsurvey',function(Request $request, Response $response){
     $params = $request->getParams();
-    $survey = $params["survey"];
+    $survey = $params["surveyId"];
     $jwt = $params["jwt"];
     $tm = new TokenManager();
     $tm->isValidToken($jwt);
@@ -73,7 +73,6 @@ $app->post('/newuser',function(Request $request, Response $response){
         $response = $response->withStatus(204);
     }
     return $response;
-    return $response;
 });
 
 $app->post('/getsurveyslist',function(Request $request, Response $response){
@@ -89,10 +88,71 @@ $app->post('/eliminatesurvey',function(Request $request, Response $response){
 });
 
 $app->post('/getsurveybyid',function(Request $request, Response $response){
-    $rv = GenericDAO::eliminateSurvey();
+    $params = $request->getParams();
+    $surveyId= $params["surveyId"];
+    $rv = GenericDAO::getSurveyById($surveyId);
     $response->getBody()->write(json_encode($rv));
     return $response;
 });
 
+$app->post('/saveanswer',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $answer = $params["answer"];
+    $jwt = $params["jwt"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $userid = $tm->getIdByJWT($jwt);
+    if(GenericDAO::saveAnswer($answer,$userid)){
+        $response = $response->withStatus(200);
+    }else{
+        $response = $response->withStatus(204);
+    }
+    return $response;
+});
+
+$app->post('/divisionslist',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getDivisions();
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
+$app->post('/subjectslistbydivisionid',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $divisionid = $params["divisionid"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getSubjectsListByDivisionId($divisionid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
+$app->post('/studentslistbydivisionandsubject',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $divisionid = $params["divisionid"];
+    $subjectid = $params["subjectid"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getStudentsListByDivisionAndSubject($divisionid,$subjectid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
+$app->post('/saveattendancelist',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $attendanceList = $params["attendancelist"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $userId = $tm->getIdByJWT($jwt);
+    $rv = GenericDAO::saveAttendaceList($attendanceList,$userId);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
 $app->run();
 ?>

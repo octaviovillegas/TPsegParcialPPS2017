@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-06-2017 a las 07:55:51
+-- Tiempo de generación: 08-06-2017 a las 04:33:12
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -44,7 +44,148 @@ INSERT INTO `addresses` (`addressid`, `street`, `number`, `floor`, `department`,
 (0, 'Calle', '12357184', 'Piso', 'Departamento', 'Aclaración', 'Localidad'),
 (1, '9 de Julio', '2722', 'PB', '', 'Es un Bar', 'Lanus'),
 (2, '9 de Julio', '1510', 'PB', 'Local', 'Es un local', 'Lanus'),
-(12, 'Falsa', '231', 'PB', 'A', 'Aclaración', 'Lanus');
+(12, 'Falsa', '231', 'PB', 'A', 'Aclaración', 'Lanus'),
+(19, '9 de Julio', '1824', '', '', '', 'Lanús'),
+(20, 'Gral. Arias', '1824', '', '', 'Estadio de fútbol', 'Lanús'),
+(21, 'ewr', '345', 'sdf', '', '', 'wersdr'),
+(22, 'qwerqwe', '456456456', '', '', '', 'werwer'),
+(23, 'werwer', '456456', '', '', '', 'rtrt'),
+(24, '45646', '456456', '', '', '', '456456');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `answers`
+--
+
+CREATE TABLE `answers` (
+  `answerid` bigint(18) NOT NULL,
+  `text` text NOT NULL,
+  `userid` bigint(18) NOT NULL,
+  `questionid` bigint(18) NOT NULL,
+  `surveyid` bigint(18) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `answers`
+--
+
+INSERT INTO `answers` (`answerid`, `text`, `userid`, `questionid`, `surveyid`) VALUES
+(22, 'ewqweqwe', 4, 53, 51);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `attendancelistitems`
+--
+
+CREATE TABLE `attendancelistitems` (
+  `attendancelistitemid` bigint(18) NOT NULL,
+  `studentid` bigint(18) NOT NULL,
+  `present` tinyint(1) NOT NULL,
+  `attendancelistid` bigint(18) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `attendancelists`
+--
+
+CREATE TABLE `attendancelists` (
+  `attendancelistid` bigint(18) NOT NULL,
+  `classid` bigint(18) NOT NULL,
+  `creationdate` date NOT NULL,
+  `ownerid` bigint(18) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `classes`
+--
+
+CREATE TABLE `classes` (
+  `classid` bigint(18) NOT NULL,
+  `divisionid` bigint(18) NOT NULL,
+  `subjectid` bigint(18) NOT NULL,
+  `classroomid` bigint(18) NOT NULL,
+  `teacherid` bigint(18) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `classes`
+--
+
+INSERT INTO `classes` (`classid`, `divisionid`, `subjectid`, `classroomid`, `teacherid`) VALUES
+(1, 1, 4, 100, 2),
+(2, 1, 5, 201, 2),
+(3, 1, 6, 202, 2),
+(4, 1, 7, 300, 2),
+(5, 2, 4, 100, 2),
+(6, 2, 5, 201, 2),
+(7, 2, 6, 202, 2),
+(8, 2, 7, 300, 2),
+(9, 3, 4, 100, 2),
+(10, 3, 5, 201, 2),
+(11, 3, 6, 202, 2),
+(12, 3, 7, 300, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `classrooms`
+--
+
+CREATE TABLE `classrooms` (
+  `classroomid` bigint(18) NOT NULL,
+  `name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `classrooms`
+--
+
+INSERT INTO `classrooms` (`classroomid`, `name`) VALUES
+(1, '100'),
+(2, '101'),
+(3, '102'),
+(4, '103'),
+(5, '200'),
+(6, '201'),
+(7, '202'),
+(8, '300'),
+(9, '301'),
+(10, '302');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `divisions`
+--
+
+CREATE TABLE `divisions` (
+  `divisionid` bigint(18) NOT NULL,
+  `name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `divisions`
+--
+
+INSERT INTO `divisions` (`divisionid`, `name`) VALUES
+(1, '1 A'),
+(2, '1 B'),
+(3, '1 C'),
+(4, '2 A'),
+(5, '2 B'),
+(6, '2 C'),
+(7, '3 A'),
+(8, '3 B'),
+(9, '3 C'),
+(10, '4 A'),
+(11, '4 B'),
+(12, '4 C');
 
 -- --------------------------------------------------------
 
@@ -64,15 +205,23 @@ CREATE TABLE `options` (
 --
 
 INSERT INTO `options` (`optionid`, `text`, `isright`, `questionid`) VALUES
-(13, 'Soy el texto de una opción correcta', 1, 52),
-(14, 'Soy el texto de una opción incorrecta', 0, 52),
-(15, 'Soy el texto de una opción correcta', 1, 53),
-(16, 'Soy el texto de una opción correcta', 1, 53),
 (17, 'Soy el texto de una opción correcta', 1, 54),
 (18, 'Soy el texto de una opción incorrecta', 0, 54),
-(19, 'Soy el texto de una opción correcta', 1, 55),
-(20, 'Soy el texto de una opción incorrecta', 0, 55),
-(21, 'Soy el texto de una opción correcta', 1, 55);
+(22, 'HTML', 0, 56),
+(23, 'Javascript', 1, 56),
+(24, 'C#', 1, 56);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `optionsbyanswer`
+--
+
+CREATE TABLE `optionsbyanswer` (
+  `optionsbyanswerid` bigint(18) NOT NULL,
+  `optionid` bigint(18) NOT NULL,
+  `answerid` bigint(18) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -145,10 +294,9 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`questionid`, `text`, `surveyid`) VALUES
-(52, '¿Una pregunta?', 50),
 (53, '¿Una pregunta?', 51),
 (54, '¿Una pregunta?', 52),
-(55, '¿Una pregunta?', 53);
+(56, '¿Cuáles de los siguientes son lenguajes de programación?', 54);
 
 -- --------------------------------------------------------
 
@@ -174,6 +322,65 @@ INSERT INTO `roles` (`rolid`, `code`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `studentsbyclass`
+--
+
+CREATE TABLE `studentsbyclass` (
+  `studentsbyclassid` bigint(18) NOT NULL,
+  `studentid` bigint(18) NOT NULL,
+  `classid` bigint(18) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `studentsbyclass`
+--
+
+INSERT INTO `studentsbyclass` (`studentsbyclassid`, `studentid`, `classid`) VALUES
+(1, 11, 1),
+(2, 12, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `subjects`
+--
+
+CREATE TABLE `subjects` (
+  `subjectid` bigint(18) NOT NULL,
+  `name` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `subjects`
+--
+
+INSERT INTO `subjects` (`subjectid`, `name`) VALUES
+(1, 'Introducción a la Programación'),
+(2, 'Lectura Comprensiva'),
+(3, 'Matemática Inicial'),
+(4, 'Matemática'),
+(5, 'Sistema de Pocesamiento de Datos'),
+(6, 'Programación I'),
+(7, 'Laboratorio de Computación I'),
+(8, 'Arquitectura y Sistemas Operativos'),
+(9, 'Estadística'),
+(10, 'Inglés II'),
+(11, 'Programación II'),
+(12, 'Laboratorio de Computación II'),
+(13, 'Metodología de la Investigación'),
+(14, 'Elementos de la Investigación Operativa'),
+(15, 'Programación III'),
+(16, 'Laboratorio de Computación III'),
+(17, 'Organización Contable de la Empresa'),
+(18, 'Organización Empresarial'),
+(19, 'Diseño y Administración de Base de Datos'),
+(20, 'Laboratorio de Computación IV'),
+(21, 'Legislación'),
+(22, 'Metodología de Sistemas I');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `surveys`
 --
 
@@ -191,10 +398,9 @@ CREATE TABLE `surveys` (
 --
 
 INSERT INTO `surveys` (`surveyid`, `title`, `creationdate`, `enddate`, `ownerid`, `waseliminated`) VALUES
-(50, 'Titulo de la encuesta', '2017-05-02', '2017-06-01', 3, 0),
-(51, 'Titulo de la encuesta', '2017-06-02', '2030-08-04', 2, 0),
-(52, 'Titulo de la encuesta', '2017-06-02', '0000-00-00', 1, 0),
-(53, 'Titulo de la encuesta', '2017-06-02', '2030-08-04', 1, 0);
+(51, 'Titulo de la encuesta Pofesor', '2017-06-02', '2030-08-04', 2, 1),
+(52, 'Titulo de la encuesta Administrador', '2017-06-02', '0000-00-00', 1, 0),
+(54, 'Titulo de otra encuesta Administrador', '2017-06-06', '0000-00-00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -222,7 +428,9 @@ INSERT INTO `users` (`userid`, `username`, `email`, `password`, `rolid`, `firstn
 (1, 'EjemploAdministrator', 'admin@admin.com', '123456', 1, 'Ejemplo', 'Administrador', 0, 111111),
 (2, 'EjemploTeacher', 'teacher@teacher.com', '123456', 2, 'Ejemplo', 'Profesor', 1, 2222),
 (3, 'EjemploAdministrative', 'administrative@administrative.com', '123456', 3, 'Ejemplo', 'Administrativo', 2, 0),
-(4, 'EjemploStudent', 'student@student.com', '123456', 4, 'Ejemplo', 'Alumno', 12, 35468);
+(4, 'EjemploStudent', 'student@student.com', '123456', 4, 'Ejemplo', 'Alumno', 12, 35468),
+(11, 'NicoCabrera', 'nicolascabrera@yahoo.com.ar', '123456', 4, 'Nicolás', 'Cabrera', 19, 105987),
+(12, 'feden91', 'feden@feden.com', '123456', 4, 'Federico', 'Nuñez', 20, 100321);
 
 --
 -- Índices para tablas volcadas
@@ -235,11 +443,57 @@ ALTER TABLE `addresses`
   ADD PRIMARY KEY (`addressid`);
 
 --
+-- Indices de la tabla `answers`
+--
+ALTER TABLE `answers`
+  ADD PRIMARY KEY (`answerid`),
+  ADD KEY `surveyid` (`surveyid`);
+
+--
+-- Indices de la tabla `attendancelistitems`
+--
+ALTER TABLE `attendancelistitems`
+  ADD PRIMARY KEY (`attendancelistitemid`),
+  ADD KEY `attendancelistid` (`attendancelistid`);
+
+--
+-- Indices de la tabla `attendancelists`
+--
+ALTER TABLE `attendancelists`
+  ADD PRIMARY KEY (`attendancelistid`);
+
+--
+-- Indices de la tabla `classes`
+--
+ALTER TABLE `classes`
+  ADD PRIMARY KEY (`classid`);
+
+--
+-- Indices de la tabla `classrooms`
+--
+ALTER TABLE `classrooms`
+  ADD PRIMARY KEY (`classroomid`);
+
+--
+-- Indices de la tabla `divisions`
+--
+ALTER TABLE `divisions`
+  ADD PRIMARY KEY (`divisionid`);
+
+--
 -- Indices de la tabla `options`
 --
 ALTER TABLE `options`
   ADD PRIMARY KEY (`optionid`),
   ADD KEY `questionid` (`questionid`);
+
+--
+-- Indices de la tabla `optionsbyanswer`
+--
+ALTER TABLE `optionsbyanswer`
+  ADD PRIMARY KEY (`optionsbyanswerid`),
+  ADD KEY `optionid` (`optionid`),
+  ADD KEY `answerid` (`answerid`);
 
 --
 -- Indices de la tabla `permissions`
@@ -269,6 +523,19 @@ ALTER TABLE `roles`
   ADD PRIMARY KEY (`rolid`);
 
 --
+-- Indices de la tabla `studentsbyclass`
+--
+ALTER TABLE `studentsbyclass`
+  ADD PRIMARY KEY (`studentsbyclassid`),
+  ADD KEY `classid` (`classid`);
+
+--
+-- Indices de la tabla `subjects`
+--
+ALTER TABLE `subjects`
+  ADD PRIMARY KEY (`subjectid`);
+
+--
 -- Indices de la tabla `surveys`
 --
 ALTER TABLE `surveys`
@@ -291,12 +558,47 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `addressid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `addressid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+--
+-- AUTO_INCREMENT de la tabla `answers`
+--
+ALTER TABLE `answers`
+  MODIFY `answerid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+--
+-- AUTO_INCREMENT de la tabla `attendancelistitems`
+--
+ALTER TABLE `attendancelistitems`
+  MODIFY `attendancelistitemid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT de la tabla `attendancelists`
+--
+ALTER TABLE `attendancelists`
+  MODIFY `attendancelistid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `classes`
+--
+ALTER TABLE `classes`
+  MODIFY `classid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT de la tabla `classrooms`
+--
+ALTER TABLE `classrooms`
+  MODIFY `classroomid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT de la tabla `divisions`
+--
+ALTER TABLE `divisions`
+  MODIFY `divisionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `options`
 --
 ALTER TABLE `options`
-  MODIFY `optionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `optionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+--
+-- AUTO_INCREMENT de la tabla `optionsbyanswer`
+--
+ALTER TABLE `optionsbyanswer`
+  MODIFY `optionsbyanswerid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `permissions`
 --
@@ -311,26 +613,49 @@ ALTER TABLE `permissionsbyrol`
 -- AUTO_INCREMENT de la tabla `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `questionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `questionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+--
+-- AUTO_INCREMENT de la tabla `studentsbyclass`
+--
+ALTER TABLE `studentsbyclass`
+  MODIFY `studentsbyclassid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `subjects`
+--
+ALTER TABLE `subjects`
+  MODIFY `subjectid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT de la tabla `surveys`
 --
 ALTER TABLE `surveys`
-  MODIFY `surveyid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `surveyid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `userid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `attendancelistitems`
+--
+ALTER TABLE `attendancelistitems`
+  ADD CONSTRAINT `attendancelistitems_ibfk_1` FOREIGN KEY (`attendancelistid`) REFERENCES `attendancelists` (`attendancelistid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `options`
 --
 ALTER TABLE `options`
   ADD CONSTRAINT `options_ibfk_1` FOREIGN KEY (`questionid`) REFERENCES `questions` (`questionid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `optionsbyanswer`
+--
+ALTER TABLE `optionsbyanswer`
+  ADD CONSTRAINT `optionsbyanswer_ibfk_1` FOREIGN KEY (`optionid`) REFERENCES `options` (`optionid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `optionsbyanswer_ibfk_2` FOREIGN KEY (`answerid`) REFERENCES `answers` (`answerid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `permissionsbyrol`

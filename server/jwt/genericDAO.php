@@ -232,5 +232,175 @@ class GenericDAO
 				where surveyid = " . $surveyId;
 	}
 
+	public static function getSurveyById($surveyId){
+		try{
+			$db = GenericDAO::getPDO();
+
+			$sql = "select s.surveyid, s.title, q.questionid, q.text from surveys as s
+					join questions as q on q.surveyid = s.surveyid
+					where s.surveyid = :surveyid";
+
+			$statement = $db->sendQuery($sql);
+			$statement->bindValue(":surveyid", $surveyId, PDO::PARAM_STR);
+			$statement->execute();
+			$rv = array();
+			$rv['survey'] = $statement->fetch(PDO::PARAM_STR);
+			$questionId = $rv["survey"]["questionid"];
+
+			$sql2 = "select * from options where questionid = :questionid";
+			$statement = $db->sendQuery($sql2);
+			$statement->bindValue(":questionid", $questionId, PDO::PARAM_INT);
+			$statement->execute();
+			$rv['options'] = $statement->fetchAll(PDO::PARAM_STR);
+
+			return $rv;
+		}catch(Exception $ex){
+			die("Error: " . $ex->getMessage());
+		}
+	}	
+
+		//User
+	public static function saveAnswer($answer,$userid){
+
+		try{
+			
+			$db = GenericDAO::getPDO();
+			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			$couldBegin = $db->beginTransaction();
+			
+			$sql =	"insert into answers
+					(text,userid,questionid,surveyid)
+					values
+					(:text,:userid,:questionid,:surveyid)";
+			$statement = $db->sendQuery($sql);
+			$statement->bindValue(":text", $answer["text"], PDO::PARAM_STR);
+			$statement->bindValue(":userid", $userid, PDO::PARAM_INT);
+			$statement->bindValue(":questionid", $answer["questionId"], PDO::PARAM_INT);
+			$statement->bindValue(":surveyid", $answer["surveyId"], PDO::PARAM_INT);
+
+			$couldInsertAnswer = $statement->execute();
+
+			$answerId = $db->lastInsertId();
+
+			//save options by answer
+			if(count($answer["optionIds"]) > 0){
+				for ($i = 0; $i < count($answer["optionIds"]); $i++) {
+					$optionId = $answer["optionIds"][$i];
+					$sql2 = "insert into optionsbyanswer (optionid,answerid) values (?,?)";
+					
+					$statement = $db->sendQuery($sql2);
+					
+					$couldInsertOptions = $statement->execute(array($optionId,$answerId));
+				}
+			}
+
+			$db->commit();
+			return true;
+		}catch(Exception $ex){
+			$db->rollBack();
+			return false;
+		}
+		
+	}
+
+	public static function getDivisions(){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql =	"select * from divisions";
+		$statement = $db->sendQuery($sql);
+		$statement->execute();
+		$rv = array("divisions"=>[]);
+		$rv['divisions'] = $statement->fetchAll(PDO::PARAM_STR);
+		return $rv;
+	}
+
+	public static function getSubjectsListByDivisionId($divisionid){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "select c.subjectid, s.name
+				FROM classes  as c
+				join subjects as s on s.subjectid = c.subjectid
+				WHERE divisionid = :divisionid";
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":divisionid", $divisionid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv = array("subjects"=>[]);
+		$rv['subjects'] = $statement->fetchAll(PDO::PARAM_STR);
+		return $rv;
+	}
+
+	public static function getStudentsListByDivisionAndSubject($divisionid, $subjectid){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		
+		$sql = "select classid
+				from classes
+				where divisionid = :divisionid and subjectid = :subjectid";
+
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":divisionid", $divisionid, PDO::PARAM_INT);
+		$statement->bindValue(":subjectid", $subjectid, PDO::PARAM_INT);
+		$statement->execute();
+		
+		$result = $statement->fetch(PDO::PARAM_STR);
+
+		$sql2 = "select userid, firstname, lastname from users
+				 where userid in (select studentid from
+				 studentsbyclass
+				 where classid = :classid)";
+
+		$statement = $db->sendQuery($sql2);
+		$statement->bindValue(":classid", $result["classid"], PDO::PARAM_INT);
+		$statement->execute();
+
+		$rv = array("students"=>[],"classid"=>$result["classid"]);
+		$rv["students"] = $statement->fetchAll(PDO::PARAM_STR);
+
+
+		return $rv;
+	}
+
+	public static function saveAttendaceList($attendanceList,$userId){
+		try{
+			
+			$creationDate = date("Y-m-d");
+
+			$db = GenericDAO::getPDO();
+			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			$couldBegin = $db->beginTransaction();
+			
+			$sql =	"insert into attendancelists
+					(classid,creationdate,ownerid)
+					values
+					(:classid,:creationdate,:ownerid)";
+			$statement = $db->sendQuery($sql);
+			$statement->bindValue(":classid", $attendanceList["classid"], PDO::PARAM_INT);
+			$statement->bindValue(":creationdate", $creationDate, PDO::PARAM_STR);
+			$statement->bindValue(":ownerid", $userId, PDO::PARAM_INT);
+
+			$couldInsertAttendanceList = $statement->execute();
+
+			$attendanceListsId = $db->lastInsertId();
+
+			//save attendanceListItems
+			for ($i = 0; $i < count($attendanceList["attendancelistitems"]); $i++) {
+					$item = $attendanceList["attendancelistitems"][$i];
+					$sql2 = "insert into attendancelistitems (studentid,present,attendancelistid) values (?,?,?)";
+					
+					$statement = $db->sendQuery($sql2);
+					
+					$couldInsertItem = $statement->execute(array($item["studentid"],$item["present"],$attendanceListsId));
+			}
+
+			$db->commit();
+			return true;
+		}catch(Exception $ex){
+			$db->rollBack();
+			return false;
+		}
+	}
+
 }
 ?>

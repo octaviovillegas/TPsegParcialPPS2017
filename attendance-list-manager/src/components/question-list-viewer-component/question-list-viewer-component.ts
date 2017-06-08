@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from "../../providers/app-service";
 import { NavController } from 'ionic-angular'
-import { questionViewer } from "../../pages/questionViewer/questionViewer";
+import { QuestionViewer } from "../../pages/question-viewer/question-viewer";
 
 @Component({
   selector: 'question-list-viewer-component',
@@ -29,8 +29,8 @@ export class QuestionListViewerComponent implements OnInit {
       });
   }
 
-  pushPage() {
-    this.navCtrl.push(questionViewer);
+  pushPage(survey){
+    console.log(survey.surveyid);
+    this.navCtrl.parent.push(QuestionViewer,{surveyId: survey.surveyid});
   }
-
 }

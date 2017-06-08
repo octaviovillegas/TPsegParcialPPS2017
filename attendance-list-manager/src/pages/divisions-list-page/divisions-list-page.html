@@ -1,0 +1,28 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Divisiones</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div [hidden]="loadingPage">
+    <ion-list>
+      <button ion-item *ngFor="let division of divisions" (click)="itemSelected(division)">
+    {{ division.name }}
+  </button>
+    </ion-list>
+  </div>
+
+  <!-- spinner -->
+  <div [hidden]="!loadingPage">
+    <div>
+      <ion-spinner></ion-spinner>
+    </div>
+    <div>
+      <p>Obteniendo lista de divisiones. Espere por favor.</p>
+    </div>
+  </div>
+</ion-content>

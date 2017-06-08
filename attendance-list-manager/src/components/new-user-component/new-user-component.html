@@ -46,7 +46,7 @@
       </ion-item>
     </ion-list>
     <div [hidden]="!hideSpinner">
-      <button ion-button full [disabled]="!form.valid" (click)="getJwtForCreateUser()">Enviar</button>
+      <button ion-button full [disabled]="!form.valid" (click)="showConfirm()">Enviar</button>
     </div>
     <div [hidden]="hideSpinner">
       <div>

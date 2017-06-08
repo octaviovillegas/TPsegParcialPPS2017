@@ -3,7 +3,7 @@ import { Storage } from "@ionic/storage";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NewUserData } from "../../app/entities/newUserData";
 import { AppService } from "../../providers/app-service";
-import { ToastController } from "ionic-angular";
+import { ToastController, AlertController } from "ionic-angular";
 
 @Component({
   selector: 'new-user-component',
@@ -19,7 +19,7 @@ export class NewUserComponent implements OnInit {
     this.setUserTypesByCurrenRol();
   }
 
-  constructor(private storage: Storage, private fb: FormBuilder, private appService: AppService, private toastCtrl: ToastController) {
+  constructor(private storage: Storage, private fb: FormBuilder, private appService: AppService, private toastCtrl: ToastController, private alertCtrl: AlertController) {
     this.roles = [];
     this.hideSpinner = true;
     this.form = this.fb.group({
@@ -36,8 +36,8 @@ export class NewUserComponent implements OnInit {
       street: ["", [Validators.required]],
       number: ["", [Validators.required]],
       city: ["", [Validators.required]],
-      floor: ["", [Validators.required]],
-      department: ["", [Validators.required]],
+      floor: "",
+      department: "",
       clarification: "",
     });
 
@@ -97,12 +97,30 @@ export class NewUserComponent implements OnInit {
     return rv;
   }
 
-  getJwtForCreateUser() {
-    this.storage.get("jwt")
-      .then(jwt => this.createNewUser(jwt))
-      .catch(() => {
-        this.showErrorMessage("Usuario no válido");//No tiene credenciales
-      });
+
+  showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: '¿Desea Guardar?',
+      message: '',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.storage.get("jwt")
+              .then(jwt => this.createNewUser(jwt))
+              .catch(() => {
+                this.showErrorMessage("Usuario no válido");//No tiene credenciales
+              });
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
 
@@ -112,8 +130,8 @@ export class NewUserComponent implements OnInit {
     this.appService.newUser(user, jwt).then((response) => {
       this.hideSpinner = true;
       if (response.status == 200) {
-        console.log(response);
         this.showErrorMessage("El usuario ha sido creado exitosamente");
+        this.form.reset();
       } else {
         this.showErrorMessage("No tiene permisos para realizar esta acción"); //No tiene permisos.
       }
@@ -128,7 +146,7 @@ export class NewUserComponent implements OnInit {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 3000,
-      position: "middle"
+      position: "bottom"
     });
     toast.present();
   }

@@ -18,6 +18,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppService } from "../providers/app-service";
 import {gestionarasistencia} from "../pages/gestionarasistencia/gestionarasistencia";
 import { UpdateQuizContainerPage } from "../pages/update-quiz-container-page/update-quiz-container-page";
+import { QuestionViewer } from "../pages/question-viewer/question-viewer";
+import { DivisionsListPage } from "../pages/divisions-list-page/divisions-list-page";
+import { SubjectsListPage } from "../pages/subjects-list-page/subjects-list-page";
+import { StudentsListPage } from "../pages/students-list-page/students-list-page";
 
 //Custom components
 import { QuestionListViewerComponent } from "../components/question-list-viewer-component/question-list-viewer-component";
@@ -57,6 +61,10 @@ import { ModifyUserComponent } from "../components/modify-user-component/modify-
     ModifyQuizComponent,
     DeleteUserComponent,
     ModifyUserComponent,
+    QuestionViewer,
+    DivisionsListPage,
+    SubjectsListPage,
+    StudentsListPage,
   ],
   imports: [
     BrowserModule,
@@ -88,6 +96,10 @@ import { ModifyUserComponent } from "../components/modify-user-component/modify-
     ModifyQuizComponent,
     DeleteUserComponent,
     ModifyUserComponent,
+    QuestionViewer,
+    DivisionsListPage,
+    SubjectsListPage,
+    StudentsListPage,
   ],
   providers: [
     StatusBar,
