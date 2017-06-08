@@ -156,11 +156,11 @@ $app->post('/usuarios/alta', function ($request, $response, $args) {
         // convierto el array en un objecto
         $usuario = (object)$usuario;
 
-        $tipo = $usuario->id_tipo;
+        /*$tipo = $usuario->id_tipo;
 
         $result = Usuario::TraerIdTipo2($tipo);
 
-        $usuario->id_tipo = $result->id_tipo;
+        $usuario->id_tipo = $result->id_tipo;*/
 
         $ret = Usuario::AltaUsuario($usuario);
 
@@ -271,7 +271,7 @@ $app->post('/comisiones/alta', function ($request, $response, $args) {
 
 });
 
- 
+
  $app->get('/GrafRespuestasDePreguntas', function ($request, $response, $args) {
 
 
