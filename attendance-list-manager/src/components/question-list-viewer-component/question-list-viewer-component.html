@@ -5,24 +5,24 @@
         Encuestas disponibles
       </ion-list-header>
       <ion-item *ngFor="let survey of surveys">
+
         <ion-card>
           <ion-card-header>
             {{survey.title}}
           </ion-card-header>
-
           <ion-list>
             <ion-item>
               <h2>Autor: {{survey.username}}</h2>
               <p>Fecha de creación: {{survey.creationdate}}</p>
               <p>Fecha de finalización: {{survey.enddate}}</p>
             </ion-item>
-
-            <button ion-item color="primary">
-          <ion-icon name="create" item-start></ion-icon>
-            Responder
-          </button>
+            <button ion-item color="secondary" (click)="pushPage(survey)">
+              <ion-icon name="create" item-start></ion-icon>
+               Responder
+            </button>
           </ion-list>
         </ion-card>
+
       </ion-item>
     </ion-list>
   </div>

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Login</ion-title>
   </ion-navbar>
 </ion-header>
@@ -18,7 +18,7 @@
       </ion-item>
     </ion-list>
     <div [hidden]="!hideSpinner">
-      <button ion-button full [disabled]="!form.valid" (click)="login()" round>Ingresar</button>
+      <button ion-button full [disabled]="!form.valid" (click)="login()" round color="secondary">Ingresar</button>
     </div>
     <div [hidden]="hideSpinner">
       <div>
@@ -29,8 +29,10 @@
       </div>
     </div>
   </form>
-  <button ion-button full (click)="setSelectedLoginData('admin@admin.com')">Administrador</button>
-  <button ion-button full (click)="setSelectedLoginData('teacher@teacher.com')">Profesor</button>
-  <button ion-button full (click)="setSelectedLoginData('administrative@administrative.com')">Administrativo</button>
-  <button ion-button full (click)="setSelectedLoginData('student@student.com')">Alumno</button>
+  <ion-list>
+    <button color="dark" ion-button full round (click)="setSelectedLoginData('admin@admin.com')">Administrador</button>
+    <button color="dark" ion-button full round (click)="setSelectedLoginData('teacher@teacher.com')">Profesor</button>
+    <button color="dark" ion-button full round (click)="setSelectedLoginData('administrative@administrative.com')">Administrativo</button>
+    <button color="dark" ion-button full round (click)="setSelectedLoginData('student@student.com')">Alumno</button>
+  </ion-list>
 </ion-content>
