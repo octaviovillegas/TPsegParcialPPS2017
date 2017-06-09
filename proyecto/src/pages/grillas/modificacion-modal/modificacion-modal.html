@@ -1,37 +1,36 @@
 
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Modificar Usuario</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Modificar Usuario</ion-title>
+    </ion-navbar>
 
 </ion-header>
 <ion-content padding>
-<ion-item><h1>Usuario: {{u}}</h1></ion-item>
+    <ion-item><h1>Usuario: {{u}}</h1></ion-item>
 
- <ion-item>
-    <ion-label floating>Nombre</ion-label>
-    <ion-input type="text" [(ngModel)]="n"></ion-input>
-  </ion-item>
-<ion-item>
-    <ion-label  floating >Clave</ion-label>
-    <ion-input type="text" [(ngModel)]="c"></ion-input>
-  </ion-item>
+    <ion-item>
+        <ion-label floating>Nombre</ion-label>
+        <ion-input type="text" [(ngModel)]="n"></ion-input>
+    </ion-item>
+    <ion-item>
+        <a (click)="resetearClave(u)">Resetear password</a>
+    </ion-item>
 
-<ion-list>
-  <ion-item>
-    <ion-label>Tipo</ion-label>
-    <ion-select [(ngModel)]="t">
-      <ion-option value="1">Administrador</ion-option>
-      <ion-option value="3">Alumno</ion-option>
-      <ion-option value="4">Profesor</ion-option>
-      <ion-option value="2">Administrativo</ion-option>
-    </ion-select>
-  </ion-item>
-</ion-list>
+    <ion-list>
+        <ion-item>
+            <ion-label>Tipo</ion-label>
+            <ion-select [(ngModel)]="t">
+                <ion-option value="1">Administrador</ion-option>
+                <ion-option value="3">Alumno</ion-option>
+                <ion-option value="4">Profesor</ion-option>
+                <ion-option value="2">Administrativo</ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
 
-<button ion-button color=light (click)="Modificar(id_usuario, n, u, c, t)"> Modificar </button>
-<button ion-button color=light (click)="Cancelar()"> Cancelar </button>
+    <button ion-button color=light (click)="Modificar(id_usuario, n, u, c, t)"> Modificar </button>
+    <button ion-button color=light (click)="Cancelar()"> Cancelar </button>
 
 
 
