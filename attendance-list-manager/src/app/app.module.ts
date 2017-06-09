@@ -22,7 +22,8 @@ import { QuestionViewer } from "../pages/question-viewer/question-viewer";
 import { DivisionsListPage } from "../pages/divisions-list-page/divisions-list-page";
 import { SubjectsListPage } from "../pages/subjects-list-page/subjects-list-page";
 import { StudentsListPage } from "../pages/students-list-page/students-list-page";
-
+import { ClassroomsListPage } from "../pages/classrooms-list-page/classrooms-list-page";
+import { ClassesGridPage } from "../pages/classes-grid-page/classes-grid-page";
 //Custom components
 import { QuestionListViewerComponent } from "../components/question-list-viewer-component/question-list-viewer-component";
 import { QuizManagerComponent } from "../components/quiz-manager-component/quiz-manager-component";
@@ -65,6 +66,8 @@ import { ModifyUserComponent } from "../components/modify-user-component/modify-
     DivisionsListPage,
     SubjectsListPage,
     StudentsListPage,
+    ClassroomsListPage,
+    ClassesGridPage,
   ],
   imports: [
     BrowserModule,
@@ -100,6 +103,8 @@ import { ModifyUserComponent } from "../components/modify-user-component/modify-
     DivisionsListPage,
     SubjectsListPage,
     StudentsListPage,
+    ClassroomsListPage,
+    ClassesGridPage,
   ],
   providers: [
     StatusBar,

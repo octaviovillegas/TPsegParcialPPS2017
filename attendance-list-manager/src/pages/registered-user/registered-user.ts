@@ -73,7 +73,7 @@ export class RegisteredUserPage {
   setRootComponent(rol) {
     switch (rol) {
       case "Administrator":
-        this.rootComponent = QuizManagerComponent;
+        this.rootComponent = UserManagerComponent;
         break;
       case "Teacher":
         this.rootComponent = QuizManagerComponent;

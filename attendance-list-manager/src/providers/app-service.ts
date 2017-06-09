@@ -131,4 +131,43 @@ export class AppService {
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/saveattendancelist", jsonData, options).toPromise();
   }
+
+  getSubjectsList(jwt) {
+    let data = { jwt };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/getsubjectslist", jsonData, options).toPromise();
+  }
+
+  getDivisionsListBySubjectId(jwt, subjectid) {
+    let data = { jwt, subjectid };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/divisionslistbysubjectid", jsonData, options).toPromise();
+  }
+
+  getClassroomsList(jwt) {
+    let data = { jwt };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/getclassroomslist", jsonData, options).toPromise();
+  }
+
+  getClassesListByClassroomid(jwt, classroomid) {
+    let data = { jwt , classroomid };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/getclassesbyclassroomid", jsonData, options).toPromise();
+  }
+  getStudentsListByClassId(jwt, classid) {
+    let data = { jwt , classid };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/getstudentslistbyclassid", jsonData, options).toPromise();
+  }
 }
