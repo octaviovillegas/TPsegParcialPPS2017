@@ -84,11 +84,13 @@
 
     </form>
 
-    <button ion-button round outline (click)="getJwtForNewSurvey()">Terminar</button> 
+    <button ion-button round outline (click)="send()">Terminar</button> 
   </ion-list>
-  <div *ngFor="let destination of destinations">
+  <div *ngFor="let option of options">
 <ion-label color="primary" stacked>Respuesta :</ion-label>
-      <ion-input type="text"[(ngModel)]="destination.name"  ></ion-input>
+      <ion-input type="text"[(ngModel)]="option.text"></ion-input>
+      <ion-label> <ion-checkbox [(ngModel)]="option.isRight"></ion-checkbox> Es Correcta </ion-label>
+      
   <ion-item>  <ion-icon ios="ios-add" md="md-add"> </ion-icon> <button clear-button 
   (click)="add()"> Agregar Nueva Opcion</button></ion-item>
  

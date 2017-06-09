@@ -484,7 +484,7 @@ class GenericDAO
 	public static function getStudentsByClassId($classid){
 		$db = GenericDAO::getPDO();
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "select studentid, u.firstname, u.lastname
+		$sql = "select studentid as userid, u.firstname, u.lastname
 				from studentsbyclass as sbc
 				join users as u on u.userid = sbc.studentid
 				where sbc.classid = :classid;";

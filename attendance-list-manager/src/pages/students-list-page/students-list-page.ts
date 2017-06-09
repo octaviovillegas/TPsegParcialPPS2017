@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ViewController,ToastController } from 'ionic-angular';
 import { AppService } from "../../providers/app-service";
 import { Storage } from "@ionic/storage";
 import { AttendanceListData } from "../../app/entities/attendanceListData";
@@ -14,7 +14,7 @@ export class StudentsListPage {
   loadingPage: boolean;
   students: Array<AttendanceListData>;
   classId: number;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage, private toastCtrl: ToastController,private alertCtrl: AlertController) {
     this.loadingPage = true;
     this.students = new Array<AttendanceListData>();
   }
@@ -94,6 +94,8 @@ export class StudentsListPage {
               this.appService.saveAttendanceList(jwt,attendanceList)
                 .then((response) => {
                   this.loadingPage = false;
+                  this.showMessage("La lista se guardó correctamente.");
+                  this.navCtrl.popToRoot();
                 })
                 .catch(() => {
                   console.log("Error");
@@ -117,7 +119,7 @@ export class StudentsListPage {
           let body = JSON.parse(response["_body"]); //convert JSON to Object
           this.setStudents(body.students);
 
-          this.classId = body.classid;
+          this.classId = this.navParams.get("a_class").classid;
           this.loadingPage = false;
           console.log(this.students);
         })
@@ -129,5 +131,14 @@ export class StudentsListPage {
       console.log("Error al traer las materias");
       this.loadingPage = false;
     });
+  }
+
+  showMessage(message: string): void {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position: "bottom"
+    });
+    toast.present();
   }
 }
