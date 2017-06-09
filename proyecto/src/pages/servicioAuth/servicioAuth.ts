@@ -17,9 +17,9 @@ export class servicioAuth {
     constructor(private http: Http) {
     }
 
-    public getUsuarioByUsuarioYClave (usuario, clave) {
+    public getUsuarioByUsuario (usuario) {
 
-        return this.http.get('http://tppps2.hol.es/ws1/usuarios?usuario='+usuario+'&clave='+clave)
+        return this.http.get('http://tppps2.hol.es/ws1/usuarios?usuario='+usuario)
         .map(r => r.json());
 
     }
@@ -34,7 +34,7 @@ export class servicioAuth {
 
             return Observable.create(observer => {
 
-                this.getUsuarioByUsuarioYClave(credenciales.usuario, credenciales.clave).subscribe((usuario) => {
+                this.getUsuarioByUsuario(credenciales.usuario).subscribe((usuario) => {
 
                     // Si existe el usuario en la base de datos SQL entro.
                     if (usuario) {

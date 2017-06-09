@@ -93,14 +93,13 @@ export class GrillaProfesor {
                   text: 'Aceptar',
                   handler: () => {
                     console.log('Aceptar clicked');
-                    this.authData.removeUser(usuario).then( success => {
-                        this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
-                            id_usuario: id_usuario
-                        })
-                        .map(res => res.json())
-                        .subscribe((quote) =>{
-                            this.CargaGrilla();
-                        });
+
+                    this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
+                        id_usuario: id_usuario
+                    })
+                    .map(res => res.json())
+                    .subscribe((quote) =>{
+                        this.CargaGrilla();
                     });
 
                   }
