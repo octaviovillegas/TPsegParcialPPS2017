@@ -43,7 +43,11 @@ import {grafico1} from "../pages/graficos/grafico1/grafico1";
 import {grafico2} from "../pages/graficos/grafico2/grafico2";
 import {grafico3} from "../pages/graficos/grafico3/grafico3";
 import {ChartsModule} from 'ng2-charts/charts/charts';
-import '../../node_modules/chart.js/dist/Chart.bundle.min.js'; 
+import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
+import { Camera } from '@ionic-native/camera';
+import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
+import { ImagePicker } from '@ionic-native/image-picker';
+
 
 @NgModule({
   declarations: [
@@ -126,6 +130,9 @@ import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
     AuthData,
     Device,
     Toast,
+    MediaCapture,
+    Camera,
+    ImagePicker,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
