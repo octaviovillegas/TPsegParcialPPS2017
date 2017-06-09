@@ -170,4 +170,20 @@ export class AppService {
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/getstudentslistbyclassid", jsonData, options).toPromise();
   }
+
+  getTeachersList(jwt) {
+    let data = { jwt };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/getteacherslist", jsonData, options).toPromise();
+  }
+  getClassesByTeacherId(jwt, teacherid) {
+    let data = { jwt , teacherid };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/getclassesbyteacherid", jsonData, options).toPromise();
+  }
+
 }

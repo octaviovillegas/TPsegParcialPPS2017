@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-06-2017 a las 06:19:53
+-- Tiempo de generación: 09-06-2017 a las 04:46:47
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -50,7 +50,8 @@ INSERT INTO `addresses` (`addressid`, `street`, `number`, `floor`, `department`,
 (21, 'ewr', '345', 'sdf', '', '', 'wersdr'),
 (22, 'qwerqwe', '456456456', '', '', '', 'werwer'),
 (23, 'werwer', '456456', '', '', '', 'rtrt'),
-(24, '45646', '456456', '', '', '', '456456');
+(24, '45646', '456456', '', '', '', '456456'),
+(25, '2 de mayo', '3524', '', '', 'Club Social', 'Lanús Oeste');
 
 -- --------------------------------------------------------
 
@@ -118,18 +119,18 @@ CREATE TABLE `classes` (
 --
 
 INSERT INTO `classes` (`classid`, `divisionid`, `subjectid`, `classroomid`, `teacherid`) VALUES
-(1, 1, 4, 100, 2),
-(2, 1, 5, 201, 2),
-(3, 1, 6, 202, 2),
-(4, 1, 7, 300, 2),
-(5, 2, 4, 100, 2),
-(6, 2, 5, 201, 2),
-(7, 2, 6, 202, 2),
-(8, 2, 7, 300, 2),
-(9, 3, 4, 100, 2),
-(10, 3, 5, 201, 2),
-(11, 3, 6, 202, 2),
-(12, 3, 7, 300, 2);
+(1, 1, 4, 1, 17),
+(2, 1, 5, 6, 2),
+(3, 1, 6, 7, 2),
+(4, 1, 7, 8, 2),
+(5, 2, 4, 1, 17),
+(6, 2, 5, 6, 2),
+(7, 2, 6, 7, 2),
+(8, 2, 7, 8, 2),
+(9, 3, 4, 1, 2),
+(10, 3, 5, 6, 2),
+(11, 3, 6, 7, 2),
+(12, 3, 7, 8, 2);
 
 -- --------------------------------------------------------
 
@@ -357,7 +358,7 @@ INSERT INTO `subjects` (`subjectid`, `name`) VALUES
 (2, 'Lectura Comprensiva'),
 (3, 'Matemática Inicial'),
 (4, 'Matemática'),
-(5, 'Sistema de Pocesamiento de Datos'),
+(5, 'Sistema de Procesamiento de Datos'),
 (6, 'Programación I'),
 (7, 'Laboratorio de Computación I'),
 (8, 'Arquitectura y Sistemas Operativos'),
@@ -428,7 +429,8 @@ INSERT INTO `users` (`userid`, `username`, `email`, `password`, `rolid`, `firstn
 (3, 'EjemploAdministrative', 'administrative@administrative.com', '123456', 3, 'Ejemplo', 'Administrativo', 2, 0),
 (4, 'EjemploStudent', 'student@student.com', '123456', 4, 'Ejemplo', 'Alumno', 12, 35468),
 (11, 'NicoCabrera', 'nicolascabrera@yahoo.com.ar', '123456', 4, 'Nicolás', 'Cabrera', 19, 105987),
-(12, 'feden91', 'feden@feden.com', '123456', 4, 'Federico', 'Nuñez', 20, 100321);
+(12, 'feden91', 'feden@feden.com', '123456', 4, 'Federico', 'Nuñez', 20, 100321),
+(17, 'RFonte', 'ruben@fonte.com', '123456', 2, 'Rubén', 'Fonte', 25, 0);
 
 --
 -- Índices para tablas volcadas
@@ -556,7 +558,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `addressid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `addressid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT de la tabla `answers`
 --
@@ -566,12 +568,12 @@ ALTER TABLE `answers`
 -- AUTO_INCREMENT de la tabla `attendancelistitems`
 --
 ALTER TABLE `attendancelistitems`
-  MODIFY `attendancelistitemid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `attendancelistitemid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `attendancelists`
 --
 ALTER TABLE `attendancelists`
-  MODIFY `attendancelistid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `attendancelistid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `classes`
 --
@@ -631,7 +633,7 @@ ALTER TABLE `surveys`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `userid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- Restricciones para tablas volcadas
 --
