@@ -38,7 +38,7 @@ export class Login {
 
     constructor(public navCtrl: NavController, private auth: servicioAuth,
         private alertCtrl: AlertController, private loadingCtrl: LoadingController,
-        public authData: AuthData, private dev: Device) 
+        public authData: AuthData, private dev: Device)
         {
         this.device = dev;
         }
@@ -55,27 +55,45 @@ export class Login {
                 // sesion.
                 this.auth.login(this.Login).subscribe(existe => {
 
-                    this.loading.dismiss().then(() => {
-
                         if (existe) {
-                            this.usuarioLogueado = this.auth.getUserInfo();
 
-                            if (this.usuarioLogueado.tipo_usuario == "Administrador") {
-                                this.navCtrl.setRoot(Menu, this.usuarioLogueado);
-                            } else
-                            if (this.usuarioLogueado.tipo_usuario == "Administrativo") {
-                                this.navCtrl.setRoot(Menu, this.usuarioLogueado);
-                            }else
-                            if (this.usuarioLogueado.tipo_usuario == "Alumno") {
-                                this.navCtrl.setRoot(Menu, this.usuarioLogueado);
-                            }
-                            if (this.usuarioLogueado.tipo_usuario == "Profesor") {
-                                this.navCtrl.setRoot(Menu, this.usuarioLogueado);
-                            }
+                            this.loading.dismiss().then(() => {
+                                this.usuarioLogueado = this.auth.getUserInfo();
+
+                                if (this.usuarioLogueado.tipo_usuario == "Administrador") {
+                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
+                                } else
+                                if (this.usuarioLogueado.tipo_usuario == "Administrativo") {
+                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
+                                }else
+                                if (this.usuarioLogueado.tipo_usuario == "Alumno") {
+                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
+                                }
+                                if (this.usuarioLogueado.tipo_usuario == "Profesor") {
+                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
+                                }
+
+                            });
+
                         } else {
-                            this.showError("El usuario no existe o ingrese datos invalidos.");
+
+                            // No existe el usuario en la BD, pero si en firebase
+                            // por lo tanto lo elimino de firebase.
+                            this.authData.removeCurrentUser().then( _ => {
+
+                                this.loading.dismiss().then(() => {
+                                    this.showError("El usuario no existe o ingresó datos invalidos.");
+                                });
+
+                            }, error => {
+
+                                this.loading.dismiss().then(() => {
+                                    this.showError("El usuario no existe o ingresó datos invalidos.");
+                                });
+
+                            });
+
                         }
-                    });
 
                 }, error => {
 
@@ -97,7 +115,7 @@ export class Login {
                         }]
                     });
                     alert.present();
-                    
+
                 });
             });
         });

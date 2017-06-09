@@ -22,53 +22,80 @@ export class ModificacionModal
     id_usuario;
     http;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, htt:Http,
-        public viewCtrl: ViewController, public auth: AuthData, private alertCtrl: AlertController)
-        {
-            this.c = navParams.data['clave'];
-            this.n=navParams.data['nombre'];
-            this.t=navParams.data['id_tipo'];
-            this.u=navParams.data['usuario'];
-            this.id_usuario = navParams.data['id_usuario'];
-            this.http=htt;
-        }
+    constructor (public navCtrl: NavController, public navParams: NavParams, htt:Http, public viewCtrl: ViewController, public auth: AuthData, private alertCtrl: AlertController)
+    {
+        this.c = navParams.data['clave'];
+        this.n = navParams.data['nombre'];
+        this.t = navParams.data['id_tipo'];
+        this.u = navParams.data['usuario'];
+        this.id_usuario = navParams.data['id_usuario'];
+        this.http = htt;
+    }
 
-        Modificar(id_usuario, nombre, usuario, clave, id_tipo)
-        {
-            // Creo el usuario en firebase`
-            this.auth.updateUserNombre(nombre).then( _ => {
-                this.http.post("http://tppps2.hol.es/ws1/usuarios/modificar", {
-                    id_usuario: id_usuario,
-                    clave: clave,
-                    nombre: nombre,
-                    usuario: usuario,
-                    id_tipo: id_tipo
-                })
-                .map(res => res.json())
-                .subscribe((quote) =>{
-                    this.viewCtrl.dismiss();
-                });
-
-
-            }).catch(e => {
-                console.log(e);
-                this.showMsg(e);
-            });
-
-        }
-
-        showMsg(text) {
-            let alert = this.alertCtrl.create({
-                title: 'Error al crear el usuario',
-                subTitle: text,
-                buttons: ['OK']
-            });
-            alert.present(prompt);
-        }
-
-        Cancelar()
-        {
+    Modificar(id_usuario, nombre, usuario, clave, id_tipo)
+    {
+        // Actualizo el usuario en la BD SQL
+        this.http.post("http://tppps2.hol.es/ws1/usuarios/modificar", {
+            id_usuario: id_usuario,
+            id_tipo: id_tipo,
+            clave: clave,
+            nombre: nombre,
+            usuario: usuario
+        })
+        .map(res => res.json())
+        .subscribe((quote) =>{
             this.viewCtrl.dismiss();
-        }
+        });
 
     }
+
+    /**
+     * Funcion que envia un mail al "email" pasado como parametro para resetear
+     * la clave de firebase.
+     * @param  {[type]} email [description]
+     * @return {[type]}       [description]
+     */
+    resetearClave (email) {
+
+        this.auth.resetPassword(email).then( r => {
+
+            this.showMsg('Clave reseteada con exito', 'Se ha enviado un mail al usuario para que resetee la clave.');
+
+        },
+        (error: any) => {
+
+            console.log('error');
+            console.log(error);
+
+            let errorMessage;
+
+            switch (error.code) {
+                case 'INVALID_EMAIL':
+                case 'INVALID_USER':
+                    errorMessage = 'Invalid email';
+                break;
+                default:
+                    errorMessage = 'Error: [' + error.code + ']';
+            }
+
+            this.showMsg('Error al resetear la clave', errorMessage);
+
+        });
+
+    }
+
+    showMsg(title, text) {
+        let alert = this.alertCtrl.create({
+            title: title,
+            subTitle: text,
+            buttons: ['OK']
+        });
+        alert.present(prompt);
+    }
+
+    Cancelar()
+    {
+        this.viewCtrl.dismiss();
+    }
+
+}
