@@ -115,6 +115,21 @@ class Usuario
 		return $consulta->fetchObject('Usuario');
 	}
 
+	public static function TraerUnUsuarioPorUsuario($usuario)
+	{
+		$sql = 'SELECT u.*, t.descripcion tipo_usuario FROM usuarios u
+			INNER JOIN tipos_usuarios t ON (u.id_tipo = t.id_tipo)
+			WHERE usuario = :usuario';
+
+		$cnx = AccesoDatos::dameUnObjetoAcceso();
+
+		$consulta = $cnx->RetornarConsulta($sql);
+		$consulta->bindValue(':usuario', $usuario, PDO::PARAM_STR);
+		$consulta->execute();
+
+		return $consulta->fetchObject('Usuario');
+	}
+
 	public static function TraerTodasLasPersonas()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();

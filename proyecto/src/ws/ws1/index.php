@@ -80,6 +80,8 @@ $app->get('/usuarios', function ($request, $response, $args) {
 
     if (!is_null($usuario) && !is_null($clave)) {
         $usuarios = Usuario::TraerUnUsuarioPorUsuarioYClave($usuario, $clave);
+    } else if (!is_null($usuario)) {
+        $usuarios = Usuario::TraerUnUsuarioPorUsuario($usuario, $clave);
     } else {
         $usuarios = Usuario::TraerTodasLasPersonas();
     }
