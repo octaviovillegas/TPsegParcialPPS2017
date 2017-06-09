@@ -21,8 +21,8 @@ export class ClassesGridPage {
     let previousView:ViewController = this.navCtrl.getPrevious(this.navCtrl.last());
     if(previousView.name == "ClassroomsListPage"){
       this.getClassesByClassroomid();
-    }else if(previousView.name == "SubjectsListPage"){
-      //this.getListDivisionsBySubjectId(this.navParams.get("subject").subjectid);
+    }else if(previousView.name == "TeachersListPage"){
+      this.getClassesByTeacherId();
     }
   }
 
@@ -30,6 +30,26 @@ export class ClassesGridPage {
     
     this.storage.get("jwt").then((jwt) => {
       this.appService.getClassesListByClassroomid(jwt,this.navParams.get("classroom").classroomid)
+        .then((response) => {
+
+          let body = JSON.parse(response["_body"]); //convert JSON to Object
+          this.classes = body.classes;
+          this.loadingPage = false;
+          console.log(body);
+        })
+        .catch(() => {
+          console.log("Error");
+          this.loadingPage = false;
+        });
+    }).catch(() => {
+      console.log("Error al traer las divisiones");
+      this.loadingPage = false;
+    })
+  }
+
+  getClassesByTeacherId(){
+    this.storage.get("jwt").then((jwt) => {
+      this.appService.getClassesByTeacherId(jwt,this.navParams.get("teacher").teacherid)
         .then((response) => {
 
           let body = JSON.parse(response["_body"]); //convert JSON to Object

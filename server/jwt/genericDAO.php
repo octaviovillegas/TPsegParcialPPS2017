@@ -495,5 +495,32 @@ class GenericDAO
 		$rv['students'] = $statement->fetchAll(PDO::PARAM_STR);
 		return $rv;
 	}
+
+	public static function getClassesByTeacherid($teacherid){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "select distinct c.classid, d.name as divisionname, s.name as subjectname 
+				from classes as c
+				join divisions as d on d.divisionid = c.divisionid
+				join subjects as s on s.subjectid = c.subjectid
+				WHERE c.teacherid = :teacherid";
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":teacherid", $teacherid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv = array("classes"=>[]);
+		$rv['classes'] = $statement->fetchAll(PDO::PARAM_STR);
+		return $rv;
+	}
+	public static function getTeachersList(){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "select distinct u.userid as teacherid, u.lastname , u.firstname 
+				from classes as c join users as u on u.userid = c.teacherid";
+		$statement = $db->sendQuery($sql);
+		$statement->execute();
+		$rv = array("teachers"=>[]);
+		$rv['teachers'] = $statement->fetchAll(PDO::PARAM_STR);
+		return $rv;
+	}
 }
 ?>

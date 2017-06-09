@@ -243,5 +243,28 @@ $app->post('/getstudentslistbyclassid',function(Request $request, Response $resp
     $response->getBody()->write(json_encode($rv));
     return $response;
 });
+
+
+$app->post('/getclassesbyteacherid',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $teacherid = $params["teacherid"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getClassesByTeacherid($teacherid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
+$app->post('/getteacherslist',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getTeachersList();
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
 $app->run();
 ?>

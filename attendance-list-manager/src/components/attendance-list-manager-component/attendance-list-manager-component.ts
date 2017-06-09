@@ -4,6 +4,8 @@ import { NavController } from "ionic-angular";
 import { DivisionsListPage } from "../../pages/divisions-list-page/divisions-list-page";
 import { SubjectsListPage } from "../../pages/subjects-list-page/subjects-list-page";
 import { ClassroomsListPage } from "../../pages/classrooms-list-page/classrooms-list-page";
+import { TeachersListPage } from "../../pages/teachers-list-page/teachers-list-page";
+
 @Component({
   selector: 'attendance-list-manager-component',
   templateUrl: 'attendance-list-manager-component.html'
@@ -21,7 +23,7 @@ export class AttendanceListManagerComponent implements OnInit {
     this.adminButtons.push({ text: "Divisiones", page: DivisionsListPage});
     this.adminButtons.push({ text: "Asignaturas", page: SubjectsListPage});
     this.adminButtons.push({ text: "Aulas", page: ClassroomsListPage});
-    this.adminButtons.push({ text: "Profesores", page: DivisionsListPage});
+    this.adminButtons.push({ text: "Profesores", page: TeachersListPage});
   }
 
 
