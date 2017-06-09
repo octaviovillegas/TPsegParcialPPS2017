@@ -12,7 +12,7 @@ import Highcharts from 'highcharts'
   selector: 'page-grafico1',
   templateUrl: 'grafico1.html',
 })
-export class grafico1 
+export class Grafico1 
 {
 
 

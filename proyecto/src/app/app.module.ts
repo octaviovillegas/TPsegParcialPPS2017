@@ -39,9 +39,9 @@ import { Device } from '@ionic-native/device';
 import {GrillaCurso} from "../pages/grillas/grilla-curso/grilla-curso";
 import {ModificacionModalCursos} from "../pages/grillas/modificacion-modal-cursos/modificacion-modal-cursos";
 import {AltaModalCursos} from "../pages/grillas/alta-modal-cursos/alta-modal-cursos";
-import {grafico1} from "../pages/graficos/grafico1/grafico1";
-import {grafico2} from "../pages/graficos/grafico2/grafico2";
-import {grafico3} from "../pages/graficos/grafico3/grafico3";
+import {Grafico1} from "../pages/graficos/grafico1/grafico1";
+import {Grafico2} from "../pages/graficos/grafico2/grafico2";
+import {Grafico3} from "../pages/graficos/grafico3/grafico3";
 import {ChartsModule} from 'ng2-charts/charts/charts';
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { Camera } from '@ionic-native/camera';
@@ -78,9 +78,9 @@ import { ImagePicker } from '@ionic-native/image-picker';
     GrillaCurso,
     ModificacionModalCursos,
     AltaModalCursos,
-    grafico1,
-    grafico2,
-    grafico3
+    Grafico1,
+    Grafico2,
+    Grafico3
   ],
   imports: [
     BrowserModule,
@@ -118,9 +118,9 @@ import { ImagePicker } from '@ionic-native/image-picker';
     GrillaCurso,
     ModificacionModalCursos,
     AltaModalCursos,
-    grafico1,
-    grafico2,
-    grafico3
+    Grafico1,
+    Grafico2,
+    Grafico3
       ],
   providers: [
     StatusBar,

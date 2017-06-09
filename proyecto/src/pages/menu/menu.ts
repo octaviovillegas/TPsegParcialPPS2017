@@ -15,9 +15,9 @@ import {Encuestas} from '../encuestas/encuestas';
 import {GenerarEncuesta} from '../encuestas/generarencuesta/generarencuesta';
 import {EnviarEncuesta} from '../encuestas/enviarencuesta/enviarencuesta';
 import {GrillaComision} from "../grillas/grilla-comision/grilla-comision";
-import {grafico1} from "../graficos/grafico1/grafico1";
-import {grafico2} from "../graficos/grafico2/grafico2";
-import {grafico3} from "../graficos/grafico3/grafico3";
+import {Grafico1} from "../graficos/grafico1/grafico1";
+import {Grafico2} from "../graficos/grafico2/grafico2";
+import {Grafico3} from "../graficos/grafico3/grafico3";
 /**
 * Generated class for the Menu page.
 *
@@ -45,6 +45,9 @@ export class Menu {
     private grillaAdministrador;
     private grillaAdministrativo;
     private grillaComision;
+    private grafico1;
+    private grafico2;
+    private grafico3;
 
     constructor(public navCtrl: NavController,public viewCtrl:ViewController,
      public navParams: NavParams,public af: AngularFire,public modalCtrl: ModalController) {
@@ -63,6 +66,9 @@ export class Menu {
         this.grillaAdministrador = GrillaAdministrador;
         this.grillaAdministrativo = GrillaAdministrativo; 
         this.grillaComision = GrillaComision;
+        this.grafico1=Grafico1;
+        this.grafico2=Grafico2;
+        this.grafico3=Grafico3;
         if (this.usuarioLogueado.tipo_usuario == 'Alumno') {
             this.openPage(this.alumnoPage);
         } else if (this.usuarioLogueado.tipo_usuario == 'Administrativo') {
