@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
 import { EncuestaPage } from '../encuesta/encuesta';
+import { Events } from 'ionic-angular';
 
 /**
 * Generated class for the AlumnoEncuestasPage.
@@ -21,7 +22,7 @@ export class AlumnoEncuestasPage {
     private encuestas;
     private cargando = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private auth: servicioAuth, private http: Http) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private auth: servicioAuth, private http: Http, private events: Events) {
         this.estado = navParams.data;
 
         if (this.estado == EncuestaPage.ESTADO_PENDIENTE) {
@@ -31,6 +32,14 @@ export class AlumnoEncuestasPage {
         } else {
             this.titulo = 'Todas';
         }
+
+        this.events.subscribe('encuestas:refresh', (success) => {
+
+            if (success) {
+                this.ionViewDidLoad();
+            }
+
+        });
     }
 
     ionViewDidLoad() {
@@ -47,7 +56,6 @@ export class AlumnoEncuestasPage {
 
         let user = this.auth.getUserInfo();
 
-        //return this.http.get('http://localhost/facultad/ws1/usuarios/'+user.id_usuario+'/encuestas?estado=' + estado).map(
         return this.http.get('http://tppps2.hol.es/ws1/usuarios/'+user.id_usuario+'/encuestas?estado=' + estado).map(
             res => res.json().encuestas
         );
