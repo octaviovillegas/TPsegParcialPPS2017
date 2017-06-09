@@ -40,10 +40,13 @@
         Respuestas por preguntas
        </button>
        <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrativo'" ion-item (click)="openPage(grafico2)" menuClose>
-        cantidad de encuestas por curso
+        Cantidad de encuestas por curso
        </button>
        <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrativo'" ion-item (click)="openPage(grafico3)" menuClose>
-        cantidad de alumnos por curso
+        Cantidad de alumnos por curso
+       </button>
+        <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrativo'" ion-item (click)="openPage(alumnocurso)" menuClose>
+        Alta de alumno en curso
        </button>
        <!-- fin administrativo -->
        <button *ngIf="usuarioLogueado.tipo_usuario == 'Profesor'" ion-item (click)="Encuestas('profesorGenerar')" menuClose>

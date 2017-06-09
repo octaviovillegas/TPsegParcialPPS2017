@@ -18,6 +18,7 @@ import {GrillaComision} from "../grillas/grilla-comision/grilla-comision";
 import {Grafico1} from "../graficos/grafico1/grafico1";
 import {Grafico2} from "../graficos/grafico2/grafico2";
 import {Grafico3} from "../graficos/grafico3/grafico3";
+import { AlumnoCurso } from "../alumno-curso/alumno-curso";
 /**
 * Generated class for the Menu page.
 *
@@ -48,6 +49,7 @@ export class Menu {
     private grafico1;
     private grafico2;
     private grafico3;
+    private alumnocurso;
 
     constructor(public navCtrl: NavController,public viewCtrl:ViewController,
      public navParams: NavParams,public af: AngularFire,public modalCtrl: ModalController) {
@@ -69,6 +71,7 @@ export class Menu {
         this.grafico1=Grafico1;
         this.grafico2=Grafico2;
         this.grafico3=Grafico3;
+        this.alumnocurso=AlumnoCurso;
         if (this.usuarioLogueado.tipo_usuario == 'Alumno') {
             this.openPage(this.alumnoPage);
         } else if (this.usuarioLogueado.tipo_usuario == 'Administrativo') {
