@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { servicioAuth } from '../servicioAuth/servicioAuth';
 
 /**
  * Generated class for the Administrativo page.
@@ -13,11 +14,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class Administrativo {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  usuarioLogueado;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: servicioAuth) {
+      this.usuarioLogueado = this.auth.getUserInfo();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Administrativo');
+
+    
   }
 
 }
