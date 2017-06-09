@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 import { Http } from '@angular/http';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
 import { Pregunta } from './pregunta';
+import { Events } from 'ionic-angular';
 
 /**
  * Generated class for the Encuesta page.
@@ -27,10 +28,12 @@ export class EncuestaPage {
     private pregunta_actual: Pregunta = null;
     private accion;
     private cargando = false;
+    private ocultarSiguientePregunte = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private auth: servicioAuth, private http: Http, public toastCtrl: ToastController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private auth: servicioAuth, private http: Http, public toastCtrl: ToastController, private events: Events) {
         this.encuesta = navParams.data.encuesta;
         this.accion = navParams.data.accion;
+        this.ocultarSiguientePregunte = false;
     }
 
     ionViewDidLoad() {
@@ -120,9 +123,15 @@ export class EncuestaPage {
         } else {
             let usuario = this.auth.getUserInfo();
 
+            this.cargando = true;
             this.guardarEncuesta(usuario.id_usuario, this.preguntas).subscribe(response => {
+                this.cargando = false;
                 this.mostrarMensaje('¡Gracias por participar de esta encuesta!');
+                this.events.publish('encuestas:refresh', true);
                 this.back();
+            }, error => {
+                this.cargando = false;
+                this.mostrarMensaje('Hubo un error al procesar su encuesta. Vuelva a intentarlo.');
             });
         }
     }
