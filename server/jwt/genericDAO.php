@@ -244,6 +244,20 @@ class GenericDAO
 
 	}
 
+public static function modifySurvey($survey)
+{ try{
+$db = GenericDAO::getPDO();
+$sql = "update surveys set title='$survey->title',creationdate='$survey->creationdate',enddate='$survey->enddate',ownerid='$survey->ownerid'
+where surveyid='$survey->surveyid'" ;
+	$statement = $db->sendQuery($sql);
+			 $statement->execute();	
+ $rv = $statement->fetchAll(PDO::PARAM_STR);
+			 return $rv;
+}catch(Exception $ex){
+		}
+
+} 
+
 	public static function eliminateSurvey($surveyid){
 	try
 		{		$db = GenericDAO::getPDO();
