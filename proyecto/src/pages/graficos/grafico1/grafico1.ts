@@ -75,7 +75,7 @@ export class grafico1
 					type: 'column'
 				},
 				title: {
-					text: 'Preguntas por respuesta'
+					text: event
 				},
 				xAxis: {
 					type: 'category'
