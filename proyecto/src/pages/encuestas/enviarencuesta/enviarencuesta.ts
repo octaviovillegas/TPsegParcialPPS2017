@@ -46,6 +46,10 @@ this.usuarioLogueado=servAuth.getUserInfo();
         message: 'La encuesta se envio correctamente',
         duration: 3000,
         position: 'top'});
+
+          this.toast.onDidDismiss(() => {
+    console.log('Dismissed toast');
+  });
          
   }
   
@@ -57,7 +61,9 @@ EnviarEncuesta(){
      })
     .map(res => res.json())
     .subscribe((quote) =>{
-      this.toast.present();
+    //  this.toast.present();
+      this.encuestaSeleccionada = null;
+      this.cursoSeleccionado =null;
       console.info(quote);
      });
 
