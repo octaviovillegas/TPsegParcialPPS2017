@@ -425,6 +425,75 @@ class GenericDAO
 			return false;
 		}
 	}
+	public static function getSubjectsList(){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "select distinct c.subjectid, s.name
+				FROM classes  as c
+				join subjects as s on s.subjectid = c.subjectid";
+		$statement = $db->sendQuery($sql);
+		$statement->execute();
+		$rv = array("subjects"=>[]);
+		$rv['subjects'] = $statement->fetchAll(PDO::PARAM_STR);
+		return $rv;
+	}
 
+	public static function getDivisionsListBySubjectId($subjectid){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "select c.divisionid, d.name
+				FROM classes  as c
+				join divisions as d on d.divisionid = c.divisionid
+				WHERE c.subjectid = :subjectid";
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":subjectid", $subjectid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv = array("divisions"=>[]);
+		$rv['divisions'] = $statement->fetchAll(PDO::PARAM_STR);
+		return $rv;
+	}
+
+	public static function getClassroomsList(){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "select distinct cr.classroomid, cr.name 
+				from classes as c join classrooms as cr on cr.classroomid = c.classroomid";
+		$statement = $db->sendQuery($sql);
+		$statement->execute();
+		$rv = array("classrooms"=>[]);
+		$rv['classrooms'] = $statement->fetchAll(PDO::PARAM_STR);
+		return $rv;
+	}
+
+	public static function getClassesByClassroomid($classroomid){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "select c.classid, d.name as divisionname, s.name as subjectname 
+				from classes as c
+				join divisions as d on d.divisionid = c.divisionid
+				join subjects as s on s.subjectid = c.subjectid
+				WHERE c.classroomid = :classroomid";
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":classroomid", $classroomid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv = array("classes"=>[]);
+		$rv['classes'] = $statement->fetchAll(PDO::PARAM_STR);
+		return $rv;
+	}
+
+	public static function getStudentsByClassId($classid){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "select studentid, u.firstname, u.lastname
+				from studentsbyclass as sbc
+				join users as u on u.userid = sbc.studentid
+				where sbc.classid = :classid;";
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":classid", $classid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv = array("students"=>[]);
+		$rv['students'] = $statement->fetchAll(PDO::PARAM_STR);
+		return $rv;
+	}
 }
 ?>

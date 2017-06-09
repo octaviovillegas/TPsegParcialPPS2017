@@ -190,5 +190,58 @@ $app->post('/saveattendancelist',function(Request $request, Response $response){
     return $response;
 });
 
+$app->post('/getsubjectslist',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getSubjectsList();
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
+$app->post('/divisionslistbysubjectid',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $subjectid = $params["subjectid"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getDivisionsListBySubjectId($subjectid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
+$app->post('/getclassroomslist',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getClassroomsList();
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
+$app->post('/getclassesbyclassroomid',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $classroomid = $params["classroomid"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getClassesByClassroomid($classroomid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
+
+$app->post('/getstudentslistbyclassid',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $classid = $params["classid"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getStudentsByClassId($classid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
 $app->run();
 ?>

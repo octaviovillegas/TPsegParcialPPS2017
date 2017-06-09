@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { AppService } from "../../providers/app-service";
 import { Storage } from "@ionic/storage";
 import { AttendanceListData } from "../../app/entities/attendanceListData";
@@ -17,12 +17,16 @@ export class StudentsListPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage, private alertCtrl: AlertController) {
     this.loadingPage = true;
     this.students = new Array<AttendanceListData>();
-    this.getStudentsList();
   }
 
   ionViewDidLoad() {
+    let previousView:ViewController = this.navCtrl.getPrevious(this.navCtrl.last());
+    if(previousView.name == "SubjectsListPage" || previousView.name == "DivisionsListPage"){
+      this.getStudentsList();
+    }else{
+      this.getStudentsListByClassId();
+    }
   }
-
   getStudentsList() {
     let subject = this.navParams.get("subject");
     let division = this.navParams.get("division");
@@ -104,5 +108,26 @@ export class StudentsListPage {
       ]
     });
     confirm.present();
+  }
+  getStudentsListByClassId() {
+
+    this.storage.get("jwt").then((jwt) => {
+      this.appService.getStudentsListByClassId(jwt, this.navParams.get("a_class").classid)
+        .then((response) => {
+          let body = JSON.parse(response["_body"]); //convert JSON to Object
+          this.setStudents(body.students);
+
+          this.classId = body.classid;
+          this.loadingPage = false;
+          console.log(this.students);
+        })
+        .catch(() => {
+          console.log("Error");
+          this.loadingPage = false;
+        });
+    }).catch(() => {
+      console.log("Error al traer las materias");
+      this.loadingPage = false;
+    });
   }
 }
