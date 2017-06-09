@@ -1,32 +1,45 @@
 
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Alta de usuario {{t}}</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Alta de usuario {{t}}</ion-title>
+    </ion-navbar>
 
 </ion-header>
 <ion-content padding>
 
- <ion-item>
-    <ion-label floating>Usuario (email)</ion-label>
-    <ion-input type="email" [(ngModel)]="u" clearInput required></ion-input>
-  </ion-item>
+    <ion-list>
+
+        <ion-item>
+            <ion-label floating>Usuario (email)</ion-label>
+            <ion-input type="email" [(ngModel)]="u" clearInput required></ion-input>
+        </ion-item>
 
 
- <ion-item>
-    <ion-label floating>Nombre</ion-label>
-    <ion-input type="text" [(ngModel)]="n" clearInput required ></ion-input>
-  </ion-item>
+        <ion-item>
+            <ion-label floating>Nombre</ion-label>
+            <ion-input type="text" [(ngModel)]="n" clearInput required ></ion-input>
+        </ion-item>
 
-<ion-item>
-    <ion-label  floating >Clave</ion-label>
-    <ion-input type="password" [(ngModel)]="c" clearInput required> </ion-input>
- </ion-item>
+        <ion-item>
+            <ion-label floating >Claves</ion-label>
+            <ion-input type="password" [(ngModel)]="c" clearInput required> </ion-input>
+        </ion-item>
 
+        <ion-item>
+            <ion-thumbnail  item-start>
+                <img [src]="base64Image" *ngIf="base64Image">
+            </ion-thumbnail>
+            <h2>Imagen</h2>
+            <button ion-button (click)="tomarFoto()" clear item-end>Desde camara</button>
+        </ion-item>
 
-<button ion-button color=light (click)="Alta(n, u, c, id_tipo)"> Alta </button>
-<button ion-button color=light (click)="cancelar()"> Cancelar </button>
+    </ion-list>
+
+    <div padding>
+        <button ion-button color=light (click)="Alta(n, u, c, id_tipo)"> Alta </button>
+        <button ion-button color=light (click)="cancelar()"> Cancelar </button>
+    </div>
 
 
 

@@ -11,6 +11,7 @@ class Usuario
 	public $id_tipo;
 	public $nombre;
 	public $tipo_usuario;
+	public $imagen;
 //--------------------------------------------------------------------------------//
 
 //--------------------------------------------------------------------------------//
@@ -217,7 +218,7 @@ public static function TraerClientesEmpleados()
 
 	public static function AltaUsuario($usuario)
 	{
-	    $sql = 'INSERT INTO usuarios (id_tipo, nombre, usuario, clave) VALUES(:id_tipo, :nombre, :usuario,  :clave)';
+	    $sql = 'INSERT INTO usuarios (id_tipo, nombre, usuario, clave, imagen) VALUES(:id_tipo, :nombre, :usuario,  :clave, :imagen)';
 
 	    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	    $consulta =$objetoAccesoDato->RetornarConsulta($sql);
@@ -227,6 +228,7 @@ public static function TraerClientesEmpleados()
 	    $consulta->bindValue(':nombre', $usuario->nombre, PDO::PARAM_STR);
 	    $consulta->bindValue(':clave', $usuario->clave, PDO::PARAM_STR);
 	    $consulta->bindValue(':id_tipo', $usuario->id_tipo, PDO::PARAM_INT);
+	    $consulta->bindValue(':imagen', $usuario->imagen, PDO::PARAM_INT);
 	    return $consulta->execute();
 	}
 //--------------------------------------------------------------------------------//

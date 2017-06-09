@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams, NavOptions, ViewController, AlertC
 import { Http, URLSearchParams } from '@angular/http';
 import { AuthData } from '../../../providers/auth-data';
 import {Observable} from 'rxjs/Observable';
+import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { Camera } from 'ionic-native';
 
 /**
 * Generated class for the ModificacionModal page.
@@ -25,13 +28,72 @@ export class AltaModal
     id_tip;
     id_tipo;
 
+    base64Image;
+
+    width = 320;
+    height = 320;
+
     constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http,
-        public viewCtrl: ViewController, public auth: AuthData, private alertCtrl: AlertController)
+        public viewCtrl: ViewController, public auth: AuthData, private alertCtrl: AlertController, private mediaCapture: MediaCapture,
+    private imagePicker: ImagePicker)
     {
         console.log('navParams.data: ');
         console.log(navParams.data);
         this.t = navParams.data['tipo'];
         this.id_tipo = navParams.data['id_tipo'];
+    }
+
+    elegirFoto () {
+        let options = {
+            maximumImagesCount: 1,
+            width: this.width,
+            height: this.height,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+        };
+
+        this.imagePicker.getPictures(options).then((results) => {
+            for (var i = 0; i < results.length; i++) {
+                this.base64Image = this.encodeImageUri(results[i]);
+                console.log('Image URI: ' + results[i]);
+                console.log('base64: ' + this.encodeImageUri(results[i]));
+            }
+        }, (error) => {
+            console.log('error imagePicker: ');
+            console.log(error);
+        });
+    }
+
+    tomarFoto(){
+        Camera.getPicture({
+            destinationType: Camera.DestinationType.DATA_URL,
+            targetWidth: this.width,
+            targetHeight: this.height
+        }).then((imageData) => {
+            // imageData is a base64 encoded string
+            this.base64Image = "data:image/jpeg;base64," + imageData;
+        }, (err) => {
+            console.log('Camera.getPicture: ');
+            console.log(err);
+        });
+    }
+
+    encodeImageUri (imageUri) {
+        var c = document.createElement('canvas');
+        var ctx = c.getContext("2d");
+        var img = new Image();
+
+        let s = this;
+        img.onload = function(){
+            c.width = s.width;
+            c.height = s.height;
+            ctx.drawImage(img, 0,0);
+        };
+        img.src = imageUri;
+        var dataURL = c.toDataURL("image/jpeg");
+        return dataURL;
     }
 
     Alta(nombre, usuario, clave, id_tipo)
@@ -55,7 +117,8 @@ export class AltaModal
                         nombre: this.n,
                         usuario: this.u,
                         tipo: this.t,
-                        id_tipo: id_tipo
+                        id_tipo: id_tipo,
+                        imagen: this.base64Image
                     })
                     .map(res => res.json())
                     .catch((error:any) => Observable.throw(error.json().error || 'Server error'))
