@@ -66,7 +66,10 @@ export class GrillaProfesor {
 
     Alta()
     {
-        let modal2 = this.modalCtrl.create(AltaModal,{"tipo":"Alumno"});
+        let modal2 = this.modalCtrl.create(AltaModal, {
+            "tipo":"Alumno",
+            id_tipo: 3
+        });
         modal2.onDidDismiss(data=>{
           this.CargaGrilla();
         });

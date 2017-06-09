@@ -13,7 +13,7 @@ import { AltaModal } from '../alta-modal/alta-modal';
 })
 export class GrillaAdministrativo {
 
- 
+
     Usuarios;
     UssAdm : Array<any> =[];
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController) {
@@ -58,12 +58,15 @@ export class GrillaAdministrativo {
           this.CargaGrilla();
         });
         modal.present();
-        
+
     }
 
     Alta()
     {
-        let modal2 = this.modalCtrl.create(AltaModal,{"tipo":"Administrativo"});
+        let modal2 = this.modalCtrl.create(AltaModal, {
+            "tipo": "Administrativo",
+            id_tipo: 2
+        });
         modal2.onDidDismiss(data=>{
           this.CargaGrilla();
         });
@@ -89,19 +92,19 @@ export class GrillaAdministrativo {
                     console.log('Aceptar clicked');
                     this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
                            id_usuario: id_usuario
-            
+
                     })
                     .map(res => res.json())
                     .subscribe((quote) =>{
                            this.CargaGrilla();
                     });
-                  
+
                   }
                 }
               ]
             });
             alert.present();
-             
+
     }
 
 }

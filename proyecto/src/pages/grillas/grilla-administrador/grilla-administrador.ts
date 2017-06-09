@@ -11,10 +11,10 @@ import { servicioAuth } from '../../servicioAuth/servicioAuth';
   selector: 'page-grilla-administrador',
   templateUrl: 'grilla-administrador.html',
 })
-export class GrillaAdministrador 
+export class GrillaAdministrador
 {
 
- 
+
     Usuarios;
     UssAdm : Array<any> =[];
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController)
@@ -58,12 +58,15 @@ export class GrillaAdministrador
           this.CargaGrilla();
         });
         modal.present();
-        
+
     }
 
     Alta()
     {
-        let modal2 = this.modalCtrl.create(AltaModal,{"tipo":"Administrador"});
+        let modal2 = this.modalCtrl.create(AltaModal, {
+            "tipo": "Administrador",
+            id_tipo: 1
+        });
         modal2.onDidDismiss(data=>{
           this.CargaGrilla();
         });
@@ -89,19 +92,19 @@ export class GrillaAdministrador
                     console.log('Aceptar clicked');
                     this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
                            id_usuario: id_usuario
-            
+
                     })
                     .map(res => res.json())
                     .subscribe((quote) =>{
                            this.CargaGrilla();
                     });
-                  
+
                   }
                 }
               ]
             });
             alert.present();
-             
+
     }
 
 
