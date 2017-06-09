@@ -5,6 +5,7 @@ import { DivisionsListPage } from "../../pages/divisions-list-page/divisions-lis
 import { SubjectsListPage } from "../../pages/subjects-list-page/subjects-list-page";
 import { ClassroomsListPage } from "../../pages/classrooms-list-page/classrooms-list-page";
 import { TeachersListPage } from "../../pages/teachers-list-page/teachers-list-page";
+import { ClassesGridPage } from "../../pages/classes-grid-page/classes-grid-page";
 
 @Component({
   selector: 'attendance-list-manager-component',
@@ -14,16 +15,16 @@ export class AttendanceListManagerComponent implements OnInit {
   text: string;
   loadingPage: boolean;
   admin: boolean;
-  adminButtons:Array<any>;
+  adminButtons: Array<any>;
 
-  constructor(private storage: Storage, public navCtrl:NavController) {
+  constructor(private storage: Storage, public navCtrl: NavController) {
     this.loadingPage = true;
     this.admin = false;
     this.adminButtons = [];
-    this.adminButtons.push({ text: "Divisiones", page: DivisionsListPage});
-    this.adminButtons.push({ text: "Asignaturas", page: SubjectsListPage});
-    this.adminButtons.push({ text: "Aulas", page: ClassroomsListPage});
-    this.adminButtons.push({ text: "Profesores", page: TeachersListPage});
+    this.adminButtons.push({ text: "Divisiones", page: DivisionsListPage });
+    this.adminButtons.push({ text: "Asignaturas", page: SubjectsListPage });
+    this.adminButtons.push({ text: "Aulas", page: ClassroomsListPage });
+    this.adminButtons.push({ text: "Profesores", page: TeachersListPage });
   }
 
 
@@ -43,4 +44,10 @@ export class AttendanceListManagerComponent implements OnInit {
   pushPage(page) {
     this.navCtrl.parent.push(page);
   }
+
+
+  assignedSubjectOnClick() {
+    this.navCtrl.parent.push(ClassesGridPage);
+  }
+
 }
