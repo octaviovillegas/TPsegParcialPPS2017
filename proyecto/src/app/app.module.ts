@@ -47,7 +47,7 @@ import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { Camera } from '@ionic-native/camera';
 import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
 import { ImagePicker } from '@ionic-native/image-picker';
-
+import { AlumnoCurso } from '../pages/alumno-curso/alumno-curso';
 
 @NgModule({
   declarations: [
@@ -80,7 +80,8 @@ import { ImagePicker } from '@ionic-native/image-picker';
     AltaModalCursos,
     Grafico1,
     Grafico2,
-    Grafico3
+    Grafico3,
+    AlumnoCurso
   ],
   imports: [
     BrowserModule,
@@ -120,7 +121,8 @@ import { ImagePicker } from '@ionic-native/image-picker';
     AltaModalCursos,
     Grafico1,
     Grafico2,
-    Grafico3
+    Grafico3,
+    AlumnoCurso
       ],
   providers: [
     StatusBar,
