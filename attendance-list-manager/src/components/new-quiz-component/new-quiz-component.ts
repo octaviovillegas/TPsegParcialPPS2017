@@ -22,7 +22,7 @@ toggleStatus:any;
     buttonStatus:any;
       form: FormGroup;
       jw:any;
-       
+       destinations:any;
   logEvent(e) {
     console.log(e)
   }
@@ -39,7 +39,13 @@ this.form = this.fb.group({
         Correct2: ["", [Validators.required]],
          Correct3: ["", [Validators.required]],
     });
-  }
+ this.destinations = [{}];
+
+ }
+add() { console.log('aca')
+    this.destinations.push({name: ''});
+  //  this.form.r3.push(this.fb.control(''));  
+}
 
 ChangeToggle() {
   if(this.toggleStatus == true){
