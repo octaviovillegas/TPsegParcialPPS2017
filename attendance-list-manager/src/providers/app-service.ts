@@ -83,7 +83,13 @@ export class AppService {
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/eliminatesurvey", jsonData, options).toPromise();
   }
-
+modifySurvey(survey) {
+    let data = { survey };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/modifySurvey", jsonData, options).toPromise();
+  }
   getSurveyById(surveyId) {
     let data = { surveyId };
     let jsonData = JSON.stringify(data);

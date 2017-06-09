@@ -51,7 +51,7 @@ $app->post('/permissions',function(Request $request, Response $response){
 
 $app->post('/newsurvey',function(Request $request, Response $response){
     $params = $request->getParams();
-    $survey = $params["surveyId"];
+    $survey = $params["survey"];
     $jwt = $params["jwt"];
     $tm = new TokenManager();
     $tm->isValidToken($jwt);
@@ -74,7 +74,18 @@ $app->post('/newuser',function(Request $request, Response $response){
     }
     return $response;
 });
-
+$app->post('/modifySurvey',function(Request $request, Response $response){
+    
+    $params = $request->getParams();
+   
+    $survey = $params["survey"];
+    
+ 
+    
+    $rv = GenericDAO::modifySurvey($survey);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
 $app->post('/getsurveyslist',function(Request $request, Response $response){
     $rv = GenericDAO::getSurveysList();
     $response->getBody()->write(json_encode($rv));

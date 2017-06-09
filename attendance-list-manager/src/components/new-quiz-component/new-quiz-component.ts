@@ -31,13 +31,8 @@ export class NewQuizComponent {
     this.form = this.fb.group({
       Titulo: ["", [Validators.required]],
       Pregunta: ["", [Validators.required]],
-      Respuesta1: ["", [Validators.required]],
-      Respuesta2: ["", [Validators.required]],
-      Respuesta3: ["", [Validators.required]],
       Fecha: ["", [Validators.required]],
-      Correct1: ["", [Validators.required]],
-      Correct2: ["", [Validators.required]],
-      Correct3: ["", [Validators.required]],
+      
     });
     this.options = [];
     this.fillDefaultsNumberOfOptions();
@@ -45,15 +40,16 @@ export class NewQuizComponent {
 
   fillDefaultsNumberOfOptions(){
     let option1 = new Option();
-    option1.isRight = true;
+    option1.isRight = false;
     let option2 = new Option();
-
+ 
     this.options.push(option1);
     this.options.push(option2);
   }
   add() {
     console.log('aca')
     let option = new Option();
+    
     this.options.push(option);
   }
 
@@ -109,22 +105,15 @@ export class NewQuizComponent {
     survey.title = this.form.get("Titulo").value;
     survey.question.text = this.form.get("Pregunta").value;
 
-    let option = new Option();
-    option.isRight = this.form.get("Correct1").value;
-    option.text = this.form.get("Respuesta1").value;;
-
-    let option2 = new Option();
-    option2.isRight = this.form.get("Correct2").value;
-    option2.text = this.form.get("Respuesta2").value;;
-
-    let option3 = new Option();
-    option3.isRight = this.form.get("Correct3").value;
-    option3.text = this.form.get("Respuesta3").value;;
-
-    survey.question.options.push(option);
-    survey.question.options.push(option2);
-    survey.question.options.push(option3);
+    
+ this.options.forEach(itemInOptions => {
+        let option = new Option();
+        option.isRight = itemInOptions.isRight;
+        option.text = itemInOptions.text;
+        survey.question.options.push(option);
+      });
     console.log(survey);
+     console.log(survey.question.options);
     this.appService.newSurvey(survey, jwt)
       .then(val => console.log("Dejar de mostrar el spinner, habilitar los botones, etc..."))
       .catch(error => console.log("Los datos no pudieron ser procesados, intentelo nuevamente..."));

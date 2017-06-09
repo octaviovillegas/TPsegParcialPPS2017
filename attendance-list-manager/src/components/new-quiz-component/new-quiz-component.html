@@ -1,15 +1,8 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Generar Encuesta
-    </ion-title>
-  </ion-navbar>
-</ion-header>
 
 <div>
-   
-  <ion-list>
     <form [formGroup]="form" padding>
+  <ion-list>
+   
     <ion-item>
       <ion-label color="primary" stacked>Titulo:</ion-label>
       <ion-input type="text" placeholder=""formControlName="Titulo" ></ion-input>
@@ -20,55 +13,29 @@
       <ion-input type="text" placeholder=""formControlName="Pregunta"></ion-input>
     </ion-item>
 
+    </ion-list>
+    
     <ion-item>
+     
       <ion-label>¿Desea agregar opciones?</ion-label>
-     <ion-toggle [(ngModel)]="toggleStatus" [ngModelOptions]="{standalone : true }"pulsado checked="false" (ionChange)="ChangeToggle();"></ion-toggle>
+     <ion-toggle [(ngModel)]="toggleStatus"pulsado checked="false"[ngModelOptions]="{standalone : true }" (ionChange)="ChangeToggle();"></ion-toggle>
     </ion-item>
-<ion-item *ngIf="toggleStatus === true">
 
-  <ion-label color="primary" stacked>Respuesta :</ion-label>
-      <ion-input type="text" placeholder="" formControlName="Respuesta1"></ion-input>
-  </ion-item>
- <ion-item *ngIf="toggleStatus === true">
-
-  <ion-label>Es Correcta </ion-label>
-
-  <ion-checkbox [(ngModel)]="Correct1" formControlName="Correct1"checked="false"></ion-checkbox>
- 
+<div *ngIf="toggleStatus === true">
   
-  </ion-item>
-<ion-item *ngIf="toggleStatus === true">
+  <div *ngFor="let option of options">
+<ion-label color="primary" stacked>Respuesta :</ion-label>
+      <ion-input type="text"[(ngModel)]="option.text" [ngModelOptions]="{standalone : true }"  ></ion-input>
+      <ion-label> <ion-checkbox [(ngModel)]="option.isRight"[ngModelOptions]="{standalone : true }"  ></ion-checkbox> Es Correcta </ion-label>
+      
+  <ion-item>  <ion-icon ios="ios-add" md="md-add"> </ion-icon> <button clear-button 
+  (click)="add()"> Agregar Nueva Opcion</button></ion-item>
  
-  <ion-label color="primary" stacked>Respuesta :</ion-label>
-      <ion-input type="text" placeholder="" formControlName="Respuesta2"></ion-input>
+</div>
+ <!--// [ngModelOptions]="{standalone : true }"-->
+  
+  </div>
  
-  </ion-item>
-<ion-item *ngIf="toggleStatus === true">
-
-  <ion-label>Es Correcta </ion-label>
-
-  <ion-checkbox [(ngModel)]="Correct2" formControlName="Correct2"checked="false"></ion-checkbox>
- 
-  
-  </ion-item>
-<ion-item *ngIf="toggleStatus === true">
-  <ion-item>  <ion-icon ios="ios-add" md="md-add"> </ion-icon> <button clear-button (click)="changeButton()"> Agregar Nueva Opcion</button></ion-item>
-  
-  </ion-item>
-<ion-item *ngIf="buttonStatus === true">
-  
-  <ion-label color="primary" stacked>Respuesta :</ion-label>
-      <ion-input type="text" placeholder="" formControlName="Respuesta3"></ion-input>
-
-  </ion-item>
-  <ion-item *ngIf="buttonStatus === true">
-
-  <ion-label>Es Correcta </ion-label>
-
-  <ion-checkbox [(ngModel)]="Correct3" formControlName="Correct3"checked="false"></ion-checkbox>
- 
-  
-  </ion-item>
     <ion-item>
       <ion-label>¿Desea agregar fecha de finalizacion?</ion-label>
      <ion-toggle [(ngModel)]="toggleStatus2" [ngModelOptions]="{standalone : true }" pulsado checked="false" (ionChange)="ChangeToggle2();"></ion-toggle>
@@ -77,16 +44,16 @@
 <ion-item *ngIf="toggleStatus2 === true">
  
   <ion-label color="primary" stacked>Fecha :</ion-label>
-      <ion-input placeholder=" Año/Mes/Día" clearInput formControlName="Fecha"></ion-input>
+      <ion-input type="date"placeholder=" Año/Mes/Día" clearInput formControlName="Fecha"></ion-input>
 
   </ion-item>
 
 
     </form>
 
-    <button ion-button round outline (click)="send()">Terminar</button> 
-  </ion-list>
-  <div *ngFor="let option of options">
+    <button ion-button round outline (click)=" getJwtForNewSurvey()">Terminar</button> 
+ 
+  <!--<div *ngFor="let option of options">
 <ion-label color="primary" stacked>Respuesta :</ion-label>
       <ion-input type="text"[(ngModel)]="option.text"></ion-input>
       <ion-label> <ion-checkbox [(ngModel)]="option.isRight"></ion-checkbox> Es Correcta </ion-label>
@@ -94,6 +61,6 @@
   <ion-item>  <ion-icon ios="ios-add" md="md-add"> </ion-icon> <button clear-button 
   (click)="add()"> Agregar Nueva Opcion</button></ion-item>
  
-</div>
+</div>-->
 
 </div>
