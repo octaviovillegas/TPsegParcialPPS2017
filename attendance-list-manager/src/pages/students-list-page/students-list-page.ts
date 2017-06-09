@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ViewController,ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ViewController, ToastController } from 'ionic-angular';
 import { AppService } from "../../providers/app-service";
 import { Storage } from "@ionic/storage";
 import { AttendanceListData } from "../../app/entities/attendanceListData";
@@ -14,16 +14,18 @@ export class StudentsListPage {
   loadingPage: boolean;
   students: Array<AttendanceListData>;
   classId: number;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage, private toastCtrl: ToastController,private alertCtrl: AlertController) {
+  noStudents: boolean;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage, private toastCtrl: ToastController, private alertCtrl: AlertController) {
     this.loadingPage = true;
+    this.noStudents = true;
     this.students = new Array<AttendanceListData>();
   }
 
   ionViewDidLoad() {
-    let previousView:ViewController = this.navCtrl.getPrevious(this.navCtrl.last());
-    if(previousView.name == "SubjectsListPage" || previousView.name == "DivisionsListPage"){
+    let previousView: ViewController = this.navCtrl.getPrevious(this.navCtrl.last());
+    if (previousView.name == "SubjectsListPage" || previousView.name == "DivisionsListPage") {
       this.getStudentsList();
-    }else{
+    } else {
       this.getStudentsListByClassId();
     }
   }
@@ -56,15 +58,18 @@ export class StudentsListPage {
   }
 
   setStudents(students) {
-    students.forEach(student => {
-      let attendanceListData = new AttendanceListData();
-      attendanceListData.firstname = student.firstname;
-      attendanceListData.lastname = student.lastname;
-      attendanceListData.userid = student.userid;
-      attendanceListData.present = false;
-      this.students.push(attendanceListData);
-    });
+    if (students.length > 0) {
+      this.noStudents = false;
+      students.forEach(student => {
+        let attendanceListData = new AttendanceListData();
+        attendanceListData.firstname = student.firstname;
+        attendanceListData.lastname = student.lastname;
+        attendanceListData.userid = student.userid;
+        attendanceListData.present = false;
+        this.students.push(attendanceListData);
 
+      });
+    }
   }
 
   showConfirm() {
@@ -91,7 +96,7 @@ export class StudentsListPage {
             });
             attendanceList.classid = this.classId;
             this.storage.get("jwt").then((jwt) => {
-              this.appService.saveAttendanceList(jwt,attendanceList)
+              this.appService.saveAttendanceList(jwt, attendanceList)
                 .then((response) => {
                   this.loadingPage = false;
                   this.showMessage("La lista se guardó correctamente.");
