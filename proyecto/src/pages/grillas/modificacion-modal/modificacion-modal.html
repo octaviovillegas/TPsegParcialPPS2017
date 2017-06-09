@@ -29,6 +29,14 @@
         </ion-item>
     </ion-list>
 
+    <ion-item>
+        <ion-thumbnail  item-start>
+            <img [src]="base64Image" *ngIf="base64Image">
+        </ion-thumbnail>
+        <h2>Imagen</h2>
+        <button ion-button (click)="tomarFoto()" clear item-end>Desde camara</button>
+    </ion-item>
+
     <button ion-button color=light (click)="Modificar(id_usuario, n, u, c, t)"> Modificar </button>
     <button ion-button color=light (click)="Cancelar()"> Cancelar </button>
 

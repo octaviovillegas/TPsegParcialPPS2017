@@ -135,7 +135,7 @@ class Usuario
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 		//$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona");
-		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT u.id_usuario, t.descripcion tipo_usuario, u.nombre, u.usuario, u.clave, u.id_tipo FROM usuarios u, tipos_usuarios t where u.id_tipo=t.id_tipo");
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT u.id_usuario, t.descripcion tipo_usuario, u.nombre, u.usuario, u.clave, u.id_tipo, u.imagen FROM usuarios u, tipos_usuarios t where u.id_tipo=t.id_tipo");
 		$consulta->execute();
 		$arrEmpleado= $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");
 		return $arrEmpleado;
@@ -200,7 +200,7 @@ public static function TraerClientesEmpleados()
 
 	public static function ModificarUsuario($usuario)
 	{
-	    $sql = 'UPDATE usuarios SET usuario = :usuario, nombre = :nombre, clave = :clave, id_tipo = :id_tipo WHERE id_usuario = :id_usuario';
+	    $sql = 'UPDATE usuarios SET usuario = :usuario, nombre = :nombre, clave = :clave, id_tipo = :id_tipo, imagen = :imagen WHERE id_usuario = :id_usuario';
 
 	    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	    $consulta =$objetoAccesoDato->RetornarConsulta($sql);
@@ -210,6 +210,13 @@ public static function TraerClientesEmpleados()
 	    $consulta->bindValue(':nombre', $usuario->nombre, PDO::PARAM_STR);
 	    $consulta->bindValue(':clave', $usuario->clave, PDO::PARAM_STR);
 	    $consulta->bindValue(':id_tipo', $usuario->id_tipo, PDO::PARAM_INT);
+
+		if (isset($usuario->imagen)) {
+			$consulta->bindValue(':imagen', $usuario->imagen, PDO::PARAM_STR);
+		} else {
+			$consulta->bindValue(':imagen', '', PDO::PARAM_STR);
+
+		}
 	    return $consulta->execute();
 	}
 
@@ -228,7 +235,7 @@ public static function TraerClientesEmpleados()
 	    $consulta->bindValue(':nombre', $usuario->nombre, PDO::PARAM_STR);
 	    $consulta->bindValue(':clave', $usuario->clave, PDO::PARAM_STR);
 	    $consulta->bindValue(':id_tipo', $usuario->id_tipo, PDO::PARAM_INT);
-	    $consulta->bindValue(':imagen', $usuario->imagen, PDO::PARAM_INT);
+	    $consulta->bindValue(':imagen', $usuario->imagen, PDO::PARAM_STR);
 	    return $consulta->execute();
 	}
 //--------------------------------------------------------------------------------//

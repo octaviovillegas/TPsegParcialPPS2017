@@ -44,14 +44,15 @@ export class GrillaAlumno {
 
     }
 
-    Modificar(id_usuario, usuario, nombre, clave, id_tipo)
+    Modificar(id_usuario, usuario, nombre, clave, id_tipo, imagen)
     {
         let usM = {
             id_usuario: id_usuario,
             usuario: usuario,
             nombre: nombre,
             clave: clave,
-            id_tipo: id_tipo
+            id_tipo: id_tipo,
+            imagen: imagen
         };
         let modal = this.modalCtrl.create(ModificacionModal, usM);
         modal.onDidDismiss(data=>{

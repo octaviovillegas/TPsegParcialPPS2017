@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, NavOptions, ViewController, AlertController } from 'ionic-angular';
 import { Http, URLSearchParams } from '@angular/http';
 import { AuthData } from '../../../providers/auth-data';
+import { Camera } from 'ionic-native';
 /**
 * Generated class for the ModificacionModal page.
 *
@@ -22,14 +23,34 @@ export class ModificacionModal
     id_usuario;
     http;
 
+    width = 320;
+    height = 320;
+    base64Image;
+
     constructor (public navCtrl: NavController, public navParams: NavParams, htt:Http, public viewCtrl: ViewController, public auth: AuthData, private alertCtrl: AlertController)
     {
+        console.log(navParams['data']);
         this.c = navParams.data['clave'];
         this.n = navParams.data['nombre'];
         this.t = navParams.data['id_tipo'];
         this.u = navParams.data['usuario'];
         this.id_usuario = navParams.data['id_usuario'];
+        this.base64Image = navParams.data['imagen'];
         this.http = htt;
+    }
+
+    tomarFoto(){
+        Camera.getPicture({
+            destinationType: Camera.DestinationType.DATA_URL,
+            targetWidth: this.width,
+            targetHeight: this.height
+        }).then((imageData) => {
+            // imageData is a base64 encoded string
+            this.base64Image = "data:image/jpeg;base64," + imageData;
+        }, (err) => {
+            console.log('Camera.getPicture: ');
+            console.log(err);
+        });
     }
 
     Modificar(id_usuario, nombre, usuario, clave, id_tipo)
@@ -40,7 +61,8 @@ export class ModificacionModal
             id_tipo: id_tipo,
             clave: clave,
             nombre: nombre,
-            usuario: usuario
+            usuario: usuario,
+            imagen: this.base64Image
         })
         .map(res => res.json())
         .subscribe((quote) =>{

@@ -1,37 +1,38 @@
 
 <ion-header>
 
-  <ion-navbar>
-      <button ion-button menuToggle left>
-          <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>Alumnos</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <button ion-button menuToggle left>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Alumnos</ion-title>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
 
     <button ion-button icon-left color=light (click)="Alta()" round >
-  <ion-icon name="person-add" ></ion-icon>
-  Nuevo usuario
-</button>
+        <ion-icon name="person-add" ></ion-icon>
+        Nuevo usuario
+    </button>
 
 
-<div *ngFor="let usr of Uss">
-<ion-card >
-  <ion-card-content>
-    <ion-card-title>
-        {{usr.nombre}}
-      </ion-card-title>
-    <p>
-        {{usr.usuario}}<br>
-         {{usr.tipo_usuario}}<br>
-         <button ion-button color=danger (click)="Eliminar(usr.id_usuario, usr.usuario, usr.nombre, usr.clave, usr.id_tipo)">eliminar</button>
-         <button ion-button color=secondary (click)="Modificar(usr.id_usuario, usr.usuario, usr.nombre, usr.clave, usr.id_tipo)">modificar</button>
-    </p>
-  </ion-card-content>
-</ion-card>
-</div>
+    <div *ngFor="let usr of Uss">
+        <ion-card >
+            <img [src]="usr.imagen" *ngIf="usr.imagen" style="max-height: 80px; width: auto;">
+            <ion-card-content>
+                <ion-card-title>
+                    {{usr.nombre}}
+                </ion-card-title>
+                <p>
+                    {{usr.usuario}}<br>
+                    {{usr.tipo_usuario}}<br>
+                    <button ion-button color=danger (click)="Eliminar(usr.id_usuario, usr.usuario, usr.nombre, usr.clave, usr.id_tipo)">eliminar</button>
+                    <button ion-button color=secondary (click)="Modificar(usr.id_usuario, usr.usuario, usr.nombre, usr.clave, usr.id_tipo, usr.imagen)">modificar</button>
+                </p>
+            </ion-card-content>
+        </ion-card>
+    </div>
 
 </ion-content>
