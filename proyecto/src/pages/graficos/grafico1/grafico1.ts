@@ -29,9 +29,10 @@ export class Grafico1
 	Unapregunta;
 	conjAver=[];
   conjAver2=[];
+	cargando:boolean=true;
 	traerdatos()
 	{
-		 
+		 this.cargando=true;
 		  this.http.get("http://tppps2.hol.es/ws1/GrafRespuestasDePreguntas")
             .map(res => res.json())
             .subscribe((quote) =>{
@@ -52,7 +53,7 @@ export class Grafico1
                }
              }
 		 
-		 
+						 this.cargando=false;
            });
 	}
 

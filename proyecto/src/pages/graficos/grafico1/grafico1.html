@@ -9,6 +9,10 @@
 </ion-header>
 
 <ion-content padding>
+  <div *ngIf="cargando">
+    <ion-spinner name="bubble"></ion-spinner>
+  </div>
+  <div *ngIf="!cargando">
     <ion-list>
       <ion-item>
         <ion-label>Pregunta:</ion-label>
@@ -21,4 +25,5 @@
     </ion-list>
   
   <div id="container"></div>
+  </div>
 </ion-content>
