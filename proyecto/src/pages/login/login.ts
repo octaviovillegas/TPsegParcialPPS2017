@@ -144,22 +144,22 @@ export class Login {
     EscribirCredenciales(tipo){
         if (tipo == "Administrador" ) {
 
-            this.Login.usuario = "testAdmin@escuelita.com";
+            this.Login.usuario = "JoseAdministrador@escuelita.com";
             this.Login.clave ="admin123";
 
          } else if (tipo == "Administrativo" ) {
 
-            this.Login.usuario = "testAdministrativo@escuelita.com";
+            this.Login.usuario = "JuanAdministrativo@escuelita.com";
             this.Login.clave ="admini123";
 
         } else if (tipo == "Alumno" ) {
 
-            this.Login.usuario = "testAlumno@escuelita.com";
+            this.Login.usuario = "MariaAlumno@escuelita.com";
             this.Login.clave ="alumno123";
 
         } else if (tipo == "Profesor" ) {
 
-            this.Login.usuario = "testProfe@escuelita.com";
+            this.Login.usuario = "OctavioProfesor@profesor.com";
             this.Login.clave ="profe123";
 
         }
