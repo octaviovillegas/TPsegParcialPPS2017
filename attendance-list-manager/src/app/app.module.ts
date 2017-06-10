@@ -65,6 +65,7 @@ import { ModifyUserComponent } from "../components/modify-user-component/modify-
     ModifyQuizComponent,
     DeleteUserComponent,
     ModifyUserComponent,
+    UpdateQuizComponent,
     QuestionViewer,
     DivisionsListPage,
     SubjectsListPage,
@@ -110,6 +111,8 @@ import { ModifyUserComponent } from "../components/modify-user-component/modify-
     ClassroomsListPage,
     ClassesGridPage,
     TeachersListPage,
+    UpdateQuizComponent,
+    
   ],
   providers: [
     StatusBar,

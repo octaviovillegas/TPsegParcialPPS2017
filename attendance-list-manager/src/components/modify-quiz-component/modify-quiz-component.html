@@ -1,4 +1,15 @@
-<!-- Generated template for the ModifyQuizComponent component -->
-<div>
-  {{text}}
+ <ion-list>
+    <div ion-item *ngFor="let item of  surveys" >
+      
+  
+    <div>Titulo: {{item.title}}</div>
+     <div>Autor:{{item.username}}</div>
+     <div>Fecha de Creación:{{item.creationdate}}</div>
+    <div>Fecha de Termino:{{item.enddate}}</div>
+    <button ion-button (click)="modify()" >Modificar</button>
+     
+   
+    
 </div>
+
+  </ion-list>
