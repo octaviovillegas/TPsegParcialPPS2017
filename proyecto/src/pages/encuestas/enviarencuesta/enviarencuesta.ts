@@ -5,6 +5,7 @@ import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import {Http} from '@angular/http';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import { Toast } from '@ionic-native/toast';
+import { NativeAudio } from '@ionic-native/native-audio';
 
 @Component({
   selector: 'page-Encuestas',
@@ -24,8 +25,9 @@ private cursoSeleccionado;
 private encuestaSeleccionada;
 private toast;
  constructor(public navCtrl: NavController,public NavParams: NavParams,private http: Http,public af: AngularFire
- ,servAuth:servicioAuth,private toastCtrl: ToastController)
+ ,servAuth:servicioAuth,private toastCtrl: ToastController,private nativeAudio: NativeAudio)
   {
+this.nativeAudio.preloadSimple('uniqueId1', '../assets/ingreso.mp3');
 this.usuarioLogueado=servAuth.getUserInfo();
     console.info(this.usuarioLogueado);
  
@@ -47,6 +49,7 @@ this.usuarioLogueado=servAuth.getUserInfo();
   }
   
 verToast(){
+  
        this.toast = this.toastCtrl.create({
         message: 'La encuesta se envio correctamente',
         duration: 3000,
@@ -55,6 +58,7 @@ verToast(){
           this.toast.onDidDismiss(() => {
     console.log('Dismissed toast');
   });
+    this.nativeAudio.play('uniqueId1', () => console.log('uniqueId1 is done playing'));
     this.toast.present();
 }
 
@@ -66,6 +70,7 @@ EnviarEncuesta(){
     .map(res => res.json())
     .subscribe((quote) =>{
     this.verToast();
+        this.nativeAudio.play('uniqueId1', () => console.log('uniqueId1 is done playing'));
       this.encuestaSeleccionada = null;
       this.cursoSeleccionado =null;
       console.info(quote);
