@@ -12,7 +12,7 @@ import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import { AuthData } from '../../providers/auth-data';
 import { Menu } from '../menu/menu';
 import { Device } from '@ionic-native/device';
-
+import { NativeAudio } from '@ionic-native/native-audio';
 import 'rxjs/Rx';
 
 @Component({
@@ -38,9 +38,10 @@ export class Login {
 
     constructor(public navCtrl: NavController, private auth: servicioAuth,
         private alertCtrl: AlertController, private loadingCtrl: LoadingController,
-        public authData: AuthData, private dev: Device)
+        public authData: AuthData, private dev: Device,private nativeAudio: NativeAudio)
         {
         this.device = dev;
+        this.nativeAudio.preloadSimple('uniqueId1', '../assets/ingreso.mp3');
         }
 
     public login() {
@@ -74,7 +75,7 @@ export class Login {
                                 }
 
                             });
-
+                            this.nativeAudio.play('uniqueId1', () => console.log('uniqueId1 is done playing'));
                         } else {
 
                             // No existe el usuario en la BD, pero si en firebase

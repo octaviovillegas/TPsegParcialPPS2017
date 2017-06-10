@@ -48,7 +48,7 @@ import { Camera } from '@ionic-native/camera';
 import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AlumnoCurso } from '../pages/alumno-curso/alumno-curso';
-
+import { NativeAudio } from '@ionic-native/native-audio';
 @NgModule({
   declarations: [
     MyApp,
@@ -135,6 +135,7 @@ import { AlumnoCurso } from '../pages/alumno-curso/alumno-curso';
     MediaCapture,
     Camera,
     ImagePicker,
+    NativeAudio,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
