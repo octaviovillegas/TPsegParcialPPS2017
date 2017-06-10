@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-
+import { Survey } from "../../app/entities/survey";
+import { AppService } from "../../providers/app-service";
+import { Response } from "@angular/http";
+import { Storage } from "@ionic/storage";
+import { Option } from "../../app/entities/option";
+import { NavController, ToastController } from 'ionic-angular';
+import { UpdateQuizComponent } from '../update-quiz-component/update-quiz-component';
 /**
  * Generated class for the ModifyQuizComponent component.
  *
@@ -13,10 +19,26 @@ import { Component } from '@angular/core';
 export class ModifyQuizComponent {
 
   text: string;
+surveys: Array<any>;
+  constructor( private storage: Storage, private appService: AppService,private navCtrl:NavController) {
+     this.storage.get("jwt")
+      .then((jwt) => {
+        this.appService.getSurveysToEliminate(jwt).then((response: Response) => {
 
-  constructor() {
-    console.log('Hello ModifyQuizComponent Component');
-    this.text = 'Estás viendo el contenido del componente ModifyQuizComponent';
+          if (response.status == 200) {
+            this.surveys = JSON.parse(response["_body"]);
+
+          } else {
+            console.log("error"); //No tiene permisos.
+          }
+        })
+          .catch((error) => console.log("error")); //Si por alguna razón el servidor no responde.
+        //Si por alguna razón el servidor no responde.
+      });
   }
+modify(){
 
+this.navCtrl.setRoot( UpdateQuizComponent );
+
+}
 }

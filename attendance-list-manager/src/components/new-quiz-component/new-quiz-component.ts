@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { AppService } from "../../providers/app-service";
 import { Storage } from "@ionic/storage";
 import { Survey } from "../../app/entities/survey";
 import { Option } from "../../app/entities/option";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-
+import { QuizManagerComponent } from '../quiz-manager-component/quiz-manager-component';
 /**
  * Generated class for the NewQuizComponent component.
  *
@@ -23,11 +23,12 @@ export class NewQuizComponent {
   form: FormGroup;
   jw: any;
   options: Array<Option>;
+  hideSpinner: boolean
   logEvent(e) {
     console.log(e)
   }
   opciones: any;
-  constructor(public navCtrl: NavController, private storage: Storage, private fb: FormBuilder, private appService: AppService) {
+  constructor(public navCtrl: NavController, private storage: Storage, private toastCtrl: ToastController, private fb: FormBuilder, private appService: AppService) {
     this.form = this.fb.group({
       Titulo: ["", [Validators.required]],
       Pregunta: ["", [Validators.required]],
@@ -36,7 +37,8 @@ export class NewQuizComponent {
     });
     this.options = [];
     this.fillDefaultsNumberOfOptions();
-  }
+   this.hideSpinner = true;
+}
 
   fillDefaultsNumberOfOptions(){
     let option1 = new Option();
@@ -95,6 +97,7 @@ export class NewQuizComponent {
 
 
   getJwtForNewSurvey() {
+    this.hideSpinner = false;
     this.storage.get("jwt")
       .then(jwt => this.newSurvey(jwt))
       .catch(() => this.appService.logOut());
@@ -105,18 +108,29 @@ export class NewQuizComponent {
     survey.title = this.form.get("Titulo").value;
     survey.question.text = this.form.get("Pregunta").value;
 
-    
+    if(this.toggleStatus){
  this.options.forEach(itemInOptions => {
         let option = new Option();
         option.isRight = itemInOptions.isRight;
         option.text = itemInOptions.text;
         survey.question.options.push(option);
-      });
-    console.log(survey);
-     console.log(survey.question.options);
+      }); }
+    this.showErrorMessage("Guardando encuesta");
+    
+      this.hideSpinner = true;
     this.appService.newSurvey(survey, jwt)
-      .then(val => console.log("Dejar de mostrar el spinner, habilitar los botones, etc..."))
-      .catch(error => console.log("Los datos no pudieron ser procesados, intentelo nuevamente..."));
+    
+      .then(val =>{this.showErrorMessage("Encuesta Guardada");
+      this.navCtrl.setRoot(QuizManagerComponent );})
+      .catch(error => this.showErrorMessage("Los datos no pudieron ser procesados, intentelo nuevamente..."));
+  }
+showErrorMessage(message: string): void {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position: "middle"
+    });
+    toast.present();
   }
 
 }
