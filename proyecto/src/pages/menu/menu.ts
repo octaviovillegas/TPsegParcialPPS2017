@@ -7,6 +7,7 @@ import {Administrador} from '../administrador/administrador';
 import {Profesor} from '../profesor/profesor';
 import {Login} from '../login/login';
 import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
+
 import {GrillaAdministrador} from "../grillas/grilla-administrador/grilla-administrador";
 import {GrillaAdministrativo} from "../grillas/grilla-administrativo/grilla-administrativo";
 import {GrillaAlumno} from "../grillas/grilla-alumno/grilla-alumno";
@@ -15,6 +16,11 @@ import {Encuestas} from '../encuestas/encuestas';
 import {GenerarEncuesta} from '../encuestas/generarencuesta/generarencuesta';
 import {EnviarEncuesta} from '../encuestas/enviarencuesta/enviarencuesta';
 import {GrillaComision} from "../grillas/grilla-comision/grilla-comision";
+
+import { Grafico1 } from "../graficos/grafico1/grafico1";
+import { Grafico2 } from "../graficos/grafico2/grafico2";
+import { Grafico3 } from "../graficos/grafico3/grafico3";
+import { AlumnoCurso } from "../alumno-curso/alumno-curso";
 /**
 * Generated class for the Menu page.
 *
@@ -43,6 +49,11 @@ export class Menu {
     private grillaAdministrativo;
     private grillaComision;
 
+    private grafico1;
+    private grafico2;
+    private grafico3;
+    private alumnocurso;
+
     constructor(public navCtrl: NavController,public viewCtrl:ViewController,
      public navParams: NavParams,public af: AngularFire,public modalCtrl: ModalController) {
 
@@ -51,15 +62,9 @@ export class Menu {
         console.log('this.usuario');
         console.log(this.usuarioLogueado);
 
-        this.alumnoPage = Alumno;
-        this.administrativoPage = Administrativo;
-        this.administradorPage = Administrador;
-        this.profesorPage = Profesor;
-        this.grillaProfesor = GrillaProfesor;
-        this.grillaAlumno = GrillaAlumno;
-        this.grillaAdministrador = GrillaAdministrador;
-        this.grillaAdministrativo = GrillaAdministrativo; 
-        this.grillaComision = GrillaComision;
+        this.initPages();
+
+
         if (this.usuarioLogueado.tipo_usuario == 'Alumno') {
             this.openPage(this.alumnoPage);
         } else if (this.usuarioLogueado.tipo_usuario == 'Administrativo') {
@@ -71,6 +76,25 @@ export class Menu {
         }
     }
 
+    initPages () {
+
+        this.alumnoPage = Alumno;
+        this.administrativoPage = Administrativo;
+        this.administradorPage = Administrador;
+        this.profesorPage = Profesor;
+        this.grillaProfesor = GrillaProfesor;
+        this.grillaAlumno = GrillaAlumno;
+        this.grillaAdministrador = GrillaAdministrador;
+        this.grillaAdministrativo = GrillaAdministrativo;
+        this.grillaComision = GrillaComision;
+
+        this.grafico1 = Grafico1;
+        this.grafico2 = Grafico2;
+        this.grafico3 = Grafico3;
+
+        this.alumnocurso = AlumnoCurso;
+    }
+
 Encuestas(queHago){
     console.info(queHago);
         if(queHago == "profesorGenerar"){
@@ -80,7 +104,7 @@ Encuestas(queHago){
          console.info(this.usuarioLogueado);
          this.openPage(EnviarEncuesta);
         }
-    
+
 
 }
     ionViewDidLoad() {
