@@ -47,3 +47,11 @@ El profesor es el encargado de generar las encuestas con las preguntas correspon
 	-	ABM de comisiones<br>
 
 
+<h4>Perfil Alumno</h4>
+El alumno podrá ver las encuestas completadas y las encuestas pendientes. 
+Las encuestas pendientes son aquellas que el usuario todavía no ha realizado. 
+Las encuestas Completadas son aquellas que el usuario ya terminó.
+
+Al acceder a encuestas pendientes, se listan las encuestas del curso al que el alumno pertenece. Una vez que se accede a una encuesta se empiezan a mostrar las preguntas, una por una. Una vez finalizada la encuesta se muestra un toast con un mensaje y luego se vuelve a la página de encuestas pendientes.
+
+Al acceder a encuestas completadas se listan las encuestas que el usuario ya completó. Al acceder a cada encuesta se listan las preguntas y respuestas del alumno.
