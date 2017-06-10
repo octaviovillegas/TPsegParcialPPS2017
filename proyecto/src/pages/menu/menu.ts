@@ -54,8 +54,7 @@ export class Menu {
     private grafico3;
     private alumnocurso;
 
-    constructor(public navCtrl: NavController,public viewCtrl:ViewController,
-     public navParams: NavParams,public af: AngularFire,public modalCtrl: ModalController) {
+    constructor(public navCtrl: NavController,public viewCtrl:ViewController, public navParams: NavParams,public af: AngularFire,public modalCtrl: ModalController) {
 
         this.usuarioLogueado = navParams.data;
         console.log('this.usuario');
@@ -73,6 +72,7 @@ export class Menu {
         } else if (this.usuarioLogueado.tipo_usuario == 'Profesor') {
             this.openPage(this.profesorPage);
         }
+        
     }
 
     initPages () {
@@ -94,18 +94,19 @@ export class Menu {
         this.alumnocurso = AlumnoCurso;
     }
 
-Encuestas(queHago){
-    console.info(queHago);
+    Encuestas(queHago){
+        console.info(queHago);
         if(queHago == "profesorGenerar"){
-          console.info(this.usuarioLogueado);
-         this.openPage(GenerarEncuesta);
+            console.info(this.usuarioLogueado);
+            this.openPage(GenerarEncuesta);
         }else{
-         console.info(this.usuarioLogueado);
-         this.openPage(EnviarEncuesta);
+            console.info(this.usuarioLogueado);
+            this.openPage(EnviarEncuesta);
         }
 
 
-}
+    }
+
     ionViewDidLoad() {
         console.log('ionViewDidLoad Menu');
     }
@@ -115,9 +116,9 @@ Encuestas(queHago){
     }
 
     /**
-     * Funcion para cerrar la sesion del usuario
-     * @return void
-     */
+    * Funcion para cerrar la sesion del usuario
+    * @return void
+    */
     cerrarSesion() {
         /** Ejecutar funcion para desloguear usuario. */
         this.af.auth.logout();
