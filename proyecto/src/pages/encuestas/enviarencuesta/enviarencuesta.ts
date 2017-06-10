@@ -42,7 +42,12 @@ this.usuarioLogueado=servAuth.getUserInfo();
     console.info(this.listaEncuestas);
   });
      
-        this.toast = this.toastCtrl.create({
+ 
+         
+  }
+  
+verToast(){
+       this.toast = this.toastCtrl.create({
         message: 'La encuesta se envio correctamente',
         duration: 3000,
         position: 'top'});
@@ -50,9 +55,8 @@ this.usuarioLogueado=servAuth.getUserInfo();
           this.toast.onDidDismiss(() => {
     console.log('Dismissed toast');
   });
-         
-  }
-  
+    this.toast.present();
+}
 
 EnviarEncuesta(){
   this.http.post("http://tppps2.hol.es/ws1/encuestas/enviar", {
@@ -61,7 +65,7 @@ EnviarEncuesta(){
      })
     .map(res => res.json())
     .subscribe((quote) =>{
-    //  this.toast.present();
+    this.verToast();
       this.encuestaSeleccionada = null;
       this.cursoSeleccionado =null;
       console.info(quote);
