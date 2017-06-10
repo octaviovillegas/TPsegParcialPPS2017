@@ -14,8 +14,8 @@ Login Con jwt Firebase: El login está diseñado para que un usuario con correo 
 
     
 <h4>Tareas</h4>
-    -	[Generacion de estilos de login.]
-    -	[Validación de usuario.]
+    -	[Generacion de estilos de login.]<br>
+    -	[Validación de usuario.]<br>
     -   [Validacion de tipos de datos en campos.]
     -	[Botones de testing.]
     -	[Funcionabilidad firebase jwt.]
