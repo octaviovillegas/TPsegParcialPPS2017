@@ -5,7 +5,7 @@ Segundo parcial de PPS 2017 IONIC 2
 
 <h4>Documentancion:</h4>
 
-  </h5>Login</h5>:
+  <h4>Login</h4>
 	Login Con jwt Firebase: El login está diseñado para que un usuario con correo y password puedan loguearse en el sistema.
 	previamente con un rol asignado y se rootea a los diferentes roles que puedan llegar a tener, administrador, administrativo, profesor, alumno.
 	Le pega a firebaseAuth y además hace una validación en un WS de usuarios online. 
@@ -21,7 +21,7 @@ Segundo parcial de PPS 2017 IONIC 2
 	-	Funcionabilidad WS jwt
 
 
-	 </h5>Profesor:</h5>:
+	 <h4>Profesor:</h4>:
 	El profesor es el encargado de generar las encuestas con las preguntas correspondientes, para si luego asignarlas a un curso.
 
 	<h4>Tareas</h4>
@@ -35,12 +35,12 @@ Segundo parcial de PPS 2017 IONIC 2
 	-	Utilizacion de iconos de ionic
 
 	
-	 </h5>Administrador</h5>:
+	 <h4>Administrador</h4>:
 	-	ABM de usuarios (alumnos, profesores, administradores y administrativos).
 	-	ABM de cursos
 	-	ABM de comisiones.
 
- </h5>Administrador</h5>
+ <h4>Administrador</h4>
 	-	Podrá asociar/agregar un alumno a un curso
 	-	visualizará los resultados en gráficos hight-charts:
 	-	Cantidad de Respuestas por pregunta (pudiendo seleccionar cada pregunta)
