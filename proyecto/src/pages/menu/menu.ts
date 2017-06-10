@@ -57,7 +57,6 @@ export class Menu {
     constructor(public navCtrl: NavController,public viewCtrl:ViewController,
      public navParams: NavParams,public af: AngularFire,public modalCtrl: ModalController) {
 
- 1
         this.usuarioLogueado = navParams.data;
         console.log('this.usuario');
         console.log(this.usuarioLogueado);
