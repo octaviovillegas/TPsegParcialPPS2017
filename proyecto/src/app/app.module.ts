@@ -49,6 +49,7 @@ import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ion
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AlumnoCurso } from '../pages/alumno-curso/alumno-curso';
 import { NativeAudio } from '@ionic-native/native-audio';
+ 
 @NgModule({
   declarations: [
     MyApp,
@@ -135,7 +136,7 @@ import { NativeAudio } from '@ionic-native/native-audio';
     MediaCapture,
     Camera,
     ImagePicker,
-    NativeAudio,
+    NativeAudio, 
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
