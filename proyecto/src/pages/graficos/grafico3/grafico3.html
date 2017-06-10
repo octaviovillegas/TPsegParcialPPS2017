@@ -1,4 +1,4 @@
- 
+
 <ion-header>
   <ion-navbar>
       <button ion-button menuToggle left>
@@ -7,15 +7,20 @@
       <ion-title>Cantidad de alumnos por curso</ion-title>
   </ion-navbar>
 </ion-header>
- 
+
 <ion-content padding>
-  <ion-list>
+
+    <div *ngIf="cargando" text-center>
+        <ion-spinner text-center name="bubbles"></ion-spinner>
+    </div>
+
+    <ion-list *ngIf="!cargando">
     <ion-item>
       <ion-label>Curso:</ion-label>
         <ion-select [(ngModel)]="Uncurso" (ionChange)="onChange(Uncurso)">
             <div *ngFor="let p of cursos">
-              <ion-option value={{p}}>{{p}}</ion-option> 
-            </div>      
+              <ion-option value={{p}}>{{p}}</ion-option>
+            </div>
         </ion-select>
     </ion-item>
   </ion-list>

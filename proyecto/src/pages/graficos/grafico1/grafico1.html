@@ -1,29 +1,29 @@
 
 <ion-header>
-  <ion-navbar>
-      <button ion-button menuToggle left>
-          <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>Cantidad de respuestas por pregunta</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <button ion-button menuToggle left>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Cantidad de respuestas por pregunta</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <div *ngIf="cargando">
-    <ion-spinner name="bubble"></ion-spinner>
-  </div>
-  <div *ngIf="!cargando">
-    <ion-list>
-      <ion-item>
-        <ion-label>Pregunta:</ion-label>
-        <ion-select [(ngModel)]="Unapregunta" (ionChange)="onChange(Unapregunta)">
-            <div *ngFor="let p of pregs">
-              <ion-option value={{p}}>{{p}}</ion-option> 
-            </div>      
-        </ion-select>
-      </ion-item>
+
+    <div *ngIf="cargando" text-center>
+        <ion-spinner text-center name="bubbles"></ion-spinner>
+    </div>
+
+    <ion-list *ngIf="!cargando">
+        <ion-item>
+            <ion-label>Pregunta:</ion-label>
+            <ion-select [(ngModel)]="Unapregunta" (ionChange)="onChange(Unapregunta)">
+                <div *ngFor="let p of pregs">
+                    <ion-option value={{p}}>{{p}}</ion-option>
+                </div>
+            </ion-select>
+        </ion-item>
     </ion-list>
-  
-  <div id="container"></div>
-  </div>
+
+    <div id="container"></div>
 </ion-content>
