@@ -35,6 +35,8 @@ El profesor es el encargado de generar las encuestas con las preguntas correspon
 	-	Utilizacion de iconos de ionic <br>
     
  <h4>Administrativo</h4>
+ 	Visualizara los resultado de los alumnos atravez de graficos realzados con hight-charts y asignara alumnos a cursos.
+ <h4>Tareas</h4><br>
 	-	Podrá asociar/agregar un alumno a un curso <br>
 	-	visualizará los resultados en gráficos hight-charts <br>
 	-	Cantidad de Respuestas por pregunta (pudiendo seleccionar cada pregunta) <br>
@@ -42,6 +44,9 @@ El profesor es el encargado de generar las encuestas con las preguntas correspon
 	-	Cantidad de alumnos por curso (pudiendo seleccionar 1 o todos los cursos)<br>
 
  <h4>Administrador</h4>
+ 	Administrara todo los tipos de usuarios, los cursos y comisiones pudiendo realizar las alta, bajas y modificaciones.
+
+ <h4>Tareas</h4><br>
 	-	ABM de usuarios (alumnos, profesores, administradores y administrativos) <br>
 	-	ABM de cursos<br>
 	-	ABM de comisiones<br>
