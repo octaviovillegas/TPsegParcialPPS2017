@@ -14,12 +14,12 @@ Login Con jwt Firebase: El login está diseñado para que un usuario con correo 
 
     
 <h4>Tareas</h4>
-    -	Generacion de estilos de login
-	-	Validación de usuario
-	-   Validacion de tipos de datos en campos
-	-	Botones de testing
-	-	Funcionabilidad firebase jwt
-	-	Funcionabilidad WS jwt
+    -	[Generacion de estilos de login.]
+    -	[Validación de usuario.]
+    -   [Validacion de tipos de datos en campos.]
+    -	[Botones de testing.]
+    -	[Funcionabilidad firebase jwt.]
+	-	[Funcionabilidad WS jwt.]
 
  <h4>Profesor</h4>
 El profesor es el encargado de generar las encuestas con las preguntas correspondientes, para si luego asignarlas a un curso.
