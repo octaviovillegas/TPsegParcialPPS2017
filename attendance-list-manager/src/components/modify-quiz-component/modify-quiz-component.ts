@@ -38,7 +38,7 @@ surveys: Array<any>;
   }
 modify(){
 
-this.navCtrl.setRoot( UpdateQuizComponent );
+this.navCtrl.setRoot(UpdateQuizComponent);
 
 }
 }
