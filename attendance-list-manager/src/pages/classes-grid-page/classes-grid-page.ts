@@ -23,6 +23,8 @@ export class ClassesGridPage {
       this.getClassesByClassroomid();
     }else if(previousView.name == "TeachersListPage"){
       this.getClassesByTeacherId();
+    }else if(previousView.name == "RegisteredUserPage"){
+      this.getClassesByVerifyingJWT();
     }
   }
 
@@ -50,6 +52,45 @@ export class ClassesGridPage {
   getClassesByTeacherId(){
     this.storage.get("jwt").then((jwt) => {
       this.appService.getClassesByTeacherId(jwt,this.navParams.get("teacher").teacherid)
+        .then((response) => {
+
+          let body = JSON.parse(response["_body"]); //convert JSON to Object
+          this.classes = body.classes;
+          this.loadingPage = false;
+          console.log(body);
+        })
+        .catch(() => {
+          console.log("Error");
+          this.loadingPage = false;
+        });
+    }).catch(() => {
+      console.log("Error al traer las divisiones");
+      this.loadingPage = false;
+    })
+  }
+
+  getClassesByVerifyingJWT(){
+    this.storage.get("jwt").then((jwt) => {
+      this.appService.getuserid(jwt)
+        .then((response) => {
+
+          let teacherid = JSON.parse(response["_body"]); //convert JSON to Object
+          this.getClassesByUserId(teacherid);
+        })
+        .catch(() => {
+          console.log("Error");
+          this.loadingPage = false;
+        });
+    }).catch(() => {
+      console.log("Problemas para identificar al usuario.");
+      this.loadingPage = false;
+    })
+
+  }
+
+  getClassesByUserId(teacherid){
+    this.storage.get("jwt").then((jwt) => {
+      this.appService.getClassesByTeacherId(jwt,teacherid)
         .then((response) => {
 
           let body = JSON.parse(response["_body"]); //convert JSON to Object

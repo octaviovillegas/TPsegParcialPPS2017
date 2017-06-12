@@ -10,7 +10,7 @@
 <ion-content padding>
   <div [hidden]="loadingPage">
     <ion-list>
-      <button ion-item *ngFor="let a_class of classes" (click)="itemSelected(a_class)">
+      <button ion-item *ngFor="let a_class of classes" (click)="itemSelected(a_class)" text-wrap>
        <ion-badge>{{a_class.divisionname}}</ion-badge> {{ a_class.subjectname }}
       </button>
     </ion-list>

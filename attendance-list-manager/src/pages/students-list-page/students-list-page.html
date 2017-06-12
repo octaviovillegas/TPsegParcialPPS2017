@@ -16,7 +16,7 @@
         <ion-checkbox color="dark" [(ngModel)]="student.present"></ion-checkbox>
       </ion-item>
     </ion-list>
-    <button ion-button full color="secondary" (click)="showConfirm()">Guardar</button>
+    <button ion-button full color="secondary" (click)="showConfirm()" [disabled]="noStudents">Guardar</button>
   </div>
 
   <!-- spinner -->
