@@ -92,6 +92,19 @@ $app->post('/getsurveyslist',function(Request $request, Response $response){
     return $response;
 });
 
+$app->post('/getuserslisttoeliminate',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    
+    $tm = new TokenManager();
+    // $tm->isValidToken($jwt);
+     
+    $userid = $tm->getIdByJWT($jwt);
+    $rv = GenericDAO::getUsersListToEliminate($userid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
 $app->post('/getsurveyslisttoeliminate',function(Request $request, Response $response){
     
     $params = $request->getParams();
@@ -122,7 +135,7 @@ $app->post('/eliminatesurvey',function(Request $request, Response $response){
 
 $app->post('/getsurveybyid',function(Request $request, Response $response){
     $params = $request->getParams();
-    $surveyId= $params["surveyId"];
+    $surveyId= $params["surveyid"];
     $rv = GenericDAO::getSurveyById($surveyId);
     $response->getBody()->write(json_encode($rv));
     return $response;

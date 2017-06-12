@@ -26,6 +26,7 @@ import { ClassroomsListPage } from "../pages/classrooms-list-page/classrooms-lis
 import { ClassesGridPage } from "../pages/classes-grid-page/classes-grid-page";
 import { TeachersListPage } from "../pages/teachers-list-page/teachers-list-page";
 
+import { Vibration } from '@ionic-native/vibration';
 
 //Custom components
 import { QuestionListViewerComponent } from "../components/question-list-viewer-component/question-list-viewer-component";
@@ -78,7 +79,7 @@ import { ModifyUserComponent } from "../components/modify-user-component/modify-
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule, 
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -118,7 +119,8 @@ import { ModifyUserComponent } from "../components/modify-user-component/modify-
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AppService
+    AppService,
+    Vibration
   ]
 })
 export class AppModule {}

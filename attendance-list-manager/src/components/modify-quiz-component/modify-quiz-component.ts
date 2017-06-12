@@ -36,9 +36,9 @@ surveys: Array<any>;
         //Si por alguna razón el servidor no responde.
       });
   }
-modify(){
+modify(surveyid){
 
-this.navCtrl.setRoot(UpdateQuizComponent);
+this.navCtrl.setRoot(UpdateQuizComponent,{surveyid} );
 
 }
 }

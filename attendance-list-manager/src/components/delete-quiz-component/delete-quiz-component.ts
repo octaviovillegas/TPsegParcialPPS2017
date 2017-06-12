@@ -5,7 +5,10 @@ import { Response } from "@angular/http";
 import { Storage } from "@ionic/storage";
 import { NavController, NavParams } from 'ionic-angular';
 import { HomePage } from "../../pages/home/home";
-import { Option } from "../../app/entities/option"
+import { Option } from "../../app/entities/option";
+import { Vibration } from '@ionic-native/vibration';
+import { ToastController, AlertController } from "ionic-angular";
+
 /**
  * Generated class for the DeleteQuizComponent component.
  *
@@ -23,7 +26,7 @@ export class DeleteQuizComponent {
   surveys: Array<any>;
   surveys2: Array<any>;
   JWT: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage) {
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private appService: AppService, private storage: Storage,private vibration: Vibration, private alertCtrl: AlertController) {
     this.storage.get("jwt")
       .then((jwt) => {
         this.appService.getSurveysToEliminate(jwt).then((response: Response) => {
@@ -41,7 +44,29 @@ export class DeleteQuizComponent {
 
 
   }
-
+showConfirm(surveyid) {
+    let confirm = this.alertCtrl.create({
+      title: '¿Desea eliminar esta Encuesta?',
+      message: '',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.vibration.vibrate(500);
+            this.eliminar(surveyid)
+              
+              
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
   logOutOnClick() {
     this.appService.logOut();
     this.navCtrl.setRoot(HomePage);
@@ -52,10 +77,13 @@ export class DeleteQuizComponent {
 
 
     this.appService.eliminatesurvey(surveyid).then((response: Response) => {
+      this.showErrorMessage("Borrando Encuesta");
       this.storage.get("jwt")
         .then((jwt) => {
           this.appService.getSurveysToEliminate(jwt).then((response: Response) => {
             if (response.status == 200) {
+              this.vibration.vibrate(500);
+              this.showErrorMessage("Encuesta Borrada");
               this.surveys = JSON.parse(response["_body"]);
             } else {
               console.log("error"); //No tiene permisos.
@@ -64,6 +92,15 @@ export class DeleteQuizComponent {
             .catch((error) => console.log("error")); //Si por alguna razón el servidor no responde.
         });
     });
+  }
+
+showErrorMessage(message: string): void {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position: "middle"
+    });
+    toast.present();
   }
 
 

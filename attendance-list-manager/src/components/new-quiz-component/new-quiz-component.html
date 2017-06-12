@@ -28,10 +28,10 @@
       <ion-input type="text"[(ngModel)]="option.text" [ngModelOptions]="{standalone : true }"  ></ion-input>
       <ion-label> <ion-checkbox [(ngModel)]="option.isRight"[ngModelOptions]="{standalone : true }"  ></ion-checkbox> Es Correcta </ion-label>
       
-  <ion-item>  <ion-icon ios="ios-add" md="md-add"> </ion-icon> <button clear-button 
-  (click)="add()"> Agregar Nueva Opcion</button></ion-item>
- 
 </div>
+
+<ion-item>  <ion-icon ios="ios-add" md="md-add"> </ion-icon> <button clear-button 
+  (click)="add()"> Agregar Nueva Opcion</button></ion-item>
  <!--// [ngModelOptions]="{standalone : true }"-->
   
   </div>
@@ -51,7 +51,7 @@
 
     </form>
 
-    <button ion-button round outline (click)=" getJwtForNewSurvey()">Terminar</button> 
+    <button ion-button round outline (click)=" showConfirm()">Terminar</button> 
  
   <!--<div *ngFor="let option of options">
 <ion-label color="primary" stacked>Respuesta :</ion-label>

@@ -6,6 +6,8 @@ import { Survey } from "../../app/entities/survey";
 import { Option } from "../../app/entities/option";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { QuizManagerComponent } from '../quiz-manager-component/quiz-manager-component';
+import { AlertController } from "ionic-angular";
+import { Vibration } from '@ionic-native/vibration';
 /**
  * Generated class for the NewQuizComponent component.
  *
@@ -23,12 +25,14 @@ export class NewQuizComponent {
   form: FormGroup;
   jw: any;
   options: Array<Option>;
-  hideSpinner: boolean
+  hideSpinner: boolean;
+   titleok:any;
+  questionok:any;
   logEvent(e) {
     console.log(e)
   }
   opciones: any;
-  constructor(public navCtrl: NavController, private storage: Storage, private toastCtrl: ToastController, private fb: FormBuilder, private appService: AppService) {
+  constructor(public navCtrl: NavController, private storage: Storage, private toastCtrl: ToastController, private fb: FormBuilder, private vibration: Vibration, private appService: AppService, private alertCtrl: AlertController) {
     this.form = this.fb.group({
       Titulo: ["", [Validators.required]],
       Pregunta: ["", [Validators.required]],
@@ -94,7 +98,30 @@ export class NewQuizComponent {
       console.log(survey.question.options);
     }
   }
-
+showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: '¿Desea guardar la Encuesta?',
+      message: '',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.getJwtForNewSurvey();
+            this.vibration.vibrate(500);
+            
+              
+              
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
 
   getJwtForNewSurvey() {
     this.hideSpinner = false;
@@ -103,7 +130,12 @@ export class NewQuizComponent {
       .catch(() => this.appService.logOut());
   }
   newSurvey(jwt) {
-    let survey = new Survey();
+  this.titleok=this.form.get("Titulo").value;
+ this.questionok=this.form.get("Pregunta").value;
+ if(this.titleok==""||this.questionok==""){
+this.showErrorMessage("Debe ingresar Titulo y Pregunta para guardar");
+
+ }else{   let survey = new Survey();
     survey.endDate = this.form.get("Fecha").value;
     survey.title = this.form.get("Titulo").value;
     survey.question.text = this.form.get("Pregunta").value;
@@ -123,7 +155,7 @@ export class NewQuizComponent {
       .then(val =>{this.showErrorMessage("Encuesta Guardada");
       this.navCtrl.setRoot(QuizManagerComponent );})
       .catch(error => this.showErrorMessage("Los datos no pudieron ser procesados, intentelo nuevamente..."));
-  }
+  }}
 showErrorMessage(message: string): void {
     let toast = this.toastCtrl.create({
       message: message,

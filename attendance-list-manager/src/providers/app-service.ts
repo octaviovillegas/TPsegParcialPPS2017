@@ -45,6 +45,14 @@ export class AppService {
     return this.http.post("http://localhost:80/jwt/getsurveyslist", options).toPromise();
   }
 
+getUserListToEliminate(jwt) {
+  let data = { jwt };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/getuserslisttoeliminate", jsonData, options).toPromise();
+  }
+
   getSurveysToEliminate(jwt) {
     let data = { jwt };
     let jsonData = JSON.stringify(data);
@@ -90,8 +98,8 @@ modifySurvey(survey) {
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/modifySurvey", jsonData, options).toPromise();
   }
-  getSurveyById(surveyId) {
-    let data = { surveyId };
+  getSurveyById(surveyid) {
+    let data = { surveyid };
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });

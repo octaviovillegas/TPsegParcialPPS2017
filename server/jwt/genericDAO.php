@@ -201,6 +201,35 @@ class GenericDAO
 		}
 		
 	}
+public static function getUsersListToEliminate($userid){
+		try
+		{	
+			
+
+			$db = GenericDAO::getPDO();
+			$today = date("Y-m-d");
+			$sql = "select u.username,u.email,u.rolid,u.firstname,u.lastname,u.filenumber,u.userid
+					from users as u
+					where u.userid<> 1 and u.userid <> 2 and u.userid <>3 and u.userid <> 4";
+			$statement = $db->sendQuery($sql);
+			 $statement->execute();
+			 $rv = $statement->fetchAll(PDO::PARAM_STR);
+			 return $rv;
+		}catch(Exception $ex){
+		}
+	}
+public static function eliminateUser($userid){
+	try
+		{		$db = GenericDAO::getPDO();
+		$sql = "delete from users
+		
+			     where userid = " . $userid;
+					$statement = $db->sendQuery($sql);
+
+			$couldDeleteuser= $statement->execute();
+			return $couldDeleteuser;
+		}catch(Exeption $ex){}
+	}
 
 	public static function getSurveysList(){
 		try
