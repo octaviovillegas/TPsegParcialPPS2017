@@ -34,6 +34,18 @@ class Curso
 	    $consulta->bindValue(':id_usuario',$curso->id_usuario, PDO::PARAM_INT);
 	    return $consulta->execute();
 	}
+	
+		public static function AltaAlumno($alcur)
+	{
+		 $sql = 'insert into usuarios_cursos (id_usuario, id_curso) values (:id_usuario, :id_curso)';
+
+	    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+	    $consulta =$objetoAccesoDato->RetornarConsulta($sql);
+	    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+	    $consulta->bindValue(':id_curso',$alcur->id_curso, PDO::PARAM_STR);
+	    $consulta->bindValue(':id_usuario',$alcur->id_usuario, PDO::PARAM_INT);
+	    return $consulta->execute();
+	}
 
 	public static function ModificarCurso($curso)
 	{

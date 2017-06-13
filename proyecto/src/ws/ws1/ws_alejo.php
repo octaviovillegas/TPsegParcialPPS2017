@@ -24,6 +24,21 @@ $app->get('/usuarios/{id_usuario}/encuestas', function ($request, $response, $ar
  * Devuelve las preguntas de la encuesta pasada por parametro id_encuesta
  * @var [type]
  */
+$app->get('/encuestas/{id_encuesta}', function($request, $response, $args) {
+
+    $id_encuesta = (int)$request->getAttribute('id_encuesta');
+
+    $encuesta = Encuesta::TraerEncuestaByIdEncuesta($id_encuesta);
+
+    $response->withHeader('Content-Type', 'application/json');
+    $response->write(json_encode(array('encuesta' => $encuesta)));
+
+});
+
+/**
+ * Devuelve las preguntas de la encuesta pasada por parametro id_encuesta
+ * @var [type]
+ */
 $app->get('/encuestas/{id_encuesta}/preguntas', function($request, $response, $args) {
 
     $id_encuesta = (int)$request->getAttribute('id_encuesta');

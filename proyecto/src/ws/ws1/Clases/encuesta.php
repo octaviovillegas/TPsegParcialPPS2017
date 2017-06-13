@@ -98,6 +98,13 @@ class Encuesta
         $consulta->execute();
         return $consulta->execute();
     }
-
+    public static function BorrarEncuesta($encuesta)
+    {
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+        $consulta =$objetoAccesoDato->RetornarConsulta("delete from encuestas where id_encuesta = :id_encuesta");
+        $consulta->bindValue(':id_encuesta',$encuesta->idEncuesta, PDO::PARAM_STR);
+        $consulta->execute();
+        return $consulta->execute();
+    }
 
 }

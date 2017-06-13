@@ -304,6 +304,33 @@ $app->post('/comisiones/alta', function ($request, $response, $args) {
 
 });
 
+   $app->post('/alumnoCurso/alta', function ($request, $response, $args) {
+
+
+        $alcur = $request->getParsedBody();
+
+        // convierto el array en un objecto
+        $alcur = (object)$alcur;
+
+        $res = Curso::AltaAlumno($alcur);
+
+
+        $hayError = false;
+
+        if ($res) {
+            $hayError = false;
+        } else {
+            $hayError = true;
+        }
+
+        $response->withHeader('Content-Type', 'application/json');
+        $response->write(json_encode(array('error' => $hayError, 'ok' => $ret)));
+
+
+        return $response;
+
+});
+
 
 //-------------------------------------------------------
 
@@ -462,6 +489,20 @@ $app->post('/encuestas/alta', function ($request, $response, $args) {
         $encuesta = (object)$encuesta;
 
   $encuestas=Encuesta::nuevaEncuesta($encuesta);
+
+ return json_encode($encuestas);
+
+
+});
+
+$app->post('/encuestas/borrar', function ($request, $response, $args) {
+
+        $encuesta = $request->getParsedBody();
+
+        // convierto el array en un objecto
+        $encuesta = (object)$encuesta;
+
+  $encuestas=Encuesta::BorrarEncuesta($encuesta);
 
  return json_encode($encuestas);
 
