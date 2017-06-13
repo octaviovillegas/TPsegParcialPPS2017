@@ -275,11 +275,30 @@ public static function eliminateUser($userid){
 
 public static function modifySurvey($survey)
 { try{
+	$survey["creationDate"] = date("Y-m-d");
 $db = GenericDAO::getPDO();
 $sql = "update surveys set title='$survey->title',creationdate='$survey->creationdate',enddate='$survey->enddate',ownerid='$survey->ownerid'
 where surveyid='$survey->surveyid'" ;
+$sql2 = "update  questions set text='$survey->question->text'
+					where surveyid='$survey->surveyid'" ;
 	$statement = $db->sendQuery($sql);
 			 $statement->execute();	
+			
+			 $statement2 = $db->sendQuery($sql2);
+			 $statement2->execute();
+
+
+if(count($survey["question"]["options"]) > 0){
+				for ($i = 0; $i < count($survey["question"]["options"]); $i++) {
+					$option = $survey["question"]["options"][$i];
+					$sql3 = "update  options set text=$survey->question->text,$survey->question->isright where questionid='$survey->surveyid'";
+					
+					$statement = $db->sendQuery($sql3);
+					
+					
+				}
+			}
+
  $rv = $statement->fetchAll(PDO::PARAM_STR);
 			 return $rv;
 }catch(Exception $ex){
@@ -303,7 +322,7 @@ where surveyid='$survey->surveyid'" ;
 		try{
 			$db = GenericDAO::getPDO();
 
-			$sql = "select s.surveyid, s.title, q.questionid, q.text from surveys as s
+			$sql = "select s.surveyid, s.title, q.questionid, q.text,s.enddate from surveys as s
 					join questions as q on q.surveyid = s.surveyid
 					where s.surveyid = :surveyid";
 

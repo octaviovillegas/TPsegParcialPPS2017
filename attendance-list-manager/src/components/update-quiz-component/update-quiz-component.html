@@ -1,13 +1,31 @@
 <!-- Generated template for the UpdateQuizComponent component -->
 <div>
 
-
+ <form [formGroup]="form" padding>
 <ion-item>
       <ion-label color="primary" stacked>Titulo:</ion-label>
-      <ion-input type="text" value=""></ion-input>
+      <ion-input type="text" value={{title}} formControlName="Titulo" ></ion-input>
     </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Pregunta:</ion-label>
+      <ion-input type="text" value={{question}} formControlName="Pregunta" ></ion-input>
+    </ion-item>
+ 
+  <div *ngFor="let option of options">
+<ion-label color="primary" stacked>Respuesta :</ion-label>
+      <ion-input type="text"[(ngModel)]="option.text" [ngModelOptions]="{standalone : true }"  ></ion-input>
+      <ion-label> <ion-checkbox [(ngModel)]="option.isRight"[ngModelOptions]="{standalone : true }"  ></ion-checkbox> Es Correcta </ion-label>
+      
+</div>
+ <ion-item>  <ion-icon ios="ios-add" md="md-add"> </ion-icon> <button clear-button 
+  (click)="add()"> Agregar Nueva Opcion</button></ion-item>
+ <!--// [ngModelOptions]="{standalone : true }"-->
+  
+ <ion-label color="primary" stacked>Fecha :</ion-label>
+      <ion-input type="date"placeholder=" Año/Mes/Día" value={{fech}} clearInput formControlName="Fecha"></ion-input>
 
-
+ </form>
+<button ion-button (click)="modifySurvey()">  Guardar  </button>
 
 
 </div>
