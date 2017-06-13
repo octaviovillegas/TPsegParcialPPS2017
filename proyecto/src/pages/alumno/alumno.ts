@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { Http } from '@angular/http';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { AlumnoEncuestasPage } from "../alumno-encuestas/alumno-encuestas";
 import { EncuestaPage } from '../encuesta/encuesta';
@@ -20,21 +22,90 @@ export class Alumno {
     private usuarioLogueado;
     private encuestas = [];
 
-    constructor(public navCtrl: NavController, private auth: servicioAuth, public navParams: NavParams) {
+    constructor (public navCtrl: NavController, private auth: servicioAuth, public navParams: NavParams, private http: Http, private barcodeScanner: BarcodeScanner, public toastCtrl: ToastController) {
         this.usuarioLogueado = this.auth.getUserInfo();
     }
 
-    ionViewDidLoad() {
+    ionViewDidLoad () {
         console.log('ionViewDidLoad Alumno');
     }
 
-    public verEncuestas(tipo): void {
+    public verEncuestas (tipo) : void {
 
         this.navCtrl.push(AlumnoEncuestasPage, tipo, {
             direction: 'forward',
             animation: 'ios-transition'
         });
 
+    }
+
+    public escanearEncuesta () {
+
+        this.barcodeScanner.scan().then((barcodeData) => {
+            console.log('BarcodeData: ', barcodeData);
+
+            if (!barcodeData.cancelled && barcodeData.text.length > 0 && barcodeData.text.indexOf('encuesta') != -1) {
+
+                this.buscarEIrALaEncuesta(barcodeData.text);
+
+            }
+            // Success! Barcode data is here
+        }, (err) => {
+            console.log('BarcodeData error: ', err);
+            // An error occurred
+        });
+
+    }
+
+    public buscarEIrALaEncuesta (data) {
+
+        let parts = data.split(':');
+        let id_encuesta = parts.length > 1 ? parts[1] : -1;
+
+        this.getEncuestaByIdEncuesta(id_encuesta).subscribe(encuesta => {
+
+            console.log('encuesta');
+            console.log(encuesta);
+
+            if (encuesta != false) {
+
+                let accion = encuesta.estado == EncuestaPage.ESTADO_PENDIENTE ?
+                            EncuestaPage.ACCION_RESPONDER : EncuestaPage.ACCION_VER;
+
+                this.navCtrl.push(EncuestaPage, {encuesta: encuesta, accion: accion}, {
+                    direction: 'forward',
+                    animation: 'ios-transition'
+                });
+
+            } else {
+                this.mostrarMensaje('La encuesta no esta asignada al usuario o no existe.', 5000, 'bottom');
+            }
+
+        },
+        e => {
+            // error
+            this.mostrarMensaje('Error: ' + e.message, 5000, 'bottom');
+        });
+
+    }
+
+    private getEncuestaByIdEncuesta (id_encuesta) {
+
+        let user = this.auth.getUserInfo();
+
+        return this.http.get('http://tppps2.hol.es/ws1/usuarios/' + user.id_usuario + '/encuestas/' + id_encuesta).map(
+            res => res.json().encuesta
+        );
+
+    }
+
+    mostrarMensaje(mensaje, duracion = 3000, posicion = 'top') {
+        let toast = this.toastCtrl.create({
+            message: mensaje,
+            duration: duracion,
+            position: posicion
+        });
+        toast.present();
     }
 
 }
