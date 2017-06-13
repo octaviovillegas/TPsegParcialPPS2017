@@ -67,6 +67,16 @@ class Encuesta
 		return $arrCurso;
 	}
 
+    public static function TraerEncuestaByIdEncuesta ($id_encuesta)
+	{
+		$cnx = AccesoDatos::dameUnObjetoAcceso();
+	    $consulta = $cnx->RetornarConsulta('SELECT * FROM encuestas WHERE id_encuesta = :id_encuesta');
+        $consulta->bindValue(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
+		$consulta->execute();
+		$encuesta = $consulta->fetchAll(PDO::FETCH_CLASS, "Encuesta");
+		return $encuesta;
+	}
+
     public static function TraerIdEncuestas()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
