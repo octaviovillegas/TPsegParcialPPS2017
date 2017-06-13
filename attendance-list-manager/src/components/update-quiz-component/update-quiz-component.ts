@@ -12,9 +12,9 @@ import { Survey } from "../../app/entities/survey";
 export class UpdateQuizComponent implements OnInit  {
   
   text: string;
-  surveys:Survey;
+  survey:any;
   surveyid:string;
-  
+  variable:any;
   
   ngOnInit(){
 
@@ -22,24 +22,21 @@ export class UpdateQuizComponent implements OnInit  {
   constructor(public navPrms: NavParams,public storage:Storage,public appService:AppService) {
         this.surveyid=this.navPrms.get("surveyid");
         console.log(this.surveyid);
-       this.surveys=new Survey();
+     
       this.appService.getSurveyById(this.surveyid).then((response: Response) => {
             if (response.status == 200) {
              
-              this.surveys = JSON.parse(response["_body"]);
-              console.log(this.surveys);
+              this.survey = JSON.parse(response["_body"]);
+              console.log(this.survey);
             } else {
               console.log("error"); //No tiene permisos.
             }
           })
             .catch((error) => console.log("error"));
 
-
+ 
  }
 
-recibir(){
 
-
-}
 
 }

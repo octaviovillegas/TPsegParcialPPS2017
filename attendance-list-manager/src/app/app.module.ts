@@ -27,6 +27,7 @@ import { ClassesGridPage } from "../pages/classes-grid-page/classes-grid-page";
 import { TeachersListPage } from "../pages/teachers-list-page/teachers-list-page";
 
 import { Vibration } from '@ionic-native/vibration';
+import { NativeAudio } from '@ionic-native/native-audio';
 
 //Custom components
 import { QuestionListViewerComponent } from "../components/question-list-viewer-component/question-list-viewer-component";
@@ -120,7 +121,8 @@ import { ModifyUserComponent } from "../components/modify-user-component/modify-
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AppService,
-    Vibration
+    Vibration,
+    NativeAudio
   ]
 })
 export class AppModule {}

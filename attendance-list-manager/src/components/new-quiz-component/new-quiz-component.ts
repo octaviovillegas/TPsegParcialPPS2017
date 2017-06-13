@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { QuizManagerComponent } from '../quiz-manager-component/quiz-manager-component';
 import { AlertController } from "ionic-angular";
 import { Vibration } from '@ionic-native/vibration';
+import { NativeAudio } from '@ionic-native/native-audio';
 /**
  * Generated class for the NewQuizComponent component.
  *
@@ -32,7 +33,9 @@ export class NewQuizComponent {
     console.log(e)
   }
   opciones: any;
-  constructor(public navCtrl: NavController, private storage: Storage, private toastCtrl: ToastController, private fb: FormBuilder, private vibration: Vibration, private appService: AppService, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController,private nativeAudio: NativeAudio, private storage: Storage, private toastCtrl: ToastController, private fb: FormBuilder, private vibration: Vibration, private appService: AppService, private alertCtrl: AlertController) {
+     this.nativeAudio.preloadSimple('bien', 'assets/sound/ok.mp3');
+     this.nativeAudio.preloadSimple('error', 'assets/sound/2.mp3');
     this.form = this.fb.group({
       Titulo: ["", [Validators.required]],
       Pregunta: ["", [Validators.required]],
@@ -133,6 +136,7 @@ showConfirm() {
   this.titleok=this.form.get("Titulo").value;
  this.questionok=this.form.get("Pregunta").value;
  if(this.titleok==""||this.questionok==""){
+this.nativeAudio.play('error', () => console.log('bienvenida is done playing'));
 this.showErrorMessage("Debe ingresar Titulo y Pregunta para guardar");
 
  }else{   let survey = new Survey();
@@ -153,6 +157,7 @@ this.showErrorMessage("Debe ingresar Titulo y Pregunta para guardar");
     this.appService.newSurvey(survey, jwt)
     
       .then(val =>{this.showErrorMessage("Encuesta Guardada");
+      this.nativeAudio.play('bien', () => console.log('bienvenida is done playing'));
       this.navCtrl.setRoot(QuizManagerComponent );})
       .catch(error => this.showErrorMessage("Los datos no pudieron ser procesados, intentelo nuevamente..."));
   }}
