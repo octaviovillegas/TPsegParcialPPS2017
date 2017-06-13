@@ -16,6 +16,7 @@ import {Encuestas} from '../encuestas/encuestas';
 import {GenerarEncuesta} from '../encuestas/generarencuesta/generarencuesta';
 import {EnviarEncuesta} from '../encuestas/enviarencuesta/enviarencuesta';
 import {GrillaComision} from "../grillas/grilla-comision/grilla-comision";
+import {GrillaCurso} from "../grillas/grilla-curso/grilla-curso";
 
 import { Grafico1 } from "../graficos/grafico1/grafico1";
 import { Grafico2 } from "../graficos/grafico2/grafico2";
@@ -48,7 +49,7 @@ export class Menu {
     private grillaAdministrador;
     private grillaAdministrativo;
     private grillaComision;
-
+    private grillaCurso;
     private grafico1;
     private grafico2;
     private grafico3;
@@ -86,7 +87,7 @@ export class Menu {
         this.grillaAdministrador = GrillaAdministrador;
         this.grillaAdministrativo = GrillaAdministrativo;
         this.grillaComision = GrillaComision;
-
+        this.grillaCurso= GrillaCurso;
         this.grafico1 = Grafico1;
         this.grafico2 = Grafico2;
         this.grafico3 = Grafico3;

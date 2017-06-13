@@ -21,6 +21,7 @@
 
 <div *ngFor="let usr of Uss">
 <ion-card >
+   <img [src]="usr.imagen" *ngIf="usr.imagen" style="max-height: 80px; width: auto;">  
   <ion-card-content>
     <ion-card-title>
         {{usr.nombre}}
