@@ -14,6 +14,7 @@ import { Menu } from '../menu/menu';
 import { Device } from '@ionic-native/device';
 import { NativeAudio } from '@ionic-native/native-audio';
 import 'rxjs/Rx';
+import { Vibration } from '@ionic-native/vibration';
 
 @Component({
     selector: 'page-contact',
@@ -38,10 +39,11 @@ export class Login {
 
     constructor(public navCtrl: NavController, private auth: servicioAuth,
         private alertCtrl: AlertController, private loadingCtrl: LoadingController,
-        public authData: AuthData, private dev: Device,private nativeAudio: NativeAudio)
+        public authData: AuthData, private dev: Device,private nativeAudio: NativeAudio,public vibration:Vibration)
         {
         this.device = dev;
-        this.nativeAudio.preloadSimple('uniqueId1', '../assets/ingreso.mp3');
+        this.nativeAudio.preloadSimple('uniqueId1', 'assets/okLogin.mp3');
+        this.nativeAudio.preloadSimple('errlogin', 'assets/errLogin.mp3');
         }
 
     public login() {
@@ -57,6 +59,9 @@ export class Login {
                 this.auth.login(this.Login).subscribe(existe => {
 
                         if (existe) {
+                            
+                            this.nativeAudio.play('uniqueId1', () => console.log('uniqueId1 is done playing'));
+                            this.vibration.vibrate([200]); 
 
                             this.loading.dismiss().then(() => {
                                 this.usuarioLogueado = this.auth.getUserInfo();
@@ -75,11 +80,13 @@ export class Login {
                                 }
 
                             });
-                            this.nativeAudio.play('uniqueId1', () => console.log('uniqueId1 is done playing'));
+                           
+                            
                         } else {
-
+                          
                             // No existe el usuario en la BD, pero si en firebase
                             // por lo tanto lo elimino de firebase.
+                            
                             this.authData.removeCurrentUser().then( _ => {
 
                                 this.loading.dismiss().then(() => {
@@ -115,6 +122,8 @@ export class Login {
                             role: 'cancel'
                         }]
                     });
+                    this.vibration.vibrate([100,100,100]); 
+                    this.nativeAudio.play('errlogin', () => console.log('errlogin is done playing'));
                     alert.present();
 
                 });
