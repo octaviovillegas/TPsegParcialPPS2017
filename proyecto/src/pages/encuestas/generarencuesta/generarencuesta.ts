@@ -30,12 +30,7 @@ private encuestaSeleccionada;
   {
 this.usuarioLogueado=servAuth.getUserInfo();    
  
-  this.http.get("http://tppps2.hol.es/ws1/encuestas")
-  .map(res => res.json())
-  .subscribe((quote) =>{
-    this.listaEncuestas = quote;
-    console.info(this.listaEncuestas);
-  });
+this.cargarEncuesta();
   
   }
     agregarPregunta(datos){
@@ -45,14 +40,36 @@ this.usuarioLogueado=servAuth.getUserInfo();
        let modal = this.modalCtrl.create(Modales,this.datos);
       modal.present(); 
     }
+
+    cargarEncuesta(){
+      this.http.get("http://tppps2.hol.es/ws1/encuestas")
+  .map(res => res.json())
+  .subscribe((quote) =>{
+    this.listaEncuestas = quote;
+    console.info(this.listaEncuestas);
+  });
+    }
     
    nuevaEncuesta(){
       this.datos.queHago="AgregarEncuesta";
        let modal = this.modalCtrl.create(Modales,this.datos);
       modal.present(); 
+      this.cargarEncuesta();
    }
 
-   
+      BorrarEncuesta(datos){
+        console.log(datos);
+       this.http.post("http://tppps2.hol.es/ws1/encuestas/borrar", {
+     idEncuesta:datos
+         })
+    .map(res => res.json())
+    .subscribe((quote) =>{
+      this.cargarEncuesta();
+      console.info(quote);
+     });
+
+    }
+    
 
 
 }

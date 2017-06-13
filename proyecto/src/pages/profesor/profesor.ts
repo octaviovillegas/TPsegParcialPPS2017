@@ -3,6 +3,7 @@ import 'rxjs/Rx';
 import { NavController,ViewController,NavParams,ModalController } from 'ionic-angular';
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import {Encuestas} from '../encuestas/encuestas';
+import { servicioAuth } from '../servicioAuth/servicioAuth';
 
 @Component({
   selector: 'page-Profesor',
@@ -11,15 +12,11 @@ import {Encuestas} from '../encuestas/encuestas';
 })
 export class Profesor {
         
-   usuarioLogueado = {
- usuario: "",
-  clave: "",
-  tipo: ""
-   } 
+ private  usuarioLogueado;
 
  constructor(public navCtrl: NavController,public viewCtrl:ViewController,public NavParams: NavParams,
- public modalCtrl: ModalController) {
-         this.usuarioLogueado = NavParams.data;
+ public modalCtrl: ModalController,servAuth:servicioAuth) {
+this.usuarioLogueado=servAuth.getUserInfo();    
     }
 
    
