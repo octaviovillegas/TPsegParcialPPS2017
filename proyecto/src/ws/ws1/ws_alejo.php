@@ -21,6 +21,45 @@ $app->get('/usuarios/{id_usuario}/encuestas', function ($request, $response, $ar
 });
 
 /**
+ * Devuelve la encuesta (id_encuesta) del id_usuario.
+ * @var [type]
+ */
+$app->get('/usuarios/{id_usuario}/encuestas/{id_encuesta}', function ($request, $response, $args) {
+
+    $params = $request->getQueryParams();
+
+    $id_usuario = (int)$request->getAttribute('id_usuario');
+    $id_encuesta = (int)$request->getAttribute('id_encuesta');
+
+    $encuesta = (object)Encuesta::trearEncuestaByIdUsuarioAndIdEncuesta($id_usuario, $id_encuesta);
+
+    if (isset($encuesta->id_encuesta) && $encuesta->id_encuesta > 0) {
+        $encuesta->estado = Encuesta::estaCompletada($id_usuario, $id_encuesta);
+    } else {
+        $encuesta = false;
+    }
+
+    $response->withHeader('Content-Type', 'application/json');
+    $response->write(json_encode(array('encuesta' => $encuesta)));
+
+});
+
+/**
+ * Devuelve la encuesta pasada por parametro id_encuesta
+ * @var [type]
+ */
+$app->get('/encuestas/{id_encuesta}', function($request, $response, $args) {
+
+    $id_encuesta = (int)$request->getAttribute('id_encuesta');
+
+    $encuesta = Encuesta::TraerEncuestaByIdEncuesta($id_encuesta);
+
+    $response->withHeader('Content-Type', 'application/json');
+    $response->write(json_encode(array('encuesta' => $encuesta)));
+
+});
+
+/**
  * Devuelve las preguntas de la encuesta pasada por parametro id_encuesta
  * @var [type]
  */

@@ -50,7 +50,8 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { AlumnoCurso } from '../pages/alumno-curso/alumno-curso';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Vibration } from '@ionic-native/vibration';
- 
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -137,8 +138,9 @@ import { Vibration } from '@ionic-native/vibration';
     MediaCapture,
     Camera,
     ImagePicker,
-    NativeAudio, 
+    NativeAudio,
     Vibration,
+    BarcodeScanner,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
