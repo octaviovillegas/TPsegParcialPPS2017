@@ -51,6 +51,9 @@ import { AlumnoCurso } from '../pages/alumno-curso/alumno-curso';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Vibration } from '@ionic-native/vibration';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import {Miubicacion} from "../pages/miubicacion/miubicacion";
+import { Geolocation } from '@ionic-native/geolocation';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -84,13 +87,17 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     Grafico1,
     Grafico2,
     Grafico3,
-    AlumnoCurso
+    AlumnoCurso,
+    Miubicacion
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
     ChartsModule,
+       AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBk5RmvUDk6MYUG8tubwDGeSathGm61C9gQWERTY'
+    }),
    AngularFireModule.initializeApp(firebaseconfig)
       ],
   bootstrap: [IonicApp],
@@ -125,7 +132,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     Grafico1,
     Grafico2,
     Grafico3,
-    AlumnoCurso
+    AlumnoCurso,
+    Miubicacion
       ],
   providers: [
     StatusBar,
@@ -141,6 +149,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     NativeAudio,
     Vibration,
     BarcodeScanner,
+    Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
