@@ -82,8 +82,10 @@ export class Grafico2
 
         Highcharts.chart('container', {
             chart: {
-                type: 'column'
+                polar: true,
+                type: 'bar'
             },
+        
             title: {
                 text: "Curso: "+event
             },
