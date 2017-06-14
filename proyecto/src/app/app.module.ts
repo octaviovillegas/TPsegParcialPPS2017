@@ -88,15 +88,15 @@ import { AgmCoreModule } from '@agm/core';
     Grafico2,
     Grafico3,
     AlumnoCurso,
-    Miubicacion
+    Miubicacion 
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
     HttpModule,
     ChartsModule,
-       AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBk5RmvUDk6MYUG8tubwDGeSathGm61C9gQWERTY'
+    IonicModule.forRoot(MyApp),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDg5RgxfKfydP2_yidVU7ZwUW21aIqPl0Y'
     }),
    AngularFireModule.initializeApp(firebaseconfig)
       ],

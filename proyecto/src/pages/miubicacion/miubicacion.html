@@ -10,18 +10,15 @@
 
 <ion-content padding>
 
-  <h1>{{ title }}</h1>
-
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15">
   <agm-marker [latitude]="lat" [longitude]="lng">
-    <agm-info-window >Usted se encuentra aqui!</agm-info-window>
+    <agm-info-window ><ion-icon name="contact"></ion-icon>Usted se encuentra aqui!</agm-info-window>
+  </agm-marker>
+   <agm-marker [latitude]="latUtn" [longitude]="longUtn">
+    <agm-info-window >  <ion-icon name="home"></ion-icon>Utn Fra</agm-info-window>
   </agm-marker>
 </agm-map>
  
-<agm-map [latitude]="latUtn" [longitude]="longUtn" [zoom]="15">
-  <agm-marker [latitude]="latUtn" [longitude]="longUtn">
-    <agm-info-window >Utn Fra</agm-info-window>
-  </agm-marker>
-</agm-map>
+
  
 </ion-content>
