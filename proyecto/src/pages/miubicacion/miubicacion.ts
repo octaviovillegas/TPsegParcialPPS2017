@@ -3,7 +3,6 @@ import { NavController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
-
 import { AgmCoreModule } from '@agm/core';
 
 @Component({
@@ -19,9 +18,9 @@ export class Miubicacion {
 
     latUtn: number=-34.662460;
     longUtn:number=-58.364813;
-
-  constructor(public navCtrl: NavController, private geolocation:Geolocation ) {
-          
+    geo:Geolocation;
+  constructor(public navCtrl: NavController, public geolocation:Geolocation ) {
+       this.geo=geolocation;
     geolocation.getCurrentPosition().then((resp) => {
     // resp.coords.latitude
     // resp.coords.longitude
@@ -41,6 +40,8 @@ export class Miubicacion {
 
   }
 
+
+   
  
 
 
