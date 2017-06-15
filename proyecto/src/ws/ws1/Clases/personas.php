@@ -217,6 +217,7 @@ public static function TraerClientesEmpleados()
 			$consulta->bindValue(':imagen', '', PDO::PARAM_STR);
 
 		}
+
 	    return $consulta->execute();
 	}
 
@@ -235,7 +236,14 @@ public static function TraerClientesEmpleados()
 	    $consulta->bindValue(':nombre', $usuario->nombre, PDO::PARAM_STR);
 	    $consulta->bindValue(':clave', $usuario->clave, PDO::PARAM_STR);
 	    $consulta->bindValue(':id_tipo', $usuario->id_tipo, PDO::PARAM_INT);
-	    $consulta->bindValue(':imagen', $usuario->imagen, PDO::PARAM_STR);
+
+		if (isset($usuario->imagen)) {
+			$consulta->bindValue(':imagen', $usuario->imagen, PDO::PARAM_STR);
+		} else {
+			$consulta->bindValue(':imagen', '', PDO::PARAM_STR);
+
+		}
+		
 	    return $consulta->execute();
 	}
 //--------------------------------------------------------------------------------//
