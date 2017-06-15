@@ -1,0 +1,27 @@
+Si se elimina un usuario:
+	Profesor:	
+		-Las encuestas que haya realizado (surveys), setean el valor de "ownerid" en "null", conservandose todas las encuestas.
+		-Las listas que haya tomado (attendancelists), setean el valor de "ownerid" en "null", conservandose todas las listas que haya tomado.
+		-Las clases que dictaba (classes), setean el valor de "teacherid" en "null", quedando la clase sin profesor, pero la clase sigue existiendo.
+		-Se elimina su dirección.
+	
+	Alumno:
+		-Las respuestas a las encuestas (answers), setean el valor de "userid" en "null", conservandose las respuestas.
+		-La lista de clases a las que el alumno asistía (studentsbyclass), se elimina.
+		-Los items de cada una de las listas en donde figura el alumno presente/ausente (attendancelistitems), se eliminan.
+		-Se elimina su dirección.
+	
+	Administrativo:
+		-Las encuestas que haya realizado (surveys), setean el valor de "ownerid" en "null", conservandose todas las encuestas.
+		-Las listas que haya tomado (attendancelists), setean el valor de "ownerid" en "null", conservandose todas las listas que haya tomado.
+		-Se elimina su dirección.
+
+Otras entidades de menor importancia:
+	Clase:
+		-Si se elimina una clase (classes), dejan de existir las listas que se hayan tomado de esa clase (attendacelists + attendancelistitems).
+		 También se elimina la lista de alumnos vinculados a esa clase (studentsbyclass).
+	
+	Encuesta:
+		-Si se elimina una encuesta (surveys), programáticamente (por sistema) se realiza un borrado lógico.
+		 Si el borrado es directo desde la Base de Datos, dejan de existir las preguntas asociadas (questions) y
+		 sus posibles respuestas (options + optionsbyanswer).

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-06-2017 a las 04:46:47
+-- Tiempo de generación: 15-06-2017 a las 21:41:47
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -47,10 +47,6 @@ INSERT INTO `addresses` (`addressid`, `street`, `number`, `floor`, `department`,
 (12, 'Falsa', '231', 'PB', 'A', 'Aclaración', 'Lanus'),
 (19, '9 de Julio', '1824', '', '', '', 'Lanús'),
 (20, 'Gral. Arias', '1824', '', '', 'Estadio de fútbol', 'Lanús'),
-(21, 'ewr', '345', 'sdf', '', '', 'wersdr'),
-(22, 'qwerqwe', '456456456', '', '', '', 'werwer'),
-(23, 'werwer', '456456', '', '', '', 'rtrt'),
-(24, '45646', '456456', '', '', '', '456456'),
 (25, '2 de mayo', '3524', '', '', 'Club Social', 'Lanús Oeste');
 
 -- --------------------------------------------------------
@@ -62,7 +58,7 @@ INSERT INTO `addresses` (`addressid`, `street`, `number`, `floor`, `department`,
 CREATE TABLE `answers` (
   `answerid` bigint(18) NOT NULL,
   `text` text NOT NULL,
-  `userid` bigint(18) NOT NULL,
+  `userid` bigint(18) DEFAULT NULL,
   `questionid` bigint(18) NOT NULL,
   `surveyid` bigint(18) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -97,7 +93,7 @@ CREATE TABLE `attendancelists` (
   `attendancelistid` bigint(18) NOT NULL,
   `classid` bigint(18) NOT NULL,
   `creationdate` date NOT NULL,
-  `ownerid` bigint(18) NOT NULL
+  `ownerid` bigint(18) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -111,7 +107,7 @@ CREATE TABLE `classes` (
   `divisionid` bigint(18) NOT NULL,
   `subjectid` bigint(18) NOT NULL,
   `classroomid` bigint(18) NOT NULL,
-  `teacherid` bigint(18) NOT NULL
+  `teacherid` bigint(18) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -388,7 +384,7 @@ CREATE TABLE `surveys` (
   `title` text NOT NULL,
   `creationdate` date NOT NULL,
   `enddate` date NOT NULL,
-  `ownerid` bigint(20) NOT NULL,
+  `ownerid` bigint(20) DEFAULT NULL,
   `waseliminated` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -447,26 +443,32 @@ ALTER TABLE `addresses`
 --
 ALTER TABLE `answers`
   ADD PRIMARY KEY (`answerid`),
-  ADD KEY `surveyid` (`surveyid`);
+  ADD KEY `surveyid` (`surveyid`),
+  ADD KEY `userid` (`userid`);
 
 --
 -- Indices de la tabla `attendancelistitems`
 --
 ALTER TABLE `attendancelistitems`
   ADD PRIMARY KEY (`attendancelistitemid`),
-  ADD KEY `attendancelistid` (`attendancelistid`);
+  ADD KEY `attendancelistid` (`attendancelistid`),
+  ADD KEY `studentid` (`studentid`),
+  ADD KEY `studentid_2` (`studentid`);
 
 --
 -- Indices de la tabla `attendancelists`
 --
 ALTER TABLE `attendancelists`
-  ADD PRIMARY KEY (`attendancelistid`);
+  ADD PRIMARY KEY (`attendancelistid`),
+  ADD KEY `classid` (`classid`),
+  ADD KEY `ownerid` (`ownerid`);
 
 --
 -- Indices de la tabla `classes`
 --
 ALTER TABLE `classes`
-  ADD PRIMARY KEY (`classid`);
+  ADD PRIMARY KEY (`classid`),
+  ADD KEY `teacherid` (`teacherid`);
 
 --
 -- Indices de la tabla `classrooms`
@@ -527,7 +529,8 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `studentsbyclass`
   ADD PRIMARY KEY (`studentsbyclassid`),
-  ADD KEY `classid` (`classid`);
+  ADD KEY `classid` (`classid`),
+  ADD KEY `studentid` (`studentid`);
 
 --
 -- Indices de la tabla `subjects`
@@ -558,7 +561,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `addressid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `addressid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT de la tabla `answers`
 --
@@ -578,7 +581,7 @@ ALTER TABLE `attendancelists`
 -- AUTO_INCREMENT de la tabla `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `classid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `classid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `classrooms`
 --
@@ -633,16 +636,36 @@ ALTER TABLE `surveys`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `userid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- Restricciones para tablas volcadas
 --
 
 --
+-- Filtros para la tabla `answers`
+--
+ALTER TABLE `answers`
+  ADD CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE SET NULL;
+
+--
 -- Filtros para la tabla `attendancelistitems`
 --
 ALTER TABLE `attendancelistitems`
-  ADD CONSTRAINT `attendancelistitems_ibfk_1` FOREIGN KEY (`attendancelistid`) REFERENCES `attendancelists` (`attendancelistid`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `attendancelistitems_ibfk_1` FOREIGN KEY (`attendancelistid`) REFERENCES `attendancelists` (`attendancelistid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `attendancelistitems_ibfk_2` FOREIGN KEY (`studentid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `attendancelists`
+--
+ALTER TABLE `attendancelists`
+  ADD CONSTRAINT `attendancelists_ibfk_1` FOREIGN KEY (`classid`) REFERENCES `classes` (`classid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `attendancelists_ibfk_2` FOREIGN KEY (`ownerid`) REFERENCES `users` (`userid`) ON DELETE SET NULL;
+
+--
+-- Filtros para la tabla `classes`
+--
+ALTER TABLE `classes`
+  ADD CONSTRAINT `classes_ibfk_1` FOREIGN KEY (`teacherid`) REFERENCES `users` (`userid`) ON DELETE SET NULL;
 
 --
 -- Filtros para la tabla `options`
@@ -671,10 +694,17 @@ ALTER TABLE `questions`
   ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`surveyid`) REFERENCES `surveys` (`surveyid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `studentsbyclass`
+--
+ALTER TABLE `studentsbyclass`
+  ADD CONSTRAINT `studentsbyclass_ibfk_1` FOREIGN KEY (`classid`) REFERENCES `classes` (`classid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `studentsbyclass_ibfk_2` FOREIGN KEY (`studentid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `surveys`
 --
 ALTER TABLE `surveys`
-  ADD CONSTRAINT `surveys_ibfk_1` FOREIGN KEY (`ownerid`) REFERENCES `users` (`userid`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `surveys_ibfk_1` FOREIGN KEY (`ownerid`) REFERENCES `users` (`userid`) ON DELETE SET NULL;
 
 --
 -- Filtros para la tabla `users`
