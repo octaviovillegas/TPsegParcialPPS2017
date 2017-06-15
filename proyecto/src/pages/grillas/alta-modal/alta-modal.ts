@@ -20,10 +20,10 @@ import { Camera } from 'ionic-native';
 export class AltaModal
 {
 
-    n;
+    n = '';
     t;
-    c;
-    u;
+    c = '';
+    u = '';
     id_usuario;
     id_tip;
     id_tipo;
@@ -32,6 +32,8 @@ export class AltaModal
 
     width = 320;
     height = 320;
+
+    cargando = false;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http,
         public viewCtrl: ViewController, public auth: AuthData, private alertCtrl: AlertController, private mediaCapture: MediaCapture,
@@ -105,9 +107,12 @@ export class AltaModal
             alert ("Debe completar todos los campos!");
         }
         else{
+            this.cargando = true;
 
             // Creo el usuario en firebase`
             this.auth.signupUser(this.u, this.c).then((success) => {
+
+                this.cargando = false;
 
                 if (success) {
 
@@ -139,6 +144,7 @@ export class AltaModal
                 }
 
             }).catch(e => {
+                this.cargando = false;
                 console.log('Catch signupUser: ');
                 console.log(e);
                 this.showMsg(e);
@@ -159,7 +165,7 @@ export class AltaModal
 
     cancelar()
     {
-        this.viewCtrl.dismiss();
+        this.viewCtrl.dismiss(false);
     }
 
 

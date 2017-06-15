@@ -2,13 +2,29 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>Alta de usuario {{t}}</ion-title>
+        <ion-buttons start left>
+            <button ion-button icon-only (tap)="cancelar()">
+                Cancelar
+            </button>
+        </ion-buttons>
+
+        <ion-title text-center>Crear {{t}}</ion-title>
+
+        <ion-buttons end>
+            <button ion-button icon-only color="primary" [disabled]="u == '' || n == '' || c == ''" (tap)="Alta(n, u, c, id_tipo)">
+                Guardar
+            </button>
+        </ion-buttons>
     </ion-navbar>
 
 </ion-header>
 <ion-content padding>
 
-    <ion-list>
+    <div *ngIf="cargando" text-center>
+        <ion-spinner text-center name="bubbles"></ion-spinner>
+    </div>
+
+    <div *ngIf="!cargando">
 
         <ion-item>
             <ion-label floating>Usuario (email)</ion-label>
@@ -27,18 +43,13 @@
         </ion-item>
 
         <ion-item>
-            <ion-thumbnail  item-start>
+            <ion-thumbnail item-start>
                 <img [src]="base64Image" *ngIf="base64Image">
             </ion-thumbnail>
             <h2>Imagen</h2>
-            <button ion-button (click)="tomarFoto()" clear item-end>Desde camara</button>
+            <button ion-button (tap)="tomarFoto()" clear item-end>Tomar foto</button>
         </ion-item>
 
-    </ion-list>
-
-    <div padding>
-        <button ion-button color=light (click)="Alta(n, u, c, id_tipo)"> Alta </button>
-        <button ion-button color=light (click)="cancelar()"> Cancelar </button>
     </div>
 
 

@@ -26,6 +26,7 @@ export class ModificacionModal
     width = 320;
     height = 320;
     base64Image;
+    cargando = false;
 
     constructor (public navCtrl: NavController, public navParams: NavParams, htt:Http, public viewCtrl: ViewController, public auth: AuthData, private alertCtrl: AlertController)
     {
@@ -55,6 +56,7 @@ export class ModificacionModal
 
     Modificar(id_usuario, nombre, usuario, clave, id_tipo)
     {
+        this.cargando = true;
         // Actualizo el usuario en la BD SQL
         this.http.post("http://tppps2.hol.es/ws1/usuarios/modificar", {
             id_usuario: id_usuario,
@@ -66,7 +68,10 @@ export class ModificacionModal
         })
         .map(res => res.json())
         .subscribe((quote) =>{
+            this.cargando = false;
             this.viewCtrl.dismiss();
+        }, e => {
+            this.cargando = false;
         });
 
     }
@@ -117,7 +122,7 @@ export class ModificacionModal
 
     Cancelar()
     {
-        this.viewCtrl.dismiss();
+        this.viewCtrl.dismiss(false);
     }
 
 }
