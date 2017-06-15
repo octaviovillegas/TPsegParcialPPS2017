@@ -5,7 +5,14 @@
         <button ion-button menuToggle left>
             <ion-icon name="menu"></ion-icon>
         </button>
+
         <ion-title>Alumnos</ion-title>
+
+        <ion-buttons end>
+            <button *ngIf="!cargando" ion-button icon-only (tap)="CargaGrilla()">
+                <ion-icon name="refresh"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 

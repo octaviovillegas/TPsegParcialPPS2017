@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController  } from 'ionic-angular';
-import {Http} from '@angular/http';
+import { NavController, NavParams, ViewController, AlertController, ToastController  } from 'ionic-angular';
+import { Http } from '@angular/http';
 import { ModificacionModal } from '../modificacion-modal/modificacion-modal';
 import { ModalController } from 'ionic-angular';
-import { Menu } from '../../menu/menu';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import { AltaModal } from '../alta-modal/alta-modal';
 import { AuthData } from '../../../providers/auth-data';
@@ -20,7 +19,7 @@ export class GrillaProfesor {
     usuarios = [];
 
     constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth, public navParams: NavParams, public viewCtrl: ViewController, private http: Http, public modalCtrl: ModalController, public authData: AuthData,
-    public actionSheetCtrl: ActionSheetController) {
+    public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController) {
         this.CargaGrilla();
     }
 
@@ -60,6 +59,8 @@ export class GrillaProfesor {
         modal.onDidDismiss(data => {
             if (data != false) {
                 this.CargaGrilla();
+            } else if (data == true) {
+                this.mostrarMensaje('Usuario modificado con éxito!');
             }
         });
         modal.present();
@@ -75,6 +76,8 @@ export class GrillaProfesor {
         modal2.onDidDismiss(data => {
             if (data != false) {
                 this.CargaGrilla();
+            } else if (data == true) {
+                this.mostrarMensaje('Usuario creado con éxito!');
             }
         });
         modal2.present();
@@ -140,6 +143,15 @@ export class GrillaProfesor {
         });
 
         actionSheet.present();
+    }
+
+    mostrarMensaje (mensaje) {
+        let toast = this.toastCtrl.create({
+            message: mensaje,
+            duration: 3000,
+            position: 'bottom'
+        });
+        toast.present();
     }
 
 

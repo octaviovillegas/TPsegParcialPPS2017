@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController  } from 'ionic-angular';
+import { NavController, NavParams, ViewController, AlertController, ToastController  } from 'ionic-angular';
 import {Http} from '@angular/http';
 import { ModificacionModal } from '../modificacion-modal/modificacion-modal';
 import { ModalController } from 'ionic-angular';
@@ -21,7 +21,7 @@ export class GrillaAlumno {
     Uss : Array<any> =[];
     constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth,
         public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController,
-        public actionSheetCtrl: ActionSheetController) {
+        public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController) {
 
             this.CargaGrilla();
 
@@ -62,6 +62,8 @@ export class GrillaAlumno {
             modal.onDidDismiss(data => {
                 if (data != false) {
                     this.CargaGrilla();
+                } else if (data == true) {
+                    this.mostrarMensaje('Usuario modificado con éxito!');
                 }
             });
             modal.present();
@@ -77,6 +79,8 @@ export class GrillaAlumno {
             modal2.onDidDismiss(data => {
                 if (data != false) {
                     this.CargaGrilla();
+                } else if (data == true) {
+                    this.mostrarMensaje('Usuario creado con éxito!');
                 }
             });
             modal2.present();
@@ -143,6 +147,15 @@ export class GrillaAlumno {
             });
 
             actionSheet.present();
+        }
+
+        mostrarMensaje (mensaje) {
+            let toast = this.toastCtrl.create({
+                message: mensaje,
+                duration: 3000,
+                position: 'bottom'
+            });
+            toast.present();
         }
 
     }

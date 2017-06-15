@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController  } from 'ionic-angular';
+import { NavController, NavParams, ViewController, AlertController, ToastController  } from 'ionic-angular';
 import {Http} from '@angular/http';
 import { ModificacionModal } from '../modificacion-modal/modificacion-modal';
 import { AltaModal } from '../alta-modal/alta-modal';
 import { ModalController } from 'ionic-angular';
-import { Menu } from '../../menu/menu';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import { ActionSheetController } from 'ionic-angular';
 
@@ -19,7 +18,7 @@ export class GrillaAdministrador
     usuarios = [];
 
     constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController,
-    public actionSheetCtrl: ActionSheetController)
+    public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController)
     {
         this.CargaGrilla();
     }
@@ -58,6 +57,8 @@ export class GrillaAdministrador
         modal.onDidDismiss(data => {
             if (data != false) {
                 this.CargaGrilla();
+            } else if (data == true) {
+                this.mostrarMensaje('Usuario modificado con éxito!');
             }
         });
         modal.present();
@@ -73,6 +74,8 @@ export class GrillaAdministrador
         modal2.onDidDismiss(data => {
             if (data != false) {
                 this.CargaGrilla();
+            } else if (data == true) {
+                this.mostrarMensaje('Usuario creado con éxito!');
             }
         });
         modal2.present();
@@ -139,6 +142,15 @@ export class GrillaAdministrador
         });
 
         actionSheet.present();
+    }
+
+    mostrarMensaje (mensaje) {
+        let toast = this.toastCtrl.create({
+            message: mensaje,
+            duration: 3000,
+            position: 'bottom'
+        });
+        toast.present();
     }
 
 

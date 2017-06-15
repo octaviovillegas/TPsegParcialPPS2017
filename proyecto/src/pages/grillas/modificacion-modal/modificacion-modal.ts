@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, NavOptions, ViewController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, NavOptions, ViewController, AlertController } from 'ionic-angular';
 import { Http, URLSearchParams } from '@angular/http';
 import { AuthData } from '../../../providers/auth-data';
 import { Camera } from 'ionic-native';
@@ -67,9 +67,11 @@ export class ModificacionModal
             imagen: this.base64Image
         })
         .map(res => res.json())
-        .subscribe((quote) =>{
+        .subscribe((quote) => {
+            console.log('modificar response: ', quote);
+
             this.cargando = false;
-            this.viewCtrl.dismiss();
+            this.viewCtrl.dismiss(true);
         }, e => {
             this.cargando = false;
         });
