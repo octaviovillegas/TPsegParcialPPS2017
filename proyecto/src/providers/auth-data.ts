@@ -26,7 +26,7 @@ export class AuthData {
 
     loginWithGithub () {
         var provider = new firebase.auth.GithubAuthProvider();
-        return firebase.auth().signInWithPopup(provider);
+        return this.afAuth.auth.signInWithPopup(provider);
     }
 
     resetPassword (email: string): firebase.Promise<any> {

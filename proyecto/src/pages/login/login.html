@@ -27,6 +27,10 @@
       <ion-row>
         <ion-col class="signup-col">
         <button ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.form.valid">Iniciar sesión</button>
+        <button ion-button margin-top class="submit-btn" full type="button" color="light" (tap)="loginWithGithub()">
+            Iniciar sesión con
+            <ion-icon name="logo-github" right margin-left></ion-icon>
+        </button>
         </ion-col>
       </ion-row>
     </form>

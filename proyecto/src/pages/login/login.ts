@@ -1,13 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController,NavParams, Loading, IonicPage  } from 'ionic-angular';
+import { NavController, AlertController, LoadingController, Loading  } from 'ionic-angular';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
-import {Usuario} from "../usuario/usuario";
-import {Http} from '@angular/http';
-import {User} from '../servicioAuth/user';
-import {Administrador} from "../administrador/administrador";
-import {Administrativo} from "../administrativo/administrativo";
-import {Alumno} from "../alumno/alumno";
-import {Profesor} from "../profesor/profesor";
+import { User } from '../servicioAuth/user';
 import { AuthData } from '../../providers/auth-data';
 import { Menu } from '../menu/menu';
 import { Device } from '@ionic-native/device';
@@ -31,10 +25,6 @@ export class Login {
 
     private device: Device;
     public loading: Loading;
-
-
-
-
 
     constructor(public navCtrl: NavController, private auth: servicioAuth,
         private alertCtrl: AlertController, private loadingCtrl: LoadingController,
@@ -131,6 +121,100 @@ export class Login {
         });
 
 
+    }
+
+    loginWithGithub() {
+        // Muestro el loading.
+        this.showLoading().then(() => {
+
+            console.log('github');
+
+            // Inicio sesion en Firebase con Github.
+            this.authData.loginWithGithub().then( result => {
+
+                let token = result.credential.accessToken;
+                // The signed-in user info.
+                let user = result.user;
+
+                console.log('loginWithGithub: ', user);
+                this.Login.usuario = user.email;
+
+
+                // Chequeo si existe el usuario en la base de datos e Inicio
+                // sesion.
+                this.auth.login(this.Login).subscribe(existe => {
+
+                        if (existe) {
+
+                            this.nativeAudio.play('uniqueId1', () => console.log('uniqueId1 is done playing'));
+                            this.vibration.vibrate([200]);
+
+                            this.loading.dismiss().then(() => {
+                                this.usuarioLogueado = this.auth.getUserInfo();
+
+                                if (this.usuarioLogueado.tipo_usuario == "Administrador") {
+                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
+                                } else
+                                if (this.usuarioLogueado.tipo_usuario == "Administrativo") {
+                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
+                                }else
+                                if (this.usuarioLogueado.tipo_usuario == "Alumno") {
+                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
+                                }
+                                if (this.usuarioLogueado.tipo_usuario == "Profesor") {
+                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
+                                }
+
+                            });
+
+
+                        } else {
+
+                            // No existe el usuario en la BD, pero si en firebase
+                            // por lo tanto lo elimino de firebase.
+
+                            this.authData.removeCurrentUser().then( _ => {
+
+                                this.loading.dismiss().then(() => {
+                                    this.showError("El usuario no existe o ingresó datos invalidos.");
+                                });
+
+                            }, error => {
+
+                                this.loading.dismiss().then(() => {
+                                    this.showError("El usuario no existe o ingresó datos invalidos.");
+                                });
+
+                            });
+
+                        }
+
+                }, error => {
+
+                    this.loading.dismiss().then(() => {
+                        this.showError(error);
+                    });
+
+                });
+            },
+            error => {
+
+                this.loading.dismiss().then(() => {
+
+                    let alert = this.alertCtrl.create({
+                        message: error.message,
+                        buttons: [{
+                            text: "Ok",
+                            role: 'cancel'
+                        }]
+                    });
+                    this.vibration.vibrate([100,100,100]);
+                    this.nativeAudio.play('errlogin', () => console.log('errlogin is done playing'));
+                    alert.present();
+
+                });
+            });
+        });
     }
 
     showLoading(): Promise<any> {
