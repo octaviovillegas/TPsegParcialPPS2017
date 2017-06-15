@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import 'rxjs/Rx'; 
+import 'rxjs/Rx';
 import { NavController,NavParams,ToastController } from 'ionic-angular';
-import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import {Http} from '@angular/http';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import { Toast } from '@ionic-native/toast';
@@ -24,13 +23,13 @@ private listaCursos;
 private cursoSeleccionado;
 private encuestaSeleccionada;
 private toast;
- constructor(public navCtrl: NavController,public NavParams: NavParams,private http: Http,public af: AngularFire
+ constructor(public navCtrl: NavController,public NavParams: NavParams,private http: Http
  ,servAuth:servicioAuth,private toastCtrl: ToastController,private nativeAudio: NativeAudio)
   {
 this.nativeAudio.preloadSimple('uniqueId1', '../assets/ingreso.mp3');
 this.usuarioLogueado=servAuth.getUserInfo();
     console.info(this.usuarioLogueado);
- 
+
   this.http.get("http://tppps2.hol.es/ws1/cursos")
   .map(res => res.json())
   .subscribe((quote) =>{
@@ -43,13 +42,13 @@ this.usuarioLogueado=servAuth.getUserInfo();
     this.listaEncuestas = quote;
     console.info(this.listaEncuestas);
   });
-     
- 
-         
+
+
+
   }
-  
+
 verToast(){
-  
+
        this.toast = this.toastCtrl.create({
         message: 'La encuesta se envio correctamente',
         duration: 3000,
@@ -80,4 +79,3 @@ EnviarEncuesta(){
 }
 
 }
-

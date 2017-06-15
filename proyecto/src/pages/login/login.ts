@@ -8,7 +8,6 @@ import {Administrador} from "../administrador/administrador";
 import {Administrativo} from "../administrativo/administrativo";
 import {Alumno} from "../alumno/alumno";
 import {Profesor} from "../profesor/profesor";
-import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import { AuthData } from '../../providers/auth-data';
 import { Menu } from '../menu/menu';
 import { Device } from '@ionic-native/device';

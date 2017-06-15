@@ -6,7 +6,6 @@ import {Administrativo} from '../administrativo/administrativo';
 import {Administrador} from '../administrador/administrador';
 import {Profesor} from '../profesor/profesor';
 import {Login} from '../login/login';
-import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 
 import {GrillaAdministrador} from "../grillas/grilla-administrador/grilla-administrador";
 import {GrillaAdministrativo} from "../grillas/grilla-administrativo/grilla-administrativo";
@@ -23,6 +22,7 @@ import { Grafico2 } from "../graficos/grafico2/grafico2";
 import { Grafico3 } from "../graficos/grafico3/grafico3";
 import { AlumnoCurso } from "../alumno-curso/alumno-curso";
 import {Miubicacion} from "../miubicacion/miubicacion";
+import { AngularFireAuth } from 'angularfire2/auth';
 
 
 @Component({
@@ -53,7 +53,7 @@ export class Menu {
     private alumnocurso;
     private miubicacion;
 
-    constructor(public navCtrl: NavController,public viewCtrl:ViewController, public navParams: NavParams,public af: AngularFire,public modalCtrl: ModalController) {
+    constructor(public navCtrl: NavController,public viewCtrl:ViewController, public navParams: NavParams,public afAuth: AngularFireAuth, public modalCtrl: ModalController) {
 
         this.usuarioLogueado = navParams.data;
         console.log('this.usuario');
@@ -71,7 +71,7 @@ export class Menu {
         } else if (this.usuarioLogueado.tipo_usuario == 'Profesor') {
             this.openPage(this.profesorPage);
         }
-        
+
     }
 
     initPages () {
@@ -121,7 +121,7 @@ export class Menu {
     */
     cerrarSesion() {
         /** Ejecutar funcion para desloguear usuario. */
-        this.af.auth.logout();
+        this.afAuth.auth.signOut();
         this.navCtrl.setRoot(Login, this.usuarioLogueado);
     }
 

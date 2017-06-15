@@ -21,6 +21,8 @@ import {Profesor} from "../pages/profesor/profesor";
 import {modalEncuesta} from '../pages/modalEncuesta/modalEncuesta';
 import {firebaseconfig} from '../pages/firebase/firebase-config';
 import {AngularFireModule} from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AuthData } from '../providers/auth-data';
 import {Menu} from "../pages/menu/menu";
 import {Encuestas} from '../pages/encuestas/encuestas';
@@ -88,7 +90,7 @@ import { AgmCoreModule } from '@agm/core';
     Grafico2,
     Grafico3,
     AlumnoCurso,
-    Miubicacion 
+    Miubicacion
   ],
   imports: [
     BrowserModule,
@@ -98,7 +100,9 @@ import { AgmCoreModule } from '@agm/core';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDg5RgxfKfydP2_yidVU7ZwUW21aIqPl0Y'
     }),
-   AngularFireModule.initializeApp(firebaseconfig)
+   AngularFireModule.initializeApp(firebaseconfig),
+   AngularFireAuthModule,
+   AngularFireDatabaseModule
       ],
   bootstrap: [IonicApp],
   entryComponents: [
