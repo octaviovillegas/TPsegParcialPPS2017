@@ -7,58 +7,60 @@ import { Menu } from '../../menu/menu';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import { AltaModal } from '../alta-modal/alta-modal';
 import { AuthData } from '../../../providers/auth-data';
+import { ActionSheetController } from 'ionic-angular';
 
 
 @Component({
-  selector: 'page-grilla-profesor',
-  templateUrl: 'grilla-profesor.html',
+    selector: 'page-grilla-profesor',
+    templateUrl: 'grilla-profesor.html',
 })
 export class GrillaProfesor {
 
-    Usuarios;
-    Uss : Array<any> =[];
-  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth,
-      public navParams: NavParams, public viewCtrl: ViewController,
-      private http: Http, public modalCtrl: ModalController, public authData: AuthData) {
-    this.CargaGrilla();
+    cargando = false;
+    usuarios = [];
 
-  }
+    constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth, public navParams: NavParams, public viewCtrl: ViewController, private http: Http, public modalCtrl: ModalController, public authData: AuthData,
+    public actionSheetCtrl: ActionSheetController) {
+        this.CargaGrilla();
+    }
 
-
-      CargaGrilla()
+    CargaGrilla()
     {
-          console.info("entro");
-          this.Usuarios=null;
-          this.Uss=[];
-            this.http.get("http://tppps2.hol.es/ws1/usuarios")
-            .map(res => res.json())
-            .subscribe((quote) =>{
-            this.Usuarios = quote;
+        this.cargando = true;
+        console.info("entro");
+        this.usuarios = [];
 
-            for(let us of this.Usuarios)
-              {
-                if(us['tipo_usuario'] == "Profesor")
-                {
-                  this.Uss.push(us);
-                }
-              }
+        this.http.get("http://tppps2.hol.es/ws1/usuarios")
+        .map(res => res.json())
+        .subscribe((quote) =>{
 
+            this.usuarios = quote.filter( u => {
+                return u.id_tipo == 4; // Profesor
             });
+
+            this.cargando = false;
+
+        }, e => {
+            this.cargando = false;
+        });
 
     }
 
-    Modificar(id_usuario, usuario, nombre, clave, id_tipo)
+    Modificar(id_usuario, usuario, nombre, clave, id_tipo, imagen)
     {
         let usM = {
             id_usuario: id_usuario,
             usuario: usuario,
             nombre: nombre,
             clave: clave,
-            id_tipo: id_tipo
+            id_tipo: id_tipo,
+            imagen: imagen
         };
         let modal = this.modalCtrl.create(ModificacionModal, usM);
-        modal.onDidDismiss(data=>{
-          this.CargaGrilla();
+        modal.onDidDismiss(data => {
+            if (data != false) {
+                this.CargaGrilla();
+            }
         });
         modal.present();
 
@@ -67,47 +69,77 @@ export class GrillaProfesor {
     Alta()
     {
         let modal2 = this.modalCtrl.create(AltaModal, {
-            "tipo":"Alumno",
-            id_tipo: 3
+            tipo: "Alumno",
+            id_tipo: 4
         });
-        modal2.onDidDismiss(data=>{
-          this.CargaGrilla();
+        modal2.onDidDismiss(data => {
+            if (data != false) {
+                this.CargaGrilla();
+            }
         });
         modal2.present();
     }
 
     Eliminar(id_usuario, usuario, nombre, clave, id_tipo)
     {
-              let alert = this.alertCtrl.create({
-              title: 'Eliminacion de usuario',
-              message: 'Confirma eliminar usuario '+ usuario,
-              buttons: [
+        let alert = this.alertCtrl.create({
+            title: 'Eliminacion de usuario',
+            message: 'Confirma eliminar usuario '+ usuario,
+            buttons: [
                 {
-                  text: 'Cancelar',
-                  role: 'cancel',
-                  handler: () => {
-                    console.log('Cancelar clicked');
-                  }
+                    text: 'Cancelar',
+                    role: 'cancel',
+                    handler: () => {
+                        console.log('Cancelar clicked');
+                    }
                 },
                 {
-                  text: 'Aceptar',
-                  handler: () => {
-                    console.log('Aceptar clicked');
+                    text: 'Aceptar',
+                    handler: () => {
+                        console.log('Aceptar clicked');
+                        this.cargando = true;
+                        this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
+                            id_usuario: id_usuario
+                        })
+                        .map(res => res.json())
+                        .subscribe((quote) => {
+                            this.cargando = false;
+                            this.CargaGrilla();
+                        });
 
-                    this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
-                        id_usuario: id_usuario
-                    })
-                    .map(res => res.json())
-                    .subscribe((quote) =>{
-                        this.CargaGrilla();
-                    });
-
-                  }
+                    }
                 }
-              ]
-            });
-            alert.present();
+            ]
+        });
+        alert.present();
 
+    }
+
+    abrirActionSheet (usr) {
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Opciones',
+            buttons: [
+                {
+                    text: 'Editar',
+                    handler: () => {
+                        this.Modificar(usr.id_usuario, usr.usuario, usr.nombre, usr.clave, usr.id_tipo, usr.imagen);
+                    }
+                },
+                {
+                    text: 'Eliminar',
+                    role: 'destructive',
+                    handler: () => {
+                        this.Eliminar(usr.id_usuario, usr.usuario, usr.nombre, usr.clave, usr.id_tipo);
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    role: 'cancel'
+                }
+            ]
+        });
+
+        actionSheet.present();
     }
 
 

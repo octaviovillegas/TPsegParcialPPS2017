@@ -6,7 +6,7 @@ import { ModalController } from 'ionic-angular';
 import { Menu } from '../../menu/menu';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import { AltaModal } from '../alta-modal/alta-modal';
-import { ActionSheetController } from 'ionic-angular'
+import { ActionSheetController } from 'ionic-angular';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class GrillaAlumno {
 
     cargando = false;
 
-    Usuarios;
+    usuarios = [];
     Uss : Array<any> =[];
     constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth,
         public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController,
@@ -31,21 +31,16 @@ export class GrillaAlumno {
         {
             this.cargando = true;
             console.info("entro");
-            this.Usuarios=null;
-            this.Uss=[];
+            this.usuarios = [];
+
             this.http.get("http://tppps2.hol.es/ws1/usuarios")
             .map(res => res.json())
             .subscribe((quote) =>{
                 this.cargando = false;
-                this.Usuarios = quote;
 
-                for(let us of this.Usuarios)
-                {
-                    if(us['tipo_usuario'] == "Alumno")
-                    {
-                        this.Uss.push(us);
-                    }
-                }
+                this.usuarios = quote.filter( u => {
+                    return u.id_tipo == 3; // Alumnos
+                });
 
             }, e => {
                 this.cargando = false;
@@ -76,7 +71,7 @@ export class GrillaAlumno {
         Alta()
         {
             let modal2 = this.modalCtrl.create(AltaModal, {
-                "tipo": "Alumno",
+                tipo: "Alumno",
                 id_tipo: 3
             });
             modal2.onDidDismiss(data => {
@@ -104,12 +99,14 @@ export class GrillaAlumno {
                         text: 'Aceptar',
                         handler: () => {
                             console.log('Aceptar clicked');
+                            this.cargando = true;
                             this.http.post("http://tppps2.hol.es/ws1/usuarios/eliminar", {
                                 id_usuario: id_usuario
 
                             })
                             .map(res => res.json())
                             .subscribe((quote) =>{
+                                this.cargando = false;
                                 this.CargaGrilla();
                             });
 

@@ -13,12 +13,12 @@
 <ion-content>
 
     <div *ngIf="cargando" text-center>
-        <ion-spinner text-center name="bubbles"></ion-spinner>
+        <ion-spinner text-center></ion-spinner>
     </div>
 
     <ion-list *ngIf="!cargando">
 
-        <ion-item *ngFor="let usr of Uss" (press)="abrirActionSheet(usr)" >
+        <ion-item *ngFor="let usr of usuarios" (press)="abrirActionSheet(usr)" >
             <ion-avatar item-left>
                 <img [src]="usr.imagen" *ngIf="usr.imagen">
             </ion-avatar>
