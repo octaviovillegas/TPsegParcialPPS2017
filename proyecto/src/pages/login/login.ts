@@ -59,9 +59,9 @@ export class Login {
                 this.auth.login(this.Login).subscribe(existe => {
 
                         if (existe) {
-                            
+
                             this.nativeAudio.play('uniqueId1', () => console.log('uniqueId1 is done playing'));
-                            this.vibration.vibrate([200]); 
+                            this.vibration.vibrate([200]);
 
                             this.loading.dismiss().then(() => {
                                 this.usuarioLogueado = this.auth.getUserInfo();
@@ -80,13 +80,13 @@ export class Login {
                                 }
 
                             });
-                           
-                            
+
+
                         } else {
-                          
+
                             // No existe el usuario en la BD, pero si en firebase
                             // por lo tanto lo elimino de firebase.
-                            
+
                             this.authData.removeCurrentUser().then( _ => {
 
                                 this.loading.dismiss().then(() => {
@@ -106,10 +106,11 @@ export class Login {
                 }, error => {
 
                     this.loading.dismiss().then(() => {
-                        this.showError(error);
+                        this.showError(JSON.stringify(error));
                     });
 
                 });
+
             },
             error => {
 
@@ -122,7 +123,7 @@ export class Login {
                             role: 'cancel'
                         }]
                     });
-                    this.vibration.vibrate([100,100,100]); 
+                    this.vibration.vibrate([100,100,100]);
                     this.nativeAudio.play('errlogin', () => console.log('errlogin is done playing'));
                     alert.present();
 
@@ -135,7 +136,7 @@ export class Login {
 
     showLoading(): Promise<any> {
         this.loading = this.loadingCtrl.create({
-            content: 'Por favor espere...',
+            content: 'Iniciando sesión...',
             dismissOnPageChange: true
         });
         return this.loading.present();
