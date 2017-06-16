@@ -8,9 +8,10 @@ import { Device } from '@ionic-native/device';
 import { NativeAudio } from '@ionic-native/native-audio';
 import 'rxjs/Rx';
 import { Vibration } from '@ionic-native/vibration';
+import { ActionSheetController } from 'ionic-angular';
 
 @Component({
-    selector: 'page-contact',
+    selector: 'page-login',
     templateUrl: 'login.html'
 })
 
@@ -28,7 +29,8 @@ export class Login {
 
     constructor(public navCtrl: NavController, private auth: servicioAuth,
         private alertCtrl: AlertController, private loadingCtrl: LoadingController,
-        public authData: AuthData, private dev: Device,private nativeAudio: NativeAudio,public vibration:Vibration)
+        public authData: AuthData, private dev: Device,private nativeAudio: NativeAudio,public vibration:Vibration,
+        public actionSheetCtrl: ActionSheetController)
         {
         this.device = dev;
         this.nativeAudio.preloadSimple('uniqueId1', 'assets/okLogin.mp3');
@@ -50,24 +52,11 @@ export class Login {
                         if (existe) {
 
                             this.nativeAudio.play('uniqueId1', () => console.log('uniqueId1 is done playing'));
-                            this.vibration.vibrate([200]);
+                            this.vibration.vibrate([100]);
 
                             this.loading.dismiss().then(() => {
                                 this.usuarioLogueado = this.auth.getUserInfo();
-
-                                if (this.usuarioLogueado.tipo_usuario == "Administrador") {
-                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
-                                } else
-                                if (this.usuarioLogueado.tipo_usuario == "Administrativo") {
-                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
-                                }else
-                                if (this.usuarioLogueado.tipo_usuario == "Alumno") {
-                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
-                                }
-                                if (this.usuarioLogueado.tipo_usuario == "Profesor") {
-                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
-                                }
-
+                                this.navCtrl.setRoot(Menu, this.usuarioLogueado);
                             });
 
 
@@ -137,65 +126,20 @@ export class Login {
                 let user = result.user;
 
                 console.log('loginWithGithub: ', user);
-                this.Login.usuario = user.email;
+                this.auth.currentUser = new User(user.uid, user.email, '', 'Profesor');
+                this.auth.currentUser.id_tipo = 4;
+                console.log('this.auth.currentUser: ', this.auth.currentUser);
 
 
-                // Chequeo si existe el usuario en la base de datos e Inicio
-                // sesion.
-                this.auth.login(this.Login).subscribe(existe => {
+                this.nativeAudio.play('uniqueId1', () => console.log('uniqueId1 is done playing'));
+                this.vibration.vibrate([100]);
 
-                        if (existe) {
-
-                            this.nativeAudio.play('uniqueId1', () => console.log('uniqueId1 is done playing'));
-                            this.vibration.vibrate([200]);
-
-                            this.loading.dismiss().then(() => {
-                                this.usuarioLogueado = this.auth.getUserInfo();
-
-                                if (this.usuarioLogueado.tipo_usuario == "Administrador") {
-                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
-                                } else
-                                if (this.usuarioLogueado.tipo_usuario == "Administrativo") {
-                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
-                                }else
-                                if (this.usuarioLogueado.tipo_usuario == "Alumno") {
-                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
-                                }
-                                if (this.usuarioLogueado.tipo_usuario == "Profesor") {
-                                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
-                                }
-
-                            });
-
-
-                        } else {
-
-                            // No existe el usuario en la BD, pero si en firebase
-                            // por lo tanto lo elimino de firebase.
-
-                            this.authData.removeCurrentUser().then( _ => {
-
-                                this.loading.dismiss().then(() => {
-                                    this.showError("El usuario no existe o ingresó datos invalidos.");
-                                });
-
-                            }, error => {
-
-                                this.loading.dismiss().then(() => {
-                                    this.showError("El usuario no existe o ingresó datos invalidos.");
-                                });
-
-                            });
-
-                        }
-
-                }, error => {
-
-                    this.loading.dismiss().then(() => {
-                        this.showError(error);
-                    });
-
+                this.loading.dismiss().then(() => {
+                    this.usuarioLogueado = this.auth.getUserInfo();
+                    console.log('userLogueado: ', this.usuarioLogueado);
+                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
                 });
+
             },
             error => {
 
@@ -213,7 +157,16 @@ export class Login {
                     alert.present();
 
                 });
+
+            }).catch(e => {
+
+                this.loading.dismiss().then(() => {
+                    let errorMessage = e.message;
+                    this.showError('Error: ' + errorMessage);
+                });
+
             });
+
         });
     }
 
@@ -256,6 +209,44 @@ export class Login {
             this.Login.clave ="profe123";
 
         }
+    }
+
+    abrirActionSheet () {
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Usuarios Test',
+            buttons: [
+                {
+                    text: 'Administrador',
+                    handler: () => {
+                        this.EscribirCredenciales('Administrador');
+                    }
+                },
+                {
+                    text: 'Administrativo',
+                    handler: () => {
+                        this.EscribirCredenciales('Administrativo');
+                    }
+                },
+                {
+                    text: 'Profesor',
+                    handler: () => {
+                        this.EscribirCredenciales('Profesor');
+                    }
+                },
+                {
+                    text: 'Alumno',
+                    handler: () => {
+                        this.EscribirCredenciales('Alumno');
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    role: 'cancel'
+                }
+            ]
+        });
+
+        actionSheet.present();
     }
 
 }

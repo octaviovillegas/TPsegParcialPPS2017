@@ -1,50 +1,65 @@
 <ion-content class="login-content" padding>
-  <ion-row class="logo-row">
-    <ion-col></ion-col>
-    <ion-col width-67>
-      <img src="assets/img/escuela.png"/>
-    </ion-col>
-    <ion-col></ion-col>
-  </ion-row>
-  <div class="login-box">
-    <form (ngSubmit)="login()" #loginForm="ngForm">
-      <ion-row>
-        <ion-col>
-          <ion-list inset>
 
-            <ion-item>
-              <ion-input type="text" placeholder="Usuario" name="usuario" [(ngModel)]="Login.usuario" required></ion-input>
-            </ion-item>
+    <ion-grid class="animated pulse">
 
-            <ion-item>
-              <ion-input type="password" placeholder="Clave" name="clave" [(ngModel)]="Login.clave" required></ion-input>
-            </ion-item>
+        <ion-row align-items-start>
+            <ion-col text-center>
+                <img src="assets/header_login.png"/>
+            </ion-col>
+        </ion-row>
 
-          </ion-list>
-        </ion-col>
-      </ion-row>
+        <ion-row align-items-end>
+            <ion-col>
+                <form (ngSubmit)="login()" #loginForm="ngForm">
 
-      <ion-row>
-        <ion-col class="signup-col">
-        <button ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.form.valid">Iniciar sesión</button>
-        <button ion-button margin-top class="submit-btn" full type="button" color="light" (tap)="loginWithGithub()">
-            Iniciar sesión con
-            <ion-icon name="logo-github" right margin-left></ion-icon>
-        </button>
-        </ion-col>
-      </ion-row>
-    </form>
+                    <ion-row>
+                        <ion-col>
+                            <ion-list>
+                                <ion-item>
+                                    <ion-icon name="ios-person-outline" item-left></ion-icon>
+                                    <ion-input type="text" placeholder="Usuario" name="usuario" [(ngModel)]="Login.usuario" required></ion-input>
+                                </ion-item>
 
-    <br><br>
-    <button ion-button small color="dark" (click)="EscribirCredenciales('Administrador')">Administrador</button>
-    <button ion-button small color="dark" (click)="EscribirCredenciales('Administrativo')">Administrativo</button>
-    <button ion-button small color="dark" (click)="EscribirCredenciales('Alumno')">Alumno</button>
-    <button ion-button small color="dark" (click)="EscribirCredenciales('Profesor')">Profesor</button>
-  </div>
+                                <ion-item>
+                                    <ion-icon name="ios-key-outline" item-left></ion-icon>
+                                    <ion-input type="text" placeholder="Clave" name="clave" [(ngModel)]="Login.clave" required></ion-input>
+                                </ion-item>
+                            </ion-list>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-col class="signup-col">
+                            <button ion-button class="submit-btn" color="primary-color" full type="submit" [disabled]="!loginForm.form.valid">
+                                Iniciar sesión
+                            </button>
+
+                            <button ion-button margin-top color="dark" full type="button" (tap)="loginWithGithub()">
+                                Iniciar sesión&nbsp;
+                                <ion-icon name="logo-github"></ion-icon>
+                            </button>
+                        </ion-col>
+                    </ion-row>
+
+                </form>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
+
 </ion-content>
 
-<ion-footer *ngIf="device.model">
-  <ion-toolbar>
-    <ion-title>{{device.model}} - {{device.platform}}</ion-title>
-  </ion-toolbar>
+<ion-footer>
+
+    <ion-navbar color="dark">
+        <ion-buttons start left>
+            <button ion-button icon-only (tap)="abrirActionSheet()">
+                <ion-icon name="ios-people-outline"></ion-icon>
+                Usuarios Test
+            </button>
+        </ion-buttons>
+
+        <ion-title *ngIf="device.model">{{device.model}} - {{device.platform}}</ion-title>
+    </ion-navbar>
+
 </ion-footer>
