@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AppService } from "../../providers/app-service";
+import { HomePage } from "../home/home";
 
 
 
@@ -9,11 +11,16 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class UpdateQuizContainerPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UpdateQuizContainerPage');
+  }
+
+  logOutOnClick() {
+    this.appService.logOut();
+    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.popToRoot();
   }
 
 }

@@ -74,14 +74,13 @@ $app->post('/newuser',function(Request $request, Response $response){
     }
     return $response;
 });
-$app->post('/modifySurvey',function(Request $request, Response $response){
+$app->post('/modifysurvey',function(Request $request, Response $response){
     
     $params = $request->getParams();
-   
     $survey = $params["survey"];
-    
- 
-    
+    $jwt = $params["jwt"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
     $rv = GenericDAO::modifySurvey($survey);
     $response->getBody()->write(json_encode($rv));
     return $response;
@@ -168,6 +167,19 @@ $app->post('/saveanswer',function(Request $request, Response $response){
     return $response;
 });
 
+$app->post('/deleteoption',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $optionid = $params["optionId"];
+    $jwt = $params["jwt"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    if(GenericDAO::deleteOption($optionid)){
+        $response = $response->withStatus(200);
+    }else{
+        $response = $response->withStatus(204);
+    }
+    return $response;
+});
 
 $app->post('/divisionslist',function(Request $request, Response $response){
     $params = $request->getParams();
