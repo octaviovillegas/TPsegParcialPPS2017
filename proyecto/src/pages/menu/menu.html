@@ -11,6 +11,9 @@
       <button *ngIf="usuarioLogueado.tipo_usuario == 'Alumno'" ion-item (click)="openPage(alumnoPage)" menuClose>
         Mis encuestas
       </button>
+       <button *ngIf="usuarioLogueado.tipo_usuario == 'Alumno'" ion-item (click)="openPage(miubicacion)" menuClose>
+        Mi Ubicacion
+       </button>
       <!-- fin alumno -->
 
       <!-- administrador-->

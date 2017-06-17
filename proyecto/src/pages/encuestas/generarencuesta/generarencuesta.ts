@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import 'rxjs/Rx'; 
+import 'rxjs/Rx';
 import { NavController,NavParams } from 'ionic-angular';
-import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import { ModalController, ViewController } from 'ionic-angular';
 import {Modales} from "../../encuestas/modales/modales";
 import {Http} from '@angular/http';
@@ -26,8 +25,9 @@ private encuestaSeleccionada;
 
 
  constructor(public navCtrl: NavController,public viewCtrl:ViewController,public modalCtrl: ModalController
-,public NavParams: NavParams,private http: Http,public af: AngularFire,servAuth:servicioAuth)
+,public NavParams: NavParams,private http: Http,servAuth:servicioAuth)
   {
+<<<<<<< HEAD
 this.usuarioLogueado=servAuth.getUserInfo();    
  
  this.http.get("http://tppps2.hol.es/ws1/encuestas")
@@ -37,13 +37,19 @@ this.usuarioLogueado=servAuth.getUserInfo();
     console.info(this.listaEncuestas);
   });
   
+=======
+this.usuarioLogueado=servAuth.getUserInfo();
+
+this.cargarEncuesta();
+
+>>>>>>> origin/master
   }
     agregarPregunta(datos){
       console.log(datos);
             this.datos.idEncuesta=datos;
       this.datos.queHago="AgregarPregunta";
        let modal = this.modalCtrl.create(Modales,this.datos);
-      modal.present(); 
+      modal.present();
     }
 
     cargarEncuesta(){
@@ -54,11 +60,11 @@ this.usuarioLogueado=servAuth.getUserInfo();
     console.info(this.listaEncuestas);
   });
     }
-    
+
    nuevaEncuesta(){
       this.datos.queHago="AgregarEncuesta";
        let modal = this.modalCtrl.create(Modales,this.datos);
-      modal.present(); 
+      modal.present();
       this.cargarEncuesta();
    }
 
@@ -74,8 +80,7 @@ this.usuarioLogueado=servAuth.getUserInfo();
      });
 
     }
-    
+
 
 
 }
-

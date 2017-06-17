@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, NavOptions, ViewController, AlertController } from 'ionic-angular';
-import { Http, URLSearchParams } from '@angular/http';
+import { NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
+import { Http } from '@angular/http';
 import { AuthData } from '../../../providers/auth-data';
-import {Observable} from 'rxjs/Observable';
-import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
+import { Observable } from 'rxjs/Observable';
+import { MediaCapture } from '@ionic-native/media-capture';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera } from 'ionic-native';
 
@@ -20,10 +20,10 @@ import { Camera } from 'ionic-native';
 export class AltaModal
 {
 
-    n;
+    n = '';
     t;
-    c;
-    u;
+    c = '';
+    u = '';
     id_usuario;
     id_tip;
     id_tipo;
@@ -33,6 +33,8 @@ export class AltaModal
     width = 320;
     height = 320;
 
+    cargando = false;
+
     constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http,
         public viewCtrl: ViewController, public auth: AuthData, private alertCtrl: AlertController, private mediaCapture: MediaCapture,
     private imagePicker: ImagePicker)
@@ -41,29 +43,6 @@ export class AltaModal
         console.log(navParams.data);
         this.t = navParams.data['tipo'];
         this.id_tipo = navParams.data['id_tipo'];
-    }
-
-    elegirFoto () {
-        let options = {
-            maximumImagesCount: 1,
-            width: this.width,
-            height: this.height,
-            destinationType: Camera.DestinationType.DATA_URL,
-            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-            allowEdit: true,
-            encodingType: Camera.EncodingType.JPEG,
-        };
-
-        this.imagePicker.getPictures(options).then((results) => {
-            for (var i = 0; i < results.length; i++) {
-                this.base64Image = this.encodeImageUri(results[i]);
-                console.log('Image URI: ' + results[i]);
-                console.log('base64: ' + this.encodeImageUri(results[i]));
-            }
-        }, (error) => {
-            console.log('error imagePicker: ');
-            console.log(error);
-        });
     }
 
     tomarFoto(){
@@ -80,31 +59,14 @@ export class AltaModal
         });
     }
 
-    encodeImageUri (imageUri) {
-        var c = document.createElement('canvas');
-        var ctx = c.getContext("2d");
-        var img = new Image();
-
-        let s = this;
-        img.onload = function(){
-            c.width = s.width;
-            c.height = s.height;
-            ctx.drawImage(img, 0,0);
-        };
-        img.src = imageUri;
-        var dataURL = c.toDataURL("image/jpeg");
-        return dataURL;
-    }
-
     Alta(nombre, usuario, clave, id_tipo)
     {
         console.log('Alta: ' + id_tipo);
 
-        if (nombre == null || nombre=="" ||usuario==null || usuario=="" || clave== null || clave=="" || id_tipo==null || id_tipo=="" )
-        {
+        if (nombre == null || nombre=="" ||usuario==null || usuario=="" || clave== null || clave=="" || id_tipo==null || id_tipo=="" ) {
             alert ("Debe completar todos los campos!");
-        }
-        else{
+        } else {
+            this.cargando = true;
 
             // Creo el usuario en firebase`
             this.auth.signupUser(this.u, this.c).then((success) => {
@@ -121,24 +83,31 @@ export class AltaModal
                         imagen: this.base64Image
                     })
                     .map(res => res.json())
-                    .catch((error:any) => Observable.throw(error.json().error || 'Server error'))
+                    .catch((error:any) => Observable.throw(error.json() || 'Server error'))
                     .subscribe((quote) =>{
+                        this.cargando = false;
                         console.log('subscribe /usuarios/alta:');
                         console.info(quote);
 
                         if (quote.error == false) {
-                            this.viewCtrl.dismiss();
+                            this.viewCtrl.dismiss(true);
                         } else {
                             this.showMsg('No se pudo crear el usuario en la base de datos.');
                         }
 
+                    }, e => {
+                        this.cargando = false;
+                        this.showMsg('Error: ' + e.message);
                     });
 
                 } else {
                     this.showMsg('No se pudo crear el usuario.');
+
+                    this.cargando = false;
                 }
 
             }).catch(e => {
+                this.cargando = false;
                 console.log('Catch signupUser: ');
                 console.log(e);
                 this.showMsg(e);
@@ -159,7 +128,7 @@ export class AltaModal
 
     cancelar()
     {
-        this.viewCtrl.dismiss();
+        this.viewCtrl.dismiss(false);
     }
 
 

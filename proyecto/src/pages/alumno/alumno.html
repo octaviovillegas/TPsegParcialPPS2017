@@ -6,13 +6,25 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
       <button ion-button menuToggle left>
           <ion-icon name="menu"></ion-icon>
       </button>
 
-      <ion-title>Alumno: {{usuarioLogueado.usuario}}</ion-title>
+      <ion-title>Alumno</ion-title>
+
+      <ion-buttons end>
+          <button ion-button icon-only (click)="escanearEncuesta()">
+              Escanear
+              <ion-icon margin-left name="qr-scanner"></ion-icon>
+          </button>
+      </ion-buttons>
+
   </ion-navbar>
+
+  <ion-toolbar>
+      <ion-title>{{usuarioLogueado.usuario}}</ion-title>
+  </ion-toolbar>
 
 </ion-header>
 

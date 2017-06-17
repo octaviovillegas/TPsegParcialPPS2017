@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import 'rxjs/Rx'; 
+import 'rxjs/Rx';
 import { NavController,NavParams } from 'ionic-angular';
-import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import { ModalController, ViewController } from 'ionic-angular';
 import {Http} from '@angular/http';
 
@@ -21,7 +20,6 @@ export class Modales {
           fechaFin:""
            }
         private veoPreguntas=false;
-        private encuestas :FirebaseListObservable<any[]>;
         private idEncuesta;
         private tipoPregunta;
         private veoEncuesta=false;
@@ -31,19 +29,19 @@ export class Modales {
         private opcion4;
         private pregunta;
  constructor(public navCtrl: NavController,public viewCtrl:ViewController,public modalCtrl: ModalController
- ,public NavParams: NavParams,public af: AngularFire,private http: Http) 
+ ,public NavParams: NavParams, private http: Http)
 {
    this.datos = NavParams.data;
    this.idEncuesta=this.datos.idEncuesta;
    console.info(this.datos);
         if(this.datos.queHago == "AgregarPregunta"){
-          this.veoPreguntas=true; 
+          this.veoPreguntas=true;
              }else if(this.datos.queHago =="AgregarEncuesta"){
   this.veoEncuesta =true;
 
              }
     }
-     
+
 
 
 dismiss() {
@@ -63,7 +61,7 @@ altaEncuesta(){
     .subscribe((quote) =>{
       console.info(quote);
      });
-       
+
       this.viewCtrl.dismiss();
 }
 altaPregunta(){
@@ -88,7 +86,7 @@ altaPregunta(){
     .subscribe((quote) =>{
       console.info(quote);
      });
-       
+
       this.viewCtrl.dismiss();
 }
 

@@ -1,11 +1,17 @@
 
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
       <button ion-button menuToggle left>
           <ion-icon name="menu"></ion-icon>
       </button>
       <ion-title>Profesores</ion-title>
+
+      <ion-buttons end>
+          <button *ngIf="!cargando" ion-button icon-only (tap)="CargaGrilla()">
+              <ion-icon name="refresh"></ion-icon>
+          </button>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -13,26 +19,31 @@
 
 <ion-content padding>
 
-    <button ion-button icon-left color=light (click)="Alta()" round >
-  <ion-icon name="person-add" ></ion-icon>
-  Nuevo usuario
-</button>
+    <div *ngIf="cargando" text-center>
+        <ion-spinner text-center></ion-spinner>
+    </div>
 
+    <ion-list *ngIf="!cargando">
 
-<div *ngFor="let usr of Uss">
-<ion-card >
-  <ion-card-content>
-    <ion-card-title>
-        {{usr.nombre}}
-      </ion-card-title>
-    <p>
-        {{usr.usuario}}<br>
-         {{usr.tipo_usuario}}<br>
-         <button ion-button color=danger (click)="Eliminar(usr.id_usuario, usr.usuario, usr.nombre, usr.clave, usr.id_tipo)">eliminar</button>
-         <button ion-button color=secondary (click)="Modificar(usr.id_usuario, usr.usuario, usr.nombre, usr.clave, usr.id_tipo)">modificar</button>
-    </p>
-  </ion-card-content>
-</ion-card>
-</div>
+        <ion-item *ngFor="let usr of usuarios" (press)="abrirActionSheet(usr)" >
+            <ion-avatar item-left>
+                <img [src]="usr.imagen" *ngIf="usr.imagen">
+            </ion-avatar>
+
+            <h2>{{usr.nombre}}</h2>
+            <p>{{usr.usuario}}</p>
+
+            <button ion-button clear item-right (click)="abrirActionSheet(usr)">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-item>
+
+    </ion-list>
+
+    <ion-fab *ngIf="!cargando" bottom right>
+        <button ion-fab (tap)="Alta()" color="secondary">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
 
 </ion-content>

@@ -1,0 +1,24 @@
+
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle left>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Geolocalizacion UTN</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="15">
+  <agm-marker [latitude]="lat" [longitude]="lng">
+    <agm-info-window ><ion-icon name="contact"></ion-icon>Usted se encuentra aqui!</agm-info-window>
+  </agm-marker>
+   <agm-marker [latitude]="latUtn" [longitude]="longUtn">
+    <agm-info-window >  <ion-icon name="home"></ion-icon>Utn Fra</agm-info-window>
+  </agm-marker>
+</agm-map>
+ 
+
+ 
+</ion-content>

@@ -77,7 +77,10 @@ export class Grafico1
 
         Highcharts.chart('container', {
             chart: {
-                type: 'column'
+                type: 'pie',
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
             },
             title: {
                 text: event

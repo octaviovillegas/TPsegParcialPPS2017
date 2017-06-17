@@ -82,7 +82,11 @@ export class Grafico3
 
         Highcharts.chart('container', {
             chart: {
-                type: 'column'
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 45
+                }
             },
             title: {
                 text: "Curso: "+event
@@ -106,7 +110,11 @@ export class Grafico3
                         enabled: true,
                         format: '{point.y:1f}'
                     }
-                }
+                },
+                 pie: {
+                        innerSize: 100,
+                        depth: 45
+                    }
             },
 
             tooltip: {

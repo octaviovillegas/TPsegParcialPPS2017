@@ -1,5 +1,5 @@
 import { Injectable  } from '@angular/core';
-import { AngularFire, AuthProviders, AuthMethods  } from 'angularfire2';
+import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
 
 @Injectable()
@@ -7,11 +7,11 @@ export class AuthData {
 
     fireAuth: any;
 
-    constructor (public af: AngularFire) {
+    constructor (public afAuth: AngularFireAuth) {
 
-        af.auth.subscribe( user => {
+        afAuth.authState.subscribe( user => {
             if (user) {
-                this.fireAuth = user.auth;
+                this.fireAuth = user;
                 console.log(user);
             }
         });
@@ -20,14 +20,13 @@ export class AuthData {
 
     loginUser (newEmail: string, newPassword: string): firebase.Promise<any> {
 
-        return this.af.auth.login({
-            email : newEmail,
-            password : newPassword
-        }, {
-            provider: AuthProviders.Password,
-            method: AuthMethods.Password
-        });
+        return this.afAuth.auth.signInWithEmailAndPassword(newEmail, newPassword);
 
+    }
+
+    loginWithGithub () {
+        var provider = new firebase.auth.GithubAuthProvider();
+        return this.afAuth.auth.signInWithPopup(provider);
     }
 
     resetPassword (email: string): firebase.Promise<any> {
@@ -35,11 +34,11 @@ export class AuthData {
     }
 
     logoutUser(): firebase.Promise<any> {
-        return this.af.auth.logout();
+        return this.afAuth.auth.signOut();
     }
 
     signupUser(newEmail: string, newPassword: string): firebase.Promise<any> {
-        return this.af.auth.createUser({ email: newEmail, password: newPassword });
+        return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPassword);
     }
 
     updateUserNombre(nombre: string): firebase.Promise<any> {

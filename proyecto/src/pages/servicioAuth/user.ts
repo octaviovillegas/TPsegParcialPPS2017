@@ -10,6 +10,7 @@ export class User {
     usuario: string;
     clave: string;
     tipo_usuario: string;
+    id_tipo: number;
 
   constructor(id_usuario: number, usuario: string, clave: string, tipo_usuario:string) {
       this.id_usuario = id_usuario;

@@ -21,6 +21,8 @@ import {Profesor} from "../pages/profesor/profesor";
 import {modalEncuesta} from '../pages/modalEncuesta/modalEncuesta';
 import {firebaseconfig} from '../pages/firebase/firebase-config';
 import {AngularFireModule} from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AuthData } from '../providers/auth-data';
 import {Menu} from "../pages/menu/menu";
 import {Encuestas} from '../pages/encuestas/encuestas';
@@ -49,7 +51,12 @@ import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ion
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AlumnoCurso } from '../pages/alumno-curso/alumno-curso';
 import { NativeAudio } from '@ionic-native/native-audio';
- 
+import { Vibration } from '@ionic-native/vibration';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import {Miubicacion} from "../pages/miubicacion/miubicacion";
+import { Geolocation } from '@ionic-native/geolocation';
+import { AgmCoreModule } from '@agm/core';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -82,14 +89,20 @@ import { NativeAudio } from '@ionic-native/native-audio';
     Grafico1,
     Grafico2,
     Grafico3,
-    AlumnoCurso
+    AlumnoCurso,
+    Miubicacion
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
     HttpModule,
     ChartsModule,
-   AngularFireModule.initializeApp(firebaseconfig)
+    IonicModule.forRoot(MyApp),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDg5RgxfKfydP2_yidVU7ZwUW21aIqPl0Y'
+    }),
+   AngularFireModule.initializeApp(firebaseconfig),
+   AngularFireAuthModule,
+   AngularFireDatabaseModule
       ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -123,7 +136,8 @@ import { NativeAudio } from '@ionic-native/native-audio';
     Grafico1,
     Grafico2,
     Grafico3,
-    AlumnoCurso
+    AlumnoCurso,
+    Miubicacion
       ],
   providers: [
     StatusBar,
@@ -136,7 +150,10 @@ import { NativeAudio } from '@ionic-native/native-audio';
     MediaCapture,
     Camera,
     ImagePicker,
-    NativeAudio, 
+    NativeAudio,
+    Vibration,
+    BarcodeScanner,
+    Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
