@@ -30,7 +30,12 @@ private encuestaSeleccionada;
   {
 this.usuarioLogueado=servAuth.getUserInfo();    
  
-this.cargarEncuesta();
+ this.http.get("http://tppps2.hol.es/ws1/encuestas")
+  .map(res => res.json())
+  .subscribe((quote) =>{
+    this.listaEncuestas = quote;
+    console.info(this.listaEncuestas);
+  });
   
   }
     agregarPregunta(datos){
