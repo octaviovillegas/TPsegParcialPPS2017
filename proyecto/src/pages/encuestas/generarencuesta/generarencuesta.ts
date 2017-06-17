@@ -27,7 +27,6 @@ private encuestaSeleccionada;
  constructor(public navCtrl: NavController,public viewCtrl:ViewController,public modalCtrl: ModalController
 ,public NavParams: NavParams,private http: Http,servAuth:servicioAuth)
   {
-<<<<<<< HEAD
 this.usuarioLogueado=servAuth.getUserInfo();    
  
  this.http.get("http://tppps2.hol.es/ws1/encuestas")
@@ -37,12 +36,10 @@ this.usuarioLogueado=servAuth.getUserInfo();
     console.info(this.listaEncuestas);
   });
   
-=======
 this.usuarioLogueado=servAuth.getUserInfo();
 
 this.cargarEncuesta();
 
->>>>>>> origin/master
   }
     agregarPregunta(datos){
       console.log(datos);
