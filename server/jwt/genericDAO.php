@@ -229,7 +229,7 @@ public static function eliminateUser($userid){
 			$couldDeleteuser= $statement->execute();
 			return $couldDeleteuser;
 		}catch(Exeption $ex){}
-	}
+}
 
 	public static function getSurveysList(){
 		try
@@ -274,45 +274,73 @@ public static function eliminateUser($userid){
 	}
 
 public static function modifySurvey($survey)
-{ try{
-	$survey["creationDate"] = date("Y-m-d");
-$db = GenericDAO::getPDO();
-$sql = "update surveys set title='$survey->title',creationdate='$survey->creationdate',enddate='$survey->enddate',ownerid='$survey->ownerid'
-where surveyid='$survey->surveyid'" ;
-$sql2 = "update  questions set text='$survey->question->text'
-					where surveyid='$survey->surveyid'" ;
-	$statement = $db->sendQuery($sql);
-			 $statement->execute();	
-			
-			 $statement2 = $db->sendQuery($sql2);
-			 $statement2->execute();
+{ 
+	try{
+
+		$survey["creationDate"] = date("Y-m-d");
+		$db = GenericDAO::getPDO();
+		$couldBegin = $db->beginTransaction(); //Start transaction
 
 
-if(count($survey["question"]["options"]) > 0){
-				for ($i = 0; $i < count($survey["question"]["options"]); $i++) {
-					$option = $survey["question"]["options"][$i];
-					$sql3 = "update  options set text=$survey->question->text,$survey->question->isright where questionid='$survey->surveyid'";
-					
+		$sql = "update surveys set title = :title, enddate = :enddate
+				where surveyid = :surveyid";
+
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":surveyid", $survey["surveyId"], PDO::PARAM_STR);
+		$statement->bindValue(":enddate", $survey["endDate"], PDO::PARAM_STR);
+		$statement->bindValue(":title", $survey["title"], PDO::PARAM_STR);
+		$statement->execute();
+
+		$question = $survey["question"];
+
+		$sql2 = "update questions set text = :text
+				 where questionid = :questionid";
+		$statement = $db->sendQuery($sql2);
+		$statement->bindValue(":questionid", $question["questionId"], PDO::PARAM_STR);
+		$statement->bindValue(":text", $question["text"], PDO::PARAM_STR);
+		$statement->execute();
+
+
+		if(count($question["options"]) > 0){
+			for ($i = 0; $i < count($question["options"]); $i++) {
+				$option = $question["options"][$i];
+				if($option["optionId"] == 0){
+					$sql4 = "insert into options (text,isright,questionid)
+							values (:text,:isright,:questionid)";
+					$statement = $db->sendQuery($sql4);
+					$statement->bindValue(":questionid", $question["questionId"], PDO::PARAM_STR);
+					$statement->bindValue(":text", $option["text"], PDO::PARAM_STR);
+					$statement->bindValue(":isright", $option["isRight"], PDO::PARAM_INT);
+					$statement->execute();
+				}else{
+					$sql3 = "update options set text = :text, isright = :isright
+						 where optionid = :optionid";
+				
 					$statement = $db->sendQuery($sql3);
-					
-					
+					$statement->bindValue(":optionid", $option["optionId"], PDO::PARAM_STR);
+					$statement->bindValue(":text", $option["text"], PDO::PARAM_STR);
+					$statement->bindValue(":isright", $option["isRight"], PDO::PARAM_INT);
+					$statement->execute();
 				}
+				
 			}
-
- $rv = $statement->fetchAll(PDO::PARAM_STR);
-			 return $rv;
-}catch(Exception $ex){
 		}
 
+ 		$db->commit();
+	}catch(Exception $ex){
+		$db->rollBack();
+	}
 } 
 
 	public static function eliminateSurvey($surveyid){
 	try
-		{		$db = GenericDAO::getPDO();
-		$sql = "update surveys set waseliminated = true
-			     where surveyid = " . $surveyid;
-					$statement = $db->sendQuery($sql);
-
+		{		
+			$db = GenericDAO::getPDO();
+			$sql = "update surveys set waseliminated = true
+			     	where surveyid = " . $surveyid;
+			
+			$statement = $db->sendQuery($sql);
+			
 			$couldDeleteuser= $statement->execute();
 			return $couldDeleteuser;
 		}catch(Exeption $ex){}
@@ -415,6 +443,17 @@ if(count($survey["question"]["options"]) > 0){
 		$rv['subjects'] = $statement->fetchAll(PDO::PARAM_STR);
 		return $rv;
 	}
+	public static function getAssistsAndAbsenses($classid){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "???";
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":classid", $classid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv = array("subjects"=>[], "absences"=>[]);
+		return $rv;
+	}
+	
 
 	public static function getStudentsListByDivisionAndSubject($divisionid, $subjectid){
 		$db = GenericDAO::getPDO();
@@ -582,6 +621,35 @@ if(count($survey["question"]["options"]) > 0){
 		$statement->execute();
 		$rv = array("teachers"=>[]);
 		$rv['teachers'] = $statement->fetchAll(PDO::PARAM_STR);
+		return $rv;
+	}
+
+	public static function deleteOption($optionid){
+	try
+		{		
+			$db = GenericDAO::getPDO();
+			$sql = "delete from options
+			 		where optionid = :optionid";
+			$statement = $db->sendQuery($sql);
+			$statement->bindValue(":optionid", $optionid, PDO::PARAM_INT);
+			$couldDeleteuser = $statement->execute();
+			return $couldDeleteuser;
+		}catch(Exeption $ex){}
+	}
+
+	public static function getSubjectsListByStudentId($studentid){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "select distinct s.name, c.classid
+				from studentsbyclass as sbc
+				join classes as c on c.classid = sbc.classid
+				join subjects as s on s.subjectid = c.subjectid
+				where studentid = :studentid";
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":studentid", $studentid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv = array("subjects"=>[]);
+		$rv['subjects'] = $statement->fetchAll(PDO::PARAM_STR);
 		return $rv;
 	}
 }

@@ -1,4 +1,19 @@
-<!-- Generated template for the SubjectListComponent component -->
-<div>
-  {{text}}
-</div>
+<ion-content padding>
+  <div [hidden]="loadingPage">
+    <ion-list>
+      <button ion-item *ngFor="let subject of subjects" (click)="itemSelected(subject)">
+    {{ subject.name }}
+  </button>
+    </ion-list>
+  </div>
+
+  <!-- spinner -->
+  <div [hidden]="!loadingPage">
+    <div>
+      <ion-spinner></ion-spinner>
+    </div>
+    <div>
+      <p>Obteniendo lista de materias. Espere por favor.</p>
+    </div>
+  </div>
+</ion-content>

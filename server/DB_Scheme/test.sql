@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-06-2017 a las 21:41:47
+-- Tiempo de generación: 18-06-2017 a las 02:30:12
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -62,13 +62,6 @@ CREATE TABLE `answers` (
   `questionid` bigint(18) NOT NULL,
   `surveyid` bigint(18) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `answers`
---
-
-INSERT INTO `answers` (`answerid`, `text`, `userid`, `questionid`, `surveyid`) VALUES
-(22, 'ewqweqwe', 4, 53, 51);
 
 -- --------------------------------------------------------
 
@@ -270,7 +263,8 @@ INSERT INTO `permissionsbyrol` (`permissionbyrolid`, `permissionid`, `rolid`) VA
 (6, 3, 3),
 (9, 3, 1),
 (10, 7, 1),
-(11, 8, 4);
+(11, 8, 4),
+(12, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -596,7 +590,7 @@ ALTER TABLE `divisions`
 -- AUTO_INCREMENT de la tabla `options`
 --
 ALTER TABLE `options`
-  MODIFY `optionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `optionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT de la tabla `optionsbyanswer`
 --
@@ -611,12 +605,12 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT de la tabla `permissionsbyrol`
 --
 ALTER TABLE `permissionsbyrol`
-  MODIFY `permissionbyrolid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `permissionbyrolid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `questionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `questionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 --
 -- AUTO_INCREMENT de la tabla `studentsbyclass`
 --
@@ -631,7 +625,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT de la tabla `surveys`
 --
 ALTER TABLE `surveys`
-  MODIFY `surveyid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `surveyid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --

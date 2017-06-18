@@ -76,15 +76,13 @@ export class QuestionViewer implements OnInit {
       }
     });
 
-    if (rightOptions == 0) {
+    if (rightOptions == 0 && (this.options.length == 0)) {
       this.withoutOptions = true;
     } else {
       if (rightOptions == 1) {
         this.uniqueRightAnswer = true;
       }
     }
-    console.log("Valor de withoutoptions" + this.withoutOptions);
-    console.log("La respuesta en unica:" + this.uniqueRightAnswer)
   }
 
   setSurveyAndOptions(survey, options) {

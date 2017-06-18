@@ -9,159 +9,120 @@ import { QuizManagerComponent } from '../quiz-manager-component/quiz-manager-com
 import { AlertController } from "ionic-angular";
 import { Vibration } from '@ionic-native/vibration';
 import { NativeAudio } from '@ionic-native/native-audio';
-/**
- * Generated class for the NewQuizComponent component.
- *
- * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
- * for more info on Angular Components.
- */
+
+
 @Component({
   selector: 'new-quiz-component',
   templateUrl: 'new-quiz-component.html'
 })
 export class NewQuizComponent {
-  toggleStatus: any;
-  toggleStatus2: any;
-  buttonStatus: any;
+  haveOptions: boolean;
+  haveEndDate: boolean;
+  endDate: string;
   form: FormGroup;
-  jw: any;
   options: Array<Option>;
   hideSpinner: boolean;
-   titleok:any;
-  questionok:any;
-  logEvent(e) {
-    console.log(e)
-  }
-  opciones: any;
-  constructor(public navCtrl: NavController,private nativeAudio: NativeAudio, private storage: Storage, private toastCtrl: ToastController, private fb: FormBuilder, private vibration: Vibration, private appService: AppService, private alertCtrl: AlertController) {
-     this.nativeAudio.preloadSimple('bien', 'assets/sound/ok.mp3');
-     this.nativeAudio.preloadSimple('error', 'assets/sound/2.mp3');
+  disableDeleteButton: boolean;
+
+  constructor(public navCtrl: NavController, private nativeAudio: NativeAudio, private storage: Storage, private toastCtrl: ToastController, private fb: FormBuilder, private vibration: Vibration, private appService: AppService, private alertCtrl: AlertController) {
+    //Set audio configurations
+    this.nativeAudio.preloadSimple('bien', 'assets/sound/ok.mp3');
+    this.nativeAudio.preloadSimple('error', 'assets/sound/2.mp3');
     this.form = this.fb.group({
       Titulo: ["", [Validators.required]],
       Pregunta: ["", [Validators.required]],
-      Fecha: ["", [Validators.required]],
-      
     });
-    this.options = [];
-    this.fillDefaultsNumberOfOptions();
-   this.hideSpinner = true;
-}
 
-  fillDefaultsNumberOfOptions(){
+    //Set initial configurations
+    this.endDate = "";
+    this.haveOptions = false;
+    this.haveEndDate = false;
+    this.options = [];
+    this.hideSpinner = true;
+    this.disableDeleteButton = true;
+    this.fillDefaultsNumberOfOptions();
+  }
+
+  fillDefaultsNumberOfOptions() {
+    this.options = [];
     let option1 = new Option();
     option1.isRight = false;
     let option2 = new Option();
- 
+
     this.options.push(option1);
     this.options.push(option2);
   }
-  add() {
-    console.log('aca')
-    let option = new Option();
-    
-    this.options.push(option);
-  }
+  
 
-  ChangeToggle() {
-    if (this.toggleStatus == true) {
-      console.log("verdad");
-    }
-    else {
-      console.log("falso");
+  haveOptionsOnChange() {
+    if (!this.haveOptions) {
+      this.fillDefaultsNumberOfOptions()
     }
   }
-  changeButton() {
-    this.buttonStatus = true;
 
-  }
-
-  ChangeToggle2() {
-    if (this.toggleStatus2 == true) {
-      console.log("verdad");
-    }
-    else {
-      console.log("falso");
-    }
-
-
-  }
-
-
-  send() {
-    console.log("Click en Enviar");
-    let survey = new Survey();
-
-    if(this.toggleStatus){
-      this.options.forEach(itemInOptions => {
-        let option = new Option();
-        option.isRight = itemInOptions.isRight;
-        option.text = itemInOptions.text;
-        survey.question.options.push(option);
-      });
-      console.log(survey.question.options);
+  haveEndDateOnChange() {
+    if (!this.haveEndDate) {
+      this.endDate = "";
     }
   }
-showConfirm() {
+
+  showConfirm() {
     let confirm = this.alertCtrl.create({
       title: '¿Desea guardar la Encuesta?',
       message: '',
-      buttons: [
-        {
+      buttons: [{
           text: 'Cancelar',
-          handler: () => {
-          }
+          handler: () => {}
         },
         {
           text: 'Aceptar',
           handler: () => {
             this.getJwtForNewSurvey();
             this.vibration.vibrate(500);
-            
-              
-              
           }
-        }
-      ]
-    });
+        }]
+      });
     confirm.present();
   }
 
   getJwtForNewSurvey() {
-    this.hideSpinner = false;
+
     this.storage.get("jwt")
       .then(jwt => this.newSurvey(jwt))
       .catch(() => this.appService.logOut());
   }
-  newSurvey(jwt) {
-  this.titleok=this.form.get("Titulo").value;
- this.questionok=this.form.get("Pregunta").value;
- if(this.titleok==""||this.questionok==""){
-this.nativeAudio.play('error', () => console.log('bienvenida is done playing'));
-this.showErrorMessage("Debe ingresar Titulo y Pregunta para guardar");
 
- }else{   let survey = new Survey();
-    survey.endDate = this.form.get("Fecha").value;
+
+  newSurvey(jwt) {
+    let survey = new Survey();
+    survey.endDate = this.endDate;
     survey.title = this.form.get("Titulo").value;
     survey.question.text = this.form.get("Pregunta").value;
 
-    if(this.toggleStatus){
- this.options.forEach(itemInOptions => {
+    if (this.haveOptions) {
+      this.options.forEach(itemInOptions => {
         let option = new Option();
         option.isRight = itemInOptions.isRight;
         option.text = itemInOptions.text;
         survey.question.options.push(option);
-      }); }
-    this.showErrorMessage("Guardando encuesta");
-    
-      this.hideSpinner = true;
+      });
+    }
+
+    this.hideSpinner = false;
     this.appService.newSurvey(survey, jwt)
-    
-      .then(val =>{this.showErrorMessage("Encuesta Guardada");
-      this.nativeAudio.play('bien', () => console.log('bienvenida is done playing'));
-      this.navCtrl.setRoot(QuizManagerComponent );})
-      .catch(error => this.showErrorMessage("Los datos no pudieron ser procesados, intentelo nuevamente..."));
-  }}
-showErrorMessage(message: string): void {
+      .then(val => {
+        this.showErrorMessage("La encuesta se ha guardado exitosamente");
+        this.nativeAudio.play('bien', () => console.log('Encuesta guardada'));
+        this.navCtrl.setRoot(QuizManagerComponent);
+      })
+      .catch(error => {
+        this.showErrorMessage("Los datos no pudieron ser procesados, intentelo nuevamente...");
+        this.hideSpinner = true;
+      });
+  }
+
+
+  showErrorMessage(message: string): void {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 3000,
@@ -170,4 +131,20 @@ showErrorMessage(message: string): void {
     toast.present();
   }
 
+  //---------------> Add/Delete options
+  deleteOption(index) {
+    if (this.options.length <= 3) {
+      this.disableDeleteButton = true;
+    }
+    this.options.splice(index, 1);
+  }
+
+  add() {
+    if (this.options.length >= 2) {
+      this.disableDeleteButton = false;
+    }
+    let option = new Option();
+    this.options.push(option);
+  }
+  //---------------//
 }
