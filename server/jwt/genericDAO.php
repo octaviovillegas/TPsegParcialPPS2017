@@ -652,5 +652,25 @@ public static function modifySurvey($survey)
 		$rv['subjects'] = $statement->fetchAll(PDO::PARAM_STR);
 		return $rv;
 	}
+public static function getAssist($userid,$classid){
+
+$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "select a.present  
+				from attendancelistitems as a 
+				join attendancelists as at on at.classid=".$classid."
+				
+				
+				where studentid=".$userid." and a.attendancelistid=at.attendancelistid";
+		$statement = $db->sendQuery($sql);
+			 $statement->execute();
+			 $rv = $statement->fetchAll(PDO::PARAM_STR);
+			 return $rv;
+		
+		
+		
+		
+}
+
 }
 ?>

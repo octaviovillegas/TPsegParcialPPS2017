@@ -325,6 +325,20 @@ $app->post('/getteacherslist',function(Request $request, Response $response){
     $response->getBody()->write(json_encode($rv));
     return $response;
 });
-
+$app->post('/getAssist',function(Request $request, Response $response){
+    
+   $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $classid=$params["classid"];
+    $tm = new TokenManager();
+    // $tm->isValidToken($jwt);
+     
+    $userid = $tm->getIdByJWT($jwt);
+ 
+    
+    $rv = GenericDAO::getAssist($userid,$classid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
 $app->run();
 ?>
