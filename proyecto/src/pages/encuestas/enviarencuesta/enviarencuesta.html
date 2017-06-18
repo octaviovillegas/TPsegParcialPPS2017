@@ -15,15 +15,15 @@
 
   <ion-item class="fondo">
     seleccionar encuesta
-    <ion-select class="fondo" [(ngModel)]="encuestaSeleccionada" >
-      <ion-option class="fondo" *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: id_encuesta" [value] = "encuesta.id_encuesta">{{encuesta.descripcion}}</ion-option>
+    <ion-select  [(ngModel)]="encuestaSeleccionada" >
+      <ion-option  *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: id_encuesta" [value] = "encuesta.id_encuesta">{{encuesta.descripcion}}</ion-option>
     </ion-select>
   </ion-item>
  
   <ion-item>
         seleccionar curso
-    <ion-select [(ngModel)]="cursoSeleccionado" class="fondo">
-      <ion-option class="fondo" *ngFor="let curso of listaCursos; let i = index; trackBy: id_curso" [value] = "curso.id_curso">{{curso.descripcion}}</ion-option>
+    <ion-select [(ngModel)]="cursoSeleccionado">
+      <ion-option  *ngFor="let curso of listaCursos; let i = index; trackBy: id_curso" [value] = "curso.id_curso">{{curso.descripcion}}</ion-option>
     </ion-select>
   </ion-item>
 <button ion-button color="primary" (click)="EnviarEncuesta()">
