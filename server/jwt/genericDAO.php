@@ -443,6 +443,17 @@ public static function modifySurvey($survey)
 		$rv['subjects'] = $statement->fetchAll(PDO::PARAM_STR);
 		return $rv;
 	}
+	public static function getAssistsAndAbsenses($classid){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "???";
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":classid", $classid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv = array("subjects"=>[], "absences"=>[]);
+		return $rv;
+	}
+	
 
 	public static function getStudentsListByDivisionAndSubject($divisionid, $subjectid){
 		$db = GenericDAO::getPDO();
@@ -624,6 +635,22 @@ public static function modifySurvey($survey)
 			$couldDeleteuser = $statement->execute();
 			return $couldDeleteuser;
 		}catch(Exeption $ex){}
+	}
+
+	public static function getSubjectsListByStudentId($studentid){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "select distinct s.name, c.classid
+				from studentsbyclass as sbc
+				join classes as c on c.classid = sbc.classid
+				join subjects as s on s.subjectid = c.subjectid
+				where studentid = :studentid";
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":studentid", $studentid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv = array("subjects"=>[]);
+		$rv['subjects'] = $statement->fetchAll(PDO::PARAM_STR);
+		return $rv;
 	}
 }
 ?>

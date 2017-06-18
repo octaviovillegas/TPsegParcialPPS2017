@@ -119,6 +119,7 @@ $app->post('/getsurveyslisttoeliminate',function(Request $request, Response $res
     return $response;
 });
 
+
 $app->post('/eliminatesurvey',function(Request $request, Response $response){
     
     $params = $request->getParams();
@@ -152,6 +153,7 @@ $app->post('/getuserid',function(Request $request, Response $response){
     $response->getBody()->write(json_encode($userid));
     return $response;
 });
+
 $app->post('/saveanswer',function(Request $request, Response $response){
     $params = $request->getParams();
     $answer = $params["answer"];
@@ -164,6 +166,17 @@ $app->post('/saveanswer',function(Request $request, Response $response){
     }else{
         $response = $response->withStatus(204);
     }
+    return $response;
+});
+
+$app->post('/subjectslistbystudentid',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $studentid = $tm->getIdByJWT($jwt);
+    $rv = GenericDAO::getSubjectsListByStudentId($studentid);
+    $response->getBody()->write(json_encode($rv));
     return $response;
 });
 
@@ -243,6 +256,17 @@ $app->post('/divisionslistbysubjectid',function(Request $request, Response $resp
     $tm = new TokenManager();
     $tm->isValidToken($jwt);
     $rv = GenericDAO::getDivisionsListBySubjectId($subjectid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
+$app->post('/getassistsandabsenses',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $jwt = $params["jwt"];
+    $classid = $params["classid"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getAssistsAndAbsenses($classid);
     $response->getBody()->write(json_encode($rv));
     return $response;
 });

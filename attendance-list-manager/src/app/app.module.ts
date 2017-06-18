@@ -25,6 +25,7 @@ import { StudentsListPage } from "../pages/students-list-page/students-list-page
 import { ClassroomsListPage } from "../pages/classrooms-list-page/classrooms-list-page";
 import { ClassesGridPage } from "../pages/classes-grid-page/classes-grid-page";
 import { TeachersListPage } from "../pages/teachers-list-page/teachers-list-page";
+import { AssistAndAbsences } from "../pages/assist-and-absences/assist-and-absences";
 
 import { Vibration } from '@ionic-native/vibration';
 import { NativeAudio } from '@ionic-native/native-audio';
@@ -75,6 +76,7 @@ import { ModifyUserComponent } from "../components/modify-user-component/modify-
     ClassroomsListPage,
     ClassesGridPage,
     TeachersListPage,
+    AssistAndAbsences,
   ],
   imports: [
     BrowserModule,
@@ -114,7 +116,7 @@ import { ModifyUserComponent } from "../components/modify-user-component/modify-
     ClassesGridPage,
     TeachersListPage,
     UpdateQuizComponent,
-    
+    AssistAndAbsences,
   ],
   providers: [
     StatusBar,
