@@ -1,5 +1,5 @@
 <ion-header>
-   <ion-navbar>
+   <ion-navbar color="primary">
       <button ion-button menuToggle left>
           <ion-icon name="menu"></ion-icon>
       </button>
@@ -13,7 +13,7 @@
   <div>
   </div>
 
-  <ion-item class="fondo">
+  <ion-item >
     seleccionar encuesta
     <ion-select  [(ngModel)]="encuestaSeleccionada" >
       <ion-option  *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: id_encuesta" [value] = "encuesta.id_encuesta">{{encuesta.descripcion}}</ion-option>
