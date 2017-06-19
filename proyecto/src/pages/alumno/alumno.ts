@@ -5,7 +5,6 @@ import { servicioAuth } from '../servicioAuth/servicioAuth';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { AlumnoEncuestasPage } from "../alumno-encuestas/alumno-encuestas";
-import { EncuestaPage } from '../encuesta/encuesta';
 /**
  * Generated class for the Alumno page.
  *

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
-import { EncuestaPage } from '../encuesta/encuesta';
 import { Events } from 'ionic-angular';
 
 /**
