@@ -38,7 +38,7 @@ export class servicioAuth {
 
                     // Si existe el usuario en la base de datos SQL entro.
                     if (usuario) {
-                        this.currentUser = new User(usuario.id_usuario, usuario.usuario, usuario.clave, usuario.tipo_usuario);
+                        this.currentUser = new User(usuario.id_usuario, usuario.usuario, usuario.clave, usuario.tipo_usuario, usuario.imagen);
                         observer.next(true);
                     } else {
                         observer.next(false);
