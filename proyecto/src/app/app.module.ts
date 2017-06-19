@@ -56,6 +56,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import {Miubicacion} from "../pages/miubicacion/miubicacion";
 import { Geolocation } from '@ionic-native/geolocation';
 import { AgmCoreModule } from '@agm/core';
+import { AcercaDePage } from '../pages/acerca-de-page/acerca-de-page';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { AgmCoreModule } from '@agm/core';
     Grafico2,
     Grafico3,
     AlumnoCurso,
-    Miubicacion
+    Miubicacion,
+    AcercaDePage
   ],
   imports: [
     BrowserModule,
@@ -137,7 +139,8 @@ import { AgmCoreModule } from '@agm/core';
     Grafico2,
     Grafico3,
     AlumnoCurso,
-    Miubicacion
+    Miubicacion,
+    AcercaDePage
       ],
   providers: [
     StatusBar,

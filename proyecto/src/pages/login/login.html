@@ -58,8 +58,11 @@
                 Usuarios Test
             </button>
         </ion-buttons>
-
-        <ion-title *ngIf="device.model">{{device.model}} - {{device.platform}}</ion-title>
+        <ion-buttons end right>
+            <button ion-button icon-only (tap)="acercaDe()">
+                <ion-icon name="ios-information-circle-outline"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 
 </ion-footer>

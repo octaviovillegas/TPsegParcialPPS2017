@@ -9,6 +9,7 @@ import { NativeAudio } from '@ionic-native/native-audio';
 import 'rxjs/Rx';
 import { Vibration } from '@ionic-native/vibration';
 import { ActionSheetController } from 'ionic-angular';
+import { AcercaDePage } from '../acerca-de-page/acerca-de-page';
 
 @Component({
     selector: 'page-login',
@@ -247,6 +248,15 @@ export class Login {
         });
 
         actionSheet.present();
+    }
+
+    acercaDe () {
+
+        this.navCtrl.push(AcercaDePage, null, {
+            direction: 'forward',
+            animation: 'ios-transition'
+        });
+
     }
 
 }
