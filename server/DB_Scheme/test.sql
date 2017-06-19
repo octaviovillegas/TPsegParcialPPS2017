@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-06-2017 a las 02:30:12
+-- Tiempo de generación: 19-06-2017 a las 03:55:27
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -33,21 +33,22 @@ CREATE TABLE `addresses` (
   `floor` varchar(50) NOT NULL,
   `department` varchar(50) NOT NULL,
   `clarification` text NOT NULL,
-  `city` varchar(50) NOT NULL
+  `city` varchar(50) NOT NULL,
+  `userid` bigint(18) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `addresses`
 --
 
-INSERT INTO `addresses` (`addressid`, `street`, `number`, `floor`, `department`, `clarification`, `city`) VALUES
-(0, 'Calle', '12357184', 'Piso', 'Departamento', 'Aclaración', 'Localidad'),
-(1, '9 de Julio', '2722', 'PB', '', 'Es un Bar', 'Lanus'),
-(2, '9 de Julio', '1510', 'PB', 'Local', 'Es un local', 'Lanus'),
-(12, 'Falsa', '231', 'PB', 'A', 'Aclaración', 'Lanus'),
-(19, '9 de Julio', '1824', '', '', '', 'Lanús'),
-(20, 'Gral. Arias', '1824', '', '', 'Estadio de fútbol', 'Lanús'),
-(25, '2 de mayo', '3524', '', '', 'Club Social', 'Lanús Oeste');
+INSERT INTO `addresses` (`addressid`, `street`, `number`, `floor`, `department`, `clarification`, `city`, `userid`) VALUES
+(0, 'Calle', '12357184', 'Piso', 'Departamento', 'Aclaración', 'Localidad', 1),
+(1, '9 de Julio', '2722', 'PB', '', 'Es un Bar', 'Lanus', 2),
+(2, '9 de Julio', '1510', 'PB', 'Local', 'Es un local', 'Lanus', 3),
+(12, 'Falsa', '231', 'PB', 'A', 'Aclaración', 'Lanus', 4),
+(19, '9 de Julio', '1824', '', '', '', 'Lanús', 11),
+(20, 'Gral. Arias', '1824', '', '', 'Estadio de fútbol', 'Lanús', 12),
+(25, '2 de mayo', '3524', '', '', 'Club Social', 'Lanús Oeste', 17);
 
 -- --------------------------------------------------------
 
@@ -76,6 +77,14 @@ CREATE TABLE `attendancelistitems` (
   `attendancelistid` bigint(18) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `attendancelistitems`
+--
+
+INSERT INTO `attendancelistitems` (`attendancelistitemid`, `studentid`, `present`, `attendancelistid`) VALUES
+(7, 11, 1, 4),
+(8, 12, 0, 4);
+
 -- --------------------------------------------------------
 
 --
@@ -88,6 +97,13 @@ CREATE TABLE `attendancelists` (
   `creationdate` date NOT NULL,
   `ownerid` bigint(18) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `attendancelists`
+--
+
+INSERT INTO `attendancelists` (`attendancelistid`, `classid`, `creationdate`, `ownerid`) VALUES
+(4, 1, '2017-06-19', 3);
 
 -- --------------------------------------------------------
 
@@ -405,7 +421,6 @@ CREATE TABLE `users` (
   `rolid` bigint(18) NOT NULL,
   `firstname` varchar(100) NOT NULL,
   `lastname` varchar(50) NOT NULL,
-  `addressid` bigint(18) NOT NULL,
   `filenumber` bigint(18) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -413,14 +428,14 @@ CREATE TABLE `users` (
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`userid`, `username`, `email`, `password`, `rolid`, `firstname`, `lastname`, `addressid`, `filenumber`) VALUES
-(1, 'EjemploAdministrator', 'admin@admin.com', '123456', 1, 'Ejemplo', 'Administrador', 0, 111111),
-(2, 'EjemploTeacher', 'teacher@teacher.com', '123456', 2, 'Ejemplo', 'Profesor', 1, 2222),
-(3, 'EjemploAdministrative', 'administrative@administrative.com', '123456', 3, 'Ejemplo', 'Administrativo', 2, 0),
-(4, 'EjemploStudent', 'student@student.com', '123456', 4, 'Ejemplo', 'Alumno', 12, 35468),
-(11, 'NicoCabrera', 'nicolascabrera@yahoo.com.ar', '123456', 4, 'Nicolás', 'Cabrera', 19, 105987),
-(12, 'feden91', 'feden@feden.com', '123456', 4, 'Federico', 'Nuñez', 20, 100321),
-(17, 'RFonte', 'ruben@fonte.com', '123456', 2, 'Rubén', 'Fonte', 25, 0);
+INSERT INTO `users` (`userid`, `username`, `email`, `password`, `rolid`, `firstname`, `lastname`, `filenumber`) VALUES
+(1, 'EjemploAdministrator', 'admin@admin.com', '123456', 1, 'Ejemplo', 'Administrador', 111111),
+(2, 'EjemploTeacher', 'teacher@teacher.com', '123456', 2, 'Ejemplo', 'Profesor', 2222),
+(3, 'EjemploAdministrative', 'administrative@administrative.com', '123456', 3, 'Ejemplo', 'Administrativo', 0),
+(4, 'EjemploStudent', 'student@student.com', '123456', 4, 'Ejemplo', 'Alumno', 35468),
+(11, 'NicoCabrera', 'nicolascabrera@yahoo.com.ar', '123456', 4, 'Nicolás', 'Cabrera', 105987),
+(12, 'feden91', 'feden@feden.com', '123456', 4, 'Federico', 'Nuñez', 100321),
+(17, 'RFonte', 'ruben@fonte.com', '123456', 2, 'Rubén', 'Fonte', 0);
 
 --
 -- Índices para tablas volcadas
@@ -430,7 +445,8 @@ INSERT INTO `users` (`userid`, `username`, `email`, `password`, `rolid`, `firstn
 -- Indices de la tabla `addresses`
 --
 ALTER TABLE `addresses`
-  ADD PRIMARY KEY (`addressid`);
+  ADD PRIMARY KEY (`addressid`),
+  ADD KEY `userid` (`userid`);
 
 --
 -- Indices de la tabla `answers`
@@ -544,8 +560,7 @@ ALTER TABLE `surveys`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`userid`),
-  ADD KEY `rolid` (`rolid`),
-  ADD KEY `addressid` (`addressid`);
+  ADD KEY `rolid` (`rolid`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -555,7 +570,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `addressid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `addressid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT de la tabla `answers`
 --
@@ -565,12 +580,12 @@ ALTER TABLE `answers`
 -- AUTO_INCREMENT de la tabla `attendancelistitems`
 --
 ALTER TABLE `attendancelistitems`
-  MODIFY `attendancelistitemid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `attendancelistitemid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `attendancelists`
 --
 ALTER TABLE `attendancelists`
-  MODIFY `attendancelistid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `attendancelistid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `classes`
 --
@@ -630,10 +645,16 @@ ALTER TABLE `surveys`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `userid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `addresses`
+--
+ALTER TABLE `addresses`
+  ADD CONSTRAINT `addresses_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `answers`
@@ -704,8 +725,7 @@ ALTER TABLE `surveys`
 -- Filtros para la tabla `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`rolid`) REFERENCES `roles` (`rolid`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`addressid`) REFERENCES `addresses` (`addressid`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`rolid`) REFERENCES `roles` (`rolid`) ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

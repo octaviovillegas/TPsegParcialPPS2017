@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { Survey } from "../../app/entities/survey";
 import { AppService } from "../../providers/app-service";
 import { Response } from "@angular/http";
 import { Storage } from "@ionic/storage";
 import { NavController, NavParams } from 'ionic-angular';
 import { HomePage } from "../../pages/home/home";
-import { Option } from "../../app/entities/option";
 import { Vibration } from '@ionic-native/vibration';
 import { ToastController, AlertController } from "ionic-angular";
 

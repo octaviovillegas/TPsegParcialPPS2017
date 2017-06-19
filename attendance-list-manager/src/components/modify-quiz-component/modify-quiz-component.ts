@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
-import { Survey } from "../../app/entities/survey";
 import { AppService } from "../../providers/app-service";
 import { Response } from "@angular/http";
 import { Storage } from "@ionic/storage";
-import { Option } from "../../app/entities/option";
 import { NavController} from 'ionic-angular';
-import { UpdateQuizComponent } from '../update-quiz-component/update-quiz-component';
 import { UpdateQuizContainerPage } from "../../pages/update-quiz-container-page/update-quiz-container-page";
 @Component({
   selector: 'modify-quiz-component',
