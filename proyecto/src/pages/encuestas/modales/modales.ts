@@ -5,7 +5,7 @@ import { ModalController, ViewController } from 'ionic-angular';
 import {Http} from '@angular/http';
 
 @Component({
-  selector: 'page-modales',
+  selector: 'page-Modales',
   templateUrl: 'modales.html'
 })
 

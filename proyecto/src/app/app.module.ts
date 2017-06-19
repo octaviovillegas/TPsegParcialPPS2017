@@ -11,12 +11,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {Login} from "../pages/login/login";
 import {Administrador} from "../pages/administrador/administrador";
 import {Administrativo} from "../pages/administrativo/administrativo";
-import {Estadisticas} from "../pages/estadisticas/estadisticas";
 import { HttpModule } from '@angular/http';
 import { servicioAuth } from '../pages/servicioAuth/servicioAuth';
 import { Alumno } from "../pages/alumno/alumno";
 import { AlumnoEncuestasPage } from '../pages/alumno-encuestas/alumno-encuestas';
-import { EncuestaPage } from '../pages/encuesta/encuesta';
 import {Profesor} from "../pages/profesor/profesor";
 import {modalEncuesta} from '../pages/modalEncuesta/modalEncuesta';
 import {firebaseconfig} from '../pages/firebase/firebase-config';
@@ -25,7 +23,6 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AuthData } from '../providers/auth-data';
 import {Menu} from "../pages/menu/menu";
-import {Encuestas} from '../pages/encuestas/encuestas';
 import {GrillaAdministrador} from "../pages/grillas/grilla-administrador/grilla-administrador";
 import {GrillaAdministrativo} from "../pages/grillas/grilla-administrativo/grilla-administrativo";
 import {GrillaAlumno} from "../pages/grillas/grilla-alumno/grilla-alumno";
@@ -67,10 +64,8 @@ import { AgmCoreModule } from '@agm/core';
     Login,
     Administrador,
     Administrativo,
-    Estadisticas,
     Alumno,
     AlumnoEncuestasPage,
-    EncuestaPage,
     Profesor,
     Menu,
     GrillaProfesor,
@@ -114,10 +109,8 @@ import { AgmCoreModule } from '@agm/core';
     Login,
     Administrador,
     Administrativo,
-    Estadisticas,
     Alumno,
     AlumnoEncuestasPage,
-    EncuestaPage,
     Profesor,
     Menu,
     GrillaProfesor,

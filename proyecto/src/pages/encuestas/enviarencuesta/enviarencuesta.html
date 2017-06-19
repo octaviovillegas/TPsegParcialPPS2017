@@ -6,24 +6,36 @@
     <ion-title>Profesor: {{usuarioLogueado.usuario}}</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content class="fondo">
+<ion-content>
   <ion-list>
       <h1> Bienvenido al asignador de encuestas</h1>
   </ion-list>
   <div>
   </div>
 
+<<<<<<< HEAD
   <ion-item >
     seleccionar encuesta
     <ion-select  [(ngModel)]="encuestaSeleccionada" >
       <ion-option  *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: id_encuesta" [value] = "encuesta.id_encuesta">{{encuesta.descripcion}}</ion-option>
+=======
+  <ion-item>
+    seleccionar encuesta
+    <ion-select [(ngModel)]="encuestaSeleccionada" >
+      <ion-option *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: id_encuesta" [value] = "encuesta.id_encuesta">{{encuesta.descripcion}}</ion-option>
+>>>>>>> b7a24ee02fec497a813112adbf4a59125582dce2
     </ion-select>
   </ion-item>
  
   <ion-item>
         seleccionar curso
+<<<<<<< HEAD
     <ion-select [(ngModel)]="cursoSeleccionado">
       <ion-option  *ngFor="let curso of listaCursos; let i = index; trackBy: id_curso" [value] = "curso.id_curso">{{curso.descripcion}}</ion-option>
+=======
+    <ion-select [(ngModel)]="cursoSeleccionado" >
+      <ion-option *ngFor="let curso of listaCursos; let i = index; trackBy: id_curso" [value] = "curso.id_curso">{{curso.descripcion}}</ion-option>
+>>>>>>> b7a24ee02fec497a813112adbf4a59125582dce2
     </ion-select>
   </ion-item>
 <button ion-button color="primary" (click)="EnviarEncuesta()">

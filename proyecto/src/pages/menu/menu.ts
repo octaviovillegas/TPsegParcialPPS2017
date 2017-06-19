@@ -11,7 +11,6 @@ import {GrillaAdministrador} from "../grillas/grilla-administrador/grilla-admini
 import {GrillaAdministrativo} from "../grillas/grilla-administrativo/grilla-administrativo";
 import {GrillaAlumno} from "../grillas/grilla-alumno/grilla-alumno";
 import {GrillaProfesor} from "../grillas/grilla-profesor/grilla-profesor";
-import {Encuestas} from '../encuestas/encuestas';
 import {GenerarEncuesta} from '../encuestas/generarencuesta/generarencuesta';
 import {EnviarEncuesta} from '../encuestas/enviarencuesta/enviarencuesta';
 import {GrillaComision} from "../grillas/grilla-comision/grilla-comision";

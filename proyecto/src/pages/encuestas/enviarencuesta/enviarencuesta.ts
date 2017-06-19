@@ -7,7 +7,7 @@ import { Toast } from '@ionic-native/toast';
 import { NativeAudio } from '@ionic-native/native-audio';
 
 @Component({
-  selector: 'page-enviarencuesta',
+  selector: 'page-Encuestas',
   templateUrl: 'enviarencuesta.html'
 })
 export class EnviarEncuesta {
