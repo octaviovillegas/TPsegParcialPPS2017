@@ -6,6 +6,7 @@ import {Login} from "../pages/login/login";
 import { TabsPage } from '../pages/tabs/tabs';
 import { GrillaComision } from '../pages/grillas/grilla-comision/grilla-comision';
 import {Profesor} from "../pages/profesor/profesor";
+import {Encuestas} from '../pages/encuestas/encuestas';
 
 @Component({
   templateUrl: 'app.html'

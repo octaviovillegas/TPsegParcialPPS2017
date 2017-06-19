@@ -1,51 +1,29 @@
 <ion-header>
-   <ion-navbar color="primary">
+   <ion-navbar>
       <button ion-button menuToggle left>
           <ion-icon name="menu"></ion-icon>
       </button>
     <ion-title>Profesor: {{usuarioLogueado.usuario}}</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content>
+<ion-content class="fondo">
   <ion-list>
       <h1> Bienvenido al asignador de encuestas</h1>
   </ion-list>
   <div>
   </div>
 
-<<<<<<< HEAD
-  <ion-item >
+  <ion-item class="fondo">
     seleccionar encuesta
-<<<<<<< HEAD
     <ion-select  [(ngModel)]="encuestaSeleccionada" >
       <ion-option  *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: id_encuesta" [value] = "encuesta.id_encuesta">{{encuesta.descripcion}}</ion-option>
-=======
-  <ion-item>
-    seleccionar encuesta
-    <ion-select [(ngModel)]="encuestaSeleccionada" >
-      <ion-option *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: id_encuesta" [value] = "encuesta.id_encuesta">{{encuesta.descripcion}}</ion-option>
->>>>>>> b7a24ee02fec497a813112adbf4a59125582dce2
-=======
-    <ion-select class="fondo" [(ngModel)]="encuestaSeleccionada" >
-      <ion-option class="fondo" *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: id_encuesta" [value] = "encuesta.id_encuesta">{{encuesta.descripcion}}</ion-option>
->>>>>>> parent of e9b9e27... estilos
     </ion-select>
   </ion-item>
  
   <ion-item>
         seleccionar curso
-<<<<<<< HEAD
-<<<<<<< HEAD
     <ion-select [(ngModel)]="cursoSeleccionado">
       <ion-option  *ngFor="let curso of listaCursos; let i = index; trackBy: id_curso" [value] = "curso.id_curso">{{curso.descripcion}}</ion-option>
-=======
-    <ion-select [(ngModel)]="cursoSeleccionado" >
-      <ion-option *ngFor="let curso of listaCursos; let i = index; trackBy: id_curso" [value] = "curso.id_curso">{{curso.descripcion}}</ion-option>
->>>>>>> b7a24ee02fec497a813112adbf4a59125582dce2
-=======
-    <ion-select [(ngModel)]="cursoSeleccionado" class="fondo">
-      <ion-option class="fondo" *ngFor="let curso of listaCursos; let i = index; trackBy: id_curso" [value] = "curso.id_curso">{{curso.descripcion}}</ion-option>
->>>>>>> parent of e9b9e27... estilos
     </ion-select>
   </ion-item>
 <button ion-button color="primary" (click)="EnviarEncuesta()">

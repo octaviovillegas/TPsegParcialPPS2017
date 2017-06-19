@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import 'rxjs/Rx';
 import { NavController,ViewController,NavParams,ModalController } from 'ionic-angular';
+import {Encuestas} from '../encuestas/encuestas';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
 
 @Component({
