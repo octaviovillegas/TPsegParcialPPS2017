@@ -4,7 +4,6 @@ import { servicioAuth } from '../servicioAuth/servicioAuth';
 import { User } from '../servicioAuth/user';
 import { AuthData } from '../../providers/auth-data';
 import { Menu } from '../menu/menu';
-import { Device } from '@ionic-native/device';
 import { NativeAudio } from '@ionic-native/native-audio';
 import 'rxjs/Rx';
 import { Vibration } from '@ionic-native/vibration';
@@ -25,15 +24,13 @@ export class Login {
         clave: ""
     }
 
-    private device: Device;
     public loading: Loading;
 
     constructor(public navCtrl: NavController, private auth: servicioAuth,
         private alertCtrl: AlertController, private loadingCtrl: LoadingController,
-        public authData: AuthData, private dev: Device,private nativeAudio: NativeAudio,public vibration:Vibration,
+        public authData: AuthData, private nativeAudio: NativeAudio,public vibration:Vibration,
         public actionSheetCtrl: ActionSheetController)
         {
-        this.device = dev;
         this.nativeAudio.preloadSimple('uniqueId1', 'assets/okLogin.mp3');
         this.nativeAudio.preloadSimple('errlogin', 'assets/errLogin.mp3');
         }

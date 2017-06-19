@@ -18,6 +18,10 @@ Ionic pages and navigation.
     <p>Somo el grupo de trabajo que desarrolló la aplicación de encuestas.</p>
     <p>El desarrollo se implementó utilizando: Ionic 2 con TypeScript.</p>
     <p>Las animaciones están hechas con la librería: Animate.css (http://daneden.me/animate).</p>
+    
+    <p *ngIf="device.model">Dispositivo: {{device.model}}</p>
+    <p *ngIf="device.model">Plataforma: {{device.platform}}</p>
+
 
     <ion-list>
         <ion-list-header>
