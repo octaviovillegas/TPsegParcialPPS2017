@@ -1,5 +1,5 @@
 <ion-header>
-   <ion-navbar>
+   <ion-navbar color="primary">
       <button ion-button menuToggle left>
           <ion-icon name="menu"></ion-icon>
       </button>
@@ -20,15 +20,15 @@
     </ion-select>
   </ion-item>
  
-  <ion-item>
+  <ion-item class="fondo">
         seleccionar curso
     <ion-select [(ngModel)]="cursoSeleccionado">
       <ion-option  *ngFor="let curso of listaCursos; let i = index; trackBy: id_curso" [value] = "curso.id_curso">{{curso.descripcion}}</ion-option>
     </ion-select>
   </ion-item>
-<button ion-button color="primary" (click)="EnviarEncuesta()">
-        <ion-icon name="plus"></ion-icon>
-        Enviar encuesta 
-      </button>
+  <br>
+  <br>
+&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="EnviarEncuesta()">Enviar Encuesta</a>
+
 
 </ion-content>
