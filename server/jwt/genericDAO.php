@@ -155,30 +155,14 @@ class GenericDAO
 
 			$couldBegin = $db->beginTransaction();
 			
-			$sql =	"insert into addresses
-					(street,number,floor,department,clarification,city)
-					values
-					(:street,:number,:floor,:department,:clarification,:city)";
-			$statement = $db->sendQuery($sql);
-			$statement->bindValue(":street", $user["street"], PDO::PARAM_STR);
-			$statement->bindValue(":number", $user["number"], PDO::PARAM_INT);
-			$statement->bindValue(":floor", $user["floor"], PDO::PARAM_STR);
-			$statement->bindValue(":department", $user["department"], PDO::PARAM_STR);
-			$statement->bindValue(":clarification", $user["clarification"], PDO::PARAM_STR);
-			$statement->bindValue(":city", $user["city"], PDO::PARAM_STR);
-
-			$couldInsertUser = $statement->execute();
-
-			$addressId = $db->lastInsertId();
-
 			//find rol id by code
 			$findRolId = "select rolid from roles where code = '" .  $user["rol"] . "'"; 
 			$statement = $db->sendQuery($findRolId);
 			$couldFindRolId = $statement->execute();
 			$rolId = $statement->fetchAll(PDO::PARAM_STR);
 
-			$sql2 = "insert into users(username,email,password,rolid,firstname,lastname,addressid,filenumber) 
-					 values (:username,:email,:password,:rolid,:firstname,:lastname,:addressid,:filenumber)";
+			$sql2 = "insert into users(username,email,password,rolid,firstname,lastname,filenumber) 
+					 values (:username,:email,:password,:rolid,:firstname,:lastname,:filenumber)";
 
 			$statement = $db->sendQuery($sql2);
 			$statement->bindValue(":username", $user["username"], PDO::PARAM_STR);
@@ -188,10 +172,26 @@ class GenericDAO
 			$statement->bindValue(":password", $user["password"], PDO::PARAM_STR);
 			$statement->bindValue(":filenumber", $user["filenumber"], PDO::PARAM_STR);
 			$statement->bindValue(":rolid", $rolId[0]["rolid"], PDO::PARAM_STR);
-			$statement->bindValue(":addressid", $addressId, PDO::PARAM_STR);
 			
 
 			$couldSaveUser = $statement->execute();
+
+			$userId = $db->lastInsertId();
+
+			$sql =	"insert into addresses
+					(street,number,floor,department,clarification,city,userid)
+					values
+					(:street,:number,:floor,:department,:clarification,:city,:userid)";
+			$statement = $db->sendQuery($sql);
+			$statement->bindValue(":street", $user["street"], PDO::PARAM_STR);
+			$statement->bindValue(":number", $user["number"], PDO::PARAM_INT);
+			$statement->bindValue(":floor", $user["floor"], PDO::PARAM_STR);
+			$statement->bindValue(":department", $user["department"], PDO::PARAM_STR);
+			$statement->bindValue(":clarification", $user["clarification"], PDO::PARAM_STR);
+			$statement->bindValue(":city", $user["city"], PDO::PARAM_STR);
+			$statement->bindValue(":userid", $userId, PDO::PARAM_INT);
+
+			$couldInsertUser = $statement->execute();
 
 			$db->commit();
 			return true;
@@ -240,7 +240,8 @@ public static function eliminateUser($userid){
 			$sql = "select s.surveyid , s.title, u.username, u.userid, s.creationdate, s.enddate
 					from surveys as s
 					join users as u on u.userid = s.ownerid
-					where s.enddate >= " . $today . " or s.enddate = 0000-00-00 and s.waseliminated = false" ;
+					where s.enddate >= " . $today . " or s.enddate = 0000-00-00 and s.waseliminated = false
+					order by s.creationdate desc";
 			$statement = $db->sendQuery($sql);
 			 $statement->execute();
 			 $rv = $statement->fetchAll(PDO::PARAM_STR);
