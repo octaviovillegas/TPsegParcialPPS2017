@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import { AppService } from "../../providers/app-service";
+import { Response } from "@angular/http";
+import { Storage } from "@ionic/storage";
+import { Vibration } from '@ionic-native/vibration';
+import { NavController} from 'ionic-angular';
+import {UpdateUseromponent} from "../update-user-component/update-user-component";
 
 /**
  * Generated class for the ModifyUserComponent component.
@@ -14,9 +20,26 @@ export class ModifyUserComponent {
 
   text: string;
 
-  constructor() {
+  users:Array<any>;
+  constructor( private appService: AppService, private storage: Storage, private navCtrl: NavController) {
     console.log('Hello ModifyUserComponent Component');
     this.text = 'Estás viendo el contenido del componente ModifyUserComponent';
-  }
+  this.storage.get("jwt")
+      .then((jwt) => {
+this.appService.getUserListToEliminate(jwt).then((response: Response) => {
+            if (response.status == 200) {
+              this.users = JSON.parse(response["_body"]);
+            } else {
+              console.log("error"); //No tiene permisos.
+            }
+          })
+            .catch((error) => console.log("error")); //Si por alguna razón el servidor no responde.
+         });
 
+
+
+}
+modificar(userid){
+  this.navCtrl.parent.push(UpdateUseromponent, { userid });
+}
 }

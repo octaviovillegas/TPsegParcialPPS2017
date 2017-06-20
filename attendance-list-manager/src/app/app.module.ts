@@ -44,9 +44,8 @@ import { UserManagerComponent } from "../components/user-manager-component/user-
 import { NewUserComponent } from "../components/new-user-component/new-user-component";
 import { DeleteUserComponent } from "../components/delete-user-component/delete-user-component";
 import { ModifyUserComponent } from "../components/modify-user-component/modify-user-component";
-import { QuestionListForStatisticsViewer } from "../components/question-list-for-statistics-viewer/question-list-for-statistics-viewer";
-
-export enum SurveyType {
+import {UpdateUseromponent} from "../components/update-user-component/update-user-component";
+import { QuestionListForStatisticsViewer } from "../components/question-list-for-statistics-viewer/question-list-for-statistics-viewer";export enum SurveyType {
     FreeAnswer = 1,
     Radiobuttons1Correct2Graphics,
     Radiobuttons1Graphic,
@@ -86,9 +85,9 @@ export enum SurveyType {
     ClassesGridPage,
     TeachersListPage,
     AssistAndAbsences,
-    QuestionListForStatisticsViewer,
-    StatisticsViewer,
-  ],
+   UpdateUseromponent,
+   QuestionListForStatisticsViewer,
+   StatisticsViewer,  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
@@ -128,9 +127,9 @@ export enum SurveyType {
     TeachersListPage,
     UpdateQuizComponent,
     AssistAndAbsences,
+    UpdateUseromponent,
     QuestionListForStatisticsViewer,
-    StatisticsViewer,
-  ],
+    StatisticsViewer,  ],
   providers: [
     StatusBar,
     SplashScreen,
