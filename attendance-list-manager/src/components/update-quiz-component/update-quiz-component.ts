@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Vibration } from '@ionic-native/vibration';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Option } from "../../app/entities/option";
+import { SurveyType } from "../../app/app.module";
 @Component({
   selector: 'update-quiz-component',
   templateUrl: 'update-quiz-component.html'
@@ -21,6 +22,8 @@ export class UpdateQuizComponent implements OnInit {
   haveOptions: boolean;
   haveEndDate: boolean;
   endDate: string;
+  haveRightAnswer: boolean;
+  onlyOneAnswer: string;
   options: Array<Option>;
   hideSpinner: boolean;
   disableDeleteButton: boolean;
@@ -36,7 +39,9 @@ export class UpdateQuizComponent implements OnInit {
       text: ["", [Validators.required]],
     });
     this.haveOptions = false;
+    this.haveRightAnswer = false;
     this.haveEndDate = false;
+    this.onlyOneAnswer = "Una";
     this.disableDeleteButton = true;
     this.surveyid = this.navPrms.get("surveyId");
     this.options = [];
@@ -57,6 +62,15 @@ export class UpdateQuizComponent implements OnInit {
       .catch((error) => {
         this.hideSpinner = true;
       });
+  }
+
+  haveRightAnswerOnChange() {
+    if (!this.haveRightAnswer) {
+      this.options.forEach(itemInOptions => {
+        itemInOptions.isRight = false;
+      });
+    }
+    console.log(this.options);
   }
 
   convertItemsInOptionsArray(options) {
@@ -84,15 +98,39 @@ export class UpdateQuizComponent implements OnInit {
       this.haveOptions = true;
       if (this.options.length > 2)
         this.disableDeleteButton = false;
+
+      switch (this.survey.surveytypeid) {
+        case SurveyType.Radiobuttons1Correct2Graphics:
+          this.onlyOneAnswer = "Una";
+          this.haveRightAnswer = true;
+          break;
+        case SurveyType.Radiobuttons1Graphic:
+          this.onlyOneAnswer = "Una";
+          this.haveRightAnswer = false;
+          break;
+        case SurveyType.Checkboxes1GraphicChooseNothing:
+          this.onlyOneAnswer = "Mas";
+          this.haveRightAnswer = false;
+          break;
+        case SurveyType.CheckboxesCorrects2GraphicsChooseNothing:
+          this.onlyOneAnswer = "Mas";
+          this.haveRightAnswer = true;
+          break;
+        default:
+          console.log("Oops!");
+          break;
+      }
+
+
     }
   }
 
 
-  showMessage(message: string): void {
+  showMessage(message: string, position: string = "middle"): void {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 3000,
-      position: "middle"
+      position: position
     });
     toast.present();
   }
@@ -117,7 +155,7 @@ export class UpdateQuizComponent implements OnInit {
             this.options.splice(index, 1);
             this.vibration.vibrate(500);
           } else {
-            this.getJwtForDeleteOption(option.optionId,index);
+            this.getJwtForDeleteOption(option.optionId, index);
           }
         }
       }]
@@ -125,23 +163,23 @@ export class UpdateQuizComponent implements OnInit {
     confirm.present();
   }
 
-  getJwtForDeleteOption(optionId,index) {
+  getJwtForDeleteOption(optionId, index) {
     this.hideSpinner = false;
     this.storage.get("jwt")
-      .then(jwt => this.deleteOptionById(jwt,optionId,index))
+      .then(jwt => this.deleteOptionById(jwt, optionId, index))
       .catch(() => this.appService.logOut());
   }
 
-  deleteOptionById(jwt,optionId,index) {
-    this.appService.deleteOption(jwt,optionId)
-     .then((response: Response) => {
+  deleteOptionById(jwt, optionId, index) {
+    this.appService.deleteOption(jwt, optionId)
+      .then((response: Response) => {
         if (response.status == 200) {
           if (this.options.length <= 3) {
-              this.disableDeleteButton = true;
-            }
-            this.options.splice(index, 1);
-            this.vibration.vibrate(500);
-            this.hideSpinner = true;
+            this.disableDeleteButton = true;
+          }
+          this.options.splice(index, 1);
+          this.vibration.vibrate(500);
+          this.hideSpinner = true;
         } else {
           console.log("No se pudo eliminar la opcion");
           this.hideSpinner = true;
@@ -160,12 +198,25 @@ export class UpdateQuizComponent implements OnInit {
     this.options.push(option);
   }
   //---------------//
-  haveOptionsOnChange() {
+  haveOptionsOnChange(e) {
     if (!this.haveOptions) {
+      if (this.findOlderItems()) {
+        console.log("Intento borrar");
+        this.getJwtForDeleteAllOptions();
+      }
       this.fillDefaultsNumberOfOptions()
     }
   }
 
+  findOlderItems() {
+    let rv: boolean = false;
+    this.options.forEach(element => {
+      if (element.optionId != 0) {
+        rv = true;
+      }
+    });
+    return rv;
+  }
   haveEndDateOnChange() {
     if (!this.haveEndDate) {
       this.endDate = "";
@@ -200,14 +251,34 @@ export class UpdateQuizComponent implements OnInit {
     confirm.present();
   }
 
+
   getJwtForUpdateSurvey() {
     this.storage.get("jwt")
       .then(jwt => this.updateSurvey(jwt))
       .catch(() => this.appService.logOut());
   }
 
+  getJwtForDeleteAllOptions() {
+    this.storage.get("jwt")
+      .then(jwt => this.deleteAllOptions(jwt))
+      .catch(() => this.appService.logOut());
+  }
+
+  deleteAllOptions(jwt) {
+    this.hideSpinner = false;
+    this.appService.deleteAllOptions(this.survey.questionid, jwt)
+      .then(val => {
+        this.showMessage("Respuestas Eliminadas");
+        this.hideSpinner = true;
+        this.nativeAudio.play('bien', () => console.log('ok'));
+
+      })
+      .catch(error => this.showMessage("Los datos no pudieron ser procesados, intentelo nuevamente..."));
+  }
+
 
   updateSurvey(jwt) {
+    let isValid = true;
     let survey = new Survey();
     survey.surveyId = this.surveyid;
     survey.endDate = this.endDate;
@@ -216,6 +287,36 @@ export class UpdateQuizComponent implements OnInit {
     survey.question.questionId = this.survey.questionid;
 
     if (this.haveOptions) {
+
+      if (this.onlyOneAnswer == "Una" && this.haveRightAnswer == true) {
+        survey.surveyTypeId = SurveyType.Radiobuttons1Correct2Graphics; // Tipo 1
+
+        let rightAnswers = 0;
+        this.options.forEach(itemInOptions => {
+          if (itemInOptions.isRight) {
+            rightAnswers++;
+          }
+        });
+        //Validando que tenga sólo una respuesta correcta.
+        if (rightAnswers != 1) {
+          this.showMessage("Debe seleccionar 1 repuesta como 'correcta'.", "bottom");
+          isValid = false;
+        }
+
+      }
+      else if (this.onlyOneAnswer == "Una" && this.haveRightAnswer == true) {
+        survey.surveyTypeId = SurveyType.Radiobuttons1Correct2Graphics; //Tipo 2
+      }
+      else if (this.onlyOneAnswer == "Una" && this.haveRightAnswer == false) {
+        survey.surveyTypeId = SurveyType.Radiobuttons1Graphic; //Tipo 3
+      }
+      else if (this.onlyOneAnswer == "Mas" && this.haveRightAnswer == false) {
+        survey.surveyTypeId = SurveyType.Checkboxes1GraphicChooseNothing; //Tipo 4
+      }
+      else if (this.onlyOneAnswer == "Mas" && this.haveRightAnswer == true) {
+        survey.surveyTypeId = SurveyType.CheckboxesCorrects2GraphicsChooseNothing; // Tipo 5
+      }
+
       this.options.forEach(itemInOptions => {
         let option = new Option();
         option.isRight = itemInOptions.isRight;
@@ -223,17 +324,21 @@ export class UpdateQuizComponent implements OnInit {
         option.optionId = itemInOptions.optionId;
         survey.question.options.push(option);
       });
-      console.log(survey);
+
+    } else {
+      survey.surveyTypeId = SurveyType.FreeAnswer;
     }
+    if (isValid) {
 
-    this.hideSpinner = false;
-    this.appService.modifySurvey(survey, jwt)
-      .then(val => {
-        this.showMessage("Encuesta Actualizada");
-        this.hideSpinner = true;
-        this.nativeAudio.play('bien', () => console.log('ok'));
+      this.hideSpinner = false;
+      this.appService.modifySurvey(survey, jwt)
+        .then(val => {
+          this.showMessage("Encuesta Actualizada");
+          this.hideSpinner = true;
+          this.nativeAudio.play('bien', () => console.log('ok'));
 
-      })
-      .catch(error => this.showMessage("Los datos no pudieron ser procesados, intentelo nuevamente..."));
+        })
+        .catch(error => this.showMessage("Los datos no pudieron ser procesados, intentelo nuevamente..."));
+    }
   }
 }

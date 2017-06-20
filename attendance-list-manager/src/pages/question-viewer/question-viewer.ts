@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Storage } from "@ionic/storage";
 import { Answer } from "../../app/entities/answerData";
 import { HomePage } from "../home/home";
+import { SurveyType } from "../../app/app.module";
+import { Option } from "../../app/entities/option";
 
 @Component({
   selector: 'page-question-viewer',
@@ -14,11 +16,11 @@ export class QuestionViewer implements OnInit {
 
   loadingPage: boolean;
   hideSpinner: boolean;
-  withoutOptions: boolean;
-  includesOptions: boolean;
-  uniqueRightAnswer: boolean;
+  freeAnswer: boolean;
+  withRadios: boolean;
+  withCheckboxes: boolean;
   survey: any;
-  options: Array<any>;
+  options: Array<Option>;
 
   form: FormGroup;
   form2: FormGroup;
@@ -30,9 +32,9 @@ export class QuestionViewer implements OnInit {
     this.loadingPage = true;
 
     //options container
-    this.includesOptions = false;
-    this.uniqueRightAnswer = false;
-    this.withoutOptions = false;
+    this.freeAnswer = false;
+    this.withRadios = false;
+    this.withCheckboxes = false;
 
     //Forms
     this.form = this.fb.group({
@@ -56,8 +58,6 @@ export class QuestionViewer implements OnInit {
         let body = JSON.parse(response["_body"]);
         this.setSurveyAndOptions(body.survey, body.options)
         this.setOptionsContainer();
-        console.log(this.survey);
-        console.log(this.options);
         this.loadingPage = false;
       })
       .catch(() => console.log("Error"))
@@ -69,34 +69,53 @@ export class QuestionViewer implements OnInit {
   }
 
   setOptionsContainer() {
-    let rightOptions = 0;
-    this.options.forEach(element => {
-      if (element.isright) {
-        rightOptions++;
-      }
-    });
 
-    if (rightOptions == 0 && (this.options.length == 0)) {
-      this.withoutOptions = true;
-    } else {
-      if (rightOptions == 1) {
-        this.uniqueRightAnswer = true;
-      }
+    switch (this.survey.surveytypeid) {
+      case SurveyType.FreeAnswer:
+        this.freeAnswer = true;
+        this.withRadios = false;
+        this.withCheckboxes = false;
+        break;
+      case SurveyType.Radiobuttons1Correct2Graphics:
+        this.freeAnswer = false;
+        this.withRadios = true;
+        this.withCheckboxes = false;
+        break;
+      case SurveyType.Radiobuttons1Graphic:
+        this.freeAnswer = false;
+        this.withRadios = true;
+        this.withCheckboxes = false;
+        break;
+      case SurveyType.Checkboxes1GraphicChooseNothing:
+        this.freeAnswer = false;
+        this.withRadios = false;
+        this.withCheckboxes = true;
+        break;
+      case SurveyType.CheckboxesCorrects2GraphicsChooseNothing:
+        this.freeAnswer = false;
+        this.withRadios = false;
+        this.withCheckboxes = true;
+        break;
+      default:
+        console.log("Oops!")
+        break;
     }
   }
 
   setSurveyAndOptions(survey, options) {
     this.survey = survey;
-    this.options = options;
+    this.convertItemsInOptionsArray(options);
   }
 
-  formToObject() {
-    this.hideSpinner = false;
-    let answer = new Answer();
-    answer.text = this.form.get("answer").value;
-    answer.surveyId = this.survey.surveyid;
-    answer.questionId = this.survey.questionid;
-    this.saveAnswer(answer);
+  convertItemsInOptionsArray(options) {
+    options.forEach(element => {
+      let option = new Option();
+      option.text = element.text;
+      option.isRight = false;
+      option.optionId = element.optionid;
+      option.questionId = element.questionid;
+      this.options.push(option);
+    });
   }
 
   saveAnswer(answer) {
@@ -120,27 +139,50 @@ export class QuestionViewer implements OnInit {
       });
   }
 
-  form2ToObject() {
+//In case that don't have options
+  saveTextAnswer() {
+    this.hideSpinner = false;
+    let answer = new Answer();
+    answer.text = this.form.get("answer").value;
+    answer.surveyId = this.survey.surveyid;
+    answer.questionId = this.survey.questionid;
+    this.saveAnswer(answer);
+  }
+//******************************
+
+
+ //In case that have options
+  saveRadioAnswer() {
     this.hideSpinner = false;
     let answer = new Answer();
     let optionId = this.form2.get("optionid").value;
     answer.optionIds.push(optionId);
     answer.questionId = this.survey.questionid;
     answer.surveyId = this.survey.surveyid;
+    answer.chooseNothing = false;
+    console.log(answer);
     this.saveAnswer(answer);
   }
 
-  sendData() {
+  saveCheckboxesAnswer() {
     this.hideSpinner = false;
+    let userChooseNothing = false;
     let answer = new Answer();
-    let optionId = this.form2.get("optionid").value;
     answer.surveyId = this.survey.surveyid;
     this.options.forEach(option => {
-      answer.optionIds.push(option.optionid);
+      if(option.isRight == true){
+        answer.optionIds.push(option.optionId);
+      }
     });
+    if(answer.optionIds.length == 0){
+      answer.chooseNothing = true;
+    }
     answer.questionId = this.survey.questionid;
     this.saveAnswer(answer);
   }
+  //*********************************************
+
+  
 
   goBack() {
     this.showMessage("La respuesta fué enviada con éxito");

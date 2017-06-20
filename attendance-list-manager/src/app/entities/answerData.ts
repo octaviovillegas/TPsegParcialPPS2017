@@ -5,7 +5,7 @@ export class Answer {
     userId:number;
     questionId:number;
     surveyId:number;
-
+    chooseNothing:boolean;
     constructor() {
         this.answerId = -1;
         this.text = "";
@@ -13,5 +13,6 @@ export class Answer {
         this.optionIds = [];
         this.questionId = -1;
         this.surveyId = -1;
+        this.chooseNothing = false;
     }
 }

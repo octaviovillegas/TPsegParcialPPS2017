@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AppService } from "../../providers/app-service";
-import { NavController } from 'ionic-angular'
-import { QuestionViewer } from "../../pages/question-viewer/question-viewer";
+import { NavController } from "ionic-angular";
+import { StatisticsViewer } from "../../pages/statistics-viewer/statistics-viewer";
 
 @Component({
-  selector: 'question-list-viewer-component',
-  templateUrl: 'question-list-viewer-component.html'
+  selector: 'question-list-for-statistics-viewer',
+  templateUrl: 'question-list-for-statistics-viewer.html'
 })
-export class QuestionListViewerComponent implements OnInit {
-  hideSpinner: boolean
+export class QuestionListForStatisticsViewer {
+
+   hideSpinner: boolean
   text: string;
   surveys: Array<any>;
 
@@ -30,6 +31,8 @@ export class QuestionListViewerComponent implements OnInit {
   }
 
   pushPage(survey){
-    this.navCtrl.parent.push(QuestionViewer,{surveyId: survey.surveyid});
+    console.log(survey.surveyid);
+    this.navCtrl.parent.push(StatisticsViewer,{surveyId: survey.surveyid});
   }
+
 }

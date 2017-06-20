@@ -18,6 +18,7 @@ import { QuestionListViewerComponent } from "../../components/question-list-view
 import { SubjectListComponent } from "../../components/subject-list-component/subject-list-component";
 import { AttendanceListManagerComponent } from "../../components/attendance-list-manager-component/attendance-list-manager-component";
 import { UserManagerComponent } from "../../components/user-manager-component/user-manager-component";
+import { QuestionListForStatisticsViewer } from "../../components/question-list-for-statistics-viewer/question-list-for-statistics-viewer";
 
 @Component({
   selector: 'page-registered-user',
@@ -148,7 +149,7 @@ export class RegisteredUserPage {
         this.rootComponent = UserManagerComponent;
         break;
       default:
-        this.rootComponent = QuestionListViewerComponent;
+        this.rootComponent = QuestionListForStatisticsViewer;
         break;
     }
     this.closeSideMenu();

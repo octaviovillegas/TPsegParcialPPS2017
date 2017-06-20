@@ -26,6 +26,7 @@ import { ClassroomsListPage } from "../pages/classrooms-list-page/classrooms-lis
 import { ClassesGridPage } from "../pages/classes-grid-page/classes-grid-page";
 import { TeachersListPage } from "../pages/teachers-list-page/teachers-list-page";
 import { AssistAndAbsences } from "../pages/assist-and-absences/assist-and-absences";
+import { StatisticsViewer } from "../pages/statistics-viewer/statistics-viewer";
 
 import { Vibration } from '@ionic-native/vibration';
 import { NativeAudio } from '@ionic-native/native-audio';
@@ -44,6 +45,13 @@ import { NewUserComponent } from "../components/new-user-component/new-user-comp
 import { DeleteUserComponent } from "../components/delete-user-component/delete-user-component";
 import { ModifyUserComponent } from "../components/modify-user-component/modify-user-component";
 import {UpdateUseromponent} from "../components/update-user-component/update-user-component";
+import { QuestionListForStatisticsViewer } from "../components/question-list-for-statistics-viewer/question-list-for-statistics-viewer";export enum SurveyType {
+    FreeAnswer = 1,
+    Radiobuttons1Correct2Graphics,
+    Radiobuttons1Graphic,
+    Checkboxes1GraphicChooseNothing,
+    CheckboxesCorrects2GraphicsChooseNothing
+}
 @NgModule({
   declarations: [
     MyApp,
@@ -78,7 +86,8 @@ import {UpdateUseromponent} from "../components/update-user-component/update-use
     TeachersListPage,
     AssistAndAbsences,
    UpdateUseromponent,
-  ],
+   QuestionListForStatisticsViewer,
+   StatisticsViewer,  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
@@ -119,7 +128,8 @@ import {UpdateUseromponent} from "../components/update-user-component/update-use
     UpdateQuizComponent,
     AssistAndAbsences,
     UpdateUseromponent,
-  ],
+    QuestionListForStatisticsViewer,
+    StatisticsViewer,  ],
   providers: [
     StatusBar,
     SplashScreen,
@@ -129,4 +139,6 @@ import {UpdateUseromponent} from "../components/update-user-component/update-use
     NativeAudio
   ]
 })
-export class AppModule {}
+export class AppModule {
+  
+}

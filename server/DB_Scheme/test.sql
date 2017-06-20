@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-06-2017 a las 03:55:27
+-- Tiempo de generación: 20-06-2017 a las 23:15:09
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -61,7 +61,8 @@ CREATE TABLE `answers` (
   `text` text NOT NULL,
   `userid` bigint(18) DEFAULT NULL,
   `questionid` bigint(18) NOT NULL,
-  `surveyid` bigint(18) NOT NULL
+  `surveyid` bigint(18) NOT NULL,
+  `choosenothing` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -215,7 +216,23 @@ INSERT INTO `options` (`optionid`, `text`, `isright`, `questionid`) VALUES
 (18, 'Soy el texto de una opción incorrecta', 0, 54),
 (22, 'HTML', 0, 56),
 (23, 'Javascript', 1, 56),
-(24, 'C#', 1, 56);
+(24, 'C#', 1, 56),
+(37, 'Incorrecta', 0, 61),
+(38, 'Correcta', 1, 61),
+(39, 'Incorrecta', 0, 61),
+(40, 'Guitarra', 0, 62),
+(41, 'Bajo', 0, 62),
+(42, 'Batería', 0, 62),
+(43, 'Teclado', 0, 62),
+(54, 'Perro', 1, 63),
+(55, 'Negro', 1, 63),
+(56, 'Rojo', 0, 63),
+(57, 'Verde', 0, 63),
+(58, 'Auto', 1, 63),
+(59, 'Blanco', 1, 63),
+(60, 'Casa', 1, 63),
+(61, 'Los Beattles', 0, 59),
+(62, 'Los Stones', 0, 59);
 
 -- --------------------------------------------------------
 
@@ -299,9 +316,14 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`questionid`, `text`, `surveyid`) VALUES
-(53, '¿Una pregunta?', 51),
-(54, '¿Una pregunta?', 52),
-(56, '¿Cuáles de los siguientes son lenguajes de programación?', 54);
+(53, '¿Una pregunta, la respuesta es libre?', 51),
+(54, '¿Una pregunta, dos opciones, una respuesta correcta, radios?', 52),
+(56, '¿Cuáles de los siguientes son lenguajes de programación?', 54),
+(59, '¿The Beattles or The Stones?', 57),
+(60, '¿Qué sabes hacer?', 58),
+(61, '¿Cuál es la respuesta correcta?', 59),
+(62, '¿Qué instrumentos tocaste alguna vez?', 60),
+(63, 'Seleccionar aquellas opciones que no son colores', 61);
 
 -- --------------------------------------------------------
 
@@ -395,17 +417,46 @@ CREATE TABLE `surveys` (
   `creationdate` date NOT NULL,
   `enddate` date NOT NULL,
   `ownerid` bigint(20) DEFAULT NULL,
-  `waseliminated` tinyint(1) NOT NULL DEFAULT '0'
+  `waseliminated` tinyint(1) NOT NULL DEFAULT '0',
+  `surveytypeid` bigint(18) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `surveys`
 --
 
-INSERT INTO `surveys` (`surveyid`, `title`, `creationdate`, `enddate`, `ownerid`, `waseliminated`) VALUES
-(51, 'Titulo de la encuesta Pofesor', '2017-06-02', '2030-08-04', 2, 0),
-(52, 'Titulo de la encuesta Administrador', '2017-06-02', '0000-00-00', 1, 0),
-(54, 'Titulo de otra encuesta Administrador', '2017-06-06', '0000-00-00', 1, 0);
+INSERT INTO `surveys` (`surveyid`, `title`, `creationdate`, `enddate`, `ownerid`, `waseliminated`, `surveytypeid`) VALUES
+(51, 'Titulo de la encuesta Pofesor', '2017-06-02', '2030-08-04', 2, 0, 1),
+(52, 'Titulo de la encuesta Administrador', '2017-06-02', '0000-00-00', 1, 0, 2),
+(54, 'Titulo de otra encuesta Administrador', '2017-06-06', '0000-00-00', 1, 0, 5),
+(57, 'Una pregunta, dos respuestas , ninguna correcta. Sólo opinión', '2017-06-20', '0000-00-00', 2, 0, 3),
+(58, 'Encuesta de libre respuesta hecha por el profesor', '2017-06-20', '0000-00-00', 2, 0, 1),
+(59, 'Una encuesta, 3 respuestas, 1 correcta, sólo elije una.', '2017-06-20', '0000-00-00', 2, 0, 2),
+(60, 'Selección múltiple, no hay respuesta correcta', '2017-06-20', '0000-00-00', 2, 0, 4),
+(61, 'Múltiples opciones, multiple seleccion, con N opciones correctas', '2017-06-20', '2017-08-01', 2, 0, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `surveytype`
+--
+
+CREATE TABLE `surveytype` (
+  `surveytypeid` bigint(18) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `surveytype`
+--
+
+INSERT INTO `surveytype` (`surveytypeid`, `name`, `description`) VALUES
+(1, 'FreeAnswer', 'El usuario ingresa la respuesta por medio de un textarea.'),
+(2, 'Radiobuttons1Correct2Graphics', 'La respuesta es por medio de opciones predefinidas y sólo se puede seleccionar una. Se utilizan radiobuttons. Existe una respuesta correcta'),
+(3, 'Radiobuttons1Graphic', 'La respuesta es por medio de opciones predefinidas y sólo se puede seleccionar una. No existe respuesta correcta, ya que se busca obtener la tendencia de opinión.'),
+(4, 'Checkboxes1GraphicChooseNothing', 'La respuesta es por medio de opciones predefinidas y se puede seleccionar todas o ninguna. No hay respuesta correcta.'),
+(5, 'CheckboxesCorrects2GraphicsChooseNothing', 'La respuesta es por medio de opciones predefinidas y se puede seleccionar todas o ninguna. Exite 1 o varias respuestas correctas, incluso la opción correcta podría llegar a ser no seleccionar ninguna.');
 
 -- --------------------------------------------------------
 
@@ -553,7 +604,14 @@ ALTER TABLE `subjects`
 --
 ALTER TABLE `surveys`
   ADD PRIMARY KEY (`surveyid`),
-  ADD KEY `ownerid` (`ownerid`);
+  ADD KEY `ownerid` (`ownerid`),
+  ADD KEY `surveytypeid` (`surveytypeid`);
+
+--
+-- Indices de la tabla `surveytype`
+--
+ALTER TABLE `surveytype`
+  ADD PRIMARY KEY (`surveytypeid`);
 
 --
 -- Indices de la tabla `users`
@@ -575,7 +633,7 @@ ALTER TABLE `addresses`
 -- AUTO_INCREMENT de la tabla `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `answerid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `answerid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT de la tabla `attendancelistitems`
 --
@@ -605,12 +663,12 @@ ALTER TABLE `divisions`
 -- AUTO_INCREMENT de la tabla `options`
 --
 ALTER TABLE `options`
-  MODIFY `optionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `optionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 --
 -- AUTO_INCREMENT de la tabla `optionsbyanswer`
 --
 ALTER TABLE `optionsbyanswer`
-  MODIFY `optionsbyanswerid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `optionsbyanswerid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT de la tabla `permissions`
 --
@@ -625,7 +683,7 @@ ALTER TABLE `permissionsbyrol`
 -- AUTO_INCREMENT de la tabla `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `questionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `questionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 --
 -- AUTO_INCREMENT de la tabla `studentsbyclass`
 --
@@ -640,7 +698,12 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT de la tabla `surveys`
 --
 ALTER TABLE `surveys`
-  MODIFY `surveyid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `surveyid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+--
+-- AUTO_INCREMENT de la tabla `surveytype`
+--
+ALTER TABLE `surveytype`
+  MODIFY `surveytypeid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
@@ -719,7 +782,8 @@ ALTER TABLE `studentsbyclass`
 -- Filtros para la tabla `surveys`
 --
 ALTER TABLE `surveys`
-  ADD CONSTRAINT `surveys_ibfk_1` FOREIGN KEY (`ownerid`) REFERENCES `users` (`userid`) ON DELETE SET NULL;
+  ADD CONSTRAINT `surveys_ibfk_1` FOREIGN KEY (`ownerid`) REFERENCES `users` (`userid`) ON DELETE SET NULL,
+  ADD CONSTRAINT `surveys_ibfk_2` FOREIGN KEY (`surveytypeid`) REFERENCES `surveytype` (`surveytypeid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `users`
