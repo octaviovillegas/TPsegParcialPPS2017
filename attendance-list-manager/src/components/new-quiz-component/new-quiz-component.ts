@@ -9,6 +9,7 @@ import { QuizManagerComponent } from '../quiz-manager-component/quiz-manager-com
 import { AlertController } from "ionic-angular";
 import { Vibration } from '@ionic-native/vibration';
 import { NativeAudio } from '@ionic-native/native-audio';
+import { SurveyType } from "../../app/app.module";
 
 
 @Component({
@@ -18,6 +19,8 @@ import { NativeAudio } from '@ionic-native/native-audio';
 export class NewQuizComponent {
   haveOptions: boolean;
   haveEndDate: boolean;
+  onlyOneAnswer: string;
+  haveRightAnswer: boolean;
   endDate: string;
   form: FormGroup;
   options: Array<Option>;
@@ -29,14 +32,16 @@ export class NewQuizComponent {
     this.nativeAudio.preloadSimple('bien', 'assets/sound/ok.mp3');
     this.nativeAudio.preloadSimple('error', 'assets/sound/2.mp3');
     this.form = this.fb.group({
-      Titulo: ["", [Validators.required]],
-      Pregunta: ["", [Validators.required]],
+      title: ["", [Validators.required]],
+      text: ["", [Validators.required]],
     });
 
     //Set initial configurations
     this.endDate = "";
     this.haveOptions = false;
     this.haveEndDate = false;
+    this.onlyOneAnswer = "Una";
+    this.haveRightAnswer = false;
     this.options = [];
     this.hideSpinner = true;
     this.disableDeleteButton = true;
@@ -52,7 +57,7 @@ export class NewQuizComponent {
     this.options.push(option1);
     this.options.push(option2);
   }
-  
+
 
   haveOptionsOnChange() {
     if (!this.haveOptions) {
@@ -66,22 +71,31 @@ export class NewQuizComponent {
     }
   }
 
+  haveRightAnswerOnChange() {
+    if (!this.haveRightAnswer) {
+      this.options.forEach(itemInOptions => {
+        itemInOptions.isRight = false;
+      });
+    }
+    console.log(this.options);
+  }
+
   showConfirm() {
     let confirm = this.alertCtrl.create({
       title: '¿Desea guardar la Encuesta?',
       message: '',
       buttons: [{
-          text: 'Cancelar',
-          handler: () => {}
-        },
-        {
-          text: 'Aceptar',
-          handler: () => {
-            this.getJwtForNewSurvey();
-            this.vibration.vibrate(500);
-          }
-        }]
-      });
+        text: 'Cancelar',
+        handler: () => { }
+      },
+      {
+        text: 'Aceptar',
+        handler: () => {
+          this.getJwtForNewSurvey();
+          this.vibration.vibrate(500);
+        }
+      }]
+    });
     confirm.present();
   }
 
@@ -94,39 +108,77 @@ export class NewQuizComponent {
 
 
   newSurvey(jwt) {
+    let isValid = true;
     let survey = new Survey();
     survey.endDate = this.endDate;
-    survey.title = this.form.get("Titulo").value;
-    survey.question.text = this.form.get("Pregunta").value;
+    survey.title = this.form.get("title").value;
+    survey.question.text = this.form.get("text").value;
 
     if (this.haveOptions) {
+
+      if (this.onlyOneAnswer == "Una" && this.haveRightAnswer == true) {
+        survey.surveyTypeId = SurveyType.Radiobuttons1Correct2Graphics; // Tipo 1
+
+        let rightAnswers = 0;
+        this.options.forEach(itemInOptions => {
+          if (itemInOptions.isRight) {
+            rightAnswers++;
+          }
+        });
+        //Validando que tenga sólo una respuesta correcta.
+        if (rightAnswers != 1) {
+          this.showErrorMessage("Debe seleccionar 1 repuesta como 'correcta'.", "bottom");
+          isValid = false;
+        }
+
+      }
+      else if (this.onlyOneAnswer == "Una" && this.haveRightAnswer == true) {
+        survey.surveyTypeId = SurveyType.Radiobuttons1Correct2Graphics; //Tipo 2
+      }
+      else if (this.onlyOneAnswer == "Una" && this.haveRightAnswer == false) {
+        survey.surveyTypeId = SurveyType.Radiobuttons1Graphic; //Tipo 3
+      }
+      else if (this.onlyOneAnswer == "Mas" && this.haveRightAnswer == false) {
+        survey.surveyTypeId = SurveyType.Checkboxes1GraphicChooseNothing; //Tipo 4
+      }
+      else if (this.onlyOneAnswer == "Mas" && this.haveRightAnswer == true) {
+        survey.surveyTypeId = SurveyType.CheckboxesCorrects2GraphicsChooseNothing; // Tipo 5
+      }
+
       this.options.forEach(itemInOptions => {
         let option = new Option();
         option.isRight = itemInOptions.isRight;
         option.text = itemInOptions.text;
         survey.question.options.push(option);
       });
+
+    } else {
+      survey.surveyTypeId = SurveyType.FreeAnswer;
     }
 
-    this.hideSpinner = false;
-    this.appService.newSurvey(survey, jwt)
-      .then(val => {
-        this.showErrorMessage("La encuesta se ha guardado exitosamente");
-        this.nativeAudio.play('bien', () => console.log('Encuesta guardada'));
-        this.navCtrl.setRoot(QuizManagerComponent);
-      })
-      .catch(error => {
-        this.showErrorMessage("Los datos no pudieron ser procesados, intentelo nuevamente...");
-        this.hideSpinner = true;
-      });
+
+    if (isValid) {
+      this.hideSpinner = false;
+
+      this.appService.newSurvey(survey, jwt)
+        .then(val => {
+          this.showErrorMessage("La encuesta se ha guardado exitosamente");
+          this.nativeAudio.play('bien', () => console.log('Encuesta guardada'));
+          this.navCtrl.setRoot(QuizManagerComponent);
+        })
+        .catch(error => {
+          this.showErrorMessage("Los datos no pudieron ser procesados, intentelo nuevamente...");
+          this.hideSpinner = true;
+        });
+    }
   }
 
 
-  showErrorMessage(message: string): void {
+  showErrorMessage(message: string, position: string = "middle"): void {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 3000,
-      position: "middle"
+      position: position,
     });
     toast.present();
   }
@@ -148,3 +200,4 @@ export class NewQuizComponent {
   }
   //---------------//
 }
+

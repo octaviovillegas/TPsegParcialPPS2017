@@ -1,0 +1,37 @@
+<ion-content>
+  <div [hidden]="!hideSpinner">
+    <ion-list>
+      <ion-list-header>
+        Estadisticas disponibles
+      </ion-list-header>
+      <ion-item *ngFor="let survey of surveys">
+
+        <ion-card>
+          <ion-card-header text-wrap>
+            {{survey.title}}
+          </ion-card-header>
+          <ion-list>
+            <ion-item>
+              <h2>Autor: {{survey.username}}</h2>
+              <p>Fecha de creación: {{survey.creationdate}}</p>
+              <p>Fecha de finalización: {{survey.enddate}}</p>
+            </ion-item>
+            <button ion-item color="success" (click)="pushPage(survey)">
+              <ion-icon name="stats" item-start></ion-icon>
+               Ver estadísticas
+            </button>
+          </ion-list>
+        </ion-card>
+
+      </ion-item>
+    </ion-list>
+  </div>
+  <div [hidden]="hideSpinner">
+      <div>
+        <ion-spinner></ion-spinner>
+      </div>
+      <div>
+        <p>Buscando encuestas ...</p>
+      </div>
+    </div>
+</ion-content>

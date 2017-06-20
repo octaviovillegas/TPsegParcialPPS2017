@@ -98,14 +98,15 @@ class GenericDAO
 			$couldBegin = $db->beginTransaction();
 			
 			$sql = "insert into surveys
-					(title,creationdate,enddate,ownerid) 
-					values (:title,:creationdate,:enddate,:ownerid)";
+					(title,creationdate,enddate,ownerid,surveytypeid) 
+					values (:title,:creationdate,:enddate,:ownerid,:surveytypeid)";
 
 			$statement = $db->sendQuery($sql);
 			$statement->bindValue(":title", $survey["title"], PDO::PARAM_STR);
 			$statement->bindValue(":creationdate", $survey["creationDate"], PDO::PARAM_STR);
 			$statement->bindValue(":enddate", $survey["endDate"], PDO::PARAM_STR);
 			$statement->bindValue(":ownerid", $userid, PDO::PARAM_INT);
+			$statement->bindValue(":surveytypeid", $survey["surveyTypeId"], PDO::PARAM_INT);
 
 			$couldInsertSurvey = $statement->execute();
 
@@ -259,7 +260,7 @@ public static function eliminateUser($userid){
 			$sql = "select s.surveyid , s.title, u.username, u.userid, s.creationdate, s.enddate,s.waseliminated
 					from surveys as s
 					join users as u on u.userid = s.ownerid
-					where  s.waseliminated=False and (s.enddate >= " . $today . " or s.enddate = 0000-00-00)and s.ownerid=".$usuarioid ;
+					where  s.waseliminated=False and (s.enddate >= " . $today . " or s.enddate = 0000-00-00)and s.ownerid=".$usuarioid . " order by s.creationdate desc";
 
 			$statement = $db->sendQuery($sql);
 
@@ -283,13 +284,14 @@ public static function modifySurvey($survey)
 		$couldBegin = $db->beginTransaction(); //Start transaction
 
 
-		$sql = "update surveys set title = :title, enddate = :enddate
+		$sql = "update surveys set title = :title, enddate = :enddate, surveytypeid = :surveytypeid
 				where surveyid = :surveyid";
 
 		$statement = $db->sendQuery($sql);
 		$statement->bindValue(":surveyid", $survey["surveyId"], PDO::PARAM_STR);
 		$statement->bindValue(":enddate", $survey["endDate"], PDO::PARAM_STR);
 		$statement->bindValue(":title", $survey["title"], PDO::PARAM_STR);
+		$statement->bindValue(":surveytypeid", $survey["surveyTypeId"], PDO::PARAM_INT);
 		$statement->execute();
 
 		$question = $survey["question"];
@@ -347,11 +349,24 @@ public static function modifySurvey($survey)
 		}catch(Exeption $ex){}
 	}
 
+	public static function deleteAllOptions($questionid){
+		try{
+			$db = GenericDAO::getPDO();
+			$sql = "delete from options
+			    	where questionid = " . $questionid;
+			$statement = $db->sendQuery($sql);
+			
+			$couldDeleteuser= $statement->execute();
+			return $couldDeleteuser;
+		}catch(Exeption $ex){}
+	}
+
 	public static function getSurveyById($surveyId){
 		try{
 			$db = GenericDAO::getPDO();
 
-			$sql = "select s.surveyid, s.title, q.questionid, q.text,s.enddate from surveys as s
+			$sql = "select s.surveyid, s.title, q.questionid, q.text,s.enddate,s.surveytypeid
+					from surveys as s
 					join questions as q on q.surveyid = s.surveyid
 					where s.surveyid = :surveyid";
 
@@ -385,14 +400,15 @@ public static function modifySurvey($survey)
 			$couldBegin = $db->beginTransaction();
 			
 			$sql =	"insert into answers
-					(text,userid,questionid,surveyid)
+					(text,userid,questionid,surveyid,choosenothing)
 					values
-					(:text,:userid,:questionid,:surveyid)";
+					(:text,:userid,:questionid,:surveyid,:choosenothing)";
 			$statement = $db->sendQuery($sql);
 			$statement->bindValue(":text", $answer["text"], PDO::PARAM_STR);
 			$statement->bindValue(":userid", $userid, PDO::PARAM_INT);
 			$statement->bindValue(":questionid", $answer["questionId"], PDO::PARAM_INT);
 			$statement->bindValue(":surveyid", $answer["surveyId"], PDO::PARAM_INT);
+			$statement->bindValue(":choosenothing", $answer["chooseNothing"], PDO::PARAM_INT);
 
 			$couldInsertAnswer = $statement->execute();
 

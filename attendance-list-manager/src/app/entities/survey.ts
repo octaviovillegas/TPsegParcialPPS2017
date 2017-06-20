@@ -1,4 +1,5 @@
 import { Question } from "./question";
+import { SurveyType } from "../app.module";
 
 
 export class Survey {
@@ -9,7 +10,8 @@ export class Survey {
     question:Question;
     ownerid:number;
     wasEliminated:boolean;
-
+    surveyTypeId:SurveyType;
+    
     constructor() {
         this.title = "";
         this.surveyId = 0;
@@ -18,5 +20,6 @@ export class Survey {
         this.question = new Question();
         this.ownerid = 0;
         this.wasEliminated = false;
+        this.surveyId = 0;
     }
 }

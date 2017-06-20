@@ -116,6 +116,16 @@ export class AppService {
     return this.http.post("http://localhost:80/jwt/saveanswer", jsonData, options).toPromise();
   }
 
+  deleteAllOptions(questionid, jwt) {
+    let data = { questionid, jwt };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/deletealloptions", jsonData, options).toPromise();
+  }
+
+  
+
   getAllDivisions(jwt) {
     let data = { jwt };
     let jsonData = JSON.stringify(data);
