@@ -34,5 +34,25 @@ this.appService.getUserListToEliminate(jwt).then((response: Response) => {
 
 
 }
-eliminar(){}
+eliminar(userid){
+
+this.appService.deleteUser(userid).then((response: Response) => {
+            if (response.status == 200) {
+              this.storage.get("jwt")
+      .then((jwt) => {
+this.appService.getUserListToEliminate(jwt).then((response: Response) => {
+            if (response.status == 200) {
+              this.users = JSON.parse(response["_body"]);
+            } else {
+              console.log("error"); //No tiene permisos.
+            }
+          })
+            .catch((error) => console.log("error")); //Si por alguna razón el servidor no responde.
+         });
+
+            } else {
+              console.log("error"); //No tiene permisos.
+            }
+          })
+}
 }

@@ -232,4 +232,33 @@ getAssist(jwt, classid) {
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/getAssist", jsonData, options).toPromise();
   }
+ deleteUser(userid){
+
+let data = {  userid };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/deleteUser", jsonData, options).toPromise();
+
+
+  }
+getUserById(userid) {
+    let data = { userid };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/getuserbyid", jsonData, options).toPromise();
+  }
+modifyUser(user){
+
+let data = { user };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/modifyUser", jsonData, options).toPromise();
+ 
+
+
+
+}
 }

@@ -1,4 +1,3 @@
-<!-- Generated template for the DeleteUserComponent component -->
 <div>
   <div ion-item *ngFor="let item of users" >
     <div>Nombre de usuario: {{item.username}}</div>
@@ -7,6 +6,6 @@
     <div>Nombre: {{item.firstname}}  </div>
     <div>Apellido: {{item.lastname}}</div>
     <div>Legajo:{{item.filenumber}}</div>
- <button ion-button (click)="eliminar()">Eliminar</button>
+ <button ion-button (click)="eliminar(item.userid)">Eliminar</button>
   </div>
 </div>

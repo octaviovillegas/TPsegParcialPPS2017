@@ -340,5 +340,33 @@ $app->post('/getAssist',function(Request $request, Response $response){
     $response->getBody()->write(json_encode($rv));
     return $response;
 });
+
+$app->post('/deleteUser',function(Request $request, Response $response){
+    
+    $params = $request->getParams();
+   
+    $userid = $params["userid"];
+    
+ 
+    
+    $rv = GenericDAO::deleteUser($userid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+$app->post('/getuserbyid',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $userid= $params["userid"];
+    $rv = GenericDAO::getUserById($userid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+$app->post('/modifyUser',function(Request $request, Response $response){
+    $params = $request->getParams();
+    $user= $params["user"];
+    $rv = GenericDAO::modifyUser($user);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
 $app->run();
 ?>

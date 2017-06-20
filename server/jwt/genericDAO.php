@@ -672,6 +672,122 @@ $db = GenericDAO::getPDO();
 		
 		
 }
+public static function deleteUser($userid){
+	try
+		{		
+			$db = GenericDAO::getPDO();
+			$sql = "delete from users
+			 		where userid =".$userid;
+			$statement = $db->sendQuery($sql);
+			$statement->bindValue(":userid", $optionid, PDO::PARAM_INT);
+			$couldDeleteuser = $statement->execute();
+			return $couldDeleteuser;
+		}catch(Exeption $ex){}
+	}
+
+public static function modifyUser($user){
+
+		try{
+			
+			//$user["creationDate"] = date("Y-m-d");
+
+			$db = GenericDAO::getPDO();
+			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			$couldBegin = $db->beginTransaction();
+
+			//find rol id by code
+			
+		
+		$findRolId = "select rolid from roles where code =:rol"; 
+
+			$statement = $db->sendQuery($findRolId);
+			$statement->bindValue(":rol", $user["rol"], PDO::PARAM_STR);
+			$couldFindRolId = $statement->execute();
+			$rolId = $statement->fetchAll(PDO::PARAM_STR);
+			$sql = "update users set username = :username, rolid= :rolid ,email = :email, password = :password, firstname = :firstname,lastname = :lastname, filenumber = :filenumber
+					where userid = :userid";
+
+			$statement = $db->sendQuery($sql);
+			$statement->bindValue(":username", $user["username"], PDO::PARAM_STR);
+			$statement->bindValue(":firstname", $user["firstname"], PDO::PARAM_STR);
+			$statement->bindValue(":lastname", $user["lastname"], PDO::PARAM_STR);
+			$statement->bindValue(":email", $user["email"], PDO::PARAM_STR);
+			$statement->bindValue(":password", $user["password"], PDO::PARAM_STR);
+			$statement->bindValue(":filenumber", $user["filenumber"], PDO::PARAM_INT);
+			$statement->bindValue(":rolid", $rolId[0]["rolid"], PDO::PARAM_STR);
+			$statement->bindValue(":userid", $user["userid"], PDO::PARAM_INT); // <----- asegurate que venga con el userid
+
+			$couldSaveUser = $statement->execute();
+
+           
+			// $statement = $db->sendQuery($findaddressId);
+			// $couldFindAddressid = $statement->execute();
+			// $addressId = $statement->fetchAll(PDO::PARAM_INT);
+			$sql2 =	"update addresses set street = :street, number = :number, floor = :floor, department = :department, clarification = :clarification, city = :city
+					 where userid = :userid";
+
+			$statement = $db->sendQuery($sql2);
+			$statement->bindValue(":street", $user["street"], PDO::PARAM_STR);
+			$statement->bindValue(":number", $user["number"], PDO::PARAM_STR);
+			$statement->bindValue(":floor", $user["floor"], PDO::PARAM_STR);
+			$statement->bindValue(":department", $user["department"], PDO::PARAM_STR);
+			$statement->bindValue(":clarification", $user["clarification"], PDO::PARAM_STR);
+	     	$statement->bindValue(":city", $user["city"], PDO::PARAM_STR);
+			$statement->bindValue(":userid", $user["userid"], PDO::PARAM_INT);
+           // $statement->bindValue(":addressid", $addressId[0]["addressid"], PDO::PARAM_INT);
+			$couldInsertUser = $statement->execute();
+
+			$db->commit();
+			return true;
+		}catch(Exception $ex){
+			$db->rollBack();
+			return false;
+		}
+		
+	} 
+// public static function getAddressId($userid){
+
+// $db = GenericDAO::getPDO();
+// 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// 		$sql = "select addressid from addresses where userid = :userid"
+// 		$statement = $db->sendQuery($sql);
+		
+// 			 $statement->execute();
+	
+// 		$rv = $statement->fetchAll(PDO::PARAM_STR);
+			
+
+// 			 return $rv;
+		
+
+// }
+
+public static function getUserById($userid){
+
+$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "select u.userid,u.username,u.email,u.password,u.rolid,u.firstname,u.lastname,u.filenumber,ad.street,ad.number,ad.floor,ad.department,ad.clarification,ad.city  
+				from users as u 
+			join addresses as ad on ad.userid=".$userid."
+				where u.userid=".$userid;
+		$statement = $db->sendQuery($sql);
+			 $statement->execute();
+	$rv = array("user"=>[]);
+		$rv['user'] = $statement->fetchAll(PDO::PARAM_STR);
+			
+
+			 return $rv;
+		
+
+
+
+
+
 
 }
+
+
+}
+
 ?>

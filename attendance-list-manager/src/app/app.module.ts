@@ -43,7 +43,7 @@ import { UserManagerComponent } from "../components/user-manager-component/user-
 import { NewUserComponent } from "../components/new-user-component/new-user-component";
 import { DeleteUserComponent } from "../components/delete-user-component/delete-user-component";
 import { ModifyUserComponent } from "../components/modify-user-component/modify-user-component";
-
+import {UpdateUseromponent} from "../components/update-user-component/update-user-component";
 @NgModule({
   declarations: [
     MyApp,
@@ -77,6 +77,7 @@ import { ModifyUserComponent } from "../components/modify-user-component/modify-
     ClassesGridPage,
     TeachersListPage,
     AssistAndAbsences,
+   UpdateUseromponent,
   ],
   imports: [
     BrowserModule,
@@ -117,6 +118,7 @@ import { ModifyUserComponent } from "../components/modify-user-component/modify-
     TeachersListPage,
     UpdateQuizComponent,
     AssistAndAbsences,
+    UpdateUseromponent,
   ],
   providers: [
     StatusBar,

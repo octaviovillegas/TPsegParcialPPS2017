@@ -6,7 +6,7 @@ export class NewUserData {
     firstname: string;
     lastname: string;
     filenumber: number;
-
+    userid:number;
     street: string;
     number: string;
     city:string;
