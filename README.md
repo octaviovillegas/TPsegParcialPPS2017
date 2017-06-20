@@ -69,28 +69,28 @@ Su ubicacion actual y la ubicacion fija de la UTN Fra.
 -----------------------
 
 <h4>Los elementos agregados del “FrameWork Ionic”:</h4>
- -PopUp
+ -PopUp<br>
  -Action Sheet
 
  <h4>Plugins utilizados:</h4>
- -$cordovaCamera
- -$cordovaBarcodeScanner 
- -$cordovaVibration 
- -$cordovaDevice
- -$cordovaToast
- -$cordovaNativeAudio
- -$cordovaGeolocation 
+ -$cordovaCamera<br>
+ -$cordovaBarcodeScanner<br> 
+ -$cordovaVibration <br>
+ -$cordovaDevice<br>
+ -$cordovaToast<br>
+ -$cordovaNativeAudio<br>
+ -$cordovaGeolocation <br>
 
  <h4>Items generales agregados=</h4>
- -Splashscreen personalizada y un icono personalizado diseñado en https://www.canva.com
- -Menús y navegación
- -servidor Slim(PHP) para el ABM de todas las tablas necesarias 
- -Login con distintos perfiles de usuarios, con distintas vistas y atributos.  
- -Uso de JWT(autentificación).  
- -login con action sheet con opciones para cargar los datos de cada perfil en los cuadros de texto.
- -ABM de las entidades y listado. 
- -Distintos permisos por perfiles de usuario. 
- -3 gráficos informativos e interactivos
+ -Splashscreen personalizada y un icono personalizado diseñado en https://www.canva.com .<br>
+ -Menús y navegación.<br>
+ -servidor Slim(PHP) para el ABM de todas las tablas necesarias.<br> 
+ -Login con distintos perfiles de usuarios, con distintas vistas y atributos.<br>  
+ -Uso de JWT(autentificación).  <br>
+ -login con action sheet con opciones para cargar los datos de cada perfil en los cuadros de texto.<br>
+ -ABM de las entidades y listado. <br>
+ -Distintos permisos por perfiles de usuario.<br> 
+ -3 gráficos informativos e interactivos.<br>
 
 <h4>Tablas=</h4>
  <img src="esquema_tablas.jpg">
