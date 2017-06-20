@@ -56,7 +56,10 @@ El profesor es el encargado de generar las encuestas con las preguntas correspon
 El alumno podrá ver las encuestas completadas y las encuestas pendientes. 
 Las encuestas pendientes son aquellas que el usuario todavía no ha realizado. 
 Las encuestas Completadas son aquellas que el usuario ya terminó.
+Su ubicacion actual y la ubicacion fija de la UTN Fra.
 
 Al acceder a encuestas pendientes, se listan las encuestas del curso al que el alumno pertenece. Una vez que se accede a una encuesta se empiezan a mostrar las preguntas, una por una. Una vez finalizada la encuesta se muestra un toast con un mensaje y luego se vuelve a la página de encuestas pendientes.
 
 Al acceder a encuestas completadas se listan las encuestas que el usuario ya completó. Al acceder a cada encuesta se listan las preguntas y respuestas del alumno.
+
+Al acceder a Mi ubicacion (geolocalizacion) e podra ubicar en un mapa la ubicacion actual del usuario logueado y si el mismo esta cerca de la UTN FRA visualizara la marca de ubicacion de la facultad.
