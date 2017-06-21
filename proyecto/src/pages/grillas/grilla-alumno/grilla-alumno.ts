@@ -112,6 +112,9 @@ export class GrillaAlumno {
                             .subscribe((quote) =>{
                                 this.cargando = false;
                                 this.CargaGrilla();
+                                this.mostrarMensaje('Usuario eliminado con éxito!');
+                            }, e => {
+                                this.cargando = false;
                             });
 
                         }
