@@ -241,7 +241,7 @@ public static function eliminateUser($userid){
 			$sql = "select s.surveyid , s.title, u.username, u.userid, s.creationdate, s.enddate
 					from surveys as s
 					join users as u on u.userid = s.ownerid
-					join answers as a on 
+					
 					where s.enddate >= " . $today . " or s.enddate = 0000-00-00 and s.waseliminated = false
 					order by s.creationdate desc";
 			$statement = $db->sendQuery($sql);
