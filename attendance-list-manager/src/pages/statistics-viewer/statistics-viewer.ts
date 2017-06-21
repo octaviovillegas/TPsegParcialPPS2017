@@ -2,21 +2,52 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
+import { AppService } from "../../providers/app-service";
+import { Storage } from "@ionic/storage";
+
 @Component({
   selector: 'page-statistics-viewer',
   templateUrl: 'statistics-viewer.html',
 })
 export class StatisticsViewer {
+  
+  hideSpinner: boolean
   @ViewChild('barCanvas') barCanvas;
   data = [12, 19, 3, 5, 2, 3];
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  
+  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage) {
   }
 
   ionViewDidLoad() {
-    this.drawStatistics();
+    this.getJWTForGetStatisticsForSurveyTypeFreeAnswer();
+  }
+
+
+
+  getStatisticsForSurveyTypeFreeAnswer(jwt) {
+    let surveyid = this.navParams.get("surveyId");
+    this.appService.getStatisticsForSurveyTypeFreeAnswer(jwt, surveyid)
+      .then((response)=>{
+        let body = JSON.parse(response["_body"]);
+        console.log(body);
+      })
+      .catch((error)=>
+      {
+        console.log(error);
+      });
+  }
+
+  getJWTForGetStatisticsForSurveyTypeFreeAnswer() {
+    this.storage.get("jwt")
+      .then(jwt => this.getStatisticsForSurveyTypeFreeAnswer(jwt))
+      .catch(() => {
+        console.log("No hay jwt");
+      });
   }
 
   drawStatistics() {
+
+    /*
     var myChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {
@@ -43,7 +74,9 @@ export class StatisticsViewer {
             borderWidth: 1
         }]
     },
-    });
+  });
+  
+  */
   }
 
 

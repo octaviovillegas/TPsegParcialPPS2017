@@ -86,6 +86,18 @@ $app->post('/modifysurvey',function(Request $request, Response $response){
     return $response;
 });
 
+$app->post('/statisticsforsurveytypefreeanswer',function(Request $request, Response $response){
+    
+    $params = $request->getParams();
+    $surveyid = $params["surveyid"];
+    $jwt = $params["jwt"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getStatisticsForSurveyTypeFreeAnswer($surveyid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
 $app->post('/deletealloptions',function(Request $request, Response $response){
     
     $params = $request->getParams();

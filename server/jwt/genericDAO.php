@@ -803,6 +803,19 @@ $db = GenericDAO::getPDO();
 
 }
 
+	//Consultas para generar estadísticas con datos de las encuestas
+	public static function getStatisticsForSurveyTypeFreeAnswer($surveyid){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "select count(*) as total
+				from answers where surveyid = :surveyid";
+
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":surveyid", $surveyid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv = $statement->fetch(PDO::PARAM_STR);
+		return $rv;
+	}
 
 }
 

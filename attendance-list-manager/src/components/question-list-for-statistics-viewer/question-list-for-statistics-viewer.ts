@@ -9,11 +9,11 @@ import { StatisticsViewer } from "../../pages/statistics-viewer/statistics-viewe
 })
 export class QuestionListForStatisticsViewer {
 
-   hideSpinner: boolean
+  hideSpinner: boolean
   text: string;
   surveys: Array<any>;
 
-  constructor(private appService: AppService, private navCtrl:NavController) {
+  constructor(private appService: AppService, private navCtrl: NavController) {
     this.hideSpinner = false;
   }
 
@@ -30,9 +30,9 @@ export class QuestionListForStatisticsViewer {
       });
   }
 
-  pushPage(survey){
+  pushPage(survey) {
     console.log(survey.surveyid);
-    this.navCtrl.parent.push(StatisticsViewer,{surveyId: survey.surveyid});
+    this.navCtrl.parent.push(StatisticsViewer, { surveyId: survey.surveyid });
   }
 
 }
