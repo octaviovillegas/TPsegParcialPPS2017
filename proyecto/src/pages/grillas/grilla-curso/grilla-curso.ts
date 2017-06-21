@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, AlertController, ToastController  } from 'ionic-angular';
 import {Http} from '@angular/http';
 import { ModificacionModalCursos } from '../modificacion-modal-cursos/modificacion-modal-cursos';
 import { ModalController } from 'ionic-angular';
@@ -7,6 +7,7 @@ import { Menu } from '../../menu/menu';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import { AltaModal } from '../alta-modal/alta-modal';
 import { AltaModalCursos } from '../alta-modal-cursos/alta-modal-cursos';
+import { ActionSheetController } from 'ionic-angular';
 
 
 @Component({
@@ -15,91 +16,100 @@ import { AltaModalCursos } from '../alta-modal-cursos/alta-modal-cursos';
 })
 export class GrillaCurso {
 
+    cargando = false;
+
     Cursos;
     Cur : Array<any> =[];
     comisiones;
     profesores=null;
     UssP=[];
-  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController) {
-    this.CargaGrilla();
-    this.TraerProfesores();
-    
+  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController,
+      private http: Http, public modalCtrl: ModalController, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController) {
+
+          this.cargarProfesoresYGrilla();
+  }
+
+  cargarProfesoresYGrilla() {
+      this.cargando = true;
+
+      this.CargarProfesores().subscribe((usuarios) => {
+          this.profesores = usuarios.filter((p) => p.tipo_usuario == 'Profesor');
+
+          this.CargaGrilla();
+      }, e => {
+          this.mostrarMensaje('Hubo un error. Intente recargar la pagina.');
+          this.cargando = false;
+      });
 
   }
 
-
-  
-      TraerProfesores()
-      {
-          this.profesores=null;
-          this.UssP=[];
-            this.http.get("http://tppps2.hol.es/ws1/usuarios")
-            .map(res => res.json())
-            .subscribe((quote) =>{
-            this.profesores = quote;
-
-            for(let us of this.profesores)
-              {
-                if(us['tipo_usuario'] == "Profesor")
-                {
-                  this.UssP.push(us);
-                }
-              }
-              console.info(this.UssP);
-
-            });
-
-      }
+  CargarProfesores()
+  {
+      return this.http.get("http://tppps2.hol.es/ws1/usuarios")
+      .map(res => res.json());
+  }
 
 
       CargaGrilla()
-    {
-          console.info("entro");
+      {
+          this.cargando = true;
+          console.info("CargaGrilla");
           this.Cursos=null;
           this.Cur=[];
-            this.http.get("http://tppps2.hol.es/ws1/cursos")
-            .map(res => res.json())
-            .subscribe((quote) =>{
-            this.Cursos = quote;
+          this.http.get("http://tppps2.hol.es/ws1/cursos")
+          .map(res => res.json())
+          .subscribe((cursos) =>{
+              this.cargando = false;
+              this.Cursos = cursos;
 
-            for(let us of this.Cursos)
-              {
-                    this.Cur.push(us); 
+              for (let c of this.Cursos) {
+                  c.profesor = this.profesores.find((p) => p.id_usuario == c.id_usuario);
               }
+              console.log(this.Cursos);
 
-            });
+          }, e => {
+              this.cargando = false;
+          });
 
-    }
+      }
 
     Modificar(id_curso, descripcion, comision,id_usuario)
     {
       console.info(id_curso, descripcion, comision,id_usuario);
-   
+
         let curs = {
             id_curso: id_curso,
             comision: comision,
             descripcion: descripcion,
             id_usuario:id_usuario
-      
+
         };
         let modal = this.modalCtrl.create(ModificacionModalCursos, curs);
-        modal.onDidDismiss(data=>{
-          this.CargaGrilla();
+        modal.onDidDismiss(data => {
+            if (data != false) {
+                this.CargaGrilla();
+            } else if (data == true) {
+                this.mostrarMensaje('Curso modificado con éxito!');
+            }
         });
         modal.present();
-        
+
     }
 
     Alta()
     {
-      
+
         let modal = this.modalCtrl.create(AltaModalCursos);
-        modal.onDidDismiss(data=>{
-          this.CargaGrilla();
+        modal.onDidDismiss(data => {
+            if (data != false) {
+                this.CargaGrilla();
+            } else if (data == true) {
+                this.mostrarMensaje('Curso creado con éxito!');
+            }
         });
         modal.present();
-        
-    } 
+
+    }
 
     Eliminar(id_curso, desc_curso)
     {
@@ -119,21 +129,61 @@ export class GrillaCurso {
                   text: 'Aceptar',
                   handler: () => {
                     console.log('Aceptar clicked');
+                    this.cargando = true;
                     this.http.post("http://tppps2.hol.es/ws1/cursos/eliminar", {
                            id_curso: id_curso
-            
+
                     })
                     .map(res => res.json())
                     .subscribe((quote) =>{
+                        this.cargando = false;
                            this.CargaGrilla();
+                    }, e => {
+                        this.cargando = false;
                     });
-                  
+
                   }
                 }
               ]
             });
             alert.present();
-             
+
+    }
+
+    abrirActionSheet (c) {
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Opciones',
+            buttons: [
+                {
+                    text: 'Editar',
+                    handler: () => {
+                        this.Modificar(c.id_curso, c.descripcion, c.comision_descripcion, c.id_usuario);
+                    }
+                },
+                {
+                    text: 'Eliminar',
+                    role: 'destructive',
+                    handler: () => {
+                        this.Eliminar(c.id_curso, c.descripcion);
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    role: 'cancel'
+                }
+            ]
+        });
+
+        actionSheet.present();
+    }
+
+    mostrarMensaje (mensaje) {
+        let toast = this.toastCtrl.create({
+            message: mensaje,
+            duration: 3000,
+            position: 'bottom'
+        });
+        toast.present();
     }
 
 
