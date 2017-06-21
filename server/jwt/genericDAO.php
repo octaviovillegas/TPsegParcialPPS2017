@@ -241,6 +241,7 @@ public static function eliminateUser($userid){
 			$sql = "select s.surveyid , s.title, u.username, u.userid, s.creationdate, s.enddate
 					from surveys as s
 					join users as u on u.userid = s.ownerid
+					
 					where s.enddate >= " . $today . " or s.enddate = 0000-00-00 and s.waseliminated = false
 					order by s.creationdate desc";
 			$statement = $db->sendQuery($sql);
@@ -802,6 +803,28 @@ $db = GenericDAO::getPDO();
 
 
 }
+public static function getSurveysListById($userid){
+		try
+		{	
+			
+			$db = GenericDAO::getPDO();
+			$today = date("Y-m-d");
+			$sql ="select * from 
+surveys where surveyid not in (select s.surveyid FROM answers as a 
+  join surveys as s on s.surveyid=a.surveyid
+                               where a.userid=".$userid." and s.enddate >= ".$today."
+			or s.enddate = 0000-00-00 
+			and s.waseliminated = false  order by s.creationdate desc)";
+                              
+                               
+                           
+			$statement = $db->sendQuery($sql);
+			 $statement->execute();
+			 $rv = $statement->fetchAll(PDO::PARAM_STR);
+			 return $rv;
+		}catch(Exception $ex){
+		}
+	}
 
 	//Consultas para generar estadísticas con datos de las encuestas
 	public static function getStatisticsForSurveyTypeFreeAnswer($surveyid){

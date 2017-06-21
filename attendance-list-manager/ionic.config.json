@@ -1,6 +1,5 @@
 {
   "name": "attendance-list-manager",
   "app_id": "",
-  "type": "ionic-angular",
-  "v2":true
+  "type": "ionic-angular"
 }
