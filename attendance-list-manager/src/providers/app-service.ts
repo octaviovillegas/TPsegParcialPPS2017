@@ -267,8 +267,13 @@ let data = { user };
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/modifyUser", jsonData, options).toPromise();
  
-
-
-
 }
+getSurveysListById(jwt) {
+    let data = { jwt };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/getsurveyslistbyid", jsonData, options).toPromise();
+  }
+
 }

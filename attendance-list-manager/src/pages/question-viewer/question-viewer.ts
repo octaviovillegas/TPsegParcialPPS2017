@@ -7,7 +7,7 @@ import { Answer } from "../../app/entities/answerData";
 import { HomePage } from "../home/home";
 import { SurveyType } from "../../app/app.module";
 import { Option } from "../../app/entities/option";
-
+import {QuestionListViewerComponent} from "../../components/question-list-viewer-component/question-list-viewer-component";
 @Component({
   selector: 'page-question-viewer',
   templateUrl: 'question-viewer.html',
@@ -186,7 +186,8 @@ export class QuestionViewer implements OnInit {
 
   goBack() {
     this.showMessage("La respuesta fué enviada con éxito");
-    this.navCtrl.pop();
+   // this.navCtrl.pop();
+   this.navCtrl.push(QuestionListViewerComponent);
   }
 
   logOutOnClick() {

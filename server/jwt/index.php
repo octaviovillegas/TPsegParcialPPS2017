@@ -382,5 +382,22 @@ $app->post('/modifyUser',function(Request $request, Response $response){
     return $response;
 });
 
+$app->post('/getsurveyslistbyid',function(Request $request, Response $response){
+    
+   $params = $request->getParams();
+    $jwt = $params["jwt"];
+    
+    $tm = new TokenManager();
+    // $tm->isValidToken($jwt);
+     
+    $userid = $tm->getIdByJWT($jwt);
+ 
+    
+    $rv = GenericDAO::getSurveysListById($userid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
+
 $app->run();
 ?>
