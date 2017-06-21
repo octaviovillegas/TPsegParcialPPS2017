@@ -6,15 +6,16 @@ import firebase from 'firebase';
 export class AuthData {
 
     fireAuth: any;
+    userToken: any;
 
     constructor (public afAuth: AngularFireAuth) {
 
-        afAuth.authState.subscribe( user => {
+        /*afAuth.authState.subscribe( user => {
             if (user) {
                 this.fireAuth = user;
                 console.log(user);
             }
-        });
+        });*/
 
     }
 
@@ -34,6 +35,7 @@ export class AuthData {
     }
 
     logoutUser(): firebase.Promise<any> {
+        this.userToken = {};
         return this.afAuth.auth.signOut();
     }
 

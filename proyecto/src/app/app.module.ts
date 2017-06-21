@@ -57,6 +57,7 @@ import {Miubicacion} from "../pages/miubicacion/miubicacion";
 import { Geolocation } from '@ionic-native/geolocation';
 import { AgmCoreModule } from '@agm/core';
 import { AcercaDePage } from '../pages/acerca-de-page/acerca-de-page';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @NgModule({
   declarations: [
@@ -157,6 +158,7 @@ import { AcercaDePage } from '../pages/acerca-de-page/acerca-de-page';
     Vibration,
     BarcodeScanner,
     Geolocation,
+    InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

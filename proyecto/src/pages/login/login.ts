@@ -9,6 +9,11 @@ import 'rxjs/Rx';
 import { Vibration } from '@ionic-native/vibration';
 import { ActionSheetController } from 'ionic-angular';
 import { AcercaDePage } from '../acerca-de-page/acerca-de-page';
+import { Events } from 'ionic-angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { Http } from '@angular/http';
+import * as firebase from 'firebase/app';
+
 
 @Component({
     selector: 'page-login',
@@ -24,15 +29,25 @@ export class Login {
         clave: ""
     }
 
+
     public loading: Loading;
+    private browser;
 
     constructor(public navCtrl: NavController, private auth: servicioAuth,
         private alertCtrl: AlertController, private loadingCtrl: LoadingController,
         public authData: AuthData, private nativeAudio: NativeAudio,public vibration:Vibration,
-        public actionSheetCtrl: ActionSheetController)
+        public actionSheetCtrl: ActionSheetController, private events: Events, private iab: InAppBrowser, private http: Http)
         {
-        this.nativeAudio.preloadSimple('uniqueId1', 'assets/okLogin.mp3');
-        this.nativeAudio.preloadSimple('errlogin', 'assets/errLogin.mp3');
+            this.nativeAudio.preloadSimple('uniqueId1', 'assets/okLogin.mp3');
+            this.nativeAudio.preloadSimple('errlogin', 'assets/errLogin.mp3');
+
+            this.events.subscribe('auth:login:no_existe', (text) => {
+
+                this.loading.dismiss().then(() => {
+                    this.showError(text);
+                });
+
+            });
         }
 
     public login() {
@@ -41,131 +56,144 @@ export class Login {
         this.showLoading().then(() => {
 
             // Inicio sesion en Firebase.
-            this.authData.loginUser(this.Login.usuario, this.Login.clave).then( authData => {
-
-                // Chequeo si existe el usuario en la base de datos e Inicio
-                // sesion.
-                this.auth.login(this.Login).subscribe(existe => {
-
-                        if (existe) {
-
-                            this.nativeAudio.play('uniqueId1', () => console.log('uniqueId1 is done playing'));
-                            this.vibration.vibrate([100]);
-
-                            this.loading.dismiss().then(() => {
-                                this.usuarioLogueado = this.auth.getUserInfo();
-                                this.navCtrl.setRoot(Menu, this.usuarioLogueado);
-                            });
-
-
-                        } else {
-
-                            // No existe el usuario en la BD, pero si en firebase
-                            // por lo tanto lo elimino de firebase.
-
-                            this.authData.removeCurrentUser().then( _ => {
-
-                                this.loading.dismiss().then(() => {
-                                    this.showError("El usuario no existe o ingresó datos invalidos.");
-                                });
-
-                            }, error => {
-
-                                this.loading.dismiss().then(() => {
-                                    this.showError("El usuario no existe o ingresó datos invalidos.");
-                                });
-
-                            });
-
-                        }
-
-                }, error => {
-
-                    this.loading.dismiss().then(() => {
-                        this.showError(JSON.stringify(error));
-                    });
-
-                });
+            this.authData.loginUser(this.Login.usuario, this.Login.clave).then(authData => {
 
             },
             error => {
 
-                this.loading.dismiss().then(() => {
+                console.log('loginError: ', error);
 
-                    let alert = this.alertCtrl.create({
-                        message: error.message,
-                        buttons: [{
-                            text: "Ok",
-                            role: 'cancel'
-                        }]
+                if (error) {
+
+                    this.loading.dismiss().then(() => {
+                        this.showError("El usuario no existe o ingresó datos invalidos.");
                     });
-                    this.vibration.vibrate([100,100,100]);
-                    this.nativeAudio.play('errlogin', () => console.log('errlogin is done playing'));
-                    alert.present();
 
-                });
+                }
+
             });
-        });
 
+        });
 
     }
 
-    loginWithGithub() {
-        // Muestro el loading.
-        this.showLoading().then(() => {
+    public githubLogin(): Promise<any> {
+        let s = this;
+        let ignorarExit = false;
+        return new Promise(function(resolve, reject) {
+            s.browser = (<any>window).cordova.InAppBrowser.open('http://github.com/login/oauth/authorize?client_id=317ba416971800cbbd8e&redirect_uri=https://abmusuarios.firebaseapp.com/__/auth/handler', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
 
-            console.log('github');
+            s.browser.addEventListener('loaderror', (event) => {
+                console.log('loaderror: ', event);
 
-            // Inicio sesion en Firebase con Github.
-            this.authData.loginWithGithub().then( result => {
+                ignorarExit = true;
+                s.browser.removeEventListener("exit", (event) => {});
+                s.browser.close();
 
-                let token = result.credential.accessToken;
-                // The signed-in user info.
-                let user = result.user;
-
-                console.log('loginWithGithub: ', user);
-                this.auth.currentUser = new User(user.uid, user.email, '', 'Profesor');
-                this.auth.currentUser.id_tipo = 4;
-                console.log('this.auth.currentUser: ', this.auth.currentUser);
-
-
-                this.nativeAudio.play('uniqueId1', () => console.log('uniqueId1 is done playing'));
-                this.vibration.vibrate([100]);
-
-                this.loading.dismiss().then(() => {
-                    this.usuarioLogueado = this.auth.getUserInfo();
-                    console.log('userLogueado: ', this.usuarioLogueado);
-                    this.navCtrl.setRoot(Menu, this.usuarioLogueado);
-                });
-
-            },
-            error => {
-
-                this.loading.dismiss().then(() => {
-
-                    let alert = this.alertCtrl.create({
-                        message: error.message,
-                        buttons: [{
-                            text: "Ok",
-                            role: 'cancel'
-                        }]
-                    });
-                    this.vibration.vibrate([100,100,100]);
-                    this.nativeAudio.play('errlogin', () => console.log('errlogin is done playing'));
-                    alert.present();
-
-                });
-
-            }).catch(e => {
-
-                this.loading.dismiss().then(() => {
-                    let errorMessage = e.message;
-                    this.showError('Error: ' + errorMessage);
-                });
-
+                let msg = event.message;
+                if (event.message == 'net::ERR_NAME_NOT_RESOLVED') {
+                    msg = 'Es probable que no tengas Internet. Chequea tu conexión.';
+                }
+                reject(msg);
             });
 
+            s.browser.addEventListener("loadstart", (event) => {
+                console.log('loadstart: ', event.url);
+                if ((event.url).indexOf("https://abmusuarios.firebaseapp.com/__/auth/handler") === 0) {
+
+                    ignorarExit = true;
+                    s.browser.removeEventListener("exit", (event) => {});
+                    s.browser.close();
+
+                    let parts = event.url.split('?code=');
+                    s.http.post('https://github.com/login/oauth/access_token', {
+                        client_id: '317ba416971800cbbd8e',
+                        client_secret: 'd2912e393e69a3c72253831be5300cf067fef112',
+                        code: parts[1]
+                    })
+                   .map(res => res.text())
+                   .subscribe((res: any) => {
+
+                        let access_token = '';
+                        let parts = res.split('&');
+                        for (let part of parts) {
+                            if (part.indexOf('access_token') != -1) {
+                                access_token = part.replace('access_token=', '');
+                                break;
+                            }
+                        }
+
+                        if (access_token != '') {
+
+                            var credential = firebase.auth.GithubAuthProvider.credential(access_token);
+
+                            firebase.auth().signInWithCredential(credential).then((result) => {
+
+                                console.log(result);
+                                resolve(result);
+
+                            }).catch((error:any) => {
+                                // Handle Error s here.
+                                var errorCode = error.code;
+                                var errorMessage = error.message;
+                                // The email of the user's account used.
+                                var email = error.email;
+                                // The firebase.auth.AuthCredential type that was used.
+                                var credential = error.credential;
+                                // ...
+                                reject("Error al iniciar sesión: " + errorMessage);
+                            });
+                        } else {
+                            reject("El inicio de sesión con Github no fue autorizado.");
+
+                        }
+
+                    }, (error: any) => {
+                        reject("El inicio de sesión de Github fue cancelado");
+                        console.log('post:error: ', error);
+                    });
+
+                } else {
+                    let url = event.url;
+                    if (url.indexOf("client_id=317ba416971800cbbd8e") == -1 && url.indexOf('github.com/session') == -1) {
+                        s.browser.close();
+                    }
+                }
+            });
+            s.browser.addEventListener("exit", function(event) {
+
+                if (!ignorarExit) {
+                    console.log('exit: ', event);
+                    reject("El inicio de sesión de Github fue cancelado");
+                }
+
+                ignorarExit = false;
+            });
         });
+    }
+
+    loginWithGithub() {
+
+        this.showLoading();
+
+        this.githubLogin().then(r => {
+            console.log('success: ', r);
+        }, e => {
+
+            let alert = this.alertCtrl.create({
+                message: e,
+                buttons: [{
+                    text: "Ok",
+                    role: 'cancel'
+                }]
+            });
+            this.vibration.vibrate([100,100,100]);
+            this.nativeAudio.play('errlogin', () => console.log('errlogin is done playing'));
+            alert.present();
+
+            this.loading.dismiss();
+
+        })
     }
 
     showLoading(): Promise<any> {
