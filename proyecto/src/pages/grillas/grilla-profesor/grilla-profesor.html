@@ -35,9 +35,7 @@
 
         <ion-row *ngIf="!cargando" class="animated pulse" align-items-end>
             <ion-col>
-
-
-                <ion-list *ngIf="!cargando">
+                <ion-list>
 
                     <ion-item *ngFor="let usr of usuarios" (press)="abrirActionSheet(usr)" >
                         <ion-avatar item-left>
