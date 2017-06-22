@@ -61,8 +61,14 @@ this.cargarEncuesta();
    nuevaEncuesta(){
       this.datos.queHago="AgregarEncuesta";
        let modal = this.modalCtrl.create(Modales,this.datos);
-      modal.present();
-      this.cargarEncuesta();
+
+        modal.onDidDismiss(data => {
+                   this.cargarEncuesta();
+            });
+
+      modal.present(); 
+
+
    }
 
       BorrarEncuesta(datos){

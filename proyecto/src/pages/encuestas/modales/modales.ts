@@ -47,7 +47,7 @@ export class Modales {
 dismiss() {
   this.veoEncuesta =false;
   this.veoPreguntas=false;
-   this.viewCtrl.dismiss();
+   this.viewCtrl.dismiss(false);
  }
 
 altaEncuesta(){
@@ -62,7 +62,7 @@ altaEncuesta(){
       console.info(quote);
      });
 
-      this.viewCtrl.dismiss();
+      this.viewCtrl.dismiss(true);
 }
 altaPregunta(){
   console.log(this.idEncuesta);
