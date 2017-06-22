@@ -58,9 +58,8 @@ export class GrillaAdministrativo {
         };
         let modal = this.modalCtrl.create(ModificacionModal, usM);
         modal.onDidDismiss(data=>{
-            if (data != false) {
+            if (data) {
                 this.CargaGrilla();
-            } else if (data == true) {
                 this.mostrarMensaje('Usuario modificado con éxito!');
             }
         });
@@ -75,9 +74,8 @@ export class GrillaAdministrativo {
             id_tipo: 2
         });
         modal2.onDidDismiss(data => {
-            if (data != false) {
+            if (data) {
                 this.CargaGrilla();
-            } else if (data == true) {
                 this.mostrarMensaje('Usuario creado con éxito!');
             }
         });

@@ -24,10 +24,10 @@ class Pregunta
 		VALUES (:id_encuesta,:pregunta,:opcion1,:opcion2,:opcion3,:opcion4,:tipo)");
 		$consulta->bindValue(':id_encuesta',$pregunta->idEncuesta, PDO::PARAM_INT);
 		$consulta->bindValue(':pregunta',$pregunta->pregunta, PDO::PARAM_STR);
-		$consulta->bindValue(':opcion1',$pregunta->opcion1, PDO::PARAM_STR);
-		$consulta->bindValue(':opcion2',$pregunta->opcion2, PDO::PARAM_STR);
-		$consulta->bindValue(':opcion3',$pregunta->opcion3, PDO::PARAM_STR);
-		$consulta->bindValue(':opcion4',$pregunta->opcion4, PDO::PARAM_STR);
+		$consulta->bindValue(':opcion1', isset($pregunta->opcion1) ? $pregunta->opcion1 : '', PDO::PARAM_STR);
+		$consulta->bindValue(':opcion2', isset($pregunta->opcion2) ? $pregunta->opcion2 : '', PDO::PARAM_STR);
+		$consulta->bindValue(':opcion3', isset($pregunta->opcion3) ? $pregunta->opcion3 : '', PDO::PARAM_STR);
+		$consulta->bindValue(':opcion4', isset($pregunta->opcion4) ? $pregunta->opcion4 : '', PDO::PARAM_STR);
 		$consulta->bindValue(':tipo',$pregunta->tipo, PDO::PARAM_STR);
 		$consulta->execute();
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();

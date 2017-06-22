@@ -1,39 +1,61 @@
 <ion-header>
-   <ion-navbar color="primary">
-      <button ion-button menuToggle left>
-          <ion-icon name="menu"></ion-icon>
-      </button>
-    <ion-title>Profesor: {{usuarioLogueado.usuario}}</ion-title>
-  </ion-navbar>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle left>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Generador de encuestas</ion-title>
+    </ion-navbar>
 </ion-header>
 <ion-content class="fondo">
-  <ion-list>
-      <h3 >Deslice a la derecha sobre la encuesta para agregar preguntas en la encuesta<br>
-          Deslice a la izquierda sobre la encuesta para borrar la encuesta
-      </h3>
-  </ion-list>
-  <div>
-  </div>
 
-<ion-list>
-  <ion-item-sliding *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: descripcion">
-    <ion-item class="fondo">
-      <ion-avatar item-left>
-      </ion-avatar>
-      <h2>{{encuesta.descripcion}}</h2>
-    </ion-item>
-    <ion-item-options side="right" class="fondoEncu">
-      <ion-icon name="plus"></ion-icon>
-        <img src="../assets/img/nueva_pregunta.png" width=65 height=65 (click)="agregarPregunta(encuesta.id_encuesta)">        
-    </ion-item-options>
-     <ion-item-options side="left" class="fondoEncu">
-      <img src="../assets/img/eliminar_encuesta.png" width=65 height=65 (click)="BorrarEncuesta(encuesta.id_encuesta)">              
-    </ion-item-options>
-      <ion-icon ios="ios-add" md="md-add"></ion-icon>
-  </ion-item-sliding>
-</ion-list>
-&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="nuevaEncuesta()">Nueva Encuesta</a>
+    <link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
 
+    <ion-grid>
 
+        <ion-row class="animated pulse" text-center>
+            <ion-col>
+                <ion-card>
+                    <ion-card-content class="card">
+                        Deslice a la derecha sobre la encuesta para agregar preguntas en la encuesta<br>
+                        Deslice a la izquierda sobre la encuesta para borrar la encuesta
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
 
-   
+        <ion-row *ngIf="cargando"  class="animated pulse" text-center>
+            <ion-col>
+                <ion-spinner text-center></ion-spinner>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="!cargando" class="animated pulse" text-center>
+            <ion-col>
+                <ion-list>
+                    <ion-list-header>Encuestas</ion-list-header>
+                    <ion-item-sliding *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: descripcion">
+                        <ion-item class="fondo">
+                            <h2>{{encuesta.descripcion}}</h2>
+                        </ion-item>
+                        <ion-item-options side="right" class="fondoEncu">
+                            <ion-icon name="plus"></ion-icon>
+                            <img src="assets/img/nueva_pregunta.png" width=65 height=65 (click)="agregarPregunta(encuesta.id_encuesta)">
+                        </ion-item-options>
+                        <ion-item-options side="left" class="fondoEncu">
+                            <img src="assets/img/eliminar_encuesta.png" width=65 height=65 (click)="BorrarEncuesta(encuesta.id_encuesta)">
+                        </ion-item-options>
+                        <ion-icon ios="ios-add" md="md-add"></ion-icon>
+                    </ion-item-sliding>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
+
+    <ion-fab *ngIf="!cargando" bottom right>
+        <button ion-fab (tap)="nuevaEncuesta()" color="secondary">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+
+</ion-content>

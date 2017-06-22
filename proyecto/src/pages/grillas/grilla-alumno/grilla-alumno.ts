@@ -60,9 +60,8 @@ export class GrillaAlumno {
             };
             let modal = this.modalCtrl.create(ModificacionModal, usM);
             modal.onDidDismiss(data => {
-                if (data != false) {
+                if (data) {
                     this.CargaGrilla();
-                } else if (data == true) {
                     this.mostrarMensaje('Usuario modificado con éxito!');
                 }
             });
@@ -77,9 +76,8 @@ export class GrillaAlumno {
                 id_tipo: 3
             });
             modal2.onDidDismiss(data => {
-                if (data != false) {
+                if (data) {
                     this.CargaGrilla();
-                } else if (data == true) {
                     this.mostrarMensaje('Usuario creado con éxito!');
                 }
             });
@@ -112,6 +110,9 @@ export class GrillaAlumno {
                             .subscribe((quote) =>{
                                 this.cargando = false;
                                 this.CargaGrilla();
+                                this.mostrarMensaje('Usuario eliminado con éxito!');
+                            }, e => {
+                                this.cargando = false;
                             });
 
                         }

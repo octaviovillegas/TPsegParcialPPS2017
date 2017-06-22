@@ -56,6 +56,9 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import {Miubicacion} from "../pages/miubicacion/miubicacion";
 import { Geolocation } from '@ionic-native/geolocation';
 import { AgmCoreModule } from '@agm/core';
+import { AcercaDePage } from '../pages/acerca-de-page/acerca-de-page';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { File } from '@ionic-native/file';
 
 @NgModule({
   declarations: [
@@ -90,7 +93,8 @@ import { AgmCoreModule } from '@agm/core';
     Grafico2,
     Grafico3,
     AlumnoCurso,
-    Miubicacion
+    Miubicacion,
+    AcercaDePage
   ],
   imports: [
     BrowserModule,
@@ -100,7 +104,7 @@ import { AgmCoreModule } from '@agm/core';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDg5RgxfKfydP2_yidVU7ZwUW21aIqPl0Y'
     }),
-   AngularFireModule.initializeApp(firebaseconfig),
+   AngularFireModule.initializeApp(firebaseconfig, 'admin-app'),
    AngularFireAuthModule,
    AngularFireDatabaseModule
       ],
@@ -137,7 +141,8 @@ import { AgmCoreModule } from '@agm/core';
     Grafico2,
     Grafico3,
     AlumnoCurso,
-    Miubicacion
+    Miubicacion,
+    AcercaDePage
       ],
   providers: [
     StatusBar,
@@ -154,6 +159,8 @@ import { AgmCoreModule } from '@agm/core';
     Vibration,
     BarcodeScanner,
     Geolocation,
+    InAppBrowser,
+    File,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

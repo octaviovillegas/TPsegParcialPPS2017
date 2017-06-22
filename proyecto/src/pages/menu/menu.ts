@@ -21,8 +21,10 @@ import { Grafico1 } from "../graficos/grafico1/grafico1";
 import { Grafico2 } from "../graficos/grafico2/grafico2";
 import { Grafico3 } from "../graficos/grafico3/grafico3";
 import { AlumnoCurso } from "../alumno-curso/alumno-curso";
-import {Miubicacion} from "../miubicacion/miubicacion";
+import { AcercaDePage } from "../acerca-de-page/acerca-de-page";
+import { Miubicacion } from "../miubicacion/miubicacion";
 import { AngularFireAuth } from 'angularfire2/auth';
+import { servicioAuth } from '../servicioAuth/servicioAuth';
 
 
 @Component({
@@ -53,9 +55,11 @@ export class Menu {
     private alumnocurso;
     private miubicacion;
 
-    constructor(public navCtrl: NavController,public viewCtrl:ViewController, public navParams: NavParams,public afAuth: AngularFireAuth, public modalCtrl: ModalController) {
+    constructor(public navCtrl: NavController,public viewCtrl:ViewController, public navParams: NavParams,public afAuth: AngularFireAuth, public modalCtrl: ModalController, public auth: servicioAuth) {
 
-        this.usuarioLogueado = navParams.data;
+        console.log('navParams.data: ', navParams.data);
+
+        this.usuarioLogueado = (navParams.data && (Object.keys(navParams.data).length === 0)) ? this.auth.getUserInfo() : navParams.data;
         console.log('this.usuario');
         console.log(this.usuarioLogueado);
 
@@ -113,6 +117,10 @@ export class Menu {
 
     openPage(p) {
         this.rootPage = p;
+    }
+
+    acercaDe() {
+        this.navCtrl.push(AcercaDePage);
     }
 
     /**

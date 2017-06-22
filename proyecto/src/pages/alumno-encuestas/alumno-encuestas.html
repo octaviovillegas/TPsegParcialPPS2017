@@ -12,7 +12,7 @@
     <ion-icon name="arrow-back"></ion-icon>
     </button>
     </ion-buttons>
-    <ion-title>Encuestas: {{titulo}}</ion-title>
+    <ion-title>Encuestas {{titulo}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -21,7 +21,7 @@
 <ion-content padding>
 
     <div *ngIf="cargando" text-center>
-        <ion-spinner text-center name="bubbles"></ion-spinner>
+        <ion-spinner text-center></ion-spinner>
     </div>
 
     <ion-list *ngIf="!cargando">

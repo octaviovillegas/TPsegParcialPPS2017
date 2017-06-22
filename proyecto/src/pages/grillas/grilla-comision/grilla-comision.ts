@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, AlertController, ToastController  } from 'ionic-angular';
 import {Http} from '@angular/http';
 import { ModificacionModal } from '../modificacion-modal/modificacion-modal';
 import { ModalController } from 'ionic-angular';
 import { Menu } from '../../menu/menu';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import { AltaModal } from '../alta-modal/alta-modal';
+import { ActionSheetController } from 'ionic-angular';
 
 
 @Component({
@@ -14,9 +15,12 @@ import { AltaModal } from '../alta-modal/alta-modal';
 })
 export class GrillaComision {
 
+    cargando = false;
+
     Comisiones;
     Com : Array<any> =[];
-  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController ,private http: Http, public modalCtrl: ModalController) {
+  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController,
+      private http: Http, public modalCtrl: ModalController, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController) {
     this.CargaGrilla();
 
   }
@@ -24,25 +28,27 @@ export class GrillaComision {
 
     CargaGrilla()
     {
+        this.cargando = true;
           console.info("entro");
           this.Comisiones=null;
           this.Com=[];
             this.http.get("http://tppps2.hol.es/ws1/comisiones")
             .map(res => res.json())
             .subscribe((quote) =>{
+                this.cargando = false;
             this.Comisiones = quote;
             console.info(quote);
             for(let us of this.Comisiones)
               {
-                  this.Com.push(us);  
+                  this.Com.push(us);
               }
 
             });
 
     }
 
-  
- 
+
+
 
   Modificar(id_comision, descripcion)
   {
@@ -53,7 +59,7 @@ export class GrillaComision {
                 name: 'descripcion',
                 placeholder: 'descripcion',
                 value:descripcion
-              } 
+              }
             ],
             buttons: [
               {
@@ -67,14 +73,19 @@ export class GrillaComision {
                 text: 'Aceptar',
                 handler: data => {
                  console.info(id_comision, data['descripcion']);
+                     this.cargando = true;
 
                           this.http.post("http://tppps2.hol.es/ws1/comisiones/modificar", {
                             id_comision: id_comision,
                             descripcion:data['descripcion']
                         })
                         .map(res => res.json())
-                        .subscribe((quote) =>{
-                          this.CargaGrilla();
+                        .subscribe((quote) => {
+                            this.cargando = false;
+                            this.mostrarMensaje('Comisión modificada con éxito!');
+                            this.CargaGrilla();
+                        }, e => {
+                            this.cargando = false;
                         });
 
 
@@ -83,20 +94,20 @@ export class GrillaComision {
             ]
           });
           alert.present();
-  } 
+  }
 
 
 
     Alta(descripcion)
     {
-       
+
           let alert = this.alertCtrl.create({
             title: 'Nueva comision',
             inputs: [
               {
                 name: 'descripcion',
                 placeholder: 'descripcion'
-              } 
+              }
             ],
             buttons: [
               {
@@ -110,16 +121,21 @@ export class GrillaComision {
                 text: 'Aceptar',
                 handler: data => {
                   console.info(data);
-                   
+
+                  this.cargando = true;
                           this.http.post("http://tppps2.hol.es/ws1/comisiones/alta", {
                             descripcion:data['descripcion']
                         })
                         .map(res => res.json())
                         .subscribe((quote) =>{
-                          this.CargaGrilla();
+                            this.cargando = false;
+                            this.mostrarMensaje('Comisión creada con éxito!');
+                            this.CargaGrilla();
+                        }, e => {
+                            this.cargando = false;
                         });
 
-                         
+
                 }
               }
             ]
@@ -144,20 +160,61 @@ export class GrillaComision {
                   text: 'Aceptar',
                   handler: () => {
                     console.log('Aceptar clicked');
+                    this.cargando = true;
                     this.http.post("http://tppps2.hol.es/ws1/comisiones/eliminar", {
                            id_comision: id_comision
-            
+
                     })
                     .map(res => res.json())
                     .subscribe((quote) =>{
+                        this.cargando = false;
+                        this.mostrarMensaje('Comisión eliminada con éxito!');
                            this.CargaGrilla();
+                    }, e => {
+                        this.cargando = false;
                     });
-                  
+
                   }
                 }
               ]
             });
             alert.present();
+    }
+
+    abrirActionSheet (c) {
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Opciones',
+            buttons: [
+                {
+                    text: 'Editar',
+                    handler: () => {
+                        this.Modificar(c.id_comision, c.descripcion);
+                    }
+                },
+                {
+                    text: 'Eliminar',
+                    role: 'destructive',
+                    handler: () => {
+                        this.Eliminar(c.id_comision, c.descripcion);
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    role: 'cancel'
+                }
+            ]
+        });
+
+        actionSheet.present();
+    }
+
+    mostrarMensaje (mensaje) {
+        let toast = this.toastCtrl.create({
+            message: mensaje,
+            duration: 3000,
+            position: 'bottom'
+        });
+        toast.present();
     }
 
 

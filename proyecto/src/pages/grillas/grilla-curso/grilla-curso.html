@@ -1,46 +1,66 @@
 
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
       <button ion-button menuToggle left>
           <ion-icon name="menu"></ion-icon>
       </button>
       <ion-title>Cursos</ion-title>
+
+      <ion-buttons end>
+          <button *ngIf="!cargando" ion-button icon-only (tap)="cargarProfesoresYGrilla()">
+              <ion-icon name="refresh"></ion-icon>
+          </button>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
- 
-
-<ion-content padding>
-
-    <button ion-button icon-left color=light (click)="Alta()" round >
-  <ion-icon name="person-add" ></ion-icon>
-  Nuevo curso
-</button>
 
 
-<div *ngFor="let c of Cur">
-<ion-card >
-  <ion-card-content>
-    <ion-card-title>
-        {{c.descripcion}}
-      </ion-card-title>
-   
-        Comision: {{c.comision_descripcion}}<br><br>
-        <div *ngFor="let pro of profesores">
-          <div *ngIf="pro.id_usuario==c.id_usuario">
-            Profesor: {{pro.nombre}}<br><br>
-          </div>
-         
-        </div>
-     
-         <button ion-button color=danger (click)="Eliminar(c.id_curso, c.descripcion)">eliminar</button>
-         <button ion-button color=secondary (click)="Modificar(c.id_curso, c.descripcion, c.comision_descripcion, c.id_usuario)">modificar</button>
+<ion-content>
 
- 
+    <ion-grid>
 
-  </ion-card-content>
-</ion-card>
-</div>
+        <ion-row *ngIf="cargando"  class="animated pulse" text-center>
+            <ion-col>
+                <ion-spinner text-center></ion-spinner>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="!cargando" class="animated pulse" align-items-start>
+            <ion-col text-center>
+                <p>Aquí se listan los cursos. Puede crear, editar y eliminar.</p>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="!cargando" class="animated pulse" align-items-end>
+            <ion-col>
+
+                <ion-list>
+
+                    <ion-item *ngFor="let c of Cursos" (press)="abrirActionSheet(usr)" >
+
+                        <h2>{{c.descripcion}}</h2>
+                        <p>Comision: {{c.comision_descripcion}}</p>
+                        <p>Profesor: {{c.profesor.nombre}}</p>
+
+                        <button ion-button clear item-right (click)="abrirActionSheet(c)">
+                            <ion-icon name="more"></ion-icon>
+                        </button>
+                    </ion-item>
+
+                </ion-list>
+
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+<button *ngIf="!cargando"  ion-button color="primary" (click)="GuardarFile()">Guardar en Excel</button>
+
+
+    <ion-fab *ngIf="!cargando" bottom right>
+        <button ion-fab (tap)="Alta()" color="secondary">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
 
 </ion-content>

@@ -1,7 +1,7 @@
 
 <ion-header>
 
-    <ion-navbar>
+    <ion-navbar color="primary">
         <ion-buttons start left>
             <button ion-button icon-only (tap)="cancelar()">
                 Cancelar
@@ -11,7 +11,7 @@
         <ion-title text-center>Crear {{t}}</ion-title>
 
         <ion-buttons end>
-            <button ion-button icon-only color="primary" [disabled]="u == '' || n == '' || c == ''" (tap)="Alta(n, u, c, id_tipo)">
+            <button ion-button icon-only color="primary-color-text" [disabled]="u == '' || n == '' || c == ''" (tap)="Alta(n, u, c, id_tipo)">
                 Guardar
             </button>
         </ion-buttons>
@@ -21,7 +21,7 @@
 <ion-content padding>
 
     <div *ngIf="cargando" text-center>
-        <ion-spinner text-center name="bubbles"></ion-spinner>
+        <ion-spinner text-center></ion-spinner>
     </div>
 
     <div *ngIf="!cargando">
