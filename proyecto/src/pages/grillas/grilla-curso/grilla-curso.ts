@@ -8,7 +8,7 @@ import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import { AltaModal } from '../alta-modal/alta-modal';
 import { AltaModalCursos } from '../alta-modal-cursos/alta-modal-cursos';
 import { ActionSheetController } from 'ionic-angular';
-
+import { File } from '@ionic-native/file';
 
 @Component({
   selector: 'page-grilla-curso',
@@ -23,10 +23,11 @@ export class GrillaCurso {
     comisiones;
     profesores=null;
     UssP=[];
-  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController,
+    archivo;
+  constructor(public file: File, private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController,
       private http: Http, public modalCtrl: ModalController, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController) {
-
-          this.cargarProfesoresYGrilla();
+         this.archivo=file;
+        this.cargarProfesoresYGrilla();
   }
 
   cargarProfesoresYGrilla() {
@@ -72,6 +73,17 @@ export class GrillaCurso {
           });
 
       }
+    
+      GuardarExcel()
+        {
+            console.info(this.Cursos);
+             console.info(this.archivo.externalDataDirectory);
+            this.archivo.writeFile(this.archivo.externalDataDirectory,"cursos.txt", this.Cursos, true)
+            .then(_ => alert("Se guardo correctamente!"))
+            .catch(err => alert("Error al guardar!"));
+            
+        }
+
 
     Modificar(id_curso, descripcion, comision,id_usuario)
     {
