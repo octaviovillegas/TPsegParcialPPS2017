@@ -1,50 +1,81 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title >
-        {{titulo}}
-    </ion-title>
+    <ion-navbar color="primary">
+        <ion-buttons start left>
+            <button ion-button icon-only (tap)="dismiss()">
+                Cancelar
+            </button>
+        </ion-buttons>
 
-    <ion-buttons start>
-      <button ion-button (click)="dismiss()">
-        <span ion-text color="primary" showWhen="ios">Cancel</span>
-        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
+        <ion-title>
+            {{datos.queHago == "AgregarPregunta" ? 'Agregar pregunta' : 'Crear encuesta'}}
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
-<ion-content class="fondo">
-<div *ngIf="veoPreguntas">
-Ingrese tipo de pregunta
-    <ion-select [(ngModel)]="tipoPregunta">
-      <ion-option [value] = "1" selected>texto</ion-option>
-      <ion-option [value] = "2">una opcion</ion-option>
-      <ion-option [value] = "3">multiple opciones</ion-option>
-    </ion-select>
-<div>
-  <ion-input type="text"  name="pregunta" [(ngModel)]="pregunta" placeholder="ingrese pregunta" required></ion-input>
-</div>
+<ion-content padding>
 
-<div *ngIf="tipoPregunta!=1" >
-  <ion-input type="text"  name="opcion1" [(ngModel)]="opcion1" placeholder="ingrese opcion 1" ></ion-input>
-  <ion-input type="text"  name="opcion2" [(ngModel)]="opcion2" placeholder="ingrese opcion 2" ></ion-input>
-  <ion-input type="text"  name="opcion3" [(ngModel)]="opcion3" placeholder="ingrese opcion 3"></ion-input>
-  <ion-input *ngIf="tipoPregunta!=2" type="text"  name="opcion4" [(ngModel)]="opcion4" placeholder="ingrese opcion 4"></ion-input>
- </div>
-  
-<!--&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="altaPregunta()"> Nueva pregunta</a>-->
-<button ion-button type="button" (click)="altaPregunta()" color="primary-color">Crear pregunta</button>
+    <div *ngIf="cargando" text-center>
+        <ion-spinner text-center></ion-spinner>
+    </div>
 
-</div>
+    <div *ngIf="!cargando">
 
- <div *ngIf="veoEncuesta">
-   Ingrese descripcion de la Encuestas
-     <ion-input type="text"  name="descripcion" [(ngModel)]="encuesta.descripcion" placeholder="ingrese descripcion" required></ion-input> 
-    <ion-input type="date"  name="fechaInicio" [(ngModel)]="encuesta.fechaInicio" placeholder="ingrese fecha Inicio" required></ion-input> 
-    <ion-input type="date"  name="fechaFin" [(ngModel)]="encuesta.fechaFin" placeholder="ingrese fecha fin" required></ion-input> 
+        <div *ngIf="veoPreguntas">
 
-<!--&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="altaEncuesta()">Nueva Encuesta</a>-->
-<button ion-button type="button" (click)="altaEncuesta()" color="primary-color">Crear Encuesta</button>
+            <ion-item>
+                <ion-label floating>Ingrese tipo de pregunta</ion-label>
+                <ion-select [(ngModel)]="tipoPregunta">
+                    <ion-option value="1" selected>Texto</ion-option>
+                    <ion-option value="2">Una opcion</ion-option>
+                    <ion-option value="3">Multiples opciones</ion-option>
+                </ion-select>
+            </ion-item>
 
- </div>
+            <ion-item>
+                <ion-label floating>Ingrese la pregunta</ion-label>
+                <ion-input type="text"  name="pregunta" [(ngModel)]="pregunta" required></ion-input>
+            </ion-item>
+
+            <div *ngIf="tipoPregunta > 1">
+                <ion-item>
+                    <ion-input type="text"  name="opcion1" [(ngModel)]="opcion1" placeholder="ingrese opcion 1" ></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-input type="text"  name="opcion2" [(ngModel)]="opcion2" placeholder="ingrese opcion 2" ></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-input type="text"  name="opcion3" [(ngModel)]="opcion3" placeholder="ingrese opcion 3"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-input type="text"  name="opcion4" [(ngModel)]="opcion4" placeholder="ingrese opcion 4"></ion-input>
+                </ion-item>
+            </div>
+
+            <button ion-button type="button" (click)="altaPregunta()" color="primary-color" full [disabled]="tipoPregunta == '' || pregunta == ''">Crear pregunta</button>
+
+        </div>
+
+        <div *ngIf="veoEncuesta">
+            <ion-item>
+                <ion-label floating>Ingrese descripcion de la Encuestas</ion-label>
+                <ion-input type="text"  name="descripcion" [(ngModel)]="encuesta.descripcion" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-input type="date"  name="fechaInicio" [(ngModel)]="encuesta.fechaInicio" placeholder="ingrese fecha Inicio"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-input type="date"  name="fechaFin" [(ngModel)]="encuesta.fechaFin" placeholder="ingrese fecha fin"></ion-input>
+            </ion-item>
+
+            <!--&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="altaEncuesta()">Nueva Encuesta</a>-->
+            <button ion-button type="button" (click)="altaEncuesta()" color="primary-color" full [disabled]="encuesta.descripcion == ''">Crear Encuesta</button>
+
+        </div>
+
+    </div>
 </ion-content>
