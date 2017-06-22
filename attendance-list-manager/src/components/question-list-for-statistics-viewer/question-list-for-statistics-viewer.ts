@@ -23,6 +23,7 @@ export class QuestionListForStatisticsViewer {
         this.hideSpinner = true;
         let body = JSON.parse(response["_body"]);
         this.surveys = body;
+        
       })
       .catch(() => {
         this.hideSpinner = true;
@@ -32,7 +33,7 @@ export class QuestionListForStatisticsViewer {
 
   pushPage(survey) {
     console.log(survey.surveyid);
-    this.navCtrl.parent.push(StatisticsViewer, { surveyId: survey.surveyid });
+    this.navCtrl.parent.push(StatisticsViewer, { surveyId: survey.surveyid , question: survey.text, surveyTypeId: survey.surveytypeid});
   }
 
 }

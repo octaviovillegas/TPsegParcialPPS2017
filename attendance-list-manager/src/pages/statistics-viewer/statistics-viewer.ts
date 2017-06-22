@@ -4,35 +4,62 @@ import { ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
 import { AppService } from "../../providers/app-service";
 import { Storage } from "@ionic/storage";
+import { AnswerTextViewer } from "../answer-text-viewer/answer-text-viewer";
+import { SurveyType } from "../../app/app.module";
 
 @Component({
   selector: 'page-statistics-viewer',
   templateUrl: 'statistics-viewer.html',
 })
 export class StatisticsViewer {
-  
+
   hideSpinner: boolean
   @ViewChild('barCanvas') barCanvas;
-  data = [12, 19, 3, 5, 2, 3];
-  
+  // para las FreeAnswers
+  total: number;
+  users: Array<any>;
+  question: string;
+  freeAnswer:boolean;
+  //*******************
   constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage) {
+    this.question = "";
+    this.freeAnswer = false;
   }
 
   ionViewDidLoad() {
-    this.getJWTForGetStatisticsForSurveyTypeFreeAnswer();
+    let surveyTypeId = this.navParams.get("surveyTypeId");
+    switch (surveyTypeId) {
+      case SurveyType.FreeAnswer:
+        this.getJWTForGetStatisticsForSurveyTypeFreeAnswer();
+        this.freeAnswer = true;
+      case SurveyType.Radiobuttons1Correct2Graphics:
+        break;
+      case SurveyType.Radiobuttons1Graphic:
+        break;
+      case SurveyType.Checkboxes1GraphicChooseNothing:
+        break;
+      case SurveyType.CheckboxesCorrects2GraphicsChooseNothing:
+        break;
+      default:
+        console.log("Oops!");
+        break;
+    }
   }
 
 
 
+//****************** Para encuenstas de libre respuesta*******************/
   getStatisticsForSurveyTypeFreeAnswer(jwt) {
     let surveyid = this.navParams.get("surveyId");
     this.appService.getStatisticsForSurveyTypeFreeAnswer(jwt, surveyid)
-      .then((response)=>{
+      .then((response) => {
         let body = JSON.parse(response["_body"]);
-        console.log(body);
+        this.users = body.users;
+        this.total = body.total;
+        this.question = this.navParams.get("question");
+        this.drawStatistics();
       })
-      .catch((error)=>
-      {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -46,39 +73,28 @@ export class StatisticsViewer {
   }
 
   drawStatistics() {
-
-    /*
+    let votes = "total: " + this.total;
     var myChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: ["alumnos"],
         datasets: [{
-            label: '# of Votes',
-            data: this.data,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
+          label: votes,
+          data: [this.total],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+          ],
+          borderWidth: 1
         }]
-    },
-  });
-  
-  */
+      },
+    });
+
   }
-
-
-
+  itemSelected(student) {
+    this.navCtrl.push(AnswerTextViewer, { student: student, question: this.question })
+  }
+  //*************************************************************************** */
 }

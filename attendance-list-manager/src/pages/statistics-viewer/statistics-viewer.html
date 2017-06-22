@@ -8,12 +8,24 @@
 
 
 <ion-content padding>
-  <ion-card>
+  <div [hidden]="!freeAnswer">
+    <ion-card>
+      <ion-card-header text-wrap text-center color="success">
+        {{question}}
+      </ion-card-header>
+      <ion-list>
+        <ion-item text-wrap>
+          <canvas #barCanvas></canvas>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+
     <ion-list>
-      <ion-item text-wrap>
-        <canvas #barCanvas></canvas>
-      </ion-item>
+      <button ion-item *ngFor="let student of users" (click)="itemSelected(student)" text-wrap>
+        {{student.lastname}} , {{student.firstname}}
+    </button>
     </ion-list>
-  </ion-card>
+  </div>
+
 
 </ion-content>
