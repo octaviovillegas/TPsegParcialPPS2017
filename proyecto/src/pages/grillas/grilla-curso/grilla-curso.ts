@@ -74,14 +74,22 @@ export class GrillaCurso {
 
       }
     
-      GuardarExcel()
+      GuardarFile()
         {
             console.info(this.Cursos);
              console.info(this.archivo.externalDataDirectory);
             this.archivo.writeFile(this.archivo.externalDataDirectory,"cursos.txt", this.Cursos, true)
             .then(_ => alert("Se guardo correctamente!"))
-            .catch(err => alert("Error al guardar!"));
+            .catch(
+                 this.archivo.writeExistingFile(this.archivo.externalDataDirectory,"cursos.txt", this.Cursos)
+                .then(_ => alert("Se guardo correctamente!"))
+                .catch(
+                err => alert("Error al guardar!")           
+                )
+            );
             
+
+         
         }
 
 
