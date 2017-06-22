@@ -58,6 +58,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { AgmCoreModule } from '@agm/core';
 import { AcercaDePage } from '../pages/acerca-de-page/acerca-de-page';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { File } from '@ionic-native/file';
 
 @NgModule({
   declarations: [
@@ -159,6 +160,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     BarcodeScanner,
     Geolocation,
     InAppBrowser,
+    File,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
