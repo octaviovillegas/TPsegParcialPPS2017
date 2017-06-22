@@ -1,45 +1,50 @@
 
 <ion-header>
 
-  <ion-navbar color="primary">
-    <ion-title>Alta de cursos</ion-title>
-  </ion-navbar>
+    <ion-navbar color="primary">
+        <ion-buttons start left>
+            <button ion-button icon-only (tap)="cancelar()">
+                Cancelar
+            </button>
+        </ion-buttons>
+
+        <ion-title>Alta de cursos</ion-title>
+
+        <ion-buttons end>
+            <button ion-button icon-only color="primary-color-text" [disabled]="d == '' || desc_comi == '' || profe == ''" (tap)="Alta(d,desc_comi,profe)">
+                Guardar
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 
 </ion-header>
 <ion-content padding>
 
- <ion-item>
-    <ion-label floating>Nombre del curso:</ion-label>
-    <ion-input type="text" [(ngModel)]="d"></ion-input>
-  </ion-item>
- 
+    <div *ngIf="cargando" text-center>
+        <ion-spinner text-center></ion-spinner>
+    </div>
 
+    <ion-item *ngIf="!cargando">
+        <ion-label floating>Nombre del curso:</ion-label>
+        <ion-input type="text" [(ngModel)]="d"></ion-input>
+    </ion-item>
 
-<ion-list>
-  <ion-item>
-    <ion-label>Comision:</ion-label>
-    <ion-select [(ngModel)]="desc_comi" >
-        <div *ngFor="let c of comisiones" >
-        <ion-option value={{c.id_comision}} >{{c.descripcion}}</ion-option> 
-        </div>      
-    </ion-select>
-  </ion-item>
-</ion-list>
+    <ion-item *ngIf="!cargando">
+        <ion-label>Comision:</ion-label>
+        <ion-select [(ngModel)]="desc_comi" >
+            <div *ngFor="let c of comisiones" >
+                <ion-option value={{c.id_comision}} >{{c.descripcion}}</ion-option>
+            </div>
+        </ion-select>
+    </ion-item>
 
-<ion-list>
-  <ion-item>
-    <ion-label>Profesor:</ion-label>
-    <ion-select [(ngModel)]="profe" >
-        <div *ngFor="let p of UssP" >
-        <ion-option value={{p.id_usuario}} >{{p.nombre}}</ion-option> 
-        </div>      
-    </ion-select>
-  </ion-item>
-</ion-list>
-
-<button ion-button color=light (click)="Alta(d,desc_comi,profe)"> Dar de alta </button>
-<button ion-button color=light (click)="cancelar()"> Cancelar </button>
-
-
+    <ion-item *ngIf="!cargando">
+        <ion-label>Profesor:</ion-label>
+        <ion-select [(ngModel)]="profe" >
+            <div *ngFor="let p of UssP" >
+                <ion-option value={{p.id_usuario}} >{{p.nombre}}</ion-option>
+            </div>
+        </ion-select>
+    </ion-item>
 
 </ion-content>

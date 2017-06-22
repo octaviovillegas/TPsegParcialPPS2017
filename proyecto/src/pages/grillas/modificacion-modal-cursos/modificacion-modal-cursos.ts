@@ -23,6 +23,7 @@ export class ModificacionModalCursos
   comisiones;
   profe_id;
   profe;
+  cargando = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, htt:Http, public viewCtrl: ViewController)
   {
     this.d= navParams.data['descripcion'];
@@ -32,12 +33,25 @@ export class ModificacionModalCursos
     console.info(this.profe_id);
 
     this.http=htt;
-    this.TraerComisiones()
-    this.TraerProfesores();
+
+
+    this.cargando = true;
+    this.CargarProfesores().subscribe((usuarios) => {
+
+        this.profesores = usuarios.filter((p) => p.tipo_usuario == 'Profesor');
+        this.UssP = this.profesores;
+        this.profe = this.profesores.find((p) => p.id_usuario == this.profe_id).nombre;
+
+        this.TraerComisiones();
+        console.info(this.UssP);
+        console.info(this.profe);
+
+    });
+
     console.info(this.profe);
   }
 
- 
+
 
   Modificar(des_curso,com_des,usuario)
   {
@@ -53,7 +67,7 @@ export class ModificacionModalCursos
         miusu=us.id_usuario;
       }
     }
-    
+
     console.info(miusu);
     for(let comi of this.comisiones)
     {
@@ -73,21 +87,34 @@ export class ModificacionModalCursos
       .subscribe((quote) =>{
         this.viewCtrl.dismiss();
       });
-        
-        
+
+
   }
 
 
-TraerComisiones(){
-            this.http.get("http://tppps2.hol.es/ws1/comisiones")
-            .map(res => res.json())
-            .subscribe((quote) =>{
-                   this.comisiones = quote;  
-                   console.info(this.comisiones);
-                     
+  CargarProfesores()
+  {
+      this.UssP=[];
+      return this.http.get("http://tppps2.hol.es/ws1/usuarios")
+      .map(res => res.json());
+  }
 
-            });
-}
+
+  TraerComisiones(){
+      console.info("entro");
+      this.cargando = true;
+
+      this.http.get("http://tppps2.hol.es/ws1/comisiones")
+      .map(res => res.json())
+      .subscribe((quote) =>{
+          this.cargando = false;
+          this.comisiones = quote;
+          console.info(this.comisiones);
+      }, e => {
+          this.cargando = false;
+      });
+
+  }
 
       TraerProfesores()
       {
@@ -112,15 +139,15 @@ TraerComisiones(){
                   console.info( this.profe);
                 }
               }
-               
+
 
             });
-            
+
       }
 
   Cancelar()
   {
       this.viewCtrl.dismiss();
   }
- 
+
 }
