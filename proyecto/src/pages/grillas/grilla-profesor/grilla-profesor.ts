@@ -106,6 +106,7 @@ export class GrillaProfesor {
                         .subscribe((quote) => {
                             this.cargando = false;
                             this.CargaGrilla();
+                            this.mostrarMensaje('Se eliminó el profesor con éxito!')
                         });
 
                     }

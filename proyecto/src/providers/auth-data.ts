@@ -1,6 +1,8 @@
 import { Injectable  } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
+import {firebaseconfig} from '../pages/firebase/firebase-config';
+import {AngularFireModule} from 'angularfire2';
 
 @Injectable()
 export class AuthData {
@@ -27,7 +29,9 @@ export class AuthData {
 
     loginWithGithub () {
         var provider = new firebase.auth.GithubAuthProvider();
-        return this.afAuth.auth.signInWithPopup(provider);
+
+        return this.afAuth.auth.signInWithRedirect(provider);
+
     }
 
     resetPassword (email: string): firebase.Promise<any> {
@@ -40,7 +44,8 @@ export class AuthData {
     }
 
     signupUser(newEmail: string, newPassword: string): firebase.Promise<any> {
-        return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPassword);
+        var secondaryApp = firebase.initializeApp(firebaseconfig, "users-app");
+        return secondaryApp.auth().createUserWithEmailAndPassword(newEmail, newPassword);
     }
 
     updateUserNombre(nombre: string): firebase.Promise<any> {
