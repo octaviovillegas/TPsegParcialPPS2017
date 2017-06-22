@@ -1,17 +1,17 @@
-<ion-content>
-
-  <ion-segment [(ngModel)]="wichComponent">
-    <ion-segment-button value="new">
+<ion-content class="usermanager">
+<h1 >
+  <ion-segment [(ngModel)]="wichComponent" color="color1">
+    <ion-segment-button  value="new">
       Nuevo
     </ion-segment-button>
-    <ion-segment-button value="delete">
+    <ion-segment-button  value="delete">
       Eliminar
     </ion-segment-button>
     <ion-segment-button value="update">
       Modificar
     </ion-segment-button>
   </ion-segment>
-
+</h1>
   <div [ngSwitch]="wichComponent">
     <div *ngSwitchCase="'new'">
       <new-user-component></new-user-component>
