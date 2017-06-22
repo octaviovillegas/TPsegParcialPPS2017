@@ -28,6 +28,7 @@ export class Modales {
         private opcion3;
         private opcion4;
         private pregunta;
+        private titulo;
  constructor(public navCtrl: NavController,public viewCtrl:ViewController,public modalCtrl: ModalController
  ,public NavParams: NavParams, private http: Http)
 {
@@ -36,7 +37,9 @@ export class Modales {
    console.info(this.datos);
         if(this.datos.queHago == "AgregarPregunta"){
           this.veoPreguntas=true;
+          this.titulo ="Agregar preguntas";
              }else if(this.datos.queHago =="AgregarEncuesta"){
+                         this.titulo ="Nueva encuesta";
   this.veoEncuesta =true;
 
              }
