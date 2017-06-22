@@ -28,6 +28,7 @@ import { TeachersListPage } from "../pages/teachers-list-page/teachers-list-page
 import { AssistAndAbsences } from "../pages/assist-and-absences/assist-and-absences";
 import { StatisticsViewer } from "../pages/statistics-viewer/statistics-viewer";
 import { AnswerTextViewer } from "../pages/answer-text-viewer/answer-text-viewer";
+import { StatisticsOptionsViewer } from "../pages/statistics-options-viewer/statistics-options-viewer";
 
 import { Vibration } from '@ionic-native/vibration';
 import { NativeAudio } from '@ionic-native/native-audio';
@@ -47,6 +48,7 @@ import { DeleteUserComponent } from "../components/delete-user-component/delete-
 import { ModifyUserComponent } from "../components/modify-user-component/modify-user-component";
 import { UpdateUseromponent } from "../components/update-user-component/update-user-component";
 import { QuestionListForStatisticsViewer } from "../components/question-list-for-statistics-viewer/question-list-for-statistics-viewer";
+import { AnswerOptionTextViewer } from "../pages/answer-option-text-viewer/answer-option-text-viewer";
 
 
 export enum SurveyType {
@@ -94,6 +96,8 @@ export enum SurveyType {
     QuestionListForStatisticsViewer,
     StatisticsViewer,
     AnswerTextViewer,
+    StatisticsOptionsViewer,
+    AnswerOptionTextViewer,
     ],
   imports: [
     BrowserModule,
@@ -138,6 +142,8 @@ export enum SurveyType {
     QuestionListForStatisticsViewer,
     StatisticsViewer,
     AnswerTextViewer,
+    StatisticsOptionsViewer,
+    AnswerOptionTextViewer,
     ],
   providers: [
     StatusBar,

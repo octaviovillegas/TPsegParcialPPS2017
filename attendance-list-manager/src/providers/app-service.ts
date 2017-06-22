@@ -288,4 +288,20 @@ getSurveysListById(jwt) {
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/statisticsforsurveytypefreeanswer", jsonData, options).toPromise();
   }
+
+  getStatisticsForSurveyTypeRadiobuttons1Correct2Graphics(jwt, surveyid, questionid) {
+    let data = { jwt, surveyid , questionid};
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/statisticsforsurveytyperadiobuttons1correct2graphics", jsonData, options).toPromise();
+  }
+
+  getOptionsByAnswerId(jwt, userid, questionid){
+    let data = { jwt, userid , questionid};
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/getoptionsbyanswerid", jsonData, options).toPromise();
+  }
 }

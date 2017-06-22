@@ -19,36 +19,29 @@ export class StatisticsViewer {
   total: number;
   users: Array<any>;
   question: string;
-  freeAnswer:boolean;
+  noData:boolean;
+  //*******************
+
+  // para las Radio2Graphics
+  @ViewChild('barCanvas2') barCanvas2;
+  radiobuttons1Correct2Graphics: boolean;
+  options: Array<any>;
   //*******************
   constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage) {
     this.question = "";
-    this.freeAnswer = false;
+    this.hideSpinner = false;
+    this.noData = false;
+
+    this.radiobuttons1Correct2Graphics = false;
+    this.options = [];
   }
 
   ionViewDidLoad() {
     let surveyTypeId = this.navParams.get("surveyTypeId");
-    switch (surveyTypeId) {
-      case SurveyType.FreeAnswer:
-        this.getJWTForGetStatisticsForSurveyTypeFreeAnswer();
-        this.freeAnswer = true;
-      case SurveyType.Radiobuttons1Correct2Graphics:
-        break;
-      case SurveyType.Radiobuttons1Graphic:
-        break;
-      case SurveyType.Checkboxes1GraphicChooseNothing:
-        break;
-      case SurveyType.CheckboxesCorrects2GraphicsChooseNothing:
-        break;
-      default:
-        console.log("Oops!");
-        break;
-    }
+    this.getJWTForGetStatisticsForSurveyTypeFreeAnswer();
   }
 
-
-
-//****************** Para encuenstas de libre respuesta*******************/
+  //****************** Para encuenstas de libre respuesta*******************/
   getStatisticsForSurveyTypeFreeAnswer(jwt) {
     let surveyid = this.navParams.get("surveyId");
     this.appService.getStatisticsForSurveyTypeFreeAnswer(jwt, surveyid)
@@ -56,8 +49,12 @@ export class StatisticsViewer {
         let body = JSON.parse(response["_body"]);
         this.users = body.users;
         this.total = body.total;
+        if(this.total == 0){
+          this.noData = true;
+        }
         this.question = this.navParams.get("question");
         this.drawStatistics();
+        this.hideSpinner = true;
       })
       .catch((error) => {
         console.log(error);
@@ -74,7 +71,7 @@ export class StatisticsViewer {
 
   drawStatistics() {
     let votes = "total: " + this.total;
-    var myChart = new Chart(this.barCanvas.nativeElement, {
+    var myChart1 = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {
         labels: ["alumnos"],
@@ -96,5 +93,5 @@ export class StatisticsViewer {
   itemSelected(student) {
     this.navCtrl.push(AnswerTextViewer, { student: student, question: this.question })
   }
-  //*************************************************************************** */
+  //****************************************************************************
 }

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AppService } from "../../providers/app-service";
 import { NavController } from "ionic-angular";
 import { StatisticsViewer } from "../../pages/statistics-viewer/statistics-viewer";
+import { SurveyType } from "../../app/app.module";
+import { StatisticsOptionsViewer } from "../../pages/statistics-options-viewer/statistics-options-viewer";
 
 @Component({
   selector: 'question-list-for-statistics-viewer',
@@ -20,10 +22,9 @@ export class QuestionListForStatisticsViewer {
   ngOnInit(): void {
     this.appService.getSurveys()
       .then((response) => {
-        this.hideSpinner = true;
         let body = JSON.parse(response["_body"]);
         this.surveys = body;
-        
+        this.hideSpinner = true;
       })
       .catch(() => {
         this.hideSpinner = true;
@@ -32,8 +33,28 @@ export class QuestionListForStatisticsViewer {
   }
 
   pushPage(survey) {
-    console.log(survey.surveyid);
-    this.navCtrl.parent.push(StatisticsViewer, { surveyId: survey.surveyid , question: survey.text, surveyTypeId: survey.surveytypeid});
+    let surveyTypeId = survey.surveytypeid;
+    switch (surveyTypeId) {
+      case SurveyType.FreeAnswer:
+        this.navCtrl.parent.push(StatisticsViewer, { surveyId: survey.surveyid, question: survey.text, surveyTypeId: survey.surveytypeid, questionId: survey.questionid });
+        break;
+      case SurveyType.Radiobuttons1Correct2Graphics:
+        this.navCtrl.parent.push(StatisticsOptionsViewer, { surveyId: survey.surveyid, question: survey.text, surveyTypeId: survey.surveytypeid, questionId: survey.questionid });
+        break;
+      case SurveyType.Radiobuttons1Graphic:
+        this.navCtrl.parent.push(StatisticsOptionsViewer, { surveyId: survey.surveyid, question: survey.text, surveyTypeId: survey.surveytypeid, questionId: survey.questionid });
+        break;
+      case SurveyType.Checkboxes1GraphicChooseNothing:
+        this.navCtrl.parent.push(StatisticsOptionsViewer, { surveyId: survey.surveyid, question: survey.text, surveyTypeId: survey.surveytypeid, questionId: survey.questionid });
+        break;
+      case SurveyType.CheckboxesCorrects2GraphicsChooseNothing:
+        this.navCtrl.parent.push(StatisticsOptionsViewer, { surveyId: survey.surveyid, question: survey.text, surveyTypeId: survey.surveytypeid, questionId: survey.questionid });
+        break;
+      default:
+        console.log("Oops!");
+        break;
+    }
+
   }
 
 }

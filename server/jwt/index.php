@@ -411,5 +411,33 @@ $app->post('/getsurveyslistbyid',function(Request $request, Response $response){
 });
 
 
+$app->post('/statisticsforsurveytyperadiobuttons1correct2graphics',function(Request $request, Response $response){
+    
+    $params = $request->getParams();
+    $surveyid = $params["surveyid"];
+    $questionid = $params["questionid"];
+    $jwt = $params["jwt"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getStatisticsForSurveyTypeRadiobuttons1Correct2Graphics($surveyid,$questionid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
+$app->post('/getoptionsbyanswerid',function(Request $request, Response $response){
+    
+    $params = $request->getParams();
+    $userid = $params["userid"];
+    $questionid = $params["questionid"];
+    $jwt = $params["jwt"];
+    $tm = new TokenManager();
+    $tm->isValidToken($jwt);
+    $rv = GenericDAO::getOptionsByAnswerId($userid,$questionid);
+    $response->getBody()->write(json_encode($rv));
+    return $response;
+});
+
+
+
 $app->run();
 ?>
