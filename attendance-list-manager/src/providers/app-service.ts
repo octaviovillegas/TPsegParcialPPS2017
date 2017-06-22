@@ -124,7 +124,7 @@ export class AppService {
     return this.http.post("http://localhost:80/jwt/deletealloptions", jsonData, options).toPromise();
   }
 
-  
+
 
   getAllDivisions(jwt) {
     let data = { jwt };
@@ -158,7 +158,7 @@ export class AppService {
     return this.http.post("http://localhost:80/jwt/studentslistbydivisionandsubject", jsonData, options).toPromise();
   }
 
-   getAssistsAndAbsenses(jwt, classid) {
+  getAssistsAndAbsenses(jwt, classid) {
     let data = { jwt, classid };
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -205,6 +205,7 @@ export class AppService {
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/getclassesbyclassroomid", jsonData, options).toPromise();
   }
+
   getStudentsListByClassId(jwt, classid) {
     let data = { jwt, classid };
     let jsonData = JSON.stringify(data);
@@ -220,6 +221,7 @@ export class AppService {
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/getteacherslist", jsonData, options).toPromise();
   }
+
   getClassesByTeacherId(jwt, teacherid) {
     let data = { jwt, teacherid };
     let jsonData = JSON.stringify(data);
@@ -235,39 +237,42 @@ export class AppService {
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/deleteoption", jsonData, options).toPromise();
   }
-getAssist(jwt, classid) {
+
+  getAssist(jwt, classid) {
     let data = { jwt, classid };
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/getAssist", jsonData, options).toPromise();
   }
- deleteUser(userid){
 
-let data = {  userid };
+  deleteUser(userid) {
+
+    let data = { userid };
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/deleteUser", jsonData, options).toPromise();
-
-
   }
-getUserById(userid) {
+
+
+  getUserById(userid) {
     let data = { userid };
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/getuserbyid", jsonData, options).toPromise();
   }
-modifyUser(user){
 
-let data = { user };
+  modifyUser(user) {
+
+    let data = { user };
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.http.post("http://localhost:80/jwt/modifyUser", jsonData, options).toPromise();
- 
-}
+  }
+
 getSurveysListById(jwt) {
     let data = { jwt };
     let jsonData = JSON.stringify(data);
@@ -276,4 +281,27 @@ getSurveysListById(jwt) {
     return this.http.post("http://localhost:80/jwt/getsurveyslistbyid", jsonData, options).toPromise();
   }
 
+  getStatisticsForSurveyTypeFreeAnswer(jwt, surveyid) {
+    let data = { jwt, surveyid };
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/statisticsforsurveytypefreeanswer", jsonData, options).toPromise();
+  }
+
+  getStatisticsForSurveyTypeRadiobuttons1Correct2Graphics(jwt, surveyid, questionid) {
+    let data = { jwt, surveyid , questionid};
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/statisticsforsurveytyperadiobuttons1correct2graphics", jsonData, options).toPromise();
+  }
+
+  getOptionsByAnswerId(jwt, userid, questionid){
+    let data = { jwt, userid , questionid};
+    let jsonData = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post("http://localhost:80/jwt/getoptionsbyanswerid", jsonData, options).toPromise();
+  }
 }

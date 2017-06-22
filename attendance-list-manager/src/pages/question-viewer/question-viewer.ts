@@ -7,7 +7,7 @@ import { Answer } from "../../app/entities/answerData";
 import { HomePage } from "../home/home";
 import { SurveyType } from "../../app/app.module";
 import { Option } from "../../app/entities/option";
-import {QuestionListViewerComponent} from "../../components/question-list-viewer-component/question-list-viewer-component";
+import { QuestionListViewerComponent } from "../../components/question-list-viewer-component/question-list-viewer-component";
 @Component({
   selector: 'page-question-viewer',
   templateUrl: 'question-viewer.html',
@@ -139,7 +139,7 @@ export class QuestionViewer implements OnInit {
       });
   }
 
-//In case that don't have options
+  //In case that don't have options
   saveTextAnswer() {
     this.hideSpinner = false;
     let answer = new Answer();
@@ -148,10 +148,10 @@ export class QuestionViewer implements OnInit {
     answer.questionId = this.survey.questionid;
     this.saveAnswer(answer);
   }
-//******************************
+  //******************************
 
 
- //In case that have options
+  //In case that have options
   saveRadioAnswer() {
     this.hideSpinner = false;
     let answer = new Answer();
@@ -166,15 +166,14 @@ export class QuestionViewer implements OnInit {
 
   saveCheckboxesAnswer() {
     this.hideSpinner = false;
-    let userChooseNothing = false;
     let answer = new Answer();
     answer.surveyId = this.survey.surveyid;
     this.options.forEach(option => {
-      if(option.isRight == true){
+      if (option.isRight == true) {
         answer.optionIds.push(option.optionId);
       }
     });
-    if(answer.optionIds.length == 0){
+    if (answer.optionIds.length == 0) {
       answer.chooseNothing = true;
     }
     answer.questionId = this.survey.questionid;
@@ -182,12 +181,11 @@ export class QuestionViewer implements OnInit {
   }
   //*********************************************
 
-  
+
 
   goBack() {
     this.showMessage("La respuesta fué enviada con éxito");
-   // this.navCtrl.pop();
-   this.navCtrl.push(QuestionListViewerComponent);
+    this.navCtrl.pop();
   }
 
   logOutOnClick() {

@@ -5,8 +5,9 @@
   </ion-navbar>
 
 </ion-header>
-<ion-content padding>
 
+
+<ion-content padding>
   <div [hidden]="!hideSpinner">
     <div [hidden]="!noData">
       <ion-card>
@@ -28,20 +29,23 @@
           </ion-item>
         </ion-list>
       </ion-card>
+    </div>
 
-      <ion-list>
-        <button ion-item *ngFor="let student of users" (click)="itemSelected(student)" text-wrap>
+
+    <ion-list>
+      <button ion-item *ngFor="let student of users" (click)="itemSelected(student)" text-wrap>
         {{student.lastname}} , {{student.firstname}}
     </button>
-      </ion-list>
-    </div>
+    </ion-list>
   </div>
+  <!-- spinner -->
   <div [hidden]="hideSpinner">
     <div>
       <ion-spinner></ion-spinner>
     </div>
     <div>
-      <p>Obteniendo Datos. Espere por favor.</p>
+      <p>Obteniendo información. Espere por favor.</p>
     </div>
   </div>
+
 </ion-content>

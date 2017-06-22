@@ -238,16 +238,16 @@ public static function eliminateUser($userid){
 			
 			$db = GenericDAO::getPDO();
 			$today = date("Y-m-d");
-			$sql = "select s.surveyid , s.title, u.username, u.userid, s.creationdate, s.enddate
+			$sql = "select s.surveyid , s.title, u.username, u.userid, s.creationdate, s.enddate, q.text, s.surveytypeid, q.questionid
 					from surveys as s
 					join users as u on u.userid = s.ownerid
-					
+					join questions as q on q.surveyid = s.surveyid
 					where s.enddate >= " . $today . " or s.enddate = 0000-00-00 and s.waseliminated = false
 					order by s.creationdate desc";
 			$statement = $db->sendQuery($sql);
-			 $statement->execute();
-			 $rv = $statement->fetchAll(PDO::PARAM_STR);
-			 return $rv;
+			$statement->execute();
+			$rv = $statement->fetchAll(PDO::PARAM_STR);
+			return $rv;
 		}catch(Exception $ex){
 		}
 	}
@@ -809,23 +809,125 @@ public static function getSurveysListById($userid){
 			
 			$db = GenericDAO::getPDO();
 			$today = date("Y-m-d");
-			$sql ="select * from 
-surveys where surveyid not in (select s.surveyid FROM answers as a 
-  join surveys as s on s.surveyid=a.surveyid
-                               where a.userid=".$userid." and s.enddate >= ".$today."
-			or s.enddate = 0000-00-00 
-			and s.waseliminated = false  order by s.creationdate desc)";
-                              
-                               
+			$sql ="select s.surveyid, s.title, u.username, u.userid, s.creationdate, s.enddate 
+				   from surveys as s 
+				   join users as u on u.userid = s.ownerid 
+				   where surveyid not in(select s.surveyid 
+				   FROM answers as a
+				   join surveys as s on s.surveyid = a.surveyid 
+				   where a.userid = " . $userid  . ")
+				   and (s.enddate >= " . $today  . " or s.enddate = 0000-00-00) and (s.waseliminated = false)
+				   order by s.creationdate desc;";
                            
 			$statement = $db->sendQuery($sql);
-			 $statement->execute();
-			 $rv = $statement->fetchAll(PDO::PARAM_STR);
-			 return $rv;
+			$statement->execute();
+			$rv = $statement->fetchAll(PDO::PARAM_STR);
+			return $rv;
 		}catch(Exception $ex){
 		}
 	}
 
+	//Consultas para generar estadísticas con datos de las encuestas
+	public static function getStatisticsForSurveyTypeFreeAnswer($surveyid){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+		//cantidad de votantes
+		$sql = "select count(*) as total
+				from answers where surveyid = :surveyid";
+
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":surveyid", $surveyid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv = array("total"=>0, "users"=>[]); 
+		$result = $statement->fetch(PDO::PARAM_STR);
+
+
+		//los votantes
+		$sql2 = "select a.answerid, a.text, a.userid, a.questionid, a.surveyid, u.firstname, u.lastname 
+				 from answers as a
+				 join users as u on u.userid = a.userid
+				 where a.surveyid = :surveyid;";
+
+		$statement = $db->sendQuery($sql2);
+		$statement->bindValue(":surveyid", $surveyid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv["users"] = $statement->fetchAll(PDO::PARAM_STR);
+		$rv["total"] = $result["total"];
+		return $rv;
+	}
+
+	public static function getStatisticsForSurveyTypeRadiobuttons1Correct2Graphics($surveyid, $questionid){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+		//cantidad de votantes
+		$sql = "select count(*) as total
+				from answers where surveyid = :surveyid";
+
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":surveyid", $surveyid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv = array("total"=>0, "users"=>[], "options"=>[]); 
+		$result = $statement->fetch(PDO::PARAM_STR); //traigo cantidad de votantes
+		$rv["total"] = $result["total"];
+
+		//los votantes
+		$sql2 = "select a.answerid, a.text, a.userid, a.questionid, a.surveyid, u.firstname, u.lastname 
+				 from answers as a
+				 join users as u on u.userid = a.userid
+				 where a.surveyid = :surveyid;";
+
+		$statement = $db->sendQuery($sql2);
+		$statement->bindValue(":surveyid", $surveyid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv["users"] = $statement->fetchAll(PDO::PARAM_STR);
+
+		//opciones
+		$sql3 = "select o.optionid, o.text, o.isright from
+				 options as o
+				 join questions as q on q.questionid = o.questionid
+				 where o.questionid = :questionid";
+
+		$statement = $db->sendQuery($sql3);
+		$statement->bindValue(":questionid", $questionid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv["options"] = $statement->fetchAll(PDO::PARAM_STR); //traigo las opciones
+		
+		$sql4 =	"select o.optionid, count(o.optionid) as total, op.text
+				 from answers as a
+				 join optionsbyanswer as o on o.answerid = a.answerid
+				 join options as op on op.optionid = o.optionid
+				 where a.questionid = :questionid
+				 group by o.optionid";
+		
+		$statement = $db->sendQuery($sql4);
+		$statement->bindValue(":questionid", $questionid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv["perOption"] = $statement->fetchAll(PDO::PARAM_STR); //votos por opciones
+		return $rv;
+	}
+
+	public static function getOptionsByAnswerId($userid,$questionid){
+		$db = GenericDAO::getPDO();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+		$sql = "select o.text
+				from optionsbyanswer as oba
+				join options as o on o.optionid = oba.optionid
+				join answers as a on a.answerid = oba.answerid
+				where a.questionid = :questionid and a.userid = :userid";
+
+		$statement = $db->sendQuery($sql);
+		$statement->bindValue(":userid", $userid, PDO::PARAM_INT);
+		$statement->bindValue(":questionid", $questionid, PDO::PARAM_INT);
+		$statement->execute();
+		$rv = array("options"=>[]); 
+		$rv["options"] = $statement->fetchAll(PDO::PARAM_STR); //traigo cantidad de opciones como respuesta
+
+		return $rv;
+	}
+	
 
 }
 

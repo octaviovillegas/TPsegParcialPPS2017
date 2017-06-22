@@ -9,14 +9,14 @@ import { assistAndAbsences } from '../pages/assistAndAbsences/assistAndAbsences'
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
-import {RegisteredUserPage } from "../pages/registered-user/registered-user";
-import {gestionalumno} from "../pages/gestionalumno/gestionalumno";
-import {gestionprofesor} from "../pages/gestionprofesor/gestionprofesor";
-import {generarencuesta} from "../pages/generarencuesta/generarencuesta";
+import { RegisteredUserPage } from "../pages/registered-user/registered-user";
+import { gestionalumno } from "../pages/gestionalumno/gestionalumno";
+import { gestionprofesor } from "../pages/gestionprofesor/gestionprofesor";
+import { generarencuesta } from "../pages/generarencuesta/generarencuesta";
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppService } from "../providers/app-service";
-import {gestionarasistencia} from "../pages/gestionarasistencia/gestionarasistencia";
+import { gestionarasistencia } from "../pages/gestionarasistencia/gestionarasistencia";
 import { UpdateQuizContainerPage } from "../pages/update-quiz-container-page/update-quiz-container-page";
 import { QuestionViewer } from "../pages/question-viewer/question-viewer";
 import { DivisionsListPage } from "../pages/divisions-list-page/divisions-list-page";
@@ -27,6 +27,8 @@ import { ClassesGridPage } from "../pages/classes-grid-page/classes-grid-page";
 import { TeachersListPage } from "../pages/teachers-list-page/teachers-list-page";
 import { AssistAndAbsences } from "../pages/assist-and-absences/assist-and-absences";
 import { StatisticsViewer } from "../pages/statistics-viewer/statistics-viewer";
+import { AnswerTextViewer } from "../pages/answer-text-viewer/answer-text-viewer";
+import { StatisticsOptionsViewer } from "../pages/statistics-options-viewer/statistics-options-viewer";
 
 import { Vibration } from '@ionic-native/vibration';
 import { NativeAudio } from '@ionic-native/native-audio';
@@ -44,14 +46,19 @@ import { UserManagerComponent } from "../components/user-manager-component/user-
 import { NewUserComponent } from "../components/new-user-component/new-user-component";
 import { DeleteUserComponent } from "../components/delete-user-component/delete-user-component";
 import { ModifyUserComponent } from "../components/modify-user-component/modify-user-component";
-import {UpdateUseromponent} from "../components/update-user-component/update-user-component";
-import { QuestionListForStatisticsViewer } from "../components/question-list-for-statistics-viewer/question-list-for-statistics-viewer";export enum SurveyType {
-    FreeAnswer = 1,
-    Radiobuttons1Correct2Graphics,
-    Radiobuttons1Graphic,
-    Checkboxes1GraphicChooseNothing,
-    CheckboxesCorrects2GraphicsChooseNothing
+import { UpdateUseromponent } from "../components/update-user-component/update-user-component";
+import { QuestionListForStatisticsViewer } from "../components/question-list-for-statistics-viewer/question-list-for-statistics-viewer";
+import { AnswerOptionTextViewer } from "../pages/answer-option-text-viewer/answer-option-text-viewer";
+
+
+export enum SurveyType {
+  FreeAnswer = 1,
+  Radiobuttons1Correct2Graphics,
+  Radiobuttons1Graphic,
+  Checkboxes1GraphicChooseNothing,
+  CheckboxesCorrects2GraphicsChooseNothing
 }
+
 @NgModule({
   declarations: [
     MyApp,
@@ -85,13 +92,17 @@ import { QuestionListForStatisticsViewer } from "../components/question-list-for
     ClassesGridPage,
     TeachersListPage,
     AssistAndAbsences,
-   UpdateUseromponent,
-   QuestionListForStatisticsViewer,
-   StatisticsViewer,  ],
+    UpdateUseromponent,
+    QuestionListForStatisticsViewer,
+    StatisticsViewer,
+    AnswerTextViewer,
+    StatisticsOptionsViewer,
+    AnswerOptionTextViewer,
+    ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule, 
+    HttpModule,
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -129,16 +140,20 @@ import { QuestionListForStatisticsViewer } from "../components/question-list-for
     AssistAndAbsences,
     UpdateUseromponent,
     QuestionListForStatisticsViewer,
-    StatisticsViewer,  ],
+    StatisticsViewer,
+    AnswerTextViewer,
+    StatisticsOptionsViewer,
+    AnswerOptionTextViewer,
+    ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     AppService,
     Vibration,
     NativeAudio
   ]
 })
 export class AppModule {
-  
+
 }
