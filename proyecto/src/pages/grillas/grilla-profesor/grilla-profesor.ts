@@ -69,7 +69,7 @@ export class GrillaProfesor {
     Alta()
     {
         let modal2 = this.modalCtrl.create(AltaModal, {
-            tipo: "Alumno",
+            tipo: "Profesor",
             id_tipo: 4
         });
         modal2.onDidDismiss(data => {
