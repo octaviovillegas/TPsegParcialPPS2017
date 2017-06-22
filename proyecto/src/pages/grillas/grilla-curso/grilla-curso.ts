@@ -86,9 +86,8 @@ export class GrillaCurso {
         };
         let modal = this.modalCtrl.create(ModificacionModalCursos, curs);
         modal.onDidDismiss(data => {
-            if (data != false) {
+            if (data) {
                 this.CargaGrilla();
-            } else if (data == true) {
                 this.mostrarMensaje('Curso modificado con éxito!');
             }
         });
@@ -101,9 +100,8 @@ export class GrillaCurso {
 
         let modal = this.modalCtrl.create(AltaModalCursos);
         modal.onDidDismiss(data => {
-            if (data != false) {
+            if (data) {
                 this.CargaGrilla();
-            } else if (data == true) {
                 this.mostrarMensaje('Curso creado con éxito!');
             }
         });

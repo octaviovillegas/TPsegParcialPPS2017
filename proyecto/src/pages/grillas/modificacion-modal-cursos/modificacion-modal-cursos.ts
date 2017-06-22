@@ -85,7 +85,7 @@ export class ModificacionModalCursos
       })
       .map(res => res.json())
       .subscribe((quote) =>{
-        this.viewCtrl.dismiss();
+        this.viewCtrl.dismiss(true);
       });
 
 
@@ -147,7 +147,7 @@ export class ModificacionModalCursos
 
   Cancelar()
   {
-      this.viewCtrl.dismiss();
+      this.viewCtrl.dismiss(false);
   }
 
 }
