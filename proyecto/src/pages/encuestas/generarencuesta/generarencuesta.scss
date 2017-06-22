@@ -1,12 +1,22 @@
 page-generarencuesta{
 .fondo{
-    background-image: url("../assets/img/generar_encuesta.png")
+    // background-image: url("../assets/img/generar_encuesta.png");
+	background-color: #d9d9d9;
+	
+}
+.card{
+    // background-image: url("../assets/img/generar_encuesta.png");
+	background-color:  #009688;// #A8B0AF;
+	font-family: 'Cinzel', serif;
+	 color: white;//#154654;
 }
 h3,h2 {
-    color: white;
+    //color: #154654;
+	color:#154654;
 }
 .fondoEncu{
-    background-color: #154654;
+    background-color: #d9d9d9;//#154654;
+	
 }
 .myButton {
 	-moz-box-shadow:inset 0px 1px 0px 0px #9acc85;

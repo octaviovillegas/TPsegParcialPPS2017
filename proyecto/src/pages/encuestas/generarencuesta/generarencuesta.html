@@ -3,14 +3,18 @@
       <button ion-button menuToggle left>
           <ion-icon name="menu"></ion-icon>
       </button>
-    <ion-title>Profesor: {{usuarioLogueado.usuario}}</ion-title>
+    <ion-title>Generador de encuestas<!-- Profesor:{{usuarioLogueado.usuario}}--></ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content class="fondo">
+<link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
   <ion-list>
-      <h3 >Deslice a la derecha sobre la encuesta para agregar preguntas en la encuesta<br>
+    <ion-card>
+  <ion-card-content class="card">
+         Deslice a la derecha sobre la encuesta para agregar preguntas en la encuesta<br>
           Deslice a la izquierda sobre la encuesta para borrar la encuesta
-      </h3>
+  </ion-card-content>
+</ion-card>   
   </ion-list>
   <div>
   </div>
@@ -32,8 +36,15 @@
       <ion-icon ios="ios-add" md="md-add"></ion-icon>
   </ion-item-sliding>
 </ion-list>
-&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="nuevaEncuesta()">Nueva Encuesta</a>
-
+<!--&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="nuevaEncuesta()">Nueva Encuesta</a>-->
+<!--&nbsp;&nbsp;&nbsp;<button ion-button type="button" (click)="nuevaEncuesta()" color="primary-color">Nueva Encuesta</button>
+   -->
+    <ion-fab bottom right>
+        <button ion-fab (tap)="nuevaEncuesta()" color="PRIMARY">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+   
 
 
    

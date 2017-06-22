@@ -32,7 +32,8 @@ Ingrese tipo de pregunta
   <ion-input *ngIf="tipoPregunta!=2" type="text"  name="opcion4" [(ngModel)]="opcion4" placeholder="ingrese opcion 4"></ion-input>
  </div>
   
-&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="altaEncuesta()"> Nueva pregunta</a>
+<!--&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="altaPregunta()"> Nueva pregunta</a>-->
+<button ion-button type="button" (click)="altaPregunta()" color="primary-color">Crear pregunta</button>
 
 </div>
 
@@ -42,7 +43,8 @@ Ingrese tipo de pregunta
     <ion-input type="date"  name="fechaInicio" [(ngModel)]="encuesta.fechaInicio" placeholder="ingrese fecha Inicio" required></ion-input> 
     <ion-input type="date"  name="fechaFin" [(ngModel)]="encuesta.fechaFin" placeholder="ingrese fecha fin" required></ion-input> 
 
-&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="altaEncuesta()">Nueva Encuesta</a>
+<!--&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="altaEncuesta()">Nueva Encuesta</a>-->
+<button ion-button type="button" (click)="altaEncuesta()" color="primary-color">Crear Encuesta</button>
 
  </div>
 </ion-content>
