@@ -3,7 +3,9 @@ import { AppService } from "../../providers/app-service";
 import { Response } from "@angular/http";
 import { Storage } from "@ionic/storage";
 import { Vibration } from '@ionic-native/vibration';
+import { ToastController, AlertController } from "ionic-angular";
 
+import { NativeAudio } from '@ionic-native/native-audio';
 /**
  * Generated class for the DeleteUserComponent component.
  *
@@ -19,7 +21,9 @@ export class DeleteUserComponent {
   text: string;
   users:Array<any>;
    loadingPage: boolean;
-  constructor( private appService: AppService, private storage: Storage) {
+  constructor( private appService: AppService, private storage: Storage, private toastCtrl: ToastController, private nativeAudio: NativeAudio, private vibration: Vibration, private alertCtrl: AlertController) {
+    this.nativeAudio.preloadSimple('bien', 'assets/sound/ok.mp3');
+    this.nativeAudio.preloadSimple('error', 'assets/sound/2.mp3');
     this.loadingPage = true;
     this.text = 'Estás viendo el contenido del componente DeleteUserComponent';
 this.storage.get("jwt")
@@ -57,12 +61,34 @@ encodeRol(rol) {
     }
     return rv;
   }
-
+ showConfirm(userid) {
+    let confirm = this.alertCtrl.create({
+      title: '¿Desea eliminar este Usuario?',
+      message: '',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {}
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.vibration.vibrate(500);
+            this.eliminar(userid)
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
 eliminar(userid){
 
 this.appService.deleteUser(userid).then((response: Response) => {
             if (response.status == 200) {
+              this.showMessage("Borrando Encuesta");
+             this.vibration.vibrate(500);
               this.storage.get("jwt")
+              
       .then((jwt) => {
 this.appService.getUserListToEliminate(jwt).then((response: Response) => {
             if (response.status == 200) {
@@ -80,4 +106,14 @@ this.appService.getUserListToEliminate(jwt).then((response: Response) => {
             }
           })
 }
+
+showMessage(message: string): void {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position: "middle"
+    });
+    toast.present();
+  }
+
 }

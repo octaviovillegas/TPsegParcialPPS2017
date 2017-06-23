@@ -4,7 +4,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NewUserData } from "../../app/entities/newUserData";
 import { AppService } from "../../providers/app-service";
 import { ToastController, AlertController } from "ionic-angular";
-
+import { Vibration } from '@ionic-native/vibration';
+import { NativeAudio } from '@ionic-native/native-audio';
 @Component({
   selector: 'new-user-component',
   templateUrl: 'new-user-component.html'
@@ -19,10 +20,13 @@ export class NewUserComponent implements OnInit {
     this.setUserTypesByCurrenRol();
   }
 
-  constructor(private storage: Storage, private fb: FormBuilder, private appService: AppService, private toastCtrl: ToastController, private alertCtrl: AlertController) {
+  constructor(private storage: Storage,private nativeAudio: NativeAudio, private vibration: Vibration, private fb: FormBuilder, private appService: AppService, private toastCtrl: ToastController, private alertCtrl: AlertController) {
     this.roles = [];
     this.hideSpinner = true;
+      this.nativeAudio.preloadSimple('bien', 'assets/sound/ok.mp3');
+    this.nativeAudio.preloadSimple('error', 'assets/sound/2.mp3');
     this.form = this.fb.group({
+    
       //user table
       firstname: ["", Validators.required],
       lastname: ["", Validators.required],
@@ -111,10 +115,12 @@ export class NewUserComponent implements OnInit {
         {
           text: 'Aceptar',
           handler: () => {
+             this.vibration.vibrate(500);
             this.storage.get("jwt")
               .then(jwt => this.createNewUser(jwt))
               .catch(() => {
                 this.showErrorMessage("Usuario no válido");//No tiene credenciales
+                this.nativeAudio.play('error', () => console.log('Encuesta guardada'));
               });
           }
         }
@@ -131,13 +137,17 @@ export class NewUserComponent implements OnInit {
       this.hideSpinner = true;
       if (response.status == 200) {
         this.showErrorMessage("El usuario ha sido creado exitosamente");
+        this.nativeAudio.play('bien', () => console.log('Encuesta guardada'));
+        this.vibration.vibrate(500);
         this.form.reset();
       } else {
         this.showErrorMessage("No tiene permisos para realizar esta acción"); //No tiene permisos.
-      }
+     this.nativeAudio.play('error', () => console.log('Encuesta guardada'));
+     }
     }).catch(() => {
       this.showErrorMessage("El alta no pudo ser procesada, por favor intentelo nuevamente");
       this.hideSpinner = true;
+      this.nativeAudio.play('error', () => console.log('Encuesta guardada'));
     });
   }
 

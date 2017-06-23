@@ -15,7 +15,7 @@
     <p>Apellido: {{item.lastname}}</p>
     <p>Legajo:{{item.filenumber}}</p>
           </ion-item>
-          <button ion-item color="danger" (click)="eliminar(item.userid)">
+          <button ion-item color="danger" (click)="showConfirm(item.userid)">
         <ion-icon name="create" item-start></ion-icon>
           Eliminar
         </button>
