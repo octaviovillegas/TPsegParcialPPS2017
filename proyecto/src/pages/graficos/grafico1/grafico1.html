@@ -26,4 +26,21 @@
     </ion-list>
 
     <div id="container"></div>
+
+
+
+                     
+<div *ngIf="conjAver2 != ''"> 
+    <table>
+    <tr>
+      <th>Respuesta</th>
+      <th>Cantidad</th>
+    </tr>
+    <tr *ngFor="let p of conjAver2">
+      <td>{{p.drilldown}}</td>
+      <td>{{p.y}}</td> 
+    </tr>
+  </table>
+</div>
+
 </ion-content>

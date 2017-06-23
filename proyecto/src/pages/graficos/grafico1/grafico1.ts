@@ -29,6 +29,7 @@ export class Grafico1
 	preganterior=null;
 	Unapregunta;
 	conjAver=[];
+    pregsel;
   conjAver2=[];
   traerdatos()
   {
@@ -62,6 +63,7 @@ export class Grafico1
 
 	onChange(event)
 	{
+        this.pregsel=event;
         this.cargando = true;
         this.conjAver2=[];
         for (let obj of this.conjAver)
@@ -120,7 +122,7 @@ export class Grafico1
         });
 
         this.cargando = false;
-
+        console.info(this.conjAver2);
 	}
 
 
