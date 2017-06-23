@@ -21,7 +21,9 @@ export class ModifyUserComponent {
   text: string;
 
   users:Array<any>;
+  loadingPage:boolean;
   constructor( private appService: AppService, private storage: Storage, private navCtrl: NavController) {
+    this.loadingPage = true;
     console.log('Hello ModifyUserComponent Component');
     this.text = 'Estás viendo el contenido del componente ModifyUserComponent';
   this.storage.get("jwt")
@@ -29,12 +31,15 @@ export class ModifyUserComponent {
 this.appService.getUserListToEliminate(jwt).then((response: Response) => {
             if (response.status == 200) {
               this.users = JSON.parse(response["_body"]);
+              this.loadingPage = false;
             } else {
               console.log("error"); //No tiene permisos.
+              this.loadingPage = false;
             }
           })
             .catch((error) => console.log("error")); //Si por alguna razón el servidor no responde.
-         });
+       this.loadingPage = false;
+        });
 
 
 
