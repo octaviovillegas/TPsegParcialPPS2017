@@ -24,6 +24,7 @@ export class GrillaCurso {
     profesores=null;
     UssP=[];
     archivo;
+    aGuardar: Array<any> =[];
   constructor(public file: File, private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController,
       private http: Http, public modalCtrl: ModalController, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController) {
          this.archivo=file;
@@ -76,17 +77,18 @@ export class GrillaCurso {
     
       GuardarFile()
         {
+            for(let c of this.Cursos)
+            {
+                this.aGuardar.push({curso : c['descripcion'] , Comision: c['comision_descripcion'] , Profesor: c['profesor']['nombre']});
+            }
+            console.info(this.aGuardar);
             console.info(this.Cursos);
              console.info(this.archivo.externalDataDirectory);
-            this.archivo.writeFile(this.archivo.externalDataDirectory,"cursos.txt", this.Cursos, true)
-            .then(_ => alert("Se guardo correctamente!"))
-            .catch(
-                 this.archivo.writeExistingFile(this.archivo.externalDataDirectory,"cursos.txt", this.Cursos)
+              this.archivo.writeExistingFile(this.archivo.externalDataDirectory,"cursos.txt", this.aGuardar)
                 .then(_ => alert("Se guardo correctamente!"))
                 .catch(
                 err => alert("Error al guardar!")           
-                )
-            );
+                );
             
 
          
