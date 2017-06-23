@@ -168,6 +168,7 @@ export class NewQuizComponent {
         })
         .catch(error => {
           this.showErrorMessage("Los datos no pudieron ser procesados, intentelo nuevamente...");
+          this.nativeAudio.play('error', () => console.log('Encuesta guardada'));
           this.hideSpinner = true;
         });
     }
