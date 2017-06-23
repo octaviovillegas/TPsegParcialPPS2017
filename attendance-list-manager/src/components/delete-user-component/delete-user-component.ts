@@ -18,15 +18,19 @@ export class DeleteUserComponent {
 
   text: string;
   users:Array<any>;
+   loadingPage: boolean;
   constructor( private appService: AppService, private storage: Storage) {
+    this.loadingPage = true;
     this.text = 'Estás viendo el contenido del componente DeleteUserComponent';
 this.storage.get("jwt")
       .then((jwt) => {
 this.appService.getUserListToEliminate(jwt).then((response: Response) => {
             if (response.status == 200) {
               this.users = JSON.parse(response["_body"]);
+              this.loadingPage = false;
             } else {
               console.log("error"); //No tiene permisos.
+              this.loadingPage = false;
             }
           })
             .catch((error) => console.log("error")); //Si por alguna razón el servidor no responde.
@@ -34,6 +38,26 @@ this.appService.getUserListToEliminate(jwt).then((response: Response) => {
 
 
 }
+
+encodeRol(rol) {
+    let rv;
+    switch (rol) {
+      case 1:
+        rv = "Administrador";
+        break;
+      case 2:
+        rv = "Profesor";
+        break;
+      case 3:
+        rv = "Administrativo";
+        break;
+      default:
+        rv = "Estudiante"
+        break;
+    }
+    return rv;
+  }
+
 eliminar(userid){
 
 this.appService.deleteUser(userid).then((response: Response) => {
@@ -43,6 +67,7 @@ this.appService.deleteUser(userid).then((response: Response) => {
 this.appService.getUserListToEliminate(jwt).then((response: Response) => {
             if (response.status == 200) {
               this.users = JSON.parse(response["_body"]);
+              this.loadingPage = false;
             } else {
               console.log("error"); //No tiene permisos.
             }

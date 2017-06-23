@@ -1,13 +1,13 @@
 <ion-header>
 
-  <ion-navbar color="primary">
+  <ion-navbar color="color1">
     <ion-title>Aulas</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="classroom">
   <div [hidden]="loadingPage">
     <ion-list>
       <button ion-item *ngFor="let classroom of classrooms" (click)="itemSelected(classroom)">

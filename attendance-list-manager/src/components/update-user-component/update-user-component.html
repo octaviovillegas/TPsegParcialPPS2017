@@ -1,12 +1,12 @@
 <ion-header>
 
-  <ion-navbar color="primary">
+  <ion-navbar color="color1">
     <ion-title></ion-title>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="update">
   
     <form [formGroup]="form" padding>
   <ion-list>
@@ -56,7 +56,7 @@
       </ion-item>
     </ion-list>
     <div [hidden]="!hideSpinner">
-      <button ion-button full  (click)="showConfirm()">Enviar</button>
+      <button ion-button full  (click)="showConfirm()"color="color1">Enviar</button>
     </div>
     <div [hidden]="hideSpinner">
       <div>
