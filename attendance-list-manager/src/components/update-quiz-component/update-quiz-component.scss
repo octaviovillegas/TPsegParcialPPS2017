@@ -1,6 +1,13 @@
-update-quiz-component {.surveys{background-image: url('../assets/img/surveys.jpg');
+update-quiz-component {
+.surveys{background-image: url('../assets/img/surveys.jpg');
 background-repeat: no-repeat;
 background-size:cover;}
+.ion-segment-button{
+
+      
+    background-color: #ffffff
+}
+
 form{ border-radius: 30px !important;
          padding-left: 30px !important;
          font-size: 0.9em;
