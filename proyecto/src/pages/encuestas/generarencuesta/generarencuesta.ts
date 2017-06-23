@@ -56,6 +56,8 @@ export class GenerarEncuesta {
                 this.cargando = false;
                 this.listaEncuestas = quote;
                 console.info(this.listaEncuestas);
+            }, e => {
+                this.cargando = false;
             });
         }
 
@@ -77,14 +79,18 @@ export class GenerarEncuesta {
 
         BorrarEncuesta(datos){
             console.log(datos);
+            this.cargando = true;
             this.http.post("http://tppps2.hol.es/ws1/encuestas/borrar", {
                 idEncuesta:datos
             })
             .map(res => res.json())
             .subscribe((quote) =>{
+                this.cargando = false;
                 this.cargarEncuestas();
                 this.mostrarMensaje('Encuesta borrada con éxito!');
                 console.info(quote);
+            }, e => {
+                this.cargando = false;
             });
 
         }
@@ -99,7 +105,10 @@ export class GenerarEncuesta {
         }
 
         verEncuesta (encuesta) {
-            this.navCtrl.push(EncuestaDetalle, encuesta);
+            this.navCtrl.push(EncuestaDetalle, encuesta, {
+                direction: 'forward',
+                animation: 'ios-transition'
+            });
         }
 
 
