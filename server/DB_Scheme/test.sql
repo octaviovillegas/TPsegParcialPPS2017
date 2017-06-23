@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-06-2017 a las 23:15:09
+-- Tiempo de generación: 23-06-2017 a las 23:26:08
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -46,9 +46,8 @@ INSERT INTO `addresses` (`addressid`, `street`, `number`, `floor`, `department`,
 (1, '9 de Julio', '2722', 'PB', '', 'Es un Bar', 'Lanus', 2),
 (2, '9 de Julio', '1510', 'PB', 'Local', 'Es un local', 'Lanus', 3),
 (12, 'Falsa', '231', 'PB', 'A', 'Aclaración', 'Lanus', 4),
-(19, '9 de Julio', '1824', '', '', '', 'Lanús', 11),
 (20, 'Gral. Arias', '1824', '', '', 'Estadio de fútbol', 'Lanús', 12),
-(25, '2 de mayo', '3524', '', '', 'Club Social', 'Lanús Oeste', 17);
+(30, 'Av Siempre viva', '743', '', '', '', 'Springfield', 22);
 
 -- --------------------------------------------------------
 
@@ -65,6 +64,16 @@ CREATE TABLE `answers` (
   `choosenothing` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `answers`
+--
+
+INSERT INTO `answers` (`answerid`, `text`, `userid`, `questionid`, `surveyid`, `choosenothing`) VALUES
+(35, 'Es puntual. Es bastante exigente.', 4, 64, 62, 0),
+(36, '', 4, 65, 63, 0),
+(37, '', 12, 65, 63, 0),
+(38, 'Excelente. 100% recomendado, 1link , mega, no virus', 12, 64, 62, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -78,14 +87,6 @@ CREATE TABLE `attendancelistitems` (
   `attendancelistid` bigint(18) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `attendancelistitems`
---
-
-INSERT INTO `attendancelistitems` (`attendancelistitemid`, `studentid`, `present`, `attendancelistid`) VALUES
-(7, 11, 1, 4),
-(8, 12, 0, 4);
-
 -- --------------------------------------------------------
 
 --
@@ -98,13 +99,6 @@ CREATE TABLE `attendancelists` (
   `creationdate` date NOT NULL,
   `ownerid` bigint(18) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `attendancelists`
---
-
-INSERT INTO `attendancelists` (`attendancelistid`, `classid`, `creationdate`, `ownerid`) VALUES
-(4, 1, '2017-06-19', 3);
 
 -- --------------------------------------------------------
 
@@ -125,18 +119,18 @@ CREATE TABLE `classes` (
 --
 
 INSERT INTO `classes` (`classid`, `divisionid`, `subjectid`, `classroomid`, `teacherid`) VALUES
-(1, 1, 4, 1, 17),
-(2, 1, 5, 6, 2),
-(3, 1, 6, 7, 2),
-(4, 1, 7, 8, 2),
-(5, 2, 4, 1, 17),
-(6, 2, 5, 6, 2),
-(7, 2, 6, 7, 2),
-(8, 2, 7, 8, 2),
-(9, 3, 4, 1, 2),
-(10, 3, 5, 6, 2),
-(11, 3, 6, 7, 2),
-(12, 3, 7, 8, 2);
+(1, 1, 4, 1, 2),
+(2, 1, 5, 6, 22),
+(3, 1, 6, 7, 22),
+(4, 1, 7, 8, 22),
+(5, 2, 4, 1, 2),
+(6, 2, 5, 6, 22),
+(7, 2, 6, 7, 22),
+(8, 2, 7, 8, 22),
+(9, 3, 4, 1, 22),
+(10, 3, 5, 6, 22),
+(11, 3, 6, 7, 22),
+(12, 3, 7, 8, 22);
 
 -- --------------------------------------------------------
 
@@ -212,27 +206,8 @@ CREATE TABLE `options` (
 --
 
 INSERT INTO `options` (`optionid`, `text`, `isright`, `questionid`) VALUES
-(17, 'Soy el texto de una opción correcta', 1, 54),
-(18, 'Soy el texto de una opción incorrecta', 0, 54),
-(22, 'HTML', 0, 56),
-(23, 'Javascript', 1, 56),
-(24, 'C#', 1, 56),
-(37, 'Incorrecta', 0, 61),
-(38, 'Correcta', 1, 61),
-(39, 'Incorrecta', 0, 61),
-(40, 'Guitarra', 0, 62),
-(41, 'Bajo', 0, 62),
-(42, 'Batería', 0, 62),
-(43, 'Teclado', 0, 62),
-(54, 'Perro', 1, 63),
-(55, 'Negro', 1, 63),
-(56, 'Rojo', 0, 63),
-(57, 'Verde', 0, 63),
-(58, 'Auto', 1, 63),
-(59, 'Blanco', 1, 63),
-(60, 'Casa', 1, 63),
-(61, 'Los Beattles', 0, 59),
-(62, 'Los Stones', 0, 59);
+(63, 'Matemática', 0, 65),
+(64, 'Estadística', 0, 65);
 
 -- --------------------------------------------------------
 
@@ -245,6 +220,14 @@ CREATE TABLE `optionsbyanswer` (
   `optionid` bigint(18) NOT NULL,
   `answerid` bigint(18) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `optionsbyanswer`
+--
+
+INSERT INTO `optionsbyanswer` (`optionsbyanswerid`, `optionid`, `answerid`) VALUES
+(29, 63, 36),
+(30, 63, 37);
 
 -- --------------------------------------------------------
 
@@ -316,14 +299,8 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`questionid`, `text`, `surveyid`) VALUES
-(53, '¿Una pregunta, la respuesta es libre?', 51),
-(54, '¿Una pregunta, dos opciones, una respuesta correcta, radios?', 52),
-(56, '¿Cuáles de los siguientes son lenguajes de programación?', 54),
-(59, '¿The Beattles or The Stones?', 57),
-(60, '¿Qué sabes hacer?', 58),
-(61, '¿Cuál es la respuesta correcta?', 59),
-(62, '¿Qué instrumentos tocaste alguna vez?', 60),
-(63, 'Seleccionar aquellas opciones que no son colores', 61);
+(64, '¿Qué te parece R. Fonte como profesor?', 62),
+(65, '¿Qué materia te resultó más difícil?', 63);
 
 -- --------------------------------------------------------
 
@@ -363,8 +340,8 @@ CREATE TABLE `studentsbyclass` (
 --
 
 INSERT INTO `studentsbyclass` (`studentsbyclassid`, `studentid`, `classid`) VALUES
-(1, 11, 1),
-(2, 12, 1);
+(2, 12, 1),
+(3, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -426,14 +403,8 @@ CREATE TABLE `surveys` (
 --
 
 INSERT INTO `surveys` (`surveyid`, `title`, `creationdate`, `enddate`, `ownerid`, `waseliminated`, `surveytypeid`) VALUES
-(51, 'Titulo de la encuesta Pofesor', '2017-06-02', '2030-08-04', 2, 0, 1),
-(52, 'Titulo de la encuesta Administrador', '2017-06-02', '0000-00-00', 1, 0, 2),
-(54, 'Titulo de otra encuesta Administrador', '2017-06-06', '0000-00-00', 1, 0, 5),
-(57, 'Una pregunta, dos respuestas , ninguna correcta. Sólo opinión', '2017-06-20', '0000-00-00', 2, 0, 3),
-(58, 'Encuesta de libre respuesta hecha por el profesor', '2017-06-20', '0000-00-00', 2, 0, 1),
-(59, 'Una encuesta, 3 respuestas, 1 correcta, sólo elije una.', '2017-06-20', '0000-00-00', 2, 0, 2),
-(60, 'Selección múltiple, no hay respuesta correcta', '2017-06-20', '0000-00-00', 2, 0, 4),
-(61, 'Múltiples opciones, multiple seleccion, con N opciones correctas', '2017-06-20', '2017-08-01', 2, 0, 5);
+(62, 'Opinión sobre el profesor', '2017-06-23', '2017-07-31', 2, 0, 1),
+(63, 'Dificultad de la materia', '2017-06-23', '2017-08-24', 2, 0, 3);
 
 -- --------------------------------------------------------
 
@@ -481,12 +452,11 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`userid`, `username`, `email`, `password`, `rolid`, `firstname`, `lastname`, `filenumber`) VALUES
 (1, 'EjemploAdministrator', 'admin@admin.com', '123456', 1, 'Ejemplo', 'Administrador', 111111),
-(2, 'EjemploTeacher', 'teacher@teacher.com', '123456', 2, 'Ejemplo', 'Profesor', 2222),
+(2, 'RFonte', 'ruben@fonte.com', '123456', 2, 'Rubén', 'Fonte', 2222),
 (3, 'EjemploAdministrative', 'administrative@administrative.com', '123456', 3, 'Ejemplo', 'Administrativo', 0),
-(4, 'EjemploStudent', 'student@student.com', '123456', 4, 'Ejemplo', 'Alumno', 35468),
-(11, 'NicoCabrera', 'nicolascabrera@yahoo.com.ar', '123456', 4, 'Nicolás', 'Cabrera', 105987),
+(4, 'NicoCabrera', 'nicolascabrera@yahoo.com.ar', '123456', 4, 'Nicolás', 'Cabrera', 35468),
 (12, 'feden91', 'feden@feden.com', '123456', 4, 'Federico', 'Nuñez', 100321),
-(17, 'RFonte', 'ruben@fonte.com', '123456', 2, 'Rubén', 'Fonte', 0);
+(22, 'O. Villegas', 'ocatavio@villegas.com', '123456', 2, 'Octavio', 'Villegas', 935442);
 
 --
 -- Índices para tablas volcadas
@@ -628,12 +598,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `addressid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `addressid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT de la tabla `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `answerid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `answerid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT de la tabla `attendancelistitems`
 --
@@ -663,12 +633,12 @@ ALTER TABLE `divisions`
 -- AUTO_INCREMENT de la tabla `options`
 --
 ALTER TABLE `options`
-  MODIFY `optionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `optionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 --
 -- AUTO_INCREMENT de la tabla `optionsbyanswer`
 --
 ALTER TABLE `optionsbyanswer`
-  MODIFY `optionsbyanswerid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `optionsbyanswerid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT de la tabla `permissions`
 --
@@ -683,12 +653,12 @@ ALTER TABLE `permissionsbyrol`
 -- AUTO_INCREMENT de la tabla `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `questionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `questionid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 --
 -- AUTO_INCREMENT de la tabla `studentsbyclass`
 --
 ALTER TABLE `studentsbyclass`
-  MODIFY `studentsbyclassid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `studentsbyclassid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `subjects`
 --
@@ -698,7 +668,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT de la tabla `surveys`
 --
 ALTER TABLE `surveys`
-  MODIFY `surveyid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `surveyid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 --
 -- AUTO_INCREMENT de la tabla `surveytype`
 --
@@ -708,7 +678,7 @@ ALTER TABLE `surveytype`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `userid` bigint(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- Restricciones para tablas volcadas
 --
