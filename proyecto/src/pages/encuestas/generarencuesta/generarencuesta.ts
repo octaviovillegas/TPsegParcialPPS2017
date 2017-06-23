@@ -4,6 +4,7 @@ import { NavController,NavParams, ModalController, ViewController, ToastControll
 import {Modales} from "../../encuestas/modales/modales";
 import {Http} from '@angular/http';
 import { servicioAuth } from '../../servicioAuth/servicioAuth';
+import { EncuestaDetalle } from "../../encuesta-detalle/encuesta-detalle";
 
 @Component({
     selector: 'page-generarencuesta',
@@ -95,6 +96,10 @@ export class GenerarEncuesta {
                 position: 'bottom'
             });
             toast.present();
+        }
+
+        verEncuesta (encuesta) {
+            this.navCtrl.push(EncuestaDetalle, encuesta);
         }
 
 
