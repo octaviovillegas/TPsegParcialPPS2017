@@ -3,7 +3,7 @@ Segundo parcial de PPS 2017 IONIC 2
 ========================================
 
 
-<h2>Documentancion:</h2>
+<h2>Documentacion:</h2>
 
  <h3>Login</h3>
 Login Con jwt Firebase: El login está diseñado para que un usuario con correo y password puedan loguearse en el sistema.
@@ -44,13 +44,13 @@ El profesor es el encargado de generar las encuestas con las preguntas correspon
 	-	Cantidad de alumnos por curso (pudiendo seleccionar 1 o todos los cursos)<br>
 
  <h3>Perfil Administrador</h3>
- 	Administrara todo los tipos de usuarios, los cursos y comisiones pudiendo realizar las alta, bajas y modificaciones.
+ 	Administrara todo los tipos de usuarios, los cursos y comisiones pudiendo realizar las alta, bajas y modificaciones, y el guardado de los cursos en un archivo txt.
 
  <h4>Tareas</h4><br>
 	-	ABM de usuarios (alumnos, profesores, administradores y administrativos) <br>
 	-	ABM de cursos<br>
 	-	ABM de comisiones<br>
-
+	-   Guardado de cursos en archivo txt
 
 <h3>Perfil Alumno</h3>
 
@@ -80,6 +80,7 @@ Su ubicacion actual y la ubicacion fija de la UTN Fra.
  -$cordovaToast<br>
  -$cordovaNativeAudio<br>
  -$cordovaGeolocation <br>
+ -$cordovaFile<br>
 
  <h4>Items generales agregados=</h4>
  -Splashscreen personalizada y un icono personalizado diseñado en https://www.canva.com .<br>
