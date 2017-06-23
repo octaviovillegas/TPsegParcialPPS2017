@@ -19,7 +19,7 @@
   <div>
   </div>
 
-<ion-list>
+<ion-list *ngIf="!cargando">
   <ion-item-sliding *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: descripcion">
     <ion-item class="fondo" (click)="verEncuesta(encuesta)">
       <ion-avatar item-left>
@@ -39,7 +39,7 @@
 <!--&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="nuevaEncuesta()">Nueva Encuesta</a>-->
 <!--&nbsp;&nbsp;&nbsp;<button ion-button type="button" (click)="nuevaEncuesta()" color="primary-color">Nueva Encuesta</button>
    -->
-    <ion-fab bottom right>
+    <ion-fab bottom right *ngIf="!cargando">
         <button ion-fab (tap)="nuevaEncuesta()" color="PRIMARY">
             <ion-icon name="add"></ion-icon>
         </button>

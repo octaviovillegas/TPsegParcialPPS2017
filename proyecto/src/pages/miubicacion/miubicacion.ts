@@ -21,9 +21,14 @@ export class Miubicacion {
     geo:Geolocation;
   constructor(public navCtrl: NavController, public geolocation:Geolocation ) {
        this.geo=geolocation;
-    geolocation.getCurrentPosition().then((resp) => {
-    // resp.coords.latitude
-    // resp.coords.longitude
+       this.cargar();
+
+  }
+
+cargar()
+{
+   this.geo.getCurrentPosition().then((resp) => {
+    
     console.info(resp['coords']['latitude']);
     this.lat=resp['coords']['latitude'];
     console.info(resp['coords']['longitude']);
@@ -37,10 +42,7 @@ export class Miubicacion {
       console.info(data);
  
     });
-
-  }
-
-
+}
    
  
 
