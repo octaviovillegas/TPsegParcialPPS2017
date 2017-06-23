@@ -104,7 +104,7 @@ import { File } from '@ionic-native/file';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDg5RgxfKfydP2_yidVU7ZwUW21aIqPl0Y'
     }),
-   AngularFireModule.initializeApp(firebaseconfig, 'admin-app'),
+   AngularFireModule.initializeApp(firebaseconfig),
    AngularFireAuthModule,
    AngularFireDatabaseModule
       ],
