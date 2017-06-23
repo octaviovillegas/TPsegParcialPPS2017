@@ -1,6 +1,6 @@
 <div [hidden]="loadingPage">
   <ion-list>
-    <ion-item *ngFor="let survey of surveys">
+    <div *ngFor="let survey of surveys">
       <ion-card>
         <ion-card-header text-wrap>
           {{survey.title}}
@@ -15,9 +15,9 @@
         <ion-icon name="create" item-start></ion-icon>
           Eliminar
         </button>
-        </ion-list>
+        </ion-list>|
       </ion-card>
-    </ion-item>
+    </div>
   </ion-list>
 </div>
 <!-- spinner -->

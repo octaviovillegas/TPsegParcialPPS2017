@@ -4,7 +4,7 @@
       <ion-list-header>
         Estadisticas disponibles
       </ion-list-header>
-      <ion-item *ngFor="let survey of surveys">
+      <div *ngFor="let survey of surveys">
 
         <ion-card>
           <ion-card-header text-wrap>
@@ -23,7 +23,7 @@
           </ion-list>
         </ion-card>
 
-      </ion-item>
+      </div>
     </ion-list>
   </div>
   <div [hidden]="hideSpinner">

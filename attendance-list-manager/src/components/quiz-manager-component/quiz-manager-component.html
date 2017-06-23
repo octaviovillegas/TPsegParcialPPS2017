@@ -1,17 +1,17 @@
-<ion-content>
-
-  <ion-segment [(ngModel)]="wichComponent">
-    <ion-segment-button value="new">
+<ion-content class="surveys">
+<h1>    
+  <ion-segment [(ngModel)]="wichComponent" color="light">
+    <ion-segment-button color="light" value="new">
       Nueva
     </ion-segment-button>
-    <ion-segment-button value="delete">
+    <ion-segment-button color="light" value="delete">
       Eliminar
     </ion-segment-button>
-    <ion-segment-button value="update">
+    <ion-segment-button color="light" value="update">
       Modificar
     </ion-segment-button>
   </ion-segment>
-
+</h1>
   <div [ngSwitch]="wichComponent">
     <div *ngSwitchCase="'new'">
       <new-quiz-component>
