@@ -38,6 +38,26 @@ this.appService.getUserListToEliminate(jwt).then((response: Response) => {
 
 
 }
+
+encodeRol(rol) {
+    let rv;
+    switch (rol) {
+      case 1:
+        rv = "Administrador";
+        break;
+      case 2:
+        rv = "Profesor";
+        break;
+      case 3:
+        rv = "Administrativo";
+        break;
+      default:
+        rv = "Estudiante"
+        break;
+    }
+    return rv;
+  }
+
 eliminar(userid){
 
 this.appService.deleteUser(userid).then((response: Response) => {

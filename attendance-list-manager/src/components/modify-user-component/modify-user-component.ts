@@ -42,8 +42,27 @@ this.appService.getUserListToEliminate(jwt).then((response: Response) => {
         });
 
 
+console.log(this.users);
 
 }
+encodeRol(rol) {
+    let rv;
+    switch (rol) {
+      case 1:
+        rv = "Administrador";
+        break;
+      case 2:
+        rv = "Profesor";
+        break;
+      case 3:
+        rv = "Administrativo";
+        break;
+      default:
+        rv = "Estudiante"
+        break;
+    }
+    return rv;
+  }
 modificar(userid){
   this.navCtrl.parent.push(UpdateUseromponent, { userid });
 }
