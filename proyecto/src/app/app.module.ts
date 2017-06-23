@@ -59,6 +59,7 @@ import { AgmCoreModule } from '@agm/core';
 import { AcercaDePage } from '../pages/acerca-de-page/acerca-de-page';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { File } from '@ionic-native/file';
+import { EncuestaDetalle } from "../pages/encuesta-detalle/encuesta-detalle";
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { File } from '@ionic-native/file';
     Grafico3,
     AlumnoCurso,
     Miubicacion,
-    AcercaDePage
+    AcercaDePage,
+    EncuestaDetalle
   ],
   imports: [
     BrowserModule,
@@ -142,7 +144,8 @@ import { File } from '@ionic-native/file';
     Grafico3,
     AlumnoCurso,
     Miubicacion,
-    AcercaDePage
+    AcercaDePage,
+    EncuestaDetalle
       ],
   providers: [
     StatusBar,

@@ -112,3 +112,15 @@ $app->post('/usuarios/{id_usuario}/encuestas/respuestas', function($request, $re
     $response->write(json_encode(array('id_respuestas' => $id_respuestas)));
 
 });
+
+$app->delete('/pregunta/{id_pregunta}', function ($request, $response, $args) {
+
+    $params = $request->getQueryParams();
+
+    $id_pregunta = (int)$request->getAttribute('id_pregunta');
+
+    $ret = Pregunta::eliminarPregunta($id_pregunta);
+
+    return json_encode($ret);
+
+});
