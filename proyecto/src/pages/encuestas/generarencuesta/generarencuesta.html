@@ -21,14 +21,14 @@
 
 <ion-list *ngIf="!cargando">
   <ion-item-sliding *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: descripcion">
-    <ion-item class="fondo" (click)="verEncuesta(encuesta)">
+    <ion-item class="fondo"> <!--(click)="verEncuesta(encuesta)"-->
       <ion-avatar item-left>
       </ion-avatar>
       <h2>{{encuesta.descripcion}}</h2>
     </ion-item>
     <ion-item-options side="right" class="fondoEncu">
       <ion-icon name="plus"></ion-icon>
-        <img src="assets/img/nueva_pregunta.png" width=50 height=50 (click)="agregarPregunta(encuesta.id_encuesta)">
+        <img src="assets/img/nueva_pregunta.png" width=50 height=50 (click)="verEncuesta(encuesta)">
     </ion-item-options>
      <ion-item-options side="left" class="fondoEncu">
       <img src="assets/img/eliminar_encuesta.png" width=50 height=50 (click)="BorrarEncuesta(encuesta.id_encuesta)">
