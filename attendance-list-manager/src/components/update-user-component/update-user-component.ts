@@ -30,6 +30,8 @@ roluser:any;
 
   constructor(public navPrms: NavParams, private nativeAudio: NativeAudio, private vibration: Vibration, public storage: Storage, public appService: AppService, private fb: FormBuilder, public navCtrl: NavController, private toastCtrl: ToastController, private alertCtrl: AlertController) {
      this.hideSpinner = true;
+     this.nativeAudio.preloadSimple('actualizacion', 'assets/sound/escribe.mp3');
+      this.nativeAudio.preloadSimple('error', 'assets/sound/2.mp3');
      this.roles = [];
     this.userid=0;
     this.form = this.fb.group({
@@ -119,7 +121,9 @@ this.userid2=this.user[0].userid;
             this.storage.get("jwt")
               .then(jwt => this.modifyUser())
               .catch(() => {
-                this.showErrorMessage("Usuario no válido");//No tiene credenciales
+                this.showErrorMessage("Usuario no válido");
+                
+                //No tiene credenciales
               });
           }
         }
@@ -176,13 +180,17 @@ modifyUser() {
       this.hideSpinner = true;
       if (response.status == 200) {
         this.showErrorMessage("El usuario ha sido creado exitosamente");
+        this.nativeAudio.play('actualizacion', () => console.log('ok'));
+        this.vibration.vibrate(500);
         this.form.reset();
       } else {
         this.showErrorMessage("No tiene permisos para realizar esta acción"); //No tiene permisos.
       }
     }).catch(() => {
       this.showErrorMessage("El alta no pudo ser procesada, por favor intentelo nuevamente");
+
       this.hideSpinner = true;
+       this.nativeAudio.play('error', () => console.log('Encuesta guardada'));
     });
   }
 

@@ -33,7 +33,10 @@ export class UpdateQuizComponent implements OnInit {
   }
 
   constructor(public navPrms: NavParams, private nativeAudio: NativeAudio, private vibration: Vibration, public storage: Storage, public appService: AppService, private fb: FormBuilder, public navCtrl: NavController, private toastCtrl: ToastController, private alertCtrl: AlertController) {
+   
     this.hideSpinner = false;
+     this.nativeAudio.preloadSimple('actualizacion', 'assets/sound/escribe.mp3');
+      this.nativeAudio.preloadSimple('error', 'assets/sound/2.mp3');
     this.form = this.fb.group({
       title: ["", [Validators.required]],
       text: ["", [Validators.required]],
@@ -300,6 +303,7 @@ export class UpdateQuizComponent implements OnInit {
         //Validando que tenga sólo una respuesta correcta.
         if (rightAnswers != 1) {
           this.showMessage("Debe seleccionar 1 repuesta como 'correcta'.", "bottom");
+           this.nativeAudio.play('error', () => console.log('Encuesta guardada'));
           isValid = false;
         }
 
@@ -335,8 +339,8 @@ export class UpdateQuizComponent implements OnInit {
         .then(val => {
           this.showMessage("Encuesta Actualizada");
           this.hideSpinner = true;
-          this.nativeAudio.play('bien', () => console.log('ok'));
-
+          this.nativeAudio.play('actualizacion', () => console.log('ok'));
+         this.vibration.vibrate(500);
         })
         .catch(error => this.showMessage("Los datos no pudieron ser procesados, intentelo nuevamente..."));
     }

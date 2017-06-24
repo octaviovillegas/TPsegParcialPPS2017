@@ -24,6 +24,7 @@ export class DeleteUserComponent {
   constructor( private appService: AppService, private storage: Storage, private toastCtrl: ToastController, private nativeAudio: NativeAudio, private vibration: Vibration, private alertCtrl: AlertController) {
     this.nativeAudio.preloadSimple('bien', 'assets/sound/ok.mp3');
     this.nativeAudio.preloadSimple('error', 'assets/sound/2.mp3');
+     this.nativeAudio.preloadSimple('borrado', 'assets/sound/papel.mp3');
     this.loadingPage = true;
     this.text = 'Estás viendo el contenido del componente DeleteUserComponent';
 this.storage.get("jwt")
@@ -46,7 +47,7 @@ this.appService.getUserListToEliminate(jwt).then((response: Response) => {
 encodeRol(rol) {
     let rv;
     switch (rol) {
-      case 1:
+     case 1:
         rv = "Administrador";
         break;
       case 2:
@@ -85,7 +86,8 @@ eliminar(userid){
 
 this.appService.deleteUser(userid).then((response: Response) => {
             if (response.status == 200) {
-              this.showMessage("Borrando Encuesta");
+              this.showMessage("Borrando Usuario");
+             this.nativeAudio.play('borrado', () => console.log('Encuesta guardada'));
              this.vibration.vibrate(500);
               this.storage.get("jwt")
               
