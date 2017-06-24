@@ -46,13 +46,13 @@ this.appService.getUserListToEliminate(jwt).then((response: Response) => {
 encodeRol(rol) {
     let rv;
     switch (rol) {
-      case 1:
+      case "1":
         rv = "Administrador";
         break;
-      case 2:
+      case "2":
         rv = "Profesor";
         break;
-      case 3:
+      case "3":
         rv = "Administrativo";
         break;
       default:

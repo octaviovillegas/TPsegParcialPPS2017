@@ -35,19 +35,19 @@ export class QuestionListForStatisticsViewer {
   pushPage(survey) {
     let surveyTypeId = survey.surveytypeid;
     switch (surveyTypeId) {
-      case SurveyType.FreeAnswer:
+      case "1":
         this.navCtrl.parent.push(StatisticsViewer, { surveyId: survey.surveyid, question: survey.text, surveyTypeId: survey.surveytypeid, questionId: survey.questionid });
         break;
-      case SurveyType.Radiobuttons1Correct2Graphics:
+      case "2":
         this.navCtrl.parent.push(StatisticsOptionsViewer, { surveyId: survey.surveyid, question: survey.text, surveyTypeId: survey.surveytypeid, questionId: survey.questionid });
         break;
-      case SurveyType.Radiobuttons1Graphic:
+      case "3":
         this.navCtrl.parent.push(StatisticsOptionsViewer, { surveyId: survey.surveyid, question: survey.text, surveyTypeId: survey.surveytypeid, questionId: survey.questionid });
         break;
-      case SurveyType.Checkboxes1GraphicChooseNothing:
+      case "4":
         this.navCtrl.parent.push(StatisticsOptionsViewer, { surveyId: survey.surveyid, question: survey.text, surveyTypeId: survey.surveytypeid, questionId: survey.questionid });
         break;
-      case SurveyType.CheckboxesCorrects2GraphicsChooseNothing:
+      case "5":
         this.navCtrl.parent.push(StatisticsOptionsViewer, { surveyId: survey.surveyid, question: survey.text, surveyTypeId: survey.surveytypeid, questionId: survey.questionid });
         break;
       default:
