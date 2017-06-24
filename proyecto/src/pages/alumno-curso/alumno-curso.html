@@ -1,6 +1,6 @@
- 
+
   <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
       <button ion-button menuToggle left>
           <ion-icon name="menu"></ion-icon>
       </button>
@@ -13,8 +13,8 @@
       <ion-label>Curso:</ion-label>
       <ion-select [(ngModel)]="UnCurso" >
         <div *ngFor="let c of Cursos" >
-          <ion-option value={{c.id_curso}} >{{c.descripcion}}</ion-option> 
-        </div>      
+          <ion-option value={{c.id_curso}} >{{c.descripcion}}</ion-option>
+        </div>
       </ion-select>
     </ion-item>
   </ion-list>
@@ -24,8 +24,8 @@
       <ion-label>Alumno:</ion-label>
       <ion-select [(ngModel)]="UnAlumno" >
         <div *ngFor="let a of UssAl" >
-          <ion-option value={{a.id_usuario}} >{{a.nombre}}</ion-option> 
-        </div>      
+          <ion-option value={{a.id_usuario}} >{{a.nombre}}</ion-option>
+        </div>
       </ion-select>
     </ion-item>
   </ion-list>
