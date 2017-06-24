@@ -1,31 +1,45 @@
-# Attendance List Manager
+# Attendace List Manager
+
+Es una aplicación destinada a agilizar el proceso de almacenar los datos obtenidos de una clase al tomar asistencia. También incluye algunos addons, como la visualización gráfica de la asistencia del alumno por materia, y gráficos estadísticos que surgen de encuestas que se pueden realizar desde la misma aplicación. 
+
+### Plugins utilizados
 
 
-### Configuraciónes básicas:
-
-#### Base de datos
-
-La base de datos es MySQL y el backend usa php5.  
-En la carpeta `server` se encuentra el archivo `test.sql`.  
-Contiene la estructura para las tablas y algunos registros importantes para la app.  
-En algunas versiones de [XAMPP](https://www.apachefriends.org/es/index.html) se incluye una **B**ase de **D**atos por defecto llamada `test`, recomiendo que utilicen esa **BD** en principio . Usuario root sin contraseña.
-
-En resumen, ejecutan el script en esa base de datos y listo.
-
-#### API REST
-
-Dentro del mismo directorio se encuentra la carpeta `jwt`.  
-La cortan y la pegan en la raíz de `htdocs`.  
-
-#### Servicio
-
-Las peticiones las realiza el servicio que van a encontrar en `src/providers/app-service.ts`.
-
-**IMPORTANTE:** Si se fijan el código de ésta clase, van a encontrar que las uris apuntan a `http://localhost:80`. Si utilizan otro puerto (como el 8080) pueden cambiar esa línea de código, **pero no suban el cambio** al repositorio remoto, porque vamos a estar modificando esa linea cada vez que alguien realice un cambio.
-
-#### Dependencias
-
-Las que vienen por defecto, ejecuten
-```sh
-npm install
 ```
+@ionic-native/native-audio 3.12.1
+@ionic-native/splash-screen 3.7.0
+@ionic-native/vibration 3.12.1
+```
+
+### Otras dependencias
+
+
+```
+chart.js 2.6.0
+slim framework 3
+firebase/php-jwt
+```
+
+
+## Autores
+
+* **Nicolás Cabrera** - *Github* - [NicoCabrera](https://github.com/NicoCabrera)
+    *  Manejo de jwt como credencial y capa de seguridad
+    *  Backend as a service, API REST, SLIM Framework
+    *  Elavoración de datos estadísticos
+    *  Wireframing, prototipado de la app
+    *  Diseño y administración de la base de datos (relacional SQL)
+    *  Programación y coordinación general, estableciendo pautas de trabajo, objetivos y resolución de conflictos
+
+* **Federico Nuñez** - *Github* - [feden91](https://github.com/feden91)
+    *  Estilo general de la aplicación 
+    *  Diseño de multiples interfaces de usuario
+    *  Testing
+    *  Implementación de plugins
+    *  Manejo de gráficos estadísticos
+    *  Programación
+
+## License
+
+This project is licensed under the MIT License 
+
