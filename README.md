@@ -38,7 +38,7 @@ firebase/php-jwt
     *  Testing
     *  Implementación de plugins
     *  Manejo de gráficos estadísticos
-    *  Programación
+    *  Programación en la aplicacion y en la API rest.
 
 ## License
 
