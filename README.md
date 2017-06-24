@@ -9,6 +9,7 @@ Es una aplicación destinada a agilizar el proceso de almacenar los datos obteni
 @ionic-native/native-audio 3.12.1
 @ionic-native/splash-screen 3.7.0
 @ionic-native/vibration 3.12.1
+@ionic-native/toast 3.1.0
 ```
 
 ### Otras dependencias
