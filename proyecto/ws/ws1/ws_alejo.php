@@ -3,7 +3,7 @@
 /**
  * Devuelve las encuestas del id_usuario.
  * Si se pasa el parametro "?estado=" (pendiente o completada)
- * devuelve las encuetas en esos estados sino trae todas.
+ * devuelve las encuestas en esos estados sino trae todas.
  * @var [type]
  */
 $app->get('/usuarios/{id_usuario}/encuestas', function ($request, $response, $args) {
@@ -113,6 +113,10 @@ $app->post('/usuarios/{id_usuario}/encuestas/respuestas', function($request, $re
 
 });
 
+/**
+ * Elimina una pregunta segun su id_pregunta.
+ * @var [type]
+ */
 $app->delete('/pregunta/{id_pregunta}', function ($request, $response, $args) {
 
     $params = $request->getQueryParams();
@@ -126,7 +130,7 @@ $app->delete('/pregunta/{id_pregunta}', function ($request, $response, $args) {
 });
 
 /**
- * Devuelve la encuesta (id_encuesta) del id_usuario.
+ * Devuelve los alumnos que tienen asignada una encuestas segun el id_encuesta.
  * @var [type]
  */
 $app->get('/encuestas/{id_encuesta}/alumnos', function ($request, $response, $args) {
