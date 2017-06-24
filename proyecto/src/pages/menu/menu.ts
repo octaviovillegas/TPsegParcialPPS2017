@@ -25,6 +25,7 @@ import { AcercaDePage } from "../acerca-de-page/acerca-de-page";
 import { Miubicacion } from "../miubicacion/miubicacion";
 import { AngularFireAuth } from 'angularfire2/auth';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
+import { Resultado } from "../graficos/resultado/resultado";
 
 
 @Component({
@@ -54,6 +55,7 @@ export class Menu {
     private grafico3;
     private alumnocurso;
     private miubicacion;
+    private resultado;
 
     constructor(public navCtrl: NavController,public viewCtrl:ViewController, public navParams: NavParams,public afAuth: AngularFireAuth, public modalCtrl: ModalController, public auth: servicioAuth) {
 
@@ -96,6 +98,7 @@ export class Menu {
         this.miubicacion= Miubicacion;
 
         this.alumnocurso = AlumnoCurso;
+        this.resultado = Resultado;
     }
 
     Encuestas(queHago){

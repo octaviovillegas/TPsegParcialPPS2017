@@ -52,6 +52,9 @@
             <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrativo'" ion-item (click)="openPage(alumnocurso)" menuClose>
                 Alta de alumno en curso
             </button>
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrativo'" ion-item (click)="openPage(resultado)" menuClose>
+                Resultados por alumno
+            </button>
             <!-- fin administrativo -->
             <button *ngIf="usuarioLogueado.tipo_usuario == 'Profesor'" ion-item (click)="Encuestas('profesorGenerar')" menuClose>
                 Crear encuesta
