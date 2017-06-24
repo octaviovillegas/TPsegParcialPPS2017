@@ -19,7 +19,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, private fb: FormBuilder, private toastCtrl: ToastController, private storage: Storage, private appService: AppService) {
     this.form = this.fb.group({
-      email: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required]]
     });
     this.hideSpinner = true;

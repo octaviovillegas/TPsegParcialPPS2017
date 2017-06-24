@@ -71,27 +71,27 @@ export class QuestionViewer implements OnInit {
   setOptionsContainer() {
 
     switch (this.survey.surveytypeid) {
-      case SurveyType.FreeAnswer:
+      case "1":
         this.freeAnswer = true;
         this.withRadios = false;
         this.withCheckboxes = false;
         break;
-      case SurveyType.Radiobuttons1Correct2Graphics:
+      case "2":
         this.freeAnswer = false;
         this.withRadios = true;
         this.withCheckboxes = false;
         break;
-      case SurveyType.Radiobuttons1Graphic:
+      case "3":
         this.freeAnswer = false;
         this.withRadios = true;
         this.withCheckboxes = false;
         break;
-      case SurveyType.Checkboxes1GraphicChooseNothing:
+      case "4":
         this.freeAnswer = false;
         this.withRadios = false;
         this.withCheckboxes = true;
         break;
-      case SurveyType.CheckboxesCorrects2GraphicsChooseNothing:
+      case "5":
         this.freeAnswer = false;
         this.withRadios = false;
         this.withCheckboxes = true;
