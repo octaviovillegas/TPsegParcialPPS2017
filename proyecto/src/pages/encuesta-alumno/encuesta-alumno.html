@@ -6,8 +6,8 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>{{titulo}}</ion-title>
+  <ion-navbar color = "primary">
+    <ion-title >{{titulo}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,15 +16,15 @@
 <ion-content padding>
 <div *ngFor="let r of resul">
   <ion-card>
-    <ion-card-header>
-        Alumno: {{r.alumno}}
+    <ion-card-header color="primary"> 
+     <strong> {{r.alumno}} </strong>
     </ion-card-header>
 
     <ion-card-content>
         <div *ngFor="let pr of r.pregyresp">
           <ion-card>
             <ion-card-content>
-              {{pr.pregunta}} <br>
+              <strong>{{pr.pregunta}}</strong> <br>
               respuesta: {{pr.opcion}}
             </ion-card-content>
           </ion-card>
