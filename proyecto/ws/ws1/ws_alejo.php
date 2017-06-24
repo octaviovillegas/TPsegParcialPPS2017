@@ -124,3 +124,20 @@ $app->delete('/pregunta/{id_pregunta}', function ($request, $response, $args) {
     return json_encode($ret);
 
 });
+
+/**
+ * Devuelve la encuesta (id_encuesta) del id_usuario.
+ * @var [type]
+ */
+$app->get('/encuestas/{id_encuesta}/alumnos', function ($request, $response, $args) {
+
+    $params = $request->getQueryParams();
+
+    $id_encuesta = (int)$request->getAttribute('id_encuesta');
+
+    $alumnos = Encuesta::trearAlumnosByIdEncuesta($id_encuesta);
+
+    $response->withHeader('Content-Type', 'application/json');
+    $response->write(json_encode(array('alumnos' => $alumnos)));
+
+});

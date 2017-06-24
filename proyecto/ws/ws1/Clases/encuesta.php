@@ -1,10 +1,13 @@
 <?php
 require_once "AccesoDatos.php";
+require_once "personas.php";
 
 class Encuesta
 {
     const ESTADO_PENDIENTE = 'pendiente';
     const ESTADO_COMPLETADA = 'completada';
+
+    const TIPO_ALUMNO = 3;
 
     public $id_encuesta;
     public $id_curso;
@@ -74,6 +77,24 @@ class Encuesta
 
         $rows = $consulta->fetchAll(PDO::FETCH_CLASS, "Encuesta");
         return count($rows) > 0 ? $rows[0] : new stdClass();
+    }
+
+    public static function trearAlumnosByIdEncuesta ($id_encuesta) {
+
+        $cnx = AccesoDatos::dameUnObjetoAcceso();
+
+        $sql = 'SELECT u.*, uc.id_curso FROM `usuarios` u
+                LEFT JOIN `usuarios_cursos` uc ON (u.id_usuario = uc.id_usuario)
+                WHERE u.id_tipo = '.self::TIPO_ALUMNO.'
+                AND uc.id_curso IN (SELECT id_curso FROM `encuestas` WHERE id_encuesta = :id_encuesta)';
+
+        $consulta = $cnx->RetornarConsulta($sql);
+        $consulta->bindValue(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
+        $consulta->execute();
+
+        $alumnos = $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");
+        return $alumnos;
+
     }
 
     public static function estaCompletada ($id_usuario, $id_encuesta) {
