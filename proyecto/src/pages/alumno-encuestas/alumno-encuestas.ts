@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
 import { EncuestaPage } from '../encuesta/encuesta';
@@ -19,7 +19,7 @@ export class AlumnoEncuestasPage {
 
     private titulo: string;
     private estado: string;
-    private encuestas;
+    private encuestas = [];
     private cargando = false;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private auth: servicioAuth, private http: Http, private events: Events) {
@@ -40,16 +40,22 @@ export class AlumnoEncuestasPage {
             }
 
         });
+
+        this.cargarEncuestas();
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad AlumnoEncuestasPage');
+    cargarEncuestas () {
         this.cargando = true;
+        this.encuestas = [];
         this.getEncuestasByEstado(this.estado).subscribe((encuestas) => {
             console.log(encuestas);
             this.encuestas = encuestas;
             this.cargando = false;
         });
+    }
+
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad AlumnoEncuestasPage');
     }
 
     getEncuestasByEstado(estado) {
