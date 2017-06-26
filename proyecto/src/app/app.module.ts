@@ -60,6 +60,7 @@ import { AcercaDePage } from '../pages/acerca-de-page/acerca-de-page';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { File } from '@ionic-native/file';
 import { EncuestaDetalle } from "../pages/encuesta-detalle/encuesta-detalle";
+import {Ayuda} from '../pages/ayuda/ayuda';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { EncuestaDetalle } from "../pages/encuesta-detalle/encuesta-detalle";
     AlumnoCurso,
     Miubicacion,
     AcercaDePage,
-    EncuestaDetalle
+    EncuestaDetalle,
+    Ayuda
   ],
   imports: [
     BrowserModule,
@@ -145,7 +147,9 @@ import { EncuestaDetalle } from "../pages/encuesta-detalle/encuesta-detalle";
     AlumnoCurso,
     Miubicacion,
     AcercaDePage,
-    EncuestaDetalle
+    EncuestaDetalle,
+    Ayuda
+    
       ],
   providers: [
     StatusBar,
