@@ -25,7 +25,7 @@ import { AcercaDePage } from "../acerca-de-page/acerca-de-page";
 import { Miubicacion } from "../miubicacion/miubicacion";
 import { AngularFireAuth } from 'angularfire2/auth';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
-
+import {Ayuda} from '../ayuda/ayuda';
 
 @Component({
     selector: 'page-menu',
@@ -131,6 +131,11 @@ export class Menu {
         /** Ejecutar funcion para desloguear usuario. */
         this.afAuth.auth.signOut();
         this.navCtrl.setRoot(Login, this.usuarioLogueado);
+    }
+
+      ayuda() {
+        /** Ejecutar funcion para desloguear usuario. */
+        this.openPage(Ayuda);
     }
 
 }
