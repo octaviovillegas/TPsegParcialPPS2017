@@ -73,7 +73,7 @@ export class MyApp {
     redirectAuthenticatedUser (user) {
 
         if (this.isGitHubUser(user)) {
-
+            console.info(user);
             this.auth.currentUser = new User(user.uid, user.email, '', 'Profesor');
             this.auth.currentUser.id_tipo = 4;
             this.auth.currentUser.imagen = user.photoURL;

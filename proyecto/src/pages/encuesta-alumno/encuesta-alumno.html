@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar color = "primary">
+  <ion-navbar color = "{{micolor}}">
     <ion-title >{{titulo}}</ion-title>
   </ion-navbar>
 
@@ -16,7 +16,7 @@
 <ion-content padding>
 <div *ngFor="let r of resul">
   <ion-card>
-    <ion-card-header color="primary"> 
+    <ion-card-header color="{{micolor}}"> 
      <strong> {{r.alumno}} </strong>
     </ion-card-header>
 

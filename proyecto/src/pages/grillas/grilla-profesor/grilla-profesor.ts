@@ -17,12 +17,39 @@ export class GrillaProfesor {
 
     cargando = false;
     usuarios = [];
+    micolor;
+     private usuarioLogueado;
 
     constructor(private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth, public navParams: NavParams, public viewCtrl: ViewController, private http: Http, public modalCtrl: ModalController, public authData: AuthData,
     public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController) {
+        this.usuarioLogueado = this.auth.getUserInfo();
+        this.traerMiEstilo();
         this.CargaGrilla();
     }
 
+    traerMiEstilo()
+    {
+        console.info(this.usuarioLogueado['id_usuario']);
+        console.info(event);
+        this.http.post("http://tppps2.hol.es/ws1/traerConfMiEstilo", {
+                    id_usuario:this.usuarioLogueado['id_usuario']
+                            })
+                            .map(res => res.json())
+                            .subscribe((quote) =>{
+                                console.info(quote);  
+                                console.info(quote['estilo']);     
+                                console.info(quote['nombre']);   
+                                console.info(quote[0]['nombre']);   
+                                  if(quote[0]['nombre'] != "estilo1" && quote[0]['nombre'] != "estilo2" && quote[0]['nombre'] != "estilo3" && quote[0]['nombre'] != "estilo4")
+                                {
+                                this.micolor=quote[0]['codigocolor1']; 
+                                }else{
+                                this.micolor=quote[0]['nombre']; 
+                                }
+
+                            });
+                        
+    }
     CargaGrilla()
     {
         this.cargando = true;

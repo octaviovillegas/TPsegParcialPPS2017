@@ -1,7 +1,7 @@
 
 <ion-header>
 
-    <ion-navbar color="primary">
+    <ion-navbar color="{{micolor}}" *ngIf="!cargando">
         <button ion-button menuToggle left>
             <ion-icon name="menu"></ion-icon>
         </button>
@@ -57,7 +57,7 @@
     </ion-grid>
 
     <ion-fab *ngIf="!cargando" bottom right>
-        <button ion-fab (tap)="Alta()" color="primary">
+        <button ion-fab (tap)="Alta()" color="{{micolor}}">
             <ion-icon name="person-add"></ion-icon>
         </button>
     </ion-fab>

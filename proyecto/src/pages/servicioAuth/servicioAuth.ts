@@ -35,10 +35,10 @@ export class servicioAuth {
             return Observable.create(observer => {
 
                 this.getUsuarioByUsuario(credenciales.usuario).subscribe((usuario) => {
-
+                    console.info(usuario);
                     // Si existe el usuario en la base de datos SQL entro.
                     if (usuario) {
-                        this.currentUser = new User(usuario.id_usuario, usuario.usuario, usuario.clave, usuario.tipo_usuario, usuario.imagen);
+                        this.currentUser = new User(usuario.id_usuario, usuario.usuario, usuario.clave, usuario.tipo_usuario, usuario.imagen, usuario.estilo);
                         observer.next(true);
                     } else {
                         observer.next(false);

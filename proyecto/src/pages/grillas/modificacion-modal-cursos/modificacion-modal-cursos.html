@@ -1,7 +1,7 @@
 
 <ion-header>
 
-    <ion-navbar color="primary">
+    <ion-navbar color="{{micolor}}"  *ngIf="!cargando">
         <ion-buttons start left>
             <button ion-button icon-only (tap)="Cancelar()">
                 Cancelar
@@ -19,7 +19,7 @@
 
 </ion-header>
 <ion-content padding>
-
+<br><br><br>
     <div *ngIf="cargando" text-center>
         <ion-spinner text-center></ion-spinner>
     </div>

@@ -3,7 +3,8 @@ import 'rxjs/Rx';
 import { NavController,NavParams, ToastController } from 'ionic-angular';
 import { ModalController, ViewController } from 'ionic-angular';
 import {Http} from '@angular/http';
-
+import { servicioAuth } from '../../servicioAuth/servicioAuth';
+ 
 @Component({
     selector: 'page-Modales',
     templateUrl: 'modales.html'
@@ -28,10 +29,16 @@ export class Modales {
     private opcion3;
     private opcion4;
     private pregunta = '';
+ micolor;
+    cargando = true;
+  private usuarioLogueado;
 
-    cargando = false;
+    constructor(public auth: servicioAuth, public navCtrl: NavController,public viewCtrl:ViewController,public modalCtrl: ModalController, public NavParams: NavParams, private http: Http, public toastCtrl: ToastController) {
+        
+        this.usuarioLogueado = this.auth.getUserInfo();
+        this.traerMiEstilo();
 
-    constructor(public navCtrl: NavController,public viewCtrl:ViewController,public modalCtrl: ModalController, public NavParams: NavParams, private http: Http, public toastCtrl: ToastController) {
+        
         this.datos = NavParams.data;
         this.idEncuesta=this.datos.idEncuesta;
         console.info(this.datos);
@@ -41,6 +48,8 @@ export class Modales {
         } else if(this.datos.queHago == "AgregarEncuesta") {
             this.veoEncuesta =true;
         }
+
+
     }
 
     dismiss() {
@@ -50,6 +59,31 @@ export class Modales {
         this.viewCtrl.dismiss(false);
 
     }
+
+traerMiEstilo()
+{
+  this.cargando = true;
+    console.info(this.usuarioLogueado['id_usuario']);
+    console.info(event);
+    this.http.post("http://tppps2.hol.es/ws1/traerConfMiEstilo", {
+              id_usuario:this.usuarioLogueado['id_usuario']
+                      })
+                      .map(res => res.json())
+                      .subscribe((quote) =>{
+                          console.info(quote);  
+                          console.info(quote['estilo']);     
+                          console.info(quote['nombre']);   
+                          console.info(quote[0]['nombre']);   
+                             if(quote[0]['nombre'] != "estilo1" && quote[0]['nombre'] != "estilo2" && quote[0]['nombre'] != "estilo3" && quote[0]['nombre'] != "estilo4")
+                                {
+                                this.micolor=quote[0]['codigocolor1']; 
+                                }else{
+                                this.micolor=quote[0]['nombre']; 
+                                }
+                          this.cargando = false;
+                      });
+                    
+}
 
     altaEncuesta() {
 

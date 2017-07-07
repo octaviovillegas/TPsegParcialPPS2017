@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-navbar color="primary">
+    <ion-navbar color="{{micolor}}"  *ngIf="!cargando">
         <button ion-button menuToggle left>
             <ion-icon name="menu"></ion-icon>
         </button>
@@ -9,6 +9,11 @@
 
 <ion-content>
 
+<div *ngIf="cargando" text-center>
+            <ion-spinner text-center></ion-spinner>
+  </div>
+
+<div  *ngIf="!cargando">
     <ion-grid>
 
         <ion-row class="animated pulse" align-items-start>
@@ -54,7 +59,7 @@
 
                 <ion-row  *ngIf="!cargando">
                     <ion-col class="signup-col animated pulse">
-                        <button ion-button type="button" (click)="EnviarEncuesta()" color="primary-color" full [disabled]="encuestaSeleccionada == 0 || cursoSeleccionado == 0">Asignar encuesta</button>
+                        <button ion-button type="button" (click)="EnviarEncuesta()" color="{{micolor}}" full [disabled]="encuestaSeleccionada == 0 || cursoSeleccionado == 0">Asignar encuesta</button>
                     </ion-col>
                 </ion-row>
 
@@ -62,5 +67,5 @@
         </ion-row>
 
     </ion-grid>
-
+</div>
 </ion-content>

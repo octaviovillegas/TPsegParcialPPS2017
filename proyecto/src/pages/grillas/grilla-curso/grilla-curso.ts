@@ -17,7 +17,7 @@ import { File } from '@ionic-native/file';
 export class GrillaCurso {
 
     cargando = false;
-
+ micolor;
     Cursos;
     Cur : Array<any> =[];
     comisiones;
@@ -25,11 +25,42 @@ export class GrillaCurso {
     UssP=[];
     archivo;
     aGuardar: Array<any> =[];
+    private usuarioLogueado;
+    texto;
   constructor(public file: File, private alertCtrl: AlertController, public navCtrl: NavController, public auth: servicioAuth ,public navParams: NavParams, public viewCtrl: ViewController,
       private http: Http, public modalCtrl: ModalController, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController) {
          this.archivo=file;
+        this.usuarioLogueado = this.auth.getUserInfo();
+        this.traerMiEstilo();
         this.cargarProfesoresYGrilla();
+      
   }
+
+
+traerMiEstilo()
+{
+  console.info(this.usuarioLogueado['id_usuario']);
+  console.info(event);
+   this.http.post("http://tppps2.hol.es/ws1/traerConfMiEstilo", {
+            id_usuario:this.usuarioLogueado['id_usuario']
+                    })
+                    .map(res => res.json())
+                    .subscribe((quote) =>{
+                        console.info(quote);  
+                        console.info(quote['estilo']);     
+                        console.info(quote['nombre']);   
+                        console.info(quote[0]['nombre']);   
+                          if(quote[0]['nombre'] != "estilo1" && quote[0]['nombre'] != "estilo2" && quote[0]['nombre'] != "estilo3" && quote[0]['nombre'] != "estilo4")
+                                {
+                                this.micolor=quote[0]['codigocolor1']; 
+                                }else{
+                                this.micolor=quote[0]['nombre']; 
+                                }
+
+                    });
+                    
+}
+
 
   cargarProfesoresYGrilla() {
       this.cargando = true;
@@ -44,6 +75,24 @@ export class GrillaCurso {
       });
 
   }
+
+datosArch="[{curso\":\"Metodologia de sistemas\",\"Comision\":\"4B-Noche\",\"Profesor\":\"Octavio Profesor\"}]";
+datosjson:any;
+
+leerArchivo(nombreArch){
+    -//this.archivo.readAsText(this.archivo.externalDataDirectory,nombreArch).then(fileStr => {this.texto = fileStr;}).catch(err => console.log('errleerarchivo'));
+
+    JSON.parse(this.datosArch,dato=>{this.datosjson=dato;});
+    console.info(this.datosArch);
+    console.info(this.datosjson);
+
+    for(let obj of this.datosjson)
+    {
+        console.info(obj);
+    }
+}
+
+
 
   CargarProfesores()
   {

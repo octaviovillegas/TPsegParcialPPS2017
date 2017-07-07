@@ -12,7 +12,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'estadisticas.html',
 })
 export class Estadisticas {
-
+ micolor;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 

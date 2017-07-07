@@ -1,13 +1,11 @@
 
-<ion-header>
-
-    <ion-navbar color="primary">
- 
-       
-        <ion-title>Resultados por alumno</ion-title>
- 
-    </ion-navbar>
-
+<<ion-header>
+  <ion-navbar *ngIf="!cargando" color="{{micolor}}">
+      <button ion-button menuToggle left>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Resultados por alumno </ion-title>
+  </ion-navbar>
 </ion-header>
 <ion-content padding>
 

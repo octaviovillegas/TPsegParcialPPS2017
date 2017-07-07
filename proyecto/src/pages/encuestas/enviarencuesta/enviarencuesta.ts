@@ -6,6 +6,7 @@ import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import { Toast } from '@ionic-native/toast';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Observable } from 'rxjs/Observable';
+ 
 
 @Component({
     selector: 'page-enviarencuesta',
@@ -18,14 +19,14 @@ export class EnviarEncuesta {
     private cursoSeleccionado = 0;
     private encuestaSeleccionada = 0;
     private toast;
-
-    private cargando = false;
-
-    constructor(public navCtrl: NavController,public NavParams: NavParams,private http: Http, servAuth:servicioAuth,private toastCtrl: ToastController,private nativeAudio: NativeAudio)
+ micolor;
+    private cargando = true;
+usuarioLogueado;
+    constructor( public auth: servicioAuth, public navCtrl: NavController,public NavParams: NavParams,private http: Http, servAuth:servicioAuth,private toastCtrl: ToastController,private nativeAudio: NativeAudio)
     {
         this.nativeAudio.preloadSimple('uniqueId1', '../assets/ingreso.mp3');
 
-        this.cargando = true;
+        
 
         let cursos = this.getCursos();
         let encuestas = this.getEncuestas();
@@ -38,12 +39,41 @@ export class EnviarEncuesta {
 
             this.listaEncuestas = results[1];
             console.info(this.listaEncuestas);
-
-            this.cargando = false;
+ 
 
         });
 
+             this.usuarioLogueado = this.auth.getUserInfo();
+        this.traerMiEstilo();
+
     }
+
+
+traerMiEstilo()
+{
+  this.cargando = true;
+    console.info(this.usuarioLogueado['id_usuario']);
+    console.info(event);
+    this.http.post("http://tppps2.hol.es/ws1/traerConfMiEstilo", {
+              id_usuario:this.usuarioLogueado['id_usuario']
+                      })
+                      .map(res => res.json())
+                      .subscribe((quote) =>{
+                          console.info(quote);  
+                          console.info(quote['estilo']);     
+                          console.info(quote['nombre']);   
+                          console.info(quote[0]['nombre']);   
+                             if(quote[0]['nombre'] != "estilo1" && quote[0]['nombre'] != "estilo2" && quote[0]['nombre'] != "estilo3" && quote[0]['nombre'] != "estilo4")
+                                {
+                                this.micolor=quote[0]['codigocolor1']; 
+                                }else{
+                                this.micolor=quote[0]['nombre']; 
+                                }
+                          this.cargando = false;
+                      });
+                    
+}
+
 
     getCursos() {
         return this.http.get("http://tppps2.hol.es/ws1/cursos")

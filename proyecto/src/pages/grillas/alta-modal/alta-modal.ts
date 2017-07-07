@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
-import { Http } from '@angular/http';
-import { AuthData } from '../../../providers/auth-data';
+import {Http} from '@angular/http'; 
+import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import { Observable } from 'rxjs/Observable';
 import { MediaCapture } from '@ionic-native/media-capture';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera } from 'ionic-native';
+import { AuthData } from '../../../providers/auth-data';
 
 /**
 * Generated class for the ModificacionModal page.
@@ -33,16 +34,44 @@ export class AltaModal
     width = 320;
     height = 320;
 
-    cargando = false;
+    cargando = true;
+ micolor;
+   private usuarioLogueado;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http,
-        public viewCtrl: ViewController, public auth: AuthData, private alertCtrl: AlertController, private mediaCapture: MediaCapture,
-    private imagePicker: ImagePicker)
+    constructor(public authData:AuthData, public navCtrl: NavController, public navParams: NavParams, public http:Http, public viewCtrl: ViewController, public auth:servicioAuth, private alertCtrl: AlertController, private mediaCapture: MediaCapture, private imagePicker: ImagePicker)
     {
         console.log('navParams.data: ');
         console.log(navParams.data);
         this.t = navParams.data['tipo'];
         this.id_tipo = navParams.data['id_tipo'];
+
+        this.usuarioLogueado = this.auth.getUserInfo();
+        this.traerMiEstilo();
+    }
+
+    traerMiEstilo()
+    {
+        this.cargando = true;
+        console.info(this.usuarioLogueado['id_usuario']);
+        console.info(event);
+        this.http.post("http://tppps2.hol.es/ws1/traerConfMiEstilo", {
+                    id_usuario:this.usuarioLogueado['id_usuario']
+                            })
+                            .map(res => res.json())
+                            .subscribe((quote) =>{
+                                console.info(quote);  
+                                console.info(quote['estilo']);     
+                                console.info(quote['nombre']);   
+                                console.info(quote[0]['nombre']);   
+                                if(quote[0]['nombre'] != "estilo1" && quote[0]['nombre'] != "estilo2" && quote[0]['nombre'] != "estilo3" && quote[0]['nombre'] != "estilo4")
+                                {
+                                this.micolor=quote[0]['codigocolor1']; 
+                                }else{
+                                this.micolor=quote[0]['nombre']; 
+                                }
+                                this.cargando = false;
+                            });
+                        
     }
 
     tomarFoto(){
@@ -69,8 +98,8 @@ export class AltaModal
             this.cargando = true;
 
             // Creo el usuario en firebase`
-            this.auth.signupUser(this.u, this.c).then((success) => {
-
+            this.authData.signupUser(this.u, this.c).then((success) => {
+                
                 if (success) {
 
                     // Creo el usuario en la base de datos sql.
@@ -125,6 +154,7 @@ export class AltaModal
         });
         alert.present(prompt);
     }
+
 
     cancelar()
     {

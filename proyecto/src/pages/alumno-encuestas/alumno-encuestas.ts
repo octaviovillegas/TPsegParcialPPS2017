@@ -20,8 +20,9 @@ export class AlumnoEncuestasPage {
     private titulo: string;
     private estado: string;
     private encuestas = [];
-    private cargando = false;
-
+    private cargando = true;
+ micolor;
+ usuarioLogueado;
     constructor(public navCtrl: NavController, public navParams: NavParams, private auth: servicioAuth, private http: Http, private events: Events) {
         this.estado = navParams.data;
 
@@ -42,17 +43,47 @@ export class AlumnoEncuestasPage {
         });
 
         this.cargarEncuestas();
+           this.usuarioLogueado = this.auth.getUserInfo();
+ 
+      
+        this.traerMiEstilo();
     }
 
     cargarEncuestas () {
-        this.cargando = true;
+   
         this.encuestas = [];
         this.getEncuestasByEstado(this.estado).subscribe((encuestas) => {
             console.log(encuestas);
             this.encuestas = encuestas;
-            this.cargando = false;
+     
         });
     }
+
+
+traerMiEstilo()
+{
+     this.cargando = true;
+  console.info(this.usuarioLogueado['id_usuario']);
+  console.info(event);
+   this.http.post("http://tppps2.hol.es/ws1/traerConfMiEstilo", {
+            id_usuario:this.usuarioLogueado['id_usuario']
+                    })
+                    .map(res => res.json())
+                    .subscribe((quote) =>{
+                        console.info(quote);  
+                        console.info(quote['estilo']);     
+                        console.info(quote['nombre']);   
+                        console.info(quote[0]['nombre']);   
+                           if(quote[0]['nombre'] != "estilo1" && quote[0]['nombre'] != "estilo2" && quote[0]['nombre'] != "estilo3" && quote[0]['nombre'] != "estilo4")
+                                {
+                                this.micolor=quote[0]['codigocolor1']; 
+                                }else{
+                                this.micolor=quote[0]['nombre']; 
+                                } 
+                        this.cargando = false;
+                    });
+                    
+}
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad AlumnoEncuestasPage');

@@ -20,15 +20,20 @@ export class GenerarEncuesta {
 
     private listaPreguntas: Array<string>;
     private listaEncuestas;
-
-    cargando = false;
-
+    micolor;
+    micolor2;
+    cargando = true;
+    rutaico;
+    icoE;
+    icoN;
 
     constructor(public navCtrl: NavController,public viewCtrl:ViewController,public modalCtrl: ModalController
         ,public NavParams: NavParams,private http: Http,servAuth:servicioAuth, public toastCtrl: ToastController)
         {
             this.usuarioLogueado = servAuth.getUserInfo();
-            this.cargarEncuestas();
+           
+               this.traerMiEstilo();
+                this.cargarEncuestas();
         }
 
         agregarPregunta(datos) {
@@ -47,6 +52,38 @@ export class GenerarEncuesta {
 
             modal.present();
         }
+
+
+
+traerMiEstilo()
+{
+  console.info(this.usuarioLogueado['id_usuario']);
+  console.info(event);
+   this.http.post("http://tppps2.hol.es/ws1/traerConfMiEstilo", {
+            id_usuario:this.usuarioLogueado['id_usuario']
+                    })
+                    .map(res => res.json())
+                    .subscribe((quote) =>{
+                        console.info(quote);  
+                        console.info(quote['estilo']);     
+                        console.info(quote['nombre']);   
+                        console.info(quote[0]['nombre']);   
+                           if(quote[0]['nombre'] != "estilo1" && quote[0]['nombre'] != "estilo2" && quote[0]['nombre'] != "estilo3" && quote[0]['nombre'] != "estilo4")
+                                {
+                                    console.info("codcol");
+                                this.micolor=quote[0]['codigocolor1']; 
+                                }else{
+                                this.micolor=quote[0]['nombre']; 
+                                   console.info("nombre");
+                                }
+                        this.micolor2=quote[0]['codigocolor2'];
+                        this.rutaico=quote[0]['rutaIcono'];
+                        this.icoE= this.rutaico+"nueva_pregunta.png";
+                        this.icoN=this.rutaico+"eliminar_encuesta.png";
+                    });
+                    
+}
+
 
         cargarEncuestas() {
             this.cargando = true;

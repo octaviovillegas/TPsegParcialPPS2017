@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, AlertController  } from 'ionic-angular';
+import { servicioAuth } from '../../servicioAuth/servicioAuth';
 import {Http} from '@angular/http';
 import Highcharts from 'highcharts'
 /**
@@ -15,10 +16,14 @@ import Highcharts from 'highcharts'
 export class Grafico1
 {
 
-    cargando = false;
+    cargando = true;
+usuarioLogueado;
 
-	constructor(public navCtrl: NavController,public http:Http) {
-		this.traerdatos();
+	constructor(public http:Http, public navCtrl: NavController, public navParams: NavParams, public viewCtrl:ViewController, public auth: servicioAuth) {
+		this.usuarioLogueado = this.auth.getUserInfo();
+        this.traerMiEstilo();
+        this.traerdatos();
+
 
 	}
 
@@ -31,6 +36,34 @@ export class Grafico1
 	conjAver=[];
     pregsel;
   conjAver2=[];
+   micolor;
+
+
+traerMiEstilo()
+{
+  console.info(this.usuarioLogueado['id_usuario']);
+  console.info(event);
+   this.http.post("http://tppps2.hol.es/ws1/traerConfMiEstilo", {
+            id_usuario:this.usuarioLogueado['id_usuario']
+                    })
+                    .map(res => res.json())
+                    .subscribe((quote) =>{
+                        console.info(quote);  
+                        console.info(quote['estilo']);     
+                        console.info(quote['nombre']);   
+                        console.info(quote[0]['nombre']);   
+                           if(quote[0]['nombre'] != "estilo1" && quote[0]['nombre'] != "estilo2" && quote[0]['nombre'] != "estilo3" && quote[0]['nombre'] != "estilo4")
+                                {
+                                this.micolor=quote[0]['codigocolor1']; 
+                                }else{
+                                this.micolor=quote[0]['nombre']; 
+                                } 
+
+                    });
+                    
+}
+
+
   traerdatos()
   {
       this.cargando = true;
@@ -54,8 +87,9 @@ export class Grafico1
 
               }
           }
+          
 
-
+           this.cargando = false;
       }, error => {
           this.cargando = false;
       });

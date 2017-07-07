@@ -23,7 +23,7 @@ import * as firebase from 'firebase/app';
 export class Login {
 
     usuarioLogueado : User;
-
+ micolor;
     Login = {
         usuario: "",
         clave: ""

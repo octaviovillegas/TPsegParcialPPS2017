@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, NavOptions, ViewController} from 'ionic-angular';
 import {Http, URLSearchParams} from '@angular/http';
+import { servicioAuth } from '../../servicioAuth/servicioAuth';
+
 /**
  * Generated class for the ModificacionModal page.
  *
@@ -16,25 +18,26 @@ export class ModificacionModalCursos
 
   d;
   id_curso;
-  http;
+ 
   profesores;
   UssP;
   comisi:number;
   comisiones;
   profe_id;
   profe;
-  cargando = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, htt:Http, public viewCtrl: ViewController)
+  cargando = true;
+   micolor;
+   private usuarioLogueado;
+  constructor(public auth: servicioAuth, public navCtrl: NavController, public navParams: NavParams, public http:Http, public viewCtrl: ViewController)
   {
     this.d= navParams.data['descripcion'];
     this.comisi=navParams.data['comision'];
     this.id_curso=navParams.data['id_curso'];
     this.profe_id=navParams.data['id_usuario'];
     console.info(this.profe_id);
+ 
 
-    this.http=htt;
-
-
+     
     this.cargando = true;
     this.CargarProfesores().subscribe((usuarios) => {
 
@@ -49,9 +52,37 @@ export class ModificacionModalCursos
     });
 
     console.info(this.profe);
+    this.usuarioLogueado = this.auth.getUserInfo();
+     this.traerMiEstilo();
+
+
+
   }
 
-
+traerMiEstilo()
+{
+  this.cargando = true;
+    console.info(this.usuarioLogueado['id_usuario']);
+    console.info(event);
+    this.http.post("http://tppps2.hol.es/ws1/traerConfMiEstilo", {
+              id_usuario:this.usuarioLogueado['id_usuario']
+                      })
+                      .map(res => res.json())
+                      .subscribe((quote) =>{
+                          console.info(quote);  
+                          console.info(quote['estilo']);     
+                          console.info(quote['nombre']);   
+                          console.info(quote[0]['nombre']);   
+                             if(quote[0]['nombre'] != "estilo1" && quote[0]['nombre'] != "estilo2" && quote[0]['nombre'] != "estilo3" && quote[0]['nombre'] != "estilo4")
+                                {
+                                this.micolor=quote[0]['codigocolor1']; 
+                                }else{
+                                this.micolor=quote[0]['nombre']; 
+                                } 
+                          this.cargando = false;
+                      });
+                    
+}
 
   Modificar(des_curso,com_des,usuario)
   {

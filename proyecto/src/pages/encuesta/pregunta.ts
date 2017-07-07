@@ -15,7 +15,7 @@ export class Pregunta {
     pregunta: string;
     tipo: string;
     respuesta_opcion: any;
-
+ micolor;
   constructor(id_encuesta: number, id_pregunta: number, opcion1: string,
             opcion2: string, opcion3: string,
             opcion4: string, pregunta: string, tipo: string, respuesta_opcion: any) {

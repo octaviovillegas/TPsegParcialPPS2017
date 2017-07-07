@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-navbar color="primary">
+    <ion-navbar color="{{micolor}}"  *ngIf="!cargando">
         <ion-buttons start left>
             <button ion-button icon-only (tap)="dismiss()">
                 Cancelar
@@ -13,7 +13,8 @@
 </ion-header>
 
 <ion-content padding>
-
+ <br><br><br><br>
+  
     <div *ngIf="cargando" text-center>
         <ion-spinner text-center></ion-spinner>
     </div>
@@ -54,7 +55,7 @@
                 </ion-item>
             </div>
 
-            <button ion-button type="button" (click)="altaPregunta()" color="primary-color" full [disabled]="tipoPregunta == '' || pregunta == ''">Crear pregunta</button>
+            <button ion-button type="button" (click)="altaPregunta()" color="{{micolor}}-color" full [disabled]="tipoPregunta == '' || pregunta == ''">Crear pregunta</button>
 
         </div>
 
@@ -73,7 +74,7 @@
             </ion-item>
 
             <!--&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="altaEncuesta()">Nueva Encuesta</a>-->
-            <button ion-button type="button" (click)="altaEncuesta()" color="primary-color" full [disabled]="encuesta.descripcion == ''">Crear Encuesta</button>
+            <button ion-button type="button" (click)="altaEncuesta()" color="{{micolor}}" full [disabled]="encuesta.descripcion == ''">Crear Encuesta</button>
 
         </div>
 

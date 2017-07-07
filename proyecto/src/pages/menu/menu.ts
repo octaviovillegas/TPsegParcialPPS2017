@@ -27,6 +27,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
 import { Resultado } from "../graficos/resultado/resultado";
 
+import { MiPerfil } from "../mi-perfil/mi-perfil";
+import {Http} from '@angular/http';
 
 @Component({
     selector: 'page-menu',
@@ -57,7 +59,10 @@ export class Menu {
     private miubicacion;
     private resultado;
 
-    constructor(public navCtrl: NavController,public viewCtrl:ViewController, public navParams: NavParams,public afAuth: AngularFireAuth, public modalCtrl: ModalController, public auth: servicioAuth) {
+    micolor;
+    constructor(public http:Http, public navCtrl: NavController,public viewCtrl:ViewController, public navParams: NavParams,public afAuth: AngularFireAuth, public modalCtrl: ModalController, public auth: servicioAuth)
+    {
+       
 
         console.log('navParams.data: ', navParams.data);
 
@@ -67,6 +72,8 @@ export class Menu {
 
         this.initPages();
 
+        console.info("hola");
+         
 
         if (this.usuarioLogueado.tipo_usuario == 'Alumno') {
             this.openPage(this.alumnoPage);
@@ -77,6 +84,7 @@ export class Menu {
         } else if (this.usuarioLogueado.tipo_usuario == 'Profesor') {
             this.openPage(this.profesorPage);
         }
+         this.traerMiEstilo();
 
     }
 
@@ -96,9 +104,16 @@ export class Menu {
         this.grafico2 = Grafico2;
         this.grafico3 = Grafico3;
         this.miubicacion= Miubicacion;
-
+        
         this.alumnocurso = AlumnoCurso;
         this.resultado = Resultado;
+      
+    }
+
+    iraperfil(miestilo)
+    {
+      
+           this.openPage(MiPerfil);
     }
 
     Encuestas(queHago){
@@ -116,6 +131,7 @@ export class Menu {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad Menu');
+         
     }
 
     openPage(p) {
@@ -136,4 +152,36 @@ export class Menu {
         this.navCtrl.setRoot(Login, this.usuarioLogueado);
     }
 
+ 
+  ionViewWillLeave() {
+    console.log("Looks like I'm about to leave :(");
+  }
+
+traerMiEstilo()
+{
+    
+    console.info(this.usuarioLogueado['id_usuario']);
+
+    this.http.post("http://tppps2.hol.es/ws1/traerConfMiEstilo", {
+              id_usuario:this.usuarioLogueado['id_usuario']
+                      })
+                      .map(res => res.json())
+                      .subscribe((quote) =>{
+                          console.info(quote);  
+                       
+                          console.info(quote[0]['nombre']);   
+                          if(quote[0]['estilopropio'] != 0)
+                          {
+                            this.micolor=quote[0]['codigocolor1']; 
+                             console.info(this.micolor);
+                          }else{
+                            this.micolor=quote[0]['nombre']; 
+                            console.info("nom");
+                          }
+                                                
+                         
+                      });
+
+                    
+}
 }

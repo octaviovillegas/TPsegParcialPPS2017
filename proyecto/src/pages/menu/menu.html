@@ -1,7 +1,7 @@
 
 <ion-menu [content]="content" side="left">
     <ion-header>
-        <ion-toolbar color="primary-color">
+        <ion-toolbar color="{{micolor}}">
             <ion-title>Menu</ion-title>
         </ion-toolbar>
     </ion-header>
@@ -56,6 +56,8 @@
                 Resultados por alumno
             </button>
             <!-- fin administrativo -->
+        
+
             <button *ngIf="usuarioLogueado.tipo_usuario == 'Profesor'" ion-item (click)="Encuestas('profesorGenerar')" menuClose>
                 Crear encuesta
             </button>
@@ -70,17 +72,29 @@
             <button ion-item (click)="cerrarSesion()">
                 Cerrar sesion
             </button>
+             
+         
+
         </ion-list>
     </ion-content>
 
     <ion-footer>
-        <ion-item>
-            <ion-avatar item-left>
+        <!--<ion-item>Estilo:</ion-item>
+         <ion-item>
+            <ion-select  [(ngModel)]="micolor">
+                <ion-option>rosa</ion-option>
+                <ion-option>violeta</ion-option>
+            </ion-select>
+            </ion-item>-->
+         
+
+        <ion-item (click)="iraperfil(miestilo)" menuClose>
+            <ion-avatar  item-left>
                 <img [src]="usuarioLogueado.imagen" *ngIf="usuarioLogueado.imagen">
             </ion-avatar>
 
             <h2>{{ usuarioLogueado.usuario }}</h2>
-            <p>{{ usuarioLogueado.tipo_usuario }}</p>
+            <p>{{ usuarioLogueado.tipo_usuario }} --> ir a mi perfil</p>
         </ion-item>
     </ion-footer>
 </ion-menu>
