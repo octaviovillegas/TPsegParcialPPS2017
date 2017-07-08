@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { servicioAuth } from '../servicioAuth/servicioAuth';
 import {Http} from '@angular/http'; 
 import { EstiloPropio } from '../estilo-propio/estilo-propio';
- import { Menu } from '../menu/menu';
+import { Menu } from '../menu/menu';
+
 @Component({
   selector: 'page-mi-perfil',
   templateUrl: 'mi-perfil.html',
@@ -51,12 +52,18 @@ traerMiEstilo()
                     
 }
 
+ 
+
 estilopropio()
 {
    this.navCtrl.push(EstiloPropio, {
             direction: 'forward',
             animation: 'ios-transition'
         });
+        
+        console.info("algo");
+
+        
 }
 
  onChange(event)
@@ -96,6 +103,6 @@ estilopropio()
 
   volver()
   {
-    this.navCtrl.push(Menu);
-  }
+    this.navCtrl.pop();
+    }
 }

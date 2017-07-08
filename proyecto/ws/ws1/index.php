@@ -96,7 +96,60 @@ $app->get('/usuarios', function ($request, $response, $args) {
 
 //--aixa------------------------------------------
 
+$app->post('/traerEstilos', function ($request, $response, $args) {
 
+   $usuario = $request->getParsedBody();
+
+    // convierto el array en un objecto
+    $usuario = (object)$usuario;
+
+  $estilo=Usuario::TraerElEstilo($usuario);
+
+ return json_encode($estilo);
+
+});
+
+
+$app->post('/traerConfMiEstilo', function ($request, $response, $args) {
+
+   $usuario = $request->getParsedBody();
+
+    // convierto el array en un objecto
+    $usuario = (object)$usuario;
+
+  $estilo=Usuario::traerConfMiEstilo($usuario);
+
+ return json_encode($estilo);
+
+});
+
+
+
+$app->post('/modificarestilo', function ($request, $response, $args) {
+
+    // Obtengo la data enviada. Es recibida como un array.
+    $usuario = $request->getParsedBody();
+
+    // convierto el array en un objecto
+    $usuario = (object)$usuario;
+
+    $ret = Usuario::ModificarEstilo($usuario);
+
+    $hayError = false;
+
+    if ($ret) {
+        $hayError = false;
+    } else {
+        $hayError = true;
+    }
+
+    $response->withHeader('Content-Type', 'application/json');
+    $response->write(json_encode(array('error' => $hayError, 'usuario' => $usuario)));
+
+   return $response;
+    // return json_encode($usuario);
+
+});
 
 
 $app->post('/usuarios/modificar', function ($request, $response, $args) {
@@ -182,6 +235,47 @@ $app->post('/usuarios/alta', function ($request, $response, $args) {
         return $response;
 
 });
+
+
+
+$app->post('/usuarios/guardarmiestilo', function ($request, $response, $args) {
+
+
+        $usuario = $request->getParsedBody();
+
+        
+        $usuario = (object)$usuario;
+ 
+
+        $ret = Usuario::GuardarMiEstilo($usuario);
+
+        $ret2 = Usuario::TraerUltimoID();
+        $hayError = false;
+
+        
+
+        return  json_encode($ret2);
+
+});
+
+
+
+$app->post('/TodosMisEstilos', function ($request, $response, $args) {
+
+
+        $usuario = $request->getParsedBody();
+
+        
+        $usuario = (object)$usuario;
+ 
+
+        $ret = Usuario::TodosMisEstilos($usuario);
+         
+
+        return  json_encode($ret);
+});
+
+
 
 
 $app->get('/comisiones', function ($request, $response, $args) {
@@ -503,6 +597,7 @@ $app->post('/encuestas/borrar', function ($request, $response, $args) {
         $encuesta = (object)$encuesta;
 
   $encuestas=Encuesta::BorrarEncuesta($encuesta);
+  $encuestas=Encuesta::BorrarPregunta($encuesta);
 
  return json_encode($encuestas);
 

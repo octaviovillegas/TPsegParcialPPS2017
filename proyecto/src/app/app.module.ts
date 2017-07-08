@@ -60,10 +60,14 @@ import { AcercaDePage } from '../pages/acerca-de-page/acerca-de-page';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { File } from '@ionic-native/file';
 import { EncuestaDetalle } from "../pages/encuesta-detalle/encuesta-detalle";
+
 import {Resultado} from "../pages/graficos/resultado/resultado";
 import {EncuestaAlumno} from "../pages/encuesta-alumno/encuesta-alumno";
 import {MiPerfil} from "../pages/mi-perfil/mi-perfil";
 import { EstiloPropio } from '../pages/estilo-propio/estilo-propio';
+
+import {Ayuda} from '../pages/ayuda/ayuda';
+
 
 @NgModule({
   declarations: [
@@ -104,7 +108,8 @@ import { EstiloPropio } from '../pages/estilo-propio/estilo-propio';
     Resultado,
     EncuestaAlumno,
     MiPerfil,
-    EstiloPropio
+    EstiloPropio,
+    Ayuda
   ],
   imports: [
     BrowserModule,
@@ -157,7 +162,8 @@ import { EstiloPropio } from '../pages/estilo-propio/estilo-propio';
     Resultado,
     EncuestaAlumno,
     MiPerfil,
-    EstiloPropio
+    EstiloPropio,
+    Ayuda
       ],
   providers: [
     StatusBar,

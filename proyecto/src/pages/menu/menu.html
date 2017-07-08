@@ -1,13 +1,13 @@
 
 <ion-menu [content]="content" side="left">
     <ion-header>
-        <ion-toolbar color="{{micolor}}">
+        <ion-toolbar>
             <ion-title>Menu</ion-title>
         </ion-toolbar>
     </ion-header>
 
     <ion-content>
-        <ion-list>
+        <ion-list> 
             <!-- alumno-->
             <button *ngIf="usuarioLogueado.tipo_usuario == 'Alumno'" ion-item (click)="openPage(alumnoPage)" menuClose>
                 Mis encuestas
@@ -65,16 +65,15 @@
                 Asignar encuesta
             </button>
 
-
+        <button ion-item (click)="ayuda()">
+                  Ayuda...
+            </button>
             <button ion-item (click)="acercaDe()" menuClose>
                 Acerca de...
             </button>
             <button ion-item (click)="cerrarSesion()">
                 Cerrar sesion
             </button>
-             
-         
-
         </ion-list>
     </ion-content>
 

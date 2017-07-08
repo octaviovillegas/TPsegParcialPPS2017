@@ -83,16 +83,27 @@ class Encuesta
 
         $cnx = AccesoDatos::dameUnObjetoAcceso();
 
-        $sql = 'SELECT u.*, uc.id_curso FROM `usuarios` u
-                LEFT JOIN `usuarios_cursos` uc ON (u.id_usuario = uc.id_usuario)
+       /* $sql = 'SELECT u.*, uc.id_curso FROM `usuarios` u
+                LEFT JOIN `usuarios_cursos` uc ON (u.id_usuario = uc.id_usuario),
+                LEFT JOIN `preguntas` uc ON (u.id_usuario = uc.id_usuario)
                 WHERE u.id_tipo = '.self::TIPO_ALUMNO.'
-                AND uc.id_curso IN (SELECT id_curso FROM `encuestas` WHERE id_encuesta = :id_encuesta)';
+                AND uc.id_curso IN (SELECT id_curso FROM `encuestas` WHERE id_encuesta = :id_encuesta)';*/
+        
+        $sql ='SELECT u.id_usuario, u.nombre, e.id_encuesta, e.descripcion as encuesta, ur.opcion, p.descripcion as pregunta
+         FROM usuarios u, usuarios_cursos uc, usuario_respuestas ur, encuestas e, preguntas p where 
+         u.id_usuario = uc.id_usuario 
+         and u.id_usuario = ur.id_usuario
+         and e.id_curso=uc.id_curso
+         and ur.id_pregunta = p.id_pregunta
+         and p.id_encuesta = e.id_encuesta
+         and e.id_encuesta=:id_encuesta
+         order by u.id_usuario , e.id_encuesta, p.descripcion';
 
         $consulta = $cnx->RetornarConsulta($sql);
         $consulta->bindValue(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
         $consulta->execute();
 
-        $alumnos = $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");
+        $alumnos = $consulta->fetchAll(PDO::FETCH_CLASS);
         return $alumnos;
 
     }

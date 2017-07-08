@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, Slides } from 'ionic-angular';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
 import {Http} from '@angular/http';
- import { Menu } from '../menu/menu';
+ import { MiPerfil } from '../mi-perfil/mi-perfil';
 
 @Component({
   selector: 'page-estilo-propio',
@@ -95,8 +95,7 @@ guardarMiEstilo()
 
                     });
 
-
-    this.navCtrl.push(Menu);
+this.navCtrl.pop();
 }
 
 

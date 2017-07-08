@@ -29,6 +29,7 @@ import { Resultado } from "../graficos/resultado/resultado";
 
 import { MiPerfil } from "../mi-perfil/mi-perfil";
 import {Http} from '@angular/http';
+import {Ayuda} from '../ayuda/ayuda';
 
 @Component({
     selector: 'page-menu',
@@ -113,7 +114,7 @@ export class Menu {
     iraperfil(miestilo)
     {
       
-           this.openPage(MiPerfil);
+           this.navCtrl.push(MiPerfil);
     }
 
     Encuestas(queHago){
@@ -152,7 +153,6 @@ export class Menu {
         this.navCtrl.setRoot(Login, this.usuarioLogueado);
     }
 
- 
   ionViewWillLeave() {
     console.log("Looks like I'm about to leave :(");
   }
@@ -184,4 +184,11 @@ traerMiEstilo()
 
                     
 }
-}
+
+      ayuda() {
+        /** Ejecutar funcion para desloguear usuario. */
+        this.openPage(Ayuda);
+    }
+
+
+F}
