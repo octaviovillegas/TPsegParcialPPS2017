@@ -66,7 +66,7 @@ traerMiEstilo()
                           this.rutaico=quote[0]['rutaIcono'];
                          
                           this.ngestilo = {
-                          'background-image': 'url(' +this.rutafondo+'menu_administrativo.jpg)',
+                          'background-image': 'url(' +this.rutafondo+'menu_Administrativo.png)',
                           'background-size':' 400px 700px'
                           };  
                          this.cargando = false;

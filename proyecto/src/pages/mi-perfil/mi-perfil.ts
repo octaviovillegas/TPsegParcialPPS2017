@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, ModalController, NavController, NavParams, ViewController } from 'ionic-angular';
 import { servicioAuth } from '../servicioAuth/servicioAuth';
 import {Http} from '@angular/http'; 
 import { EstiloPropio } from '../estilo-propio/estilo-propio';
@@ -19,7 +19,7 @@ export class MiPerfil {
     misEstilosCreados=[];
     estelg;
 
-  constructor(public http:Http, public navCtrl: NavController, public navParams: NavParams,public viewCtrl:ViewController , public auth: servicioAuth) {
+  constructor(public modalCtrl: ModalController,public http:Http, public navCtrl: NavController, public navParams: NavParams,public viewCtrl:ViewController , public auth: servicioAuth) {
      this.usuarioLogueado = this.auth.getUserInfo();
         this.traerMiEstilo();
 
@@ -56,16 +56,26 @@ traerMiEstilo()
 
 estilopropio()
 {
-   this.navCtrl.push(EstiloPropio, {
-            direction: 'forward',
-            animation: 'ios-transition'
-        });
-        
-        console.info("algo");
+  /*  this.navCtrl.push(EstiloPropio, {
+             direction: 'forward',
+             animation: 'ios-transition'
+      });*/
+
+        let modal = this.modalCtrl.create(EstiloPropio);
+        modal.onDidDismiss(() => this.cargar2veces());
+        modal.present();
 
         
+  
 }
 
+
+cargar2veces()
+{
+  this.traerMiEstilo();
+  this.traerMiEstilo();
+
+}
  onChange(event)
  {
    console.info(event); 
@@ -103,6 +113,6 @@ estilopropio()
 
   volver()
   {
-    this.navCtrl.pop();
+    this.navCtrl.push(Menu);
     }
 }

@@ -113,8 +113,7 @@ export class Menu {
 
     iraperfil(miestilo)
     {
-      
-           this.navCtrl.push(MiPerfil);
+        this.openPage(MiPerfil);
     }
 
     Encuestas(queHago){

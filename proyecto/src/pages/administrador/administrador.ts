@@ -43,7 +43,7 @@ traerMiEstilo()
                         this.rutafondo=quote[0]['rutaFondo'];
                         this.rutaico=quote[0]['rutaIcono'];
                          this.ngestilo = {
-                          'background-image': 'url(' +this.rutafondo+'menu_administrador.jpg)',
+                          'background-image': 'url(' +this.rutafondo+'menu_Administrador.png)',
                           'background-size':' 400px 700px'
   };
                     });
