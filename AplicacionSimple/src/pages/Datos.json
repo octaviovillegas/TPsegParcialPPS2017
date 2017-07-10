@@ -1,0 +1,20 @@
+{
+  "myColor" : "Rojo",
+  "myFont" : "Boogaloo",
+  "myIcon1" : "ios-baseball",
+  "myIcon2": "ios-brush",
+  "myIcon3":"ios-bulb",
+  "myIcon4":"ios-call",
+  "mifondo":"fondo2",
+  "fondo1":"assets/1.png",
+  "fondo2":"assets/2.png",
+  "fondo3":"assets/3.png",
+  "UnEstilo":"Boogaloo",
+  "letras":["Boogaloo","Pacifico","Righteous","Lobster Two"],
+  "TipoIcono":"ios",
+  "ngestilo ": "{
+                          background-image': 'url(' + this.fondo2 +')',
+                          'background-size':' 400px 700px'
+  }"
+
+}

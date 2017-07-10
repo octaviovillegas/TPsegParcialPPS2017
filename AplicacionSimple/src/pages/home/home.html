@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar color="{{myColor}}">
+    <ion-title>Mi Aplicacion Simple</ion-title>
+  </ion-navbar>
+</ion-header>
+
+ <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> 
+ <link href="https://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet"> 
+ <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet"> 
+ <link href="https://fonts.googleapis.com/css?family=Boogaloo" rel="stylesheet"> 
+<ion-content padding  [ngStyle]="ngestilo">
+  <ion-card  [style.font-family]="UnEstilo" color="{{myColor}}"><ion-card-header>Hola Mundo!!</ion-card-header></ion-card> 
+   
+<ion-list>
+  <ion-item>
+    <ion-label>Color</ion-label>
+    <ion-select [(ngModel)]="myColor">
+      <ion-option>Rojo</ion-option>
+      <ion-option>Verde</ion-option>
+      <ion-option>Azul</ion-option>
+      <ion-option>Amarillo</ion-option>
+    </ion-select>
+  </ion-item>
+   <ion-item>
+    <ion-label>Fondo:</ion-label>
+    <ion-select [(ngModel)]="mifondo" (ionChange)="onChangefondo()">
+      <ion-option value="fondo1">Fondo 1</ion-option>
+      <ion-option value="fondo2">Fondo 2</ion-option>
+      <ion-option value="fondo3">Fondo 3</ion-option>
+    </ion-select>
+  </ion-item>
+  <br>
+  <ion-label>Si se quisiera mejorar:</ion-label>
+  <ion-item>
+    <ion-label>Letra</ion-label>
+    <ion-select [(ngModel)]="myFont" (ionChange)="onChange()">
+      <div *ngFor="let letra of letras">
+      <ion-option>{{letra}}</ion-option>
+      </div>
+    </ion-select>
+  </ion-item>
+ 
+<ion-item>
+    <ion-label>Icono</ion-label>
+    <ion-select [(ngModel)]="TipoIcono" (ionChange)="onChangeTipo()">
+      <ion-option value="ios">ios</ion-option>
+      <ion-option value="ioso">ios-Outline</ion-option>
+      <ion-option value="md">Material Design</ion-option>
+    </ion-select>
+  </ion-item>
+  
+<h1>
+  <ion-icon color="{{myColor}}" name={{myIcon1}}></ion-icon>
+  <ion-icon color="{{myColor}}" name={{myIcon2}}></ion-icon>
+  <ion-icon color="{{myColor}}" name={{myIcon3}}></ion-icon>
+  <ion-icon color="{{myColor}}" name={{myIcon4}}></ion-icon>
+</h1>
+</ion-list>
+
+</ion-content>
