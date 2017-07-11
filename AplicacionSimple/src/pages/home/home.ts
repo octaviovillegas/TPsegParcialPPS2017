@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-
+import { datos } from '../datos/datos';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+
 
   myColor: string = "Rojo";
   myFont: string = "Boogaloo";
@@ -24,8 +25,12 @@ export class HomePage {
                           'background-image': 'url(' + this.fondo2 +')',
                           'background-size':' 400px 700px'
   };
-
-  constructor(public navCtrl: NavController) {
+ 
+  Icono1="assets/editar1.png";
+  Icono2="assets/editar2.png";
+  Icono3="assets/editar3.png";
+  iconofoto=this.Icono1;
+  constructor(public navCtrl: NavController,public dato:datos) {
    
   }
 
@@ -57,6 +62,11 @@ onChangeTipo(){
 }
 
 
+  onChangecolor()
+  {
+    this.dato.SetmyColor(this.myColor);
+  }
+
   onChange(){
     console.info("letra: "+this.myFont);
     this.UnEstilo=this.myFont;
@@ -86,6 +96,7 @@ onChangeTipo(){
     };
       }
 
+      this.dato.Setmifondo(this.ngestilo);
   }
 
 }
