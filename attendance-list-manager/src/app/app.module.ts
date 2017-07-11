@@ -49,7 +49,7 @@ import { ModifyUserComponent } from "../components/modify-user-component/modify-
 import { UpdateUseromponent } from "../components/update-user-component/update-user-component";
 import { QuestionListForStatisticsViewer } from "../components/question-list-for-statistics-viewer/question-list-for-statistics-viewer";
 import { AnswerOptionTextViewer } from "../pages/answer-option-text-viewer/answer-option-text-viewer";
-
+import {Settings} from '../providers/settings';
 
 export enum SurveyType {
   FreeAnswer = 1,
@@ -151,7 +151,8 @@ export enum SurveyType {
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AppService,
     Vibration,
-    NativeAudio
+    NativeAudio,
+    Settings
   ]
 })
 export class AppModule {

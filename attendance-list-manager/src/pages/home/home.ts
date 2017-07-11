@@ -8,6 +8,7 @@ import "rxjs/add/operator/toPromise";
 
 import { LoginData } from "../../app/entities/loginData";
 import { RegisteredUserPage } from "../../pages/registered-user/registered-user";
+import {Settings} from '../../providers/settings';
 
 @Component({
   selector: 'page-home',
@@ -16,15 +17,31 @@ import { RegisteredUserPage } from "../../pages/registered-user/registered-user"
 export class HomePage {
   form: FormGroup;
   hideSpinner: boolean
-
-  constructor(public navCtrl: NavController, private fb: FormBuilder, private toastCtrl: ToastController, private storage: Storage, private appService: AppService) {
+selectedTheme:String;
+  constructor(public navCtrl: NavController, private fb: FormBuilder, private toastCtrl: ToastController, private storage: Storage, private appService: AppService,private settings:Settings) {
+     this.settings.getActiveTheme().subscribe(val=> this.selectedTheme=val);
     this.form = this.fb.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required]]
     });
     this.hideSpinner = true;
   }
+toggleAppTheme(){
+if(this.selectedTheme == 'dark-theme'){
 
+this.settings.setActiveTheme('light-theme');
+
+}else{
+
+
+this.settings.setActiveTheme('dark-theme');
+
+
+
+}
+
+
+}
 
   login() {
 

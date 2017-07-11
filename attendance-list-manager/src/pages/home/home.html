@@ -4,7 +4,7 @@
   </ion-navbar>-->
 </ion-header>
 
-<ion-content padding class="login">
+<ion-content padding >
 
 <ion-row class="logo-row">
     <ion-col></ion-col>
@@ -48,6 +48,11 @@
     <button class="submit-btn" ion-button full round (click)="setSelectedLoginData('administrative@administrative.com')">Administrativo</button>
     <button class="submit-btn" ion-button full round (click)="setSelectedLoginData('nicolascabrera@yahoo.com.ar')">Alumno</button>
   </ion-list>
-
+<button ion-button full icon-left (click)="toggleAppTheme()">
+  <ion-icon name="bulb"></ion-icon>
+  Cambiar</button>
+ <button ion-button full icon-left (click)="toggle2()">
+  <ion-icon name="bulb"></ion-icon>
+  Cambiar</button>
  
 </ion-content>
