@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { datos } from '../datos/datos';
+import { Datos } from '../datos/datos';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -30,8 +30,9 @@ export class HomePage {
   Icono2="assets/editar2.png";
   Icono3="assets/editar3.png";
   iconofoto=this.Icono1;
-  constructor(public navCtrl: NavController,public dato:datos) {
-   
+  constructor(public navCtrl: NavController,public dato:Datos) {
+   dato.SetMiFondo(this.ngestilo);
+   dato.SetMyColor(this.myColor);
   }
 
 onChangeTipo(){
@@ -64,7 +65,7 @@ onChangeTipo(){
 
   onChangecolor()
   {
-    this.dato.SetmyColor(this.myColor);
+    this.dato.SetMyColor(this.myColor);
   }
 
   onChange(){
@@ -96,7 +97,7 @@ onChangeTipo(){
     };
       }
 
-      this.dato.Setmifondo(this.ngestilo);
+      this.dato.SetMiFondo(this.ngestilo);
   }
 
 }

@@ -1,33 +1,33 @@
 import {Injectable} from "@angular/core";
+
 @Injectable()
-export class datos {
+export class Datos {
 
+  private myColor;
+  private miFondo= {};
    
-  constructor() {
-    
-  }
+  constructor() {  }
 
-  myColor = "Rojo";
-  mifondo= {};
  
- SetmyColor(val)
+
+ SetMyColor(val)
  {
     this.myColor=val;
  }
 
- GetmyColor()
+ GetMyColor()
  {
    return this.myColor;
  }
 
-  Setmifondo(val)
+  SetMiFondo(val)
  {
-    this.mifondo=val;
+    this.miFondo=val;
  }
 
- Getmifondo()
+ GetMiFondo()
  {
-   return this.mifondo;
+   return this.miFondo;
  }
 
 }
