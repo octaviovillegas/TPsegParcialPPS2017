@@ -1,0 +1,58 @@
+<ion-header>
+  <!--<ion-navbar >
+    <ion-title >Login</ion-title>
+  </ion-navbar>-->
+</ion-header>
+
+<ion-content padding >
+
+<ion-row class="logo-row">
+    <ion-col></ion-col>
+    <ion-col width-67>
+      <img src="assets/img/11.png"/>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+  
+  <form [formGroup]="form" padding>
+   
+    <ion-list>
+      <ion-item>
+        <ion-label>E-mail</ion-label>
+        <ion-input type="email" formControlName="email" maxlength="50"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label >Contraseña</ion-label>
+        <ion-input type="password" formControlName="password" maxlength="50"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <div [hidden]="!hideSpinner">
+      <button ion-button full [disabled]="!form.valid" (click)="login()" round color="secondary">Ingresar</button>
+    </div>
+    <div [hidden]="hideSpinner">
+      <div>
+        <ion-spinner></ion-spinner>
+      </div>
+
+      <div>
+        <p>Validando la información enviada. Espere por favor.</p>
+      </div>
+    </div>
+    
+  </form>
+  
+  <ion-list>
+    <button class="submit-btn" ion-button full round (click)="setSelectedLoginData('admin@admin.com')">Administrador</button>
+    <button class="submit-btn" ion-button full round (click)="setSelectedLoginData('ruben@fonte.com')">Profesor</button>
+    <button class="submit-btn" ion-button full round (click)="setSelectedLoginData('administrative@administrative.com')">Administrativo</button>
+    <button class="submit-btn" ion-button full round (click)="setSelectedLoginData('nicolascabrera@yahoo.com.ar')">Alumno</button>
+  </ion-list>
+
+<button ion-button full icon-left (click)="encodeStyle('dark-theme')">
+  <ion-icon name="bulb"></ion-icon>
+  Dark Theme</button>
+ <button ion-button full icon-left (click)="encodeStyle('brown-theme')">
+  <ion-icon name="bulb"></ion-icon>
+  Brown Theme</button>
+</ion-content>

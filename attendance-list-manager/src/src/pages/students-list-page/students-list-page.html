@@ -1,0 +1,31 @@
+<ion-header>
+
+  <ion-navbar color="color1">
+    <ion-title>Listado de Alumnos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="studentlist">
+  <div [hidden]="loadingPage">
+    
+    <ion-list>
+      <ion-item *ngFor="let student of students">
+        <ion-label text-wrap >{{student.lastname}} , {{student.firstname}}</ion-label>
+        <ion-checkbox color="dark" [(ngModel)]="student.present"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+    <button ion-button full color="secondary" (click)="showConfirm()" [disabled]="noStudents">Guardar</button>
+  </div>
+
+  <!-- spinner -->
+  <div [hidden]="!loadingPage">
+    <div>
+      <ion-spinner></ion-spinner>
+    </div>
+    <div>
+      <p>Obteniendo lista de Alumnos. Espere por favor.</p>
+    </div>
+  </div>
+</ion-content>

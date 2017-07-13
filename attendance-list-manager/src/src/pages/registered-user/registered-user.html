@@ -1,0 +1,41 @@
+<ion-header>
+
+  <ion-navbar color="color1">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title></ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="logOutOnClick()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+<ion-menu [content]="mycontent">
+  <ion-content>
+    <ion-list>
+      <ion-item class="user-info">
+        <ion-icon name="contact" class="user-icon"></ion-icon>
+        <h1>{{rol}}</h1>
+        <h2>{{username}}</h2>
+        <h3>{{email}}</h3>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-fab right middle class="over-over">
+        <button ion-fab color="secondary" (click)="closeSideMenu()"><ion-icon name="arrow-dropleft"></ion-icon></button>
+      </ion-fab>
+      <ion-list-header>
+        Acciones
+      </ion-list-header>
+      <button ion-item *ngFor="let action of actions" (click)="selectedActionOnChange(action)">{{action}}</button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-content padding>
+  <ion-nav #mycontent [root]="rootComponent"></ion-nav>
+</ion-content>

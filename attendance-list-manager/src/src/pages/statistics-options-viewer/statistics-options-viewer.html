@@ -1,0 +1,51 @@
+<ion-header>
+
+  <ion-navbar color="color1">
+    <ion-title>Estadísticas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="Statistics">
+  <div [hidden]="!hideSpinner">
+    <div [hidden]="!noData">
+      <ion-card>
+        <ion-card-content>
+          <ion-card-title text-wrap text-center color="danger">
+            Aún no hay datos para mostrar
+          </ion-card-title>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div [hidden]="noData">
+      <ion-card>
+        <ion-card-header text-wrap text-center color="success">
+          {{question}}
+        </ion-card-header>
+        <ion-list>
+          <ion-item text-wrap>
+            <canvas #barCanvas></canvas>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+    </div>
+
+
+    <ion-list>
+      <button ion-item *ngFor="let student of users" (click)="itemSelected(student)" text-wrap>
+        {{student.lastname}} , {{student.firstname}}
+    </button>
+    </ion-list>
+  </div>
+  <!-- spinner -->
+  <div [hidden]="hideSpinner">
+    <div>
+      <ion-spinner></ion-spinner>
+    </div>
+    <div>
+      <p>Obteniendo información. Espere por favor.</p>
+    </div>
+  </div>
+
+</ion-content>

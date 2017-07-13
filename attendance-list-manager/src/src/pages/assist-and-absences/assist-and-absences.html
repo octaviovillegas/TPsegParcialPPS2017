@@ -1,0 +1,38 @@
+<ion-header>
+
+  <ion-navbar color="color1">
+    <ion-title></ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="assistAndAsences">
+
+  <ion-card>
+    
+    <ion-card-header>
+      <ion-list>
+        <ion-item>
+          <ion-badge item-start color="success">{{assists}}</ion-badge>
+          Asistencias
+        </ion-item>
+
+        <ion-item>
+          <ion-badge item-start color="danger">{{absences}}</ion-badge>
+          Inasistencias
+        </ion-item>
+      </ion-list>
+    </ion-card-header>
+    <ion-list>
+      <ion-item>
+       <ion-card-content>
+        <canvas #barCanvas></canvas>
+      </ion-card-content>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+
+
+</ion-content>

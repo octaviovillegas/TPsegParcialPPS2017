@@ -1,0 +1,46 @@
+<!-- Generated template for the ModifyUserComponent component -->
+<!--<div>
+  <div ion-item *ngFor="let item of users" >
+    <div>Nombre de usuario: {{item.username}}</div>
+    <div>Email: {{item.email}}</div>
+    <div>Rol: {{item.rolid}}</div>
+    <div>Nombre: {{item.firstname}}  </div>
+    <div>Apellido: {{item.lastname}}</div>
+    <div>Legajo:{{item.filenumber}}</div>
+ <button ion-button (click)="modificar(item.userid)" color="color1">Modificar</button>
+  </div>
+</div>-->
+
+<div [hidden]="loadingPage">
+  <ion-list>
+    <div *ngFor="let item of users">
+      <ion-card>
+        <ion-card-header text-wrap>
+         Nombre de usuario: {{item.username}}
+        </ion-card-header>
+        <ion-list>
+          <ion-item>
+            <p>Email: {{item.email}}</p>
+    <p>Rol: {{encodeRol(item.rolid)}}</p>
+    <p>Nombre: {{item.firstname}}  </p>
+    <p>Apellido: {{item.lastname}}</p>
+    <p>Legajo:{{item.filenumber}}</p>
+          </ion-item>
+          <button ion-item color="secondary" (click)="modificar(item.userid)">
+        <ion-icon name="create" item-start></ion-icon>
+          Modificar
+        </button>
+        </ion-list>
+      </ion-card>
+    </div>
+  </ion-list>
+</div>
+<!-- spinner -->
+<div [hidden]="!loadingPage">
+  <div>
+    <ion-spinner></ion-spinner>
+  </div>
+  <div>
+    <p>Obteniendo los usuarios. Espere por favor.</p>
+  </div>
+</div>

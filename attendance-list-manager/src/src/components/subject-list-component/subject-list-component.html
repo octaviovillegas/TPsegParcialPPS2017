@@ -1,0 +1,19 @@
+<ion-content padding class="subjects">
+  <div [hidden]="loadingPage">
+    <ion-list>
+      <button ion-item *ngFor="let subject of subjects" (click)="itemSelected(subject)">
+    {{ subject.name }}
+  </button>
+    </ion-list>
+  </div>
+
+  <!-- spinner -->
+  <div [hidden]="!loadingPage">
+    <div>
+      <ion-spinner></ion-spinner>
+    </div>
+    <div>
+      <p>Obteniendo lista de materias. Espere por favor.</p>
+    </div>
+  </div>
+</ion-content>

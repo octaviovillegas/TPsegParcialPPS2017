@@ -1,0 +1,101 @@
+<ion-header>
+
+  <ion-navbar color="color1">
+    <ion-title>Encuesta</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding class="answer">
+
+  <div [hidden]="loadingPage">
+    <ion-list>
+      <ion-card>
+         <ion-item text-wrap text-center>
+          {{survey.text}}
+         </ion-item>
+      </ion-card>
+
+      <div [hidden]="!freeAnswer">
+        <form [formGroup]="form" padding>
+          <!-- Respuesta -->
+          <ion-item>
+            <ion-textarea placeholder="Respuesta" formControlName="answer"></ion-textarea>
+          </ion-item>
+        </form>
+        <!-- Enviar -->
+        <div [hidden]="!hideSpinner">
+          <button ion-button full color="secondary" [disabled]="!form.valid" (click)="saveTextAnswer()">Enviar</button>
+        </div>
+        <!-- spinner -->
+        <div [hidden]="hideSpinner">
+          <div>
+            <ion-spinner></ion-spinner>
+          </div>
+          <div>
+            <p>Enviando la respuesta. Espere por favor.</p>
+          </div>
+        </div>
+      </div>
+      <div [hidden]="freeAnswer">
+
+        <div [hidden]="withCheckboxes">
+          <form [formGroup]="form2" padding>
+            <!-- Lista con radiobuttons-->
+            <ion-list radio-group formControlName="optionid">
+              <ion-item *ngFor="let option of options">
+                <ion-label text-wrap>{{option.text}}</ion-label>
+                <ion-radio class="large-text" [value]="option.optionId"></ion-radio>
+              </ion-item>
+            </ion-list>
+          </form>
+          <!-- Enviar -->
+          <div [hidden]="!hideSpinner">
+            <button ion-button full color="secondary" [disabled]="!form2.valid" (click)="saveRadioAnswer()">Enviar</button>
+          </div>
+          <!-- spinner -->
+          <div [hidden]="hideSpinner">
+            <div>
+              <ion-spinner></ion-spinner>
+            </div>
+            <div>
+              <p>Enviando la respuesta. Espere por favor.</p>
+            </div>
+          </div>
+        </div>
+
+        <div [hidden]="withRadios">
+          <!-- Lista con checkboxes-->
+          <ion-list>
+            <ion-item *ngFor="let option of options">
+              <ion-label text-wrap>{{option.text}}</ion-label>
+              <ion-checkbox color="dark" [(ngModel)]="option.isRight"></ion-checkbox>
+            </ion-item>
+          </ion-list>
+          <!-- Enviar -->
+          <div [hidden]="!hideSpinner">
+            <button ion-button full color="secondary" (click)="saveCheckboxesAnswer()">Enviar</button>
+          </div>
+          <!-- spinner -->
+          <div [hidden]="hideSpinner">
+            <div>
+              <ion-spinner></ion-spinner>
+            </div>
+            <div>
+              <p>Enviando la respuesta. Espere por favor.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </ion-list>
+  </div>
+  <!-- spinner -->
+  <div [hidden]="!loadingPage">
+    <div>
+      <ion-spinner></ion-spinner>
+    </div>
+    <div>
+      <p>Buscando encuestas ...</p>
+    </div>
+  </div>
+</ion-content>

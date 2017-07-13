@@ -1,0 +1,31 @@
+<div [hidden]="loadingPage">
+  <ion-list>
+    <div *ngFor="let survey of surveys">
+      <ion-card>
+        <ion-card-header text-wrap>
+          {{survey.title}}
+        </ion-card-header>
+        <ion-list>
+          <ion-item>
+            <h2>Autor: {{survey.username}}</h2>
+            <p>Fecha de creación: {{survey.creationdate}}</p>
+            <p>Fecha de finalización: {{survey.enddate}}</p>
+          </ion-item>
+          <button ion-item color="danger" (click)="showConfirm(survey.surveyid)">
+        <ion-icon name="create" item-start></ion-icon>
+          Eliminar
+        </button>
+        </ion-list>
+      </ion-card>
+    </div>
+  </ion-list>
+</div>
+<!-- spinner -->
+<div [hidden]="!loadingPage">
+  <div>
+    <ion-spinner></ion-spinner>
+  </div>
+  <div>
+    <p>Espere por favor...</p>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<ion-header>
+
+  <ion-navbar color="color1">
+    <ion-title>Aulas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="classroom">
+  <div [hidden]="loadingPage">
+    <ion-list>
+      <button ion-item *ngFor="let classroom of classrooms" (click)="itemSelected(classroom)">
+       {{ classroom.name }}
+  </button>
+    </ion-list>
+  </div>
+
+  <!-- spinner -->
+  <div [hidden]="!loadingPage">
+    <div>
+      <ion-spinner></ion-spinner>
+    </div>
+    <div>
+      <p>Obteniendo lista de Aulas. Espere por favor.</p>
+    </div>
+  </div>
+</ion-content>
