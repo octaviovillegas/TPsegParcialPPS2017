@@ -23,7 +23,8 @@ export class HomePage {
   TipoIcono="ios";
   ngestilo = {
                           'background-image': 'url(' + this.fondo2 +')',
-                          'background-size':' 400px 700px'
+                          'background-size':'auto',
+                          
   };
  
   Icono1="assets/editar1.png";
@@ -80,20 +81,20 @@ onChangeTipo(){
       console.info("entro al 1");
     this.ngestilo = {
                           'background-image': 'url(' + this.fondo1 +')',
-                          'background-size':' 400px 700px'
+                          'background-size':' auto'
       };
     }
     if(this.mifondo == "fondo2"){
       console.info("entro al 2");
        this.ngestilo = {
                           'background-image': 'url(' + this.fondo2 +')',
-                          'background-size':' 400px 700px'
+                          'background-size':' auto'
     };}
       if(this.mifondo == "fondo3"){
         console.info("entro al 3");
         this.ngestilo = {
                             'background-image': 'url(' + this.fondo3 +')',
-                            'background-size':' 400px 700px'
+                            'background-size':' auto'
     };
       }
 
