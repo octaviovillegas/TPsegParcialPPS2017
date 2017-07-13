@@ -9,6 +9,8 @@ import { Vibration } from '@ionic-native/vibration';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Option } from "../../app/entities/option";
 import { NewUserData } from "../../app/entities/newUserData";
+import {Settings} from '../../providers/settings';
+
 @Component({
   selector: 'update-user-component',
   templateUrl: 'update-user-component.html'
@@ -28,7 +30,7 @@ roluser:any;
  this.setUserTypesByCurrenRol();
   }
 
-  constructor(public navPrms: NavParams, private nativeAudio: NativeAudio, private vibration: Vibration, public storage: Storage, public appService: AppService, private fb: FormBuilder, public navCtrl: NavController, private toastCtrl: ToastController, private alertCtrl: AlertController) {
+  constructor(public navPrms: NavParams, private nativeAudio: NativeAudio, private vibration: Vibration, public storage: Storage, public appService: AppService, private fb: FormBuilder, public navCtrl: NavController, private toastCtrl: ToastController, private alertCtrl: AlertController,private settings:Settings) {
      this.hideSpinner = true;
      this.nativeAudio.preloadSimple('actualizacion', 'assets/sound/escribe.mp3');
       this.nativeAudio.preloadSimple('error', 'assets/sound/2.mp3');
@@ -74,6 +76,43 @@ this.appService.getUserById(this.userid)
         
       });
 
+  }
+    showConfirm2() {
+    let confirm = this.alertCtrl.create({
+      title: 'Elija un estilo',
+      message: '',
+      buttons: [
+        {
+          text: 'Cold-theme',
+          handler: () => {this.encodeStyle('dark-theme'); 
+          }
+        },
+        {
+          text: 'Brown-theme',
+          handler: () => { this.encodeStyle('brown-theme');
+             
+              
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  encodeStyle(Style) {
+    let rv;
+    switch (Style) {
+      case "dark-theme":
+        this.settings.setActiveTheme('dark-theme');
+        break;
+      case "brown-theme":
+        this.settings.setActiveTheme('brown-theme');
+        break;
+      
+      default:
+       this.settings.setActiveTheme('button-light')
+        break;
+    }
+    
   }
 objectToForm() {
     this.form.get("firstname").setValue(this.user[0].firstname);
