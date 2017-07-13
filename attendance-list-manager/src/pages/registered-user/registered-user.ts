@@ -19,7 +19,8 @@ import { SubjectListComponent } from "../../components/subject-list-component/su
 import { AttendanceListManagerComponent } from "../../components/attendance-list-manager-component/attendance-list-manager-component";
 import { UserManagerComponent } from "../../components/user-manager-component/user-manager-component";
 import { QuestionListForStatisticsViewer } from "../../components/question-list-for-statistics-viewer/question-list-for-statistics-viewer";
-
+import {Settings} from '../../providers/settings';
+import {  AlertController } from "ionic-angular";
 @Component({
   selector: 'page-registered-user',
   templateUrl: 'registered-user.html',
@@ -31,7 +32,7 @@ export class RegisteredUserPage {
   rol: string;
   username: string;
   email: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private appService: AppService, private menuCtrl: MenuController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private appService: AppService, private menuCtrl: MenuController,private settings:Settings, private alertCtrl: AlertController) {
     this.title = "Menu";
     this.actions = [];
     this.rol = "Tipo de usuario";
@@ -70,7 +71,43 @@ export class RegisteredUserPage {
       })
       .catch(() => this.logOutOnClick()); //Si por alguna razón el servidor no responde.
   }
-
+showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: 'Elija un estilo',
+      message: '',
+      buttons: [
+        {
+          text: 'Cold-theme',
+          handler: () => {this.encodeStyle('dark-theme'); 
+          }
+        },
+        {
+          text: 'Brown-theme',
+          handler: () => { this.encodeStyle('brown-theme');
+             
+              
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  encodeStyle(Style) {
+    let rv;
+    switch (Style) {
+      case "dark-theme":
+        this.settings.setActiveTheme('dark-theme');
+        break;
+      case "brown-theme":
+        this.settings.setActiveTheme('brown-theme');
+        break;
+      
+      default:
+       this.settings.setActiveTheme('button-light')
+        break;
+    }
+    
+  }
   setRootComponent(rol) {
     switch (rol) {
       case "Administrator":

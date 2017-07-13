@@ -9,7 +9,7 @@ import "rxjs/add/operator/toPromise";
 import { LoginData } from "../../app/entities/loginData";
 import { RegisteredUserPage } from "../../pages/registered-user/registered-user";
 import {Settings} from '../../providers/settings';
-
+import {  AlertController } from "ionic-angular";
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -18,7 +18,7 @@ export class HomePage {
   form: FormGroup;
   hideSpinner: boolean
 selectedTheme:String;
-  constructor(public navCtrl: NavController, private fb: FormBuilder, private toastCtrl: ToastController, private storage: Storage, private appService: AppService,private settings:Settings) {
+  constructor(public navCtrl: NavController, private fb: FormBuilder, private toastCtrl: ToastController, private storage: Storage, private appService: AppService,private settings:Settings, private alertCtrl: AlertController) {
      this.settings.getActiveTheme().subscribe(val=> this.selectedTheme=val);
     this.form = this.fb.group({
       email: ["", [Validators.required, Validators.email]],
@@ -59,6 +59,30 @@ encodeStyle(Style) {
     
   }
 
+  showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: 'Elija un estilo',
+      message: '',
+      buttons: [
+        {
+          text: 'Cold-theme',
+          handler: () => {this.encodeStyle('dark-theme'); 
+          }
+        },
+        {
+          text: 'Brown-theme',
+          handler: () => { this.encodeStyle('brown-theme');
+             
+              
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+
+    
   login() {
 
     //show spinner UX

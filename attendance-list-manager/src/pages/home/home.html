@@ -2,8 +2,8 @@
  <ion-navbar >
     <ion-title >Login</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only >
-        <ion-icon name="color-palette"></ion-icon>
+      <button ion-button icon-only (click)="showConfirm()" >
+        <ion-icon name="color-palette" ></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -54,10 +54,5 @@
     <button class="submit-btn" ion-button full round (click)="setSelectedLoginData('nicolascabrera@yahoo.com.ar')">Alumno</button>
   </ion-list>
 
-<button ion-button full icon-left (click)="encodeStyle('dark-theme')">
-  <ion-icon name="bulb"></ion-icon>
-  Dark Theme</button>
- <button ion-button full icon-left (click)="encodeStyle('brown-theme')">
-  <ion-icon name="bulb"></ion-icon>
-  Brown Theme</button>
+
 </ion-content>
