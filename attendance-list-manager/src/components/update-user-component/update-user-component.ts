@@ -10,6 +10,7 @@ import { NativeAudio } from '@ionic-native/native-audio';
 import { Option } from "../../app/entities/option";
 import { NewUserData } from "../../app/entities/newUserData";
 import {Settings} from '../../providers/settings';
+import { HomePage } from "../../pages/home/home";
 
 @Component({
   selector: 'update-user-component',
@@ -76,6 +77,11 @@ this.appService.getUserById(this.userid)
         
       });
 
+  }
+   logOutOnClick() {
+    this.appService.logOut();
+    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.popToRoot();
   }
     showConfirm2() {
     let confirm = this.alertCtrl.create({

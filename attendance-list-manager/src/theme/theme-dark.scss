@@ -1,5 +1,12 @@
 .dark-theme{
+.lala{.button{
 
+border-color:red ;
+background-color: #35778c ;
+color:#fff;
+
+
+}}
   ion-content{
 
 background-color:#aeb7da;
@@ -31,13 +38,14 @@ color:#fff;
 
 }
 
-button{
+buttn{
 border-color:red ;
 background-color: #35778c ;
 color:#fff;
 
 
 }
+$colors: (but:#865c1c,);
 ion-segment{
          border-radius: 30px !important;
          padding-left: 25px !important;
@@ -57,4 +65,19 @@ input-cover{color:#fff;
 background-color: #fff;
 
 }
+.logo-row {
+    padding-top: 50px;
+     padding-bottom: 20px;
+      align-items: center;    } .ion-row {
+       align-items: center;      
+         text-align: center;
+     }
+
+     
+ion-card-header{
+background-color: #35778c ;
+color:#fff;
+
+
+}     
 }

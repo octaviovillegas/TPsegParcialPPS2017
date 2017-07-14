@@ -102,7 +102,8 @@
     <ion-input type="date" placeholder="Año/Mes/Día" [(ngModel)]="endDate"></ion-input>
 
   </ion-item>
-  <button ion-button round full (click)="showConfirm()" [disabled]="!form.valid">Guardar Encuesta</button>
+  <div class="lala" >
+  <button ion-button round full (click)="showConfirm()" [disabled]="!form.valid">Guardar Encuesta</button></div>
 </div>
 <div [hidden]="hideSpinner">
   <div>

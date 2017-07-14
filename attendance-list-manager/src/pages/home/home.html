@@ -3,7 +3,7 @@
     <ion-title >Login</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="showConfirm()" >
-        <ion-icon name="color-palette" ></ion-icon>
+        <ion-icon name="color-palette" color="light"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -21,7 +21,7 @@
   
   <form [formGroup]="form" padding>
    
-    <ion-list>
+    <ion-list class="l1">
       <ion-item>
         <ion-label>E-mail</ion-label>
         <ion-input type="email" formControlName="email" maxlength="50"></ion-input>
@@ -47,8 +47,8 @@
     
   </form>
   
-  <ion-list>
-    <button class="submit-btn" ion-button full round (click)="setSelectedLoginData('admin@admin.com')">Administrador</button>
+  <ion-list class="lala">
+    <button color="but" ion-button full round (click)="setSelectedLoginData('admin@admin.com')">Administrador</button>
     <button class="submit-btn" ion-button full round (click)="setSelectedLoginData('ruben@fonte.com')">Profesor</button>
     <button class="submit-btn" ion-button full round (click)="setSelectedLoginData('administrative@administrative.com')">Administrativo</button>
     <button class="submit-btn" ion-button full round (click)="setSelectedLoginData('nicolascabrera@yahoo.com.ar')">Alumno</button>

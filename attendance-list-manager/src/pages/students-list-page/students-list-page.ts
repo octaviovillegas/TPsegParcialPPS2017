@@ -5,7 +5,9 @@ import { Storage } from "@ionic/storage";
 import { AttendanceListData } from "../../app/entities/attendanceListData";
 import { AttendanceList } from "../../app/entities/attendanceList";
 import { AttendanceListItem } from "../../app/entities/attendanceListItem";
+import {Settings} from '../../providers/settings';
 
+import { HomePage } from "../../pages/home/home";
 @Component({
   selector: 'page-students-list-page',
   templateUrl: 'students-list-page.html',
@@ -15,7 +17,7 @@ export class StudentsListPage {
   students: Array<AttendanceListData>;
   classId: number;
   noStudents: boolean;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage, private toastCtrl: ToastController, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage, private toastCtrl: ToastController, private alertCtrl: AlertController,private settings:Settings) {
     this.loadingPage = true;
     this.noStudents = true;
     this.students = new Array<AttendanceListData>();
@@ -115,6 +117,48 @@ export class StudentsListPage {
       ]
     });
     confirm.present();
+  }
+    logOutOnClick() {
+    this.appService.logOut();
+    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.popToRoot();
+  }
+  showConfirm2() {
+    let confirm = this.alertCtrl.create({
+      title: 'Elija un estilo',
+      message: '',
+      buttons: [
+        {
+          text: 'Cold-theme',
+          handler: () => {this.encodeStyle('dark-theme'); 
+          }
+        },
+        {
+          text: 'Brown-theme',
+          handler: () => { this.encodeStyle('brown-theme');
+             
+              
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  encodeStyle(Style) {
+    let rv;
+    switch (Style) {
+      case "dark-theme":
+        this.settings.setActiveTheme('dark-theme');
+        break;
+      case "brown-theme":
+        this.settings.setActiveTheme('brown-theme');
+        break;
+      
+      default:
+       this.settings.setActiveTheme('button-light')
+        break;
+    }
+    
   }
   getStudentsListByClassId() {
 

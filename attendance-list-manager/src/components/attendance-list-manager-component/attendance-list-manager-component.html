@@ -1,8 +1,8 @@
-<ion-content class="attendancelist">
+<ion-content >
 
   <div [hidden]="loadingPage">
     <ion-card>
-      <ion-card-header color="secondary">
+      <ion-card-header >
         <ion-icon name="clipboard" item-start></ion-icon>
         Buscar planilla por:
       </ion-card-header>
@@ -10,7 +10,7 @@
 
       <ion-list>
         <div [hidden]="admin">
-          <button ion-item color="dark" (click)="assignedSubjectOnClick()">
+          <button ion-item  (click)="assignedSubjectOnClick()">
           <ion-icon name="list-box" item-start></ion-icon>
           Materias Asignadas
         </button>
@@ -18,7 +18,7 @@
 
 
         <div [hidden]="!admin">
-          <button ion-item color="dark" (click)="pushPage(navButton.page)" *ngFor="let navButton of adminButtons">
+          <button ion-item  (click)="pushPage(navButton.page)" *ngFor="let navButton of adminButtons">
           <ion-icon name="list-box" item-start></ion-icon>
           {{navButton.text}}
         </button>

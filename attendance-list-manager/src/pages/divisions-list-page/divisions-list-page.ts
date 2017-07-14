@@ -4,7 +4,9 @@ import { Storage } from "@ionic/storage";
 import { AppService } from "../../providers/app-service";
 import { SubjectsListPage } from "../subjects-list-page/subjects-list-page";
 import { StudentsListPage } from "../students-list-page/students-list-page";
-
+import {Settings} from '../../providers/settings';
+import {  AlertController } from "ionic-angular";
+import { HomePage } from "../../pages/home/home";
 @Component({
   selector: 'page-divisions-list-page',
   templateUrl: 'divisions-list-page.html',
@@ -12,7 +14,7 @@ import { StudentsListPage } from "../students-list-page/students-list-page";
 export class DivisionsListPage {
   divisions: Array<any>;
   loadingPage: boolean;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private appService: AppService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private appService: AppService,private settings:Settings, private alertCtrl: AlertController) {
     this.divisions = [];
     this.loadingPage = true;
     
@@ -45,6 +47,11 @@ export class DivisionsListPage {
     }
   }
 
+  logOutOnClick() {
+    this.appService.logOut();
+    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.popToRoot();
+  }
   getListDivisions() {
     this.storage.get("jwt").then((jwt) => {
       this.appService.getAllDivisions(jwt)
@@ -64,7 +71,43 @@ export class DivisionsListPage {
       this.loadingPage = false;
     })
   }
-
+showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: 'Elija un estilo',
+      message: '',
+      buttons: [
+        {
+          text: 'Cold-theme',
+          handler: () => {this.encodeStyle('dark-theme'); 
+          }
+        },
+        {
+          text: 'Brown-theme',
+          handler: () => { this.encodeStyle('brown-theme');
+             
+              
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  encodeStyle(Style) {
+    let rv;
+    switch (Style) {
+      case "dark-theme":
+        this.settings.setActiveTheme('dark-theme');
+        break;
+      case "brown-theme":
+        this.settings.setActiveTheme('brown-theme');
+        break;
+      
+      default:
+       this.settings.setActiveTheme('button-light')
+        break;
+    }
+    
+  }
   getListDivisionsBySubjectId(subjectid) {
     this.storage.get("jwt").then((jwt) => {
       this.appService.getDivisionsListBySubjectId(jwt ,subjectid)

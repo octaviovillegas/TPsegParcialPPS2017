@@ -3,6 +3,9 @@ import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { AppService } from "../../providers/app-service";
 import { Storage } from "@ionic/storage";
 import { StudentsListPage } from "../students-list-page/students-list-page";
+import {Settings} from '../../providers/settings';
+import {  AlertController } from "ionic-angular";
+import { HomePage } from "../../pages/home/home";
 @Component({
   selector: 'page-classes-grid-page',
   templateUrl: 'classes-grid-page.html',
@@ -10,7 +13,7 @@ import { StudentsListPage } from "../students-list-page/students-list-page";
 export class ClassesGridPage {
   classes: Array<any>;
   loadingPage: boolean;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private appService: AppService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private appService: AppService,private settings:Settings, private alertCtrl: AlertController) {
     this.classes = [];
     this.loadingPage = true;
     
@@ -110,5 +113,47 @@ export class ClassesGridPage {
 
   itemSelected(a_class){
     this.navCtrl.push(StudentsListPage, {a_class});
+  }
+    logOutOnClick() {
+    this.appService.logOut();
+    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.popToRoot();
+  }
+  showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: 'Elija un estilo',
+      message: '',
+      buttons: [
+        {
+          text: 'Cold-theme',
+          handler: () => {this.encodeStyle('dark-theme'); 
+          }
+        },
+        {
+          text: 'Brown-theme',
+          handler: () => { this.encodeStyle('brown-theme');
+             
+              
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  encodeStyle(Style) {
+    let rv;
+    switch (Style) {
+      case "dark-theme":
+        this.settings.setActiveTheme('dark-theme');
+        break;
+      case "brown-theme":
+        this.settings.setActiveTheme('brown-theme');
+        break;
+      
+      default:
+       this.settings.setActiveTheme('button-light')
+        break;
+    }
+    
   }
 }

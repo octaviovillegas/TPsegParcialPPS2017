@@ -1,5 +1,13 @@
-.brown-theme{
+.brown-theme{$colors: (but:#865c1c,);
+ .lala{.button{
 
+background-color: #865c1c ;
+color:#fff;
+but:#865c1c;
+
+}
+but:#865c1c;
+ }
  ion-content{
 
 background-color:#efecc5;
@@ -19,7 +27,7 @@ background-color: #865c1c ;
 color:#fff;
 
   }
-button{
+.butto{
 
 background-color: #865c1c ;
 color:#fff;
@@ -39,8 +47,9 @@ color:#fff;
 
 }
 h1{
-         border-radius: 30px !important;
-         padding-left: 30px !important;
+          border-radius: 30px !important;
+         padding-left: 25px !important;
+         padding-right: 25px !important;
          font-size: 0.9em;
          margin-bottom: 10px;
          border: 1px solid #ffffff;
@@ -50,4 +59,18 @@ h1{
 
 
 }
+.l1{
+ion-item {
+        border-radius: 30px !important;
+          padding-left: 30px !important;
+          font-size: 0.9em;
+         margin-bottom: 10px;          box-shadow: none !important;
+     }}
+     .logo-row {
+    padding-top: 50px;
+     padding-bottom: 20px;
+      align-items: center;    } .ion-row {
+       align-items: center;      
+         text-align: center;
+     }
 }
