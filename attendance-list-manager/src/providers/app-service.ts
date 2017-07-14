@@ -18,7 +18,7 @@ export class AppService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let jsonLoginData = JSON.stringify(loginData);
-    return this.http.post("http://localhost:80/jwt/token", jsonLoginData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/token", jsonLoginData, options).toPromise();
   }
 
   //use when you need logout to clear the user data.
@@ -29,10 +29,11 @@ export class AppService {
   }
 
   getPermissionsByUserRol(jwt) {
+    let data = { jwt };
+    let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    headers.append("jwt", jwt);
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/permissions", options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/permissions", jsonData, options).toPromise();
   }
 
   logOut() {
@@ -42,7 +43,7 @@ export class AppService {
   getSurveys() {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getsurveyslist", options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getsurveyslist", options).toPromise();
   }
 
   getUserListToEliminate(jwt) {
@@ -50,7 +51,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getuserslisttoeliminate", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getuserslisttoeliminate", jsonData, options).toPromise();
   }
 
   getSurveysToEliminate(jwt) {
@@ -58,7 +59,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getsurveyslisttoeliminate", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getsurveyslisttoeliminate", jsonData, options).toPromise();
   }
 
   newSurvey(survey: Survey, jwt) {
@@ -66,30 +67,31 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/newsurvey", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/newsurvey", jsonData, options).toPromise();
   }
 
   newUser(user: NewUserData, jwt) {
     let data = { user, jwt };
     let jsonData = JSON.stringify(data);
+    console.log(jsonData);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/newuser", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/newuser", jsonData, options).toPromise();
   }
   getuserid(jwt) {
     let data = { jwt };
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getuserid", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getuserid", jsonData, options).toPromise();
 
   }
-  eliminatesurvey(surveyid) {
-    let data = { surveyid };
+  eliminatesurvey(jwt, surveyid) {
+    let data = { jwt, surveyid };
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/eliminatesurvey", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/eliminatesurvey", jsonData, options).toPromise();
   }
 
   modifySurvey(survey, jwt) {
@@ -97,7 +99,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/modifysurvey", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/modifysurvey", jsonData, options).toPromise();
   }
 
   getSurveyById(surveyid) {
@@ -105,7 +107,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getsurveybyid", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getsurveybyid", jsonData, options).toPromise();
   }
 
   saveAnswer(answer, jwt) {
@@ -113,7 +115,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/saveanswer", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/saveanswer", jsonData, options).toPromise();
   }
 
   deleteAllOptions(questionid, jwt) {
@@ -121,7 +123,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/deletealloptions", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/deletealloptions", jsonData, options).toPromise();
   }
 
 
@@ -131,7 +133,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/divisionslist", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/divisionslist", jsonData, options).toPromise();
   }
 
   getSubjectsListByDivisionId(jwt, divisionid) {
@@ -139,7 +141,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/subjectslistbydivisionid", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/subjectslistbydivisionid", jsonData, options).toPromise();
   }
 
   getSubjectsListByStudentId(jwt) {
@@ -147,7 +149,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/subjectslistbystudentid", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/subjectslistbystudentid", jsonData, options).toPromise();
   }
 
   getStudentsListByDivisionAndSubject(jwt, divisionid, subjectid) {
@@ -155,7 +157,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/studentslistbydivisionandsubject", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/studentslistbydivisionandsubject", jsonData, options).toPromise();
   }
 
   getAssistsAndAbsenses(jwt, classid) {
@@ -163,7 +165,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getassistsandabsenses", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getassistsandabsenses", jsonData, options).toPromise();
   }
 
   saveAttendanceList(jwt, attendancelist, ) {
@@ -171,7 +173,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/saveattendancelist", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/saveattendancelist", jsonData, options).toPromise();
   }
 
   getSubjectsList(jwt) {
@@ -179,7 +181,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getsubjectslist", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getsubjectslist", jsonData, options).toPromise();
   }
 
   getDivisionsListBySubjectId(jwt, subjectid) {
@@ -187,7 +189,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/divisionslistbysubjectid", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/divisionslistbysubjectid", jsonData, options).toPromise();
   }
 
   getClassroomsList(jwt) {
@@ -195,7 +197,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getclassroomslist", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getclassroomslist", jsonData, options).toPromise();
   }
 
   getClassesListByClassroomid(jwt, classroomid) {
@@ -203,7 +205,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getclassesbyclassroomid", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getclassesbyclassroomid", jsonData, options).toPromise();
   }
 
   getStudentsListByClassId(jwt, classid) {
@@ -211,7 +213,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getstudentslistbyclassid", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getstudentslistbyclassid", jsonData, options).toPromise();
   }
 
   getTeachersList(jwt) {
@@ -219,7 +221,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getteacherslist", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getteacherslist", jsonData, options).toPromise();
   }
 
   getClassesByTeacherId(jwt, teacherid) {
@@ -227,7 +229,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getclassesbyteacherid", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getclassesbyteacherid", jsonData, options).toPromise();
   }
 
   deleteOption(jwt, optionId) {
@@ -235,7 +237,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/deleteoption", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/jwt/deleteoption", jsonData, options).toPromise();
   }
 
   getAssist(jwt, classid) {
@@ -243,7 +245,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getAssist", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getAssist", jsonData, options).toPromise();
   }
 
   deleteUser(userid) {
@@ -252,7 +254,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/deleteUser", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/jwt/deleteUser", jsonData, options).toPromise();
   }
 
 
@@ -261,7 +263,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getuserbyid", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getuserbyid", jsonData, options).toPromise();
   }
 
   modifyUser(user) {
@@ -270,7 +272,7 @@ export class AppService {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/modifyUser", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/modifyUser", jsonData, options).toPromise();
   }
 
 getSurveysListById(jwt) {
@@ -278,7 +280,7 @@ getSurveysListById(jwt) {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getsurveyslistbyid", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getsurveyslistbyid", jsonData, options).toPromise();
   }
 
   getStatisticsForSurveyTypeFreeAnswer(jwt, surveyid) {
@@ -286,7 +288,7 @@ getSurveysListById(jwt) {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/statisticsforsurveytypefreeanswer", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/statisticsforsurveytypefreeanswer", jsonData, options).toPromise();
   }
 
   getStatisticsForSurveyTypeRadiobuttons1Correct2Graphics(jwt, surveyid, questionid) {
@@ -294,7 +296,7 @@ getSurveysListById(jwt) {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/statisticsforsurveytyperadiobuttons1correct2graphics", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/statisticsforsurveytyperadiobuttons1correct2graphics", jsonData, options).toPromise();
   }
 
   getOptionsByAnswerId(jwt, userid, questionid){
@@ -302,6 +304,6 @@ getSurveysListById(jwt) {
     let jsonData = JSON.stringify(data);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post("http://localhost:80/jwt/getoptionsbyanswerid", jsonData, options).toPromise();
+    return this.http.post("http://www.ionicparaaprobar.esy.es/getoptionsbyanswerid", jsonData, options).toPromise();
   }
 }

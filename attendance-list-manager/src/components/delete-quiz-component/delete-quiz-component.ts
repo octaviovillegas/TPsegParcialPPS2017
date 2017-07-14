@@ -73,7 +73,9 @@ export class DeleteQuizComponent {
 
   eliminar(surveyid) {
     this.loadingPage = true;
-    this.appService.eliminatesurvey(surveyid).then((response: Response) => {
+    this.storage.get("jwt")
+        .then((jwt) => {
+    this.appService.eliminatesurvey(jwt,surveyid).then((response: Response) => {
       this.showMessage("Borrando Encuesta");
       this.storage.get("jwt")
         .then((jwt) => {
@@ -89,7 +91,7 @@ export class DeleteQuizComponent {
           })
             .catch((error) => console.log("error")); //Si por alguna razón el servidor no responde.
         });
-    });
+    });});
   }
 
   showMessage(message: string): void {
