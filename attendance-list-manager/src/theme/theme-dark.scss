@@ -8,8 +8,9 @@ color:#fff;
 
 }}
   ion-content{
-
-background-color:#aeb7da;
+background-image: url('../assets/img/ColdIce.jpg');
+background-repeat: no-repeat;
+background-size:cover;
 
 
   }
@@ -47,9 +48,7 @@ color:#fff;
 }
 $colors: (but:#865c1c,);
 ion-segment{
-         border-radius: 30px !important;
-         padding-left: 25px !important;
-         padding-right: 25px !important;
+       
          font-size: 0.9em;
          margin-bottom: 10px;
          border: 1px solid #ffffff;

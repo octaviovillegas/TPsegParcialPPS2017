@@ -15,6 +15,13 @@ export class AnswerTextViewer {
     this.student = {};
     this.question = "";
   }
+ ionViewDidLoad() {
+    this.student = this.navParams.get("student");
+    this.question = this.navParams.get("question");
+  }
+
+
+
 logOutOnClick() {
     this.appService.logOut();
     this.navCtrl.setRoot(HomePage);
@@ -57,9 +64,5 @@ logOutOnClick() {
     }
     
   }
-  ionViewDidLoad() {
-    this.student = this.navParams.get("student");
-    this.question = this.navParams.get("question");
-  }
-
+ 
 }
