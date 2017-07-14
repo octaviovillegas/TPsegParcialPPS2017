@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
+import { NavController, ViewController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Pregunta } from '../encuesta/pregunta';
 import {Modales} from "../encuestas/modales/modales";
@@ -24,7 +24,7 @@ export class EncuestaDetalle {
  micolor;
  
   private usuarioLogueado;
-    constructor(public auth: servicioAuth, public navCtrl: NavController, public navParams: NavParams, private http: Http, public toastCtrl: ToastController, public modalCtrl: ModalController) {
+    constructor(public auth: servicioAuth, public viewCtrl:ViewController, public navCtrl: NavController, public navParams: NavParams, private http: Http, public toastCtrl: ToastController, public modalCtrl: ModalController) {
         console.log('EncuestaDetalle: ', navParams.data);
 
         this.encuesta = navParams.data;
@@ -37,7 +37,11 @@ export class EncuestaDetalle {
         this.traerMiEstilo();
     }
 
+   dismiss() {
 
+        this.viewCtrl.dismiss();
+
+    }
 traerMiEstilo()
 {
   this.cargando = true;

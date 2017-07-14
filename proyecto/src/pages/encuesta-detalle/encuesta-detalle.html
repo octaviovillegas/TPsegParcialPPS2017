@@ -1,9 +1,13 @@
 
 <ion-header>
    
-    <ion-navbar color="{{micolor}}" >
-
-        <ion-title>{{encuesta.descripcion}}</ion-title>
+    <ion-navbar color="{{micolor}}"  *ngIf="!cargando">
+         <ion-buttons start left>
+            <button ion-button icon-only (tap)="dismiss()">
+                Cancelar
+            </button>
+        </ion-buttons>
+        <ion-title align="center">{{encuesta.descripcion}}</ion-title>
 
         <ion-buttons end>
             <button *ngIf="!cargando" ion-button icon-only (tap)="cargarPreguntas(encuesta.id_encuesta)">
@@ -16,7 +20,7 @@
 
 
 <ion-content class="whitesmoke">
-    
+    <br><br><br>
 <div *ngIf="cargando" text-center>
             <ion-spinner text-center></ion-spinner>
   </div>

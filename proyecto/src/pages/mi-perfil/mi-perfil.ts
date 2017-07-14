@@ -37,15 +37,22 @@ traerMiEstilo()
                       })
                       .map(res => res.json())
                       .subscribe((quote) =>{
-                          console.info(quote);  
-                          console.info(quote['estilo']);     
-                          console.info(quote['nombre']);   
-                          console.info(quote[0]['nombre']);   
+                          console.info(quote);  ;   
+                          console.info(quote[0]['nombre']);  
+                          console.info(quote[0]['estilopropio']); 
                             if(quote[0]['estilopropio'] != 0)
                                 {
+                                  //estilo propio
                                 this.micolor=quote[0]['codigocolor1']; 
-                                }else{
+                                this.relationship="EstilosPropios";                                
+                                this.estelg=quote[0]['nombre'];
+                                console.info(this.estelg);
+                                console.info("ento aca:",this.relationship);
+                              }else{
+                                //estilo por defecto
                                 this.micolor=quote[0]['nombre']; 
+                                this.relationship="estiloDef";
+                                console.info("o aca:",this.relationship);
                                 } 
                           this.cargando = false;
                       });
