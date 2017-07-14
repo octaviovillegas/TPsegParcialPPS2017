@@ -79,7 +79,7 @@ cargar2veces()
  onChange(event)
  {
    console.info(event); 
-   
+   this.cargando = true;
     this.http.post("http://tppps2.hol.es/ws1/modificarestilo", {
             id_usuario:this.usuarioLogueado['id_usuario'],
             estilo:event

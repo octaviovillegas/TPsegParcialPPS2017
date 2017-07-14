@@ -6,10 +6,12 @@
 -->
 <ion-header>
    <ion-navbar color="{{micolor}}"  *ngIf="!cargando">
-      <button ion-button menuToggle left (click)="volver()">
-          <ion-icon name="arrow-back" ></ion-icon>
-      </button>  
-      <ion-title>Crear estilo propio</ion-title>    
+      <ion-buttons start left>
+            <button ion-button icon-only (tap)="cerrar()">
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+      <ion-title align="center">Crear estilo propio</ion-title>    
 
   </ion-navbar>
 </ion-header>

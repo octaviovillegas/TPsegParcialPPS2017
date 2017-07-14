@@ -144,10 +144,7 @@ guardarMiEstilo()
                     
 }
 
-volver()
-{
-  this.viewCtrl.dismiss();
-}
+ 
 cerrar()
 {
   console.info("cerrando");
