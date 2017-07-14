@@ -66,15 +66,15 @@
             </ion-item>
 
             <ion-item>
-                <ion-input type="date"  name="fechaInicio" [(ngModel)]="encuesta.fechaInicio" placeholder="ingrese fecha Inicio"></ion-input>
+                <ion-input type="date"  name="fechaInicio"  placeholder="Fecha inicio" [(ngModel)]="encuesta.fechaInicio" required></ion-input>
             </ion-item>
 
             <ion-item>
-                <ion-input type="date"  name="fechaFin" [(ngModel)]="encuesta.fechaFin" placeholder="ingrese fecha fin"></ion-input>
+                <ion-input type="date"  name="fechaFin" placeholder="Fecha fin" [(ngModel)]="encuesta.fechaFin" required></ion-input>
             </ion-item>
 
             <!--&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="altaEncuesta()">Nueva Encuesta</a>-->
-            <button ion-button type="button" (click)="altaEncuesta()" color="{{micolor}}" full [disabled]="encuesta.descripcion == ''">Crear Encuesta</button>
+            <button ion-button type="button" (click)="altaEncuesta()" color="{{micolor}}" full [disabled]="encuesta.descripcion == '' || encuesta.fechaInicio == '' || encuesta.fechaFin == ''">Crear Encuesta</button>
 
         </div>
 

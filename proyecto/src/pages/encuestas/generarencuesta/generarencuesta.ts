@@ -142,6 +142,7 @@ traerMiEstilo()
         }
 
         verEncuesta (encuesta) {
+            console.info("aca entra");
             this.navCtrl.push(EncuestaDetalle, encuesta, {
                 direction: 'forward',
                 animation: 'ios-transition'

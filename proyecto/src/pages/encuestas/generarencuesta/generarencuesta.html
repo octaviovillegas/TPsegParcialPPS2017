@@ -34,10 +34,10 @@
         </ion-item>
         <ion-item-options side="right" class="fondoEncu">
           <ion-icon name="plus"></ion-icon>
-            <img [src]="icoN" width=50 height=50 (click)="verEncuesta(encuesta)">
+            <img [src]="icoE" width=50 height=50 (click)="verEncuesta(encuesta)">
         </ion-item-options>
         <ion-item-options side="left" class="fondoEncu">
-          <img [src]="icoE" width=50 height=50 (click)="BorrarEncuesta(encuesta.id_encuesta)">
+          <img [src]="icoN" width=50 height=50 (click)="BorrarEncuesta(encuesta.id_encuesta)">
         </ion-item-options>
           <ion-icon ios="ios-add" md="md-add"></ion-icon>
       </ion-item-sliding>
@@ -51,4 +51,5 @@
             </button>
         </ion-fab>
   </div>
+  
 </ion-content>
