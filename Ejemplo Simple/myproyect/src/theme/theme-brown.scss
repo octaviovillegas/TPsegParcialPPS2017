@@ -1,0 +1,76 @@
+.brown-theme{$colors: (but:#865c1c,);
+ .lala{.button{
+
+background-color: #865c1c ;
+color:#fff;
+border-radius:30px ;
+
+}
+
+ }
+ ion-content{
+background-image: url('../assets/img/pine.jpg');
+background-repeat: no-repeat;
+background-size:cover;
+
+  }
+.toolbar-title-md {
+    padding: 0 12px;
+    font-size: 2rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.header .toolbar-background{
+border-color:#fff ;
+background-color: #865c1c ;
+color:#fff;
+
+  }
+.butto{
+
+background-color: #865c1c ;
+color:#fff;
+
+
+}
+.segment-md .segment-button {
+background-color: #865c1c ;
+color:#fff;
+
+
+}
+.card-header-md{
+
+background-color: #865c1c ;
+color:#fff;
+
+}
+h1{
+          border-radius: 30px !important;
+         padding-left: 25px !important;
+         padding-right: 25px !important;
+         font-size: 0.9em;
+         margin-bottom: 10px;
+         border: 1px solid #ffffff;
+         border-bottom: 0px !important;
+         box-shadow: none !important;
+         background-color: #865c1c;
+
+
+}
+.l1{
+ion-item {
+        border-radius: 30px !important;
+          padding-left: 30px !important;
+          font-size: 0.9em;
+         margin-bottom: 10px;          box-shadow: none !important;
+     }}
+     .logo-row {
+    padding-top: 50px;
+     padding-bottom: 20px;
+      align-items: center;    } .ion-row {
+       align-items: center;      
+         text-align: center;
+     }
+}
