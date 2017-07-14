@@ -31,40 +31,41 @@
                     
                     <ion-list radio-group [(ngModel)]="relationship">
                              
-                            <ion-label>
-                                    <ion-radio value="estiloDef"></ion-radio>         
+                            <ion-radio value="estiloDef"></ion-radio>
+                            <ion-item>
+                                <ion-label>
                                    Estilo pre-definido:
-                                    <ion-select  [(ngModel)]="micolor" (ionChange)="onChange($event)" [disabled]="relationship != 'estiloDef'">
-                                     
+                                    <ion-select  [(ngModel)]="micolor" (ionChange)="onChange($event)" [disabled]="relationship != 'estiloDef'"> 
                                         <ion-option>estilo1</ion-option>
                                         <ion-option>estilo2</ion-option>
                                         <ion-option>estilo3</ion-option>
-                                        <ion-option>estilo4</ion-option>
-                                        <!--<ion-option>estilopropio</ion-option>-->
+                                        <ion-option>estilo4</ion-option> 
                                     </ion-select>
-                            </ion-label>
+                                </ion-label>
+                            </ion-item>
                      
-
-                            <ion-label>
-                                    <ion-radio value="EstilosPropios"></ion-radio>         
+                            <ion-radio value="EstilosPropios"></ion-radio>   
+                            <ion-item >       
+                                <ion-label>    
                                     Mis estilos Creados:
-                                    <ion-select  [(ngModel)]="estelg" (ionChange)="onChange(estelg)" [disabled]="relationship != 'EstilosPropios'">
+                                    <ion-select  [(ngModel)]="estelg" (ionChange)="onChange(estelg)" [disabled]="relationship != 'EstilosPropios'">  
                                     
                                      <div *ngFor="let estilo of misEstilosCreados">
                                         <ion-option>{{estilo.nombre}}</ion-option>
                                      </div>
                                     </ion-select>
-                            </ion-label>
+                                </ion-label>
+                            </ion-item>
 
-                            
-                            <ion-label>
-                                <ion-radio value="estiloNoDef"></ion-radio>       
-                                <button ion-item (click)="estilopropio()" [disabled]="relationship != 'estiloNoDef'">
+                            <ion-radio value="estiloNoDef"></ion-radio>
+                            <ion-item>
+                                <ion-label>
+                                <button ion-item (click)="estilopropio()" [disabled]="relationship != 'estiloNoDef'"> 
                                     <h2>Crear estilo propio</h2>
                                     <ion-icon name="ios-arrow-forward" item-right></ion-icon>
                                 </button>
-                           
-                            </ion-label>
+                           </ion-label>
+                            </ion-item>
                             
                       
                     </ion-list>
