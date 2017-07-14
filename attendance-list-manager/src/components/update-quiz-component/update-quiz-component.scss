@@ -1,12 +1,5 @@
 update-quiz-component {
-.surveys{background-image: url('../assets/img/surveys.jpg');
-background-repeat: no-repeat;
-background-size:cover;}
-.ion-segment-button{
-
-      
-    background-color: #ffffff
-}
+.surveys{
 
 form{ border-radius: 30px !important;
          padding-left: 30px !important;
@@ -32,4 +25,5 @@ form{ border-radius: 30px !important;
          border-bottom: 0px !important;
          box-shadow: none !important;
          background-color: white;}
+}
 }

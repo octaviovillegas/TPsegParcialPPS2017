@@ -67,6 +67,8 @@ export class UpdateQuizComponent implements OnInit {
       });
   }
 
+  
+
   haveRightAnswerOnChange() {
     if (!this.haveRightAnswer) {
       this.options.forEach(itemInOptions => {
