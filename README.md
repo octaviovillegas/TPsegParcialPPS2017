@@ -1,7 +1,7 @@
 # TPsegParcialPPS2017
 Segundo parcial de PPS 2017 IONIC 2
 ========================================
-
+ionic id= afaef87a 
 
 <h2>Documentacion:</h2>
 
@@ -95,3 +95,9 @@ Su ubicacion actual y la ubicacion fija de la UTN Fra.
 
 <h4>Tablas=</h4>
  <img src="esquema_tablas.jpg">
+
+<br><br>
+ <h4>Agregado para el final</h4><br><br>
+ -poder setear un estilo por defecto<br>
+ -poder generar un estilo propio<br>
+ -poder setear un estilo propio generado anteriormente<br>
