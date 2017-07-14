@@ -6,7 +6,9 @@ import { Storage } from "@ionic/storage";
 import { AnswerTextViewer } from "../answer-text-viewer/answer-text-viewer";
 import { SurveyType } from "../../app/app.module";
 import { AnswerOptionTextViewer } from "../answer-option-text-viewer/answer-option-text-viewer";
-
+import {Settings} from '../../providers/settings';
+import {  AlertController } from "ionic-angular";
+import { HomePage } from "../../pages/home/home";
 @Component({
   selector: 'page-statistics-options-viewer',
   templateUrl: 'statistics-options-viewer.html',
@@ -21,7 +23,7 @@ export class StatisticsOptionsViewer {
   perOption: Array<any>;
   optionsWithTotal: Array<any>;
   noData:boolean;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService,  private storage: Storage,private settings:Settings, private alertCtrl: AlertController) {
     this.hideSpinner = false;
     this.question = "";
     this.options = [];
@@ -41,7 +43,48 @@ export class StatisticsOptionsViewer {
       });
 
   }
-
+ logOutOnClick() {
+    this.appService.logOut();
+    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.popToRoot();
+  }
+  showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: 'Elija un estilo',
+      message: '',
+      buttons: [
+        {
+          text: 'Cold-theme',
+          handler: () => {this.encodeStyle('dark-theme'); 
+          }
+        },
+        {
+          text: 'Brown-theme',
+          handler: () => { this.encodeStyle('brown-theme');
+             
+              
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  encodeStyle(Style) {
+    let rv;
+    switch (Style) {
+      case "dark-theme":
+        this.settings.setActiveTheme('dark-theme');
+        break;
+      case "brown-theme":
+        this.settings.setActiveTheme('brown-theme');
+        break;
+      
+      default:
+       this.settings.setActiveTheme('button-light')
+        break;
+    }
+    
+  }
   getStatisticsForSurveyTypeRadiobuttons1Correct2Graphics(jwt) {
     let surveyid = this.navParams.get("surveyId");
     let questionid = this.navParams.get("questionId");

@@ -4,6 +4,9 @@ import { AppService } from "../../providers/app-service";
 import { Storage } from "@ionic/storage";
 import { StudentsListPage } from "../students-list-page/students-list-page";
 import { DivisionsListPage } from "../divisions-list-page/divisions-list-page";
+import {Settings} from '../../providers/settings';
+import {  AlertController } from "ionic-angular";
+import { HomePage } from "../../pages/home/home";
 
 @Component({
   selector: 'page-subjects-list-page',
@@ -12,7 +15,7 @@ import { DivisionsListPage } from "../divisions-list-page/divisions-list-page";
 export class SubjectsListPage {
   loadingPage: boolean;
   subjects: Array<any>;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage,private settings:Settings, private alertCtrl: AlertController) {
     this.subjects = [];
     this.loadingPage = true;
   }
@@ -28,7 +31,48 @@ export class SubjectsListPage {
       this.getAllSubjects();
     }
   }
-
+ logOutOnClick() {
+    this.appService.logOut();
+    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.popToRoot();
+  }
+  showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: 'Elija un estilo',
+      message: '',
+      buttons: [
+        {
+          text: 'Cold-theme',
+          handler: () => {this.encodeStyle('dark-theme'); 
+          }
+        },
+        {
+          text: 'Brown-theme',
+          handler: () => { this.encodeStyle('brown-theme');
+             
+              
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  encodeStyle(Style) {
+    let rv;
+    switch (Style) {
+      case "dark-theme":
+        this.settings.setActiveTheme('dark-theme');
+        break;
+      case "brown-theme":
+        this.settings.setActiveTheme('brown-theme');
+        break;
+      
+      default:
+       this.settings.setActiveTheme('button-light')
+        break;
+    }
+    
+  }
   getSubjectsListByDivisionId(divisionId) {
 
     this.storage.get("jwt").then((jwt) => {

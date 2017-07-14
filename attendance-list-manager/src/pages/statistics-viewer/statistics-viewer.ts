@@ -6,7 +6,9 @@ import { AppService } from "../../providers/app-service";
 import { Storage } from "@ionic/storage";
 import { AnswerTextViewer } from "../answer-text-viewer/answer-text-viewer";
 import { SurveyType } from "../../app/app.module";
-
+import {Settings} from '../../providers/settings';
+import {  AlertController } from "ionic-angular";
+import { HomePage } from "../../pages/home/home";
 @Component({
   selector: 'page-statistics-viewer',
   templateUrl: 'statistics-viewer.html',
@@ -27,7 +29,7 @@ export class StatisticsViewer {
   radiobuttons1Correct2Graphics: boolean;
   options: Array<any>;
   //*******************
-  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage,  private settings:Settings, private alertCtrl: AlertController) {
     this.question = "";
     this.hideSpinner = false;
     this.noData = false;
@@ -60,7 +62,48 @@ export class StatisticsViewer {
         console.log(error);
       });
   }
-
+logOutOnClick() {
+    this.appService.logOut();
+    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.popToRoot();
+  }
+  showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: 'Elija un estilo',
+      message: '',
+      buttons: [
+        {
+          text: 'Cold-theme',
+          handler: () => {this.encodeStyle('dark-theme'); 
+          }
+        },
+        {
+          text: 'Brown-theme',
+          handler: () => { this.encodeStyle('brown-theme');
+             
+              
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  encodeStyle(Style) {
+    let rv;
+    switch (Style) {
+      case "dark-theme":
+        this.settings.setActiveTheme('dark-theme');
+        break;
+      case "brown-theme":
+        this.settings.setActiveTheme('brown-theme');
+        break;
+      
+      default:
+       this.settings.setActiveTheme('button-light')
+        break;
+    }
+    
+  }
   getJWTForGetStatisticsForSurveyTypeFreeAnswer() {
     this.storage.get("jwt")
       .then(jwt => this.getStatisticsForSurveyTypeFreeAnswer(jwt))

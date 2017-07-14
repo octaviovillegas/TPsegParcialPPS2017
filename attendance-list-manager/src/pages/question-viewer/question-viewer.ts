@@ -8,6 +8,9 @@ import { HomePage } from "../home/home";
 import { SurveyType } from "../../app/app.module";
 import { Option } from "../../app/entities/option";
 import { QuestionListViewerComponent } from "../../components/question-list-viewer-component/question-list-viewer-component";
+import {Settings} from '../../providers/settings';
+import {  AlertController } from "ionic-angular";
+
 @Component({
   selector: 'page-question-viewer',
   templateUrl: 'question-viewer.html',
@@ -25,7 +28,7 @@ export class QuestionViewer implements OnInit {
   form: FormGroup;
   form2: FormGroup;
   form3: FormGroup;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private fb: FormBuilder, private storage: Storage, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private fb: FormBuilder, private storage: Storage, private toastCtrl: ToastController,private settings:Settings, private alertCtrl: AlertController) {
     this.hideSpinner = true;
     this.options = [];
     this.survey = {};
@@ -64,6 +67,43 @@ export class QuestionViewer implements OnInit {
   }
 
 
+  showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: 'Elija un estilo',
+      message: '',
+      buttons: [
+        {
+          text: 'Cold-theme',
+          handler: () => {this.encodeStyle('dark-theme'); 
+          }
+        },
+        {
+          text: 'Brown-theme',
+          handler: () => { this.encodeStyle('brown-theme');
+             
+              
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  encodeStyle(Style) {
+    let rv;
+    switch (Style) {
+      case "dark-theme":
+        this.settings.setActiveTheme('dark-theme');
+        break;
+      case "brown-theme":
+        this.settings.setActiveTheme('brown-theme');
+        break;
+      
+      default:
+       this.settings.setActiveTheme('button-light')
+        break;
+    }
+    
+  }
   ionViewDidLoad() {
 
   }

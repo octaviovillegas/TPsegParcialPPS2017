@@ -1,11 +1,20 @@
 <ion-header>
+<ion-navbar >
+   <ion-title>Estadísticas</ion-title>
+ 
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="showConfirm()" >
+        <ion-icon name="color-palette" ></ion-icon>
+      </button>
+      <button ion-button icon-only color="light" (click)="logOutOnClick()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
 
-  <ion-navbar color="color1">
-    <ion-title>Estadísticas</ion-title>
-  </ion-navbar>
-
+</ion-navbar>
+  
 </ion-header>
-<ion-content padding class="Statistics">
+<ion-content padding >
 
   <div [hidden]="!hideSpinner">
     <div [hidden]="!noData">

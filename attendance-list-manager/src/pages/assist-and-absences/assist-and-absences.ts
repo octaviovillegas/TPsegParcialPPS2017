@@ -6,6 +6,9 @@ import { ViewChild } from '@angular/core';
 import { Response } from "@angular/http";
 
 import { Chart } from 'chart.js';
+import {Settings} from '../../providers/settings';
+import {  AlertController } from "ionic-angular";
+import { HomePage } from "../../pages/home/home";
 @Component({
   selector: 'page-assist-and-absences',
   templateUrl: 'assist-and-absences.html',
@@ -19,7 +22,7 @@ export class AssistAndAbsences implements OnInit {
 
   classid: any;
   assistandabsences: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private storage: Storage,private settings:Settings, private alertCtrl: AlertController) {
 
     this.assists = 0;
     this.absences = 0;
@@ -96,7 +99,48 @@ export class AssistAndAbsences implements OnInit {
       });
 
   }
-
+logOutOnClick() {
+    this.appService.logOut();
+    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.popToRoot();
+  }
+  showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: 'Elija un estilo',
+      message: '',
+      buttons: [
+        {
+          text: 'Cold-theme',
+          handler: () => {this.encodeStyle('dark-theme'); 
+          }
+        },
+        {
+          text: 'Brown-theme',
+          handler: () => { this.encodeStyle('brown-theme');
+             
+              
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  encodeStyle(Style) {
+    let rv;
+    switch (Style) {
+      case "dark-theme":
+        this.settings.setActiveTheme('dark-theme');
+        break;
+      case "brown-theme":
+        this.settings.setActiveTheme('brown-theme');
+        break;
+      
+      default:
+       this.settings.setActiveTheme('button-light')
+        break;
+    }
+    
+  }
   getAssistsAndAbsenses() {
     this.storage.get("jwt").then(() => {
 

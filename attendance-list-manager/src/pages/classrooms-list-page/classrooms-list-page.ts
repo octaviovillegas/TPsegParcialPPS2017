@@ -3,7 +3,9 @@ import { NavController, NavParams } from 'ionic-angular';
 import { AppService } from "../../providers/app-service";
 import { Storage } from "@ionic/storage";
 import { ClassesGridPage } from "../classes-grid-page/classes-grid-page";
-
+import {Settings} from '../../providers/settings';
+import {  AlertController } from "ionic-angular";
+import { HomePage } from "../../pages/home/home";
 @Component({
   selector: 'page-classrooms-list-page',
   templateUrl: 'classrooms-list-page.html',
@@ -11,7 +13,7 @@ import { ClassesGridPage } from "../classes-grid-page/classes-grid-page";
 export class ClassroomsListPage {
   classrooms: Array<any>;
   loadingPage: boolean;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private appService: AppService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private appService: AppService,private settings:Settings, private alertCtrl: AlertController) {
     this.classrooms = [];
     this.loadingPage = true;
     this.getClassroomsList();
@@ -43,5 +45,47 @@ export class ClassroomsListPage {
 
   itemSelected(classroom) {
     this.navCtrl.push(ClassesGridPage, { classroom });
+  }
+  logOutOnClick() {
+    this.appService.logOut();
+    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.popToRoot();
+  }
+  showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: 'Elija un estilo',
+      message: '',
+      buttons: [
+        {
+          text: 'Cold-theme',
+          handler: () => {this.encodeStyle('dark-theme'); 
+          }
+        },
+        {
+          text: 'Brown-theme',
+          handler: () => { this.encodeStyle('brown-theme');
+             
+              
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  encodeStyle(Style) {
+    let rv;
+    switch (Style) {
+      case "dark-theme":
+        this.settings.setActiveTheme('dark-theme');
+        break;
+      case "brown-theme":
+        this.settings.setActiveTheme('brown-theme');
+        break;
+      
+      default:
+       this.settings.setActiveTheme('button-light')
+        break;
+    }
+    
   }
 }
