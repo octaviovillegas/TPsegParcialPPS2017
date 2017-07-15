@@ -1,0 +1,32 @@
+
+<<ion-header>
+  <ion-navbar *ngIf="!cargando" color="{{micolor}}">
+      <button ion-button menuToggle left>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Resultados por alumno </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+<br><br><br>
+        <div *ngIf="cargando" text-center>
+            <ion-spinner text-center></ion-spinner>
+        </div>
+
+        <ion-list *ngIf="!cargando">
+
+            <ion-item *ngIf="encuestas?.length == 0">
+                No hay encuestas disponibles.
+            </ion-item>
+
+            <button ion-item *ngFor="let encuesta of encuestas" (click)="verEncuesta(encuesta)">
+                <h2>{{ encuesta.descripcion }}</h2>
+                <p *ngIf="encuesta.fecha_inicio != '0000-00-00 00:00:00' || encuesta.fecha_fin != '0000-00-00 00:00:00'">
+                    Fecha: {{ encuesta.fecha_inicio }} - {{ encuesta.fecha_fin }}
+                </p>
+                <ion-icon name="ios-arrow-forward" item-right></ion-icon>
+            </button>
+
+        </ion-list>
+
+</ion-content>

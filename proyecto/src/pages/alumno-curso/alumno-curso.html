@@ -1,0 +1,45 @@
+
+  <ion-header>
+  <ion-navbar  *ngIf="!cargando" color="{{micolor}}">
+      <button ion-button menuToggle left>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+    <ion-title>Alta de alumno en curso</ion-title>
+  </ion-navbar>
+  </ion-header>
+<ion-content>
+<br><br><br>
+<div *ngIf="cargando" text-center>
+            <ion-spinner text-center></ion-spinner>
+ </div>
+
+<div  *ngIf="!cargando">
+      <ion-list>
+        <ion-item>
+          <ion-label>Curso:</ion-label>
+          <ion-select [(ngModel)]="UnCurso" >
+            <div *ngFor="let c of Cursos" >
+              <ion-option value={{c.id_curso}} >{{c.descripcion}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+        <ion-list>
+        <ion-item>
+          <ion-label>Alumno:</ion-label>
+          <ion-select [(ngModel)]="UnAlumno" >
+            <div *ngFor="let a of UssAl" >
+              <ion-option value={{a.id_usuario}} >{{a.nombre}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+    <div align="center">
+      <button ion-button color=light (click)="Alta()" color={{micolor}}> Dar de alta </button>
+    </div>
+</div>
+ </ion-content>
+ 
+ 

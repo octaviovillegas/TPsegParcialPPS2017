@@ -1,0 +1,101 @@
+
+<ion-menu [content]="content" side="left">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>Menu</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+        <ion-list> 
+            <!-- alumno-->
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Alumno'" ion-item (click)="openPage(alumnoPage)" menuClose>
+                Mis encuestas
+            </button>
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Alumno'" ion-item (click)="openPage(miubicacion)" menuClose>
+                Mi Ubicacion
+            </button>
+            <!-- fin alumno -->
+
+            <!-- administrador-->
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(grillaProfesor)" menuClose>
+                ABM Profesores
+            </button>
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(grillaAlumno)" menuClose>
+                ABM Alumnos
+            </button>
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(grillaAdministrativo)" menuClose>
+                ABM Administrativos
+            </button>
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(grillaAdministrador)" menuClose>
+                ABM Administradores
+            </button>
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(grillaComision)" menuClose>
+                ABM Comisiones
+            </button>
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrador'" ion-item (click)="openPage(grillaCurso)" menuClose>
+                ABM Cursos
+            </button>
+
+            <!-- fin administrador -->
+
+            <!-- administrativo -->
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrativo'" ion-item (click)="openPage(grafico1)" menuClose>
+                Cantidad de Respuestas por preguntas
+            </button>
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrativo'" ion-item (click)="openPage(grafico2)" menuClose>
+                Cantidad de encuestas por curso
+            </button>
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrativo'" ion-item (click)="openPage(grafico3)" menuClose>
+                Cantidad de alumnos por curso
+            </button>
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrativo'" ion-item (click)="openPage(alumnocurso)" menuClose>
+                Alta de alumno en curso
+            </button>
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Administrativo'" ion-item (click)="openPage(resultado)" menuClose>
+                Resultados por alumno
+            </button>
+            <!-- fin administrativo -->
+        
+
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Profesor'" ion-item (click)="Encuestas('profesorGenerar')" menuClose>
+                Crear encuesta
+            </button>
+            <button *ngIf="usuarioLogueado.tipo_usuario == 'Profesor'" ion-item (click)="Encuestas('profesorEnviar')" menuClose>
+                Asignar encuesta
+            </button>
+
+        <!--<button ion-item (click)="ayuda()">
+                  Ayuda...
+            </button>-->
+            <button ion-item (click)="acercaDe()" menuClose>
+                Acerca de...
+            </button>
+            <button ion-item (click)="cerrarSesion()">
+                Cerrar sesion
+            </button>
+        </ion-list>
+    </ion-content>
+
+    <ion-footer>
+        <!--<ion-item>Estilo:</ion-item>
+         <ion-item>
+            <ion-select  [(ngModel)]="micolor">
+                <ion-option>rosa</ion-option>
+                <ion-option>violeta</ion-option>
+            </ion-select>
+            </ion-item>-->
+         
+
+        <ion-item (click)="iraperfil(miestilo)" menuClose>
+            <ion-avatar  item-left>
+                <img [src]="usuarioLogueado.imagen" *ngIf="usuarioLogueado.imagen">
+            </ion-avatar>
+
+            <h2>{{ usuarioLogueado.usuario }}</h2>
+            <p>{{ usuarioLogueado.tipo_usuario }} --> ir a mi perfil</p>
+        </ion-item>
+    </ion-footer>
+</ion-menu>
+
+<ion-nav id="nav" #content [root]="rootPage"></ion-nav>

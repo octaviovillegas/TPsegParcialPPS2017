@@ -1,0 +1,43 @@
+
+<ion-header>
+  <ion-navbar  *ngIf="!cargando"  color="{{micolor}}">
+      <button ion-button menuToggle left>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Cantidad de alumnos por curso</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<br><br><br>
+    <div *ngIf="cargando" text-center>
+        <ion-spinner text-center></ion-spinner>
+    </div>
+
+    <ion-list *ngIf="!cargando">
+    <ion-item>
+      <ion-label>Curso:</ion-label>
+        <ion-select [(ngModel)]="Uncurso" (ionChange)="onChange(Uncurso)">
+            <div *ngFor="let p of cursos">
+              <ion-option value={{p}}>{{p}}</ion-option>
+            </div>
+        </ion-select>
+    </ion-item>
+  </ion-list>
+ 	<div id="container"></div>
+ 
+ 
+ <div *ngIf="conjAver2 != ''">   
+    <table>
+    <tr>
+      <th>Curso</th>
+      <th>Cantidad</th>
+    </tr>
+    <tr *ngFor="let p of conjAver2">
+      <td>{{p.drilldown}}</td>
+      <td>{{p.y}}</td> 
+    </tr>
+  </table>
+ </div>
+
+</ion-content>

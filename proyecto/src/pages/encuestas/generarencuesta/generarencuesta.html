@@ -1,0 +1,55 @@
+<ion-header>
+   <ion-navbar color="{{micolor}}"  *ngIf="!cargando">
+      <button ion-button menuToggle left>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+    <ion-title>Generador de encuestas<!-- Profesor:{{usuarioLogueado.usuario}}--></ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="fondo" >
+  <br><br><br><br>
+  <div *ngIf="cargando" text-center>
+            <ion-spinner text-center></ion-spinner>
+  </div>
+
+  <div *ngIf="!cargando">
+<link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
+  <ion-list>
+    <ion-card  color="{{micolor}}">
+  <ion-card-content class="card"  >
+         Deslice a la derecha sobre la encuesta para agregar preguntas en la encuesta<br>
+          Deslice a la izquierda sobre la encuesta para borrar la encuesta
+  </ion-card-content>
+</ion-card>
+  </ion-list>
+  <div>
+  </div>
+ 
+<ion-list *ngIf="!cargando">
+      <ion-item-sliding *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: descripcion">
+        <ion-item class="fondo"> <!--(click)="verEncuesta(encuesta)"-->
+          <ion-avatar item-left>
+          </ion-avatar>
+          {{encuesta.descripcion}}
+        </ion-item>
+        <ion-item-options side="right" class="fondoEncu">
+          <ion-icon name="plus"></ion-icon>
+            <img [src]="icoE" width=50 height=50 (click)="verEncuesta(encuesta)">
+        </ion-item-options>
+        <ion-item-options side="left" class="fondoEncu">
+          <img [src]="icoN" width=50 height=50 (click)="BorrarEncuesta(encuesta.id_encuesta)">
+        </ion-item-options>
+          <ion-icon ios="ios-add" md="md-add"></ion-icon>
+      </ion-item-sliding>
+    </ion-list>
+    <!--&nbsp;&nbsp;&nbsp;<a href="#" class="myButton" (click)="nuevaEncuesta()">Nueva Encuesta</a>-->
+    <!--&nbsp;&nbsp;&nbsp;<button ion-button type="button" (click)="nuevaEncuesta()" color="{{micolor}}-color">Nueva Encuesta</button>
+      -->
+        <ion-fab bottom right *ngIf="!cargando">
+            <button ion-fab (tap)="nuevaEncuesta()" color="{{micolor}}">
+                <ion-icon name="add"></ion-icon>
+            </button>
+        </ion-fab>
+  </div>
+  
+</ion-content>

@@ -1,0 +1,68 @@
+<!--
+Generated template for the GrillaAdministrador page.
+
+See http://ionicframework.com/docs/components/#navigation for more info on
+Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar color="{{micolor}}" *ngIf="!cargando">
+        <button ion-button menuToggle left>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Administradores</ion-title>
+
+        <ion-buttons end>
+            <button *ngIf="!cargando" ion-button icon-only (tap)="CargaGrilla()">
+                <ion-icon name="refresh"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+<br><br><br>
+    <ion-grid>
+ 
+        <ion-row *ngIf="cargando"  class="animated pulse" text-center>
+            <ion-col>
+                <ion-spinner text-center></ion-spinner>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="!cargando" class="animated pulse" align-items-start>
+            <ion-col text-center>
+                <p>Aquí se listan los usuarios de tipo "administrador". Puede crear, editar y eliminar.</p>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="!cargando" class="animated pulse" align-items-end>
+            <ion-col>
+                <ion-list>
+
+                    <ion-item *ngFor="let usr of usuarios" (press)="abrirActionSheet(usr)" >
+                        <ion-avatar item-left>
+                            <img [src]="usr.imagen" *ngIf="usr.imagen">
+                        </ion-avatar>
+
+                        <h2>{{usr.nombre}}</h2>
+                        <p>{{usr.usuario}}</p>
+
+                        <button ion-button clear item-right (click)="abrirActionSheet(usr)">
+                            <ion-icon name="more"></ion-icon>
+                        </button>
+                    </ion-item>
+
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-fab *ngIf="!cargando" bottom right>
+        <button ion-fab (tap)="Alta()" color="{{micolor}}">
+            <ion-icon name="person-add"></ion-icon>
+        </button>
+    </ion-fab>
+
+</ion-content>

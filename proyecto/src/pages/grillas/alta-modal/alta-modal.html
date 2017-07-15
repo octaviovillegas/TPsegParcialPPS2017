@@ -1,0 +1,57 @@
+
+<ion-header>
+
+    <ion-navbar color="{{micolor}}" *ngIf="!cargando">
+        <ion-buttons start left>
+            <button ion-button icon-only (tap)="cancelar()">
+                Cancelar
+            </button>
+        </ion-buttons>
+
+        <ion-title text-center>Crear {{t}}</ion-title>
+
+        <ion-buttons end>
+            <button ion-button icon-only color="primary-color-text" [disabled]="u == '' || n == '' || c == ''" (tap)="Alta(n, u, c, id_tipo)">
+                Guardar
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+<br><br><br>
+    <div *ngIf="cargando" text-center>
+        <ion-spinner text-center></ion-spinner>
+    </div>
+
+    <div *ngIf="!cargando">
+
+        <ion-item>
+            <ion-label floating>Usuario (email)</ion-label>
+            <ion-input type="email" [(ngModel)]="u" clearInput required></ion-input>
+        </ion-item>
+
+
+        <ion-item>
+            <ion-label floating>Nombre</ion-label>
+            <ion-input type="text" [(ngModel)]="n" clearInput required ></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating >Claves</ion-label>
+            <ion-input type="password" [(ngModel)]="c" clearInput required> </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-thumbnail item-start>
+                <img [src]="base64Image" *ngIf="base64Image">
+            </ion-thumbnail>
+            <h2>Imagen</h2>
+            <button ion-button (tap)="tomarFoto()" clear item-end>Tomar foto</button>
+        </ion-item>
+
+    </div>
+
+
+
+</ion-content>

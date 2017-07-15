@@ -1,0 +1,45 @@
+<!--
+  Generated template for the EncuestaAlumno page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color = "{{micolor}}">
+    <ion-title >{{titulo}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<div *ngFor="let r of resul">
+  <ion-card>
+    <ion-card-header color="{{micolor}}"> 
+     <strong> {{r.alumno}} </strong>
+    </ion-card-header>
+
+    <ion-card-content>
+        <div *ngFor="let pr of r.pregyresp">
+          <ion-card>
+            <ion-card-content>
+              <strong>{{pr.pregunta}}</strong> <br>
+              respuesta: {{pr.opcion}}
+            </ion-card-content>
+          </ion-card>
+        </div>
+    </ion-card-content>
+
+  </ion-card>
+</div>
+<!--
+<div *ngFor="let r of resul">
+  alumno: {{r.alumno}}
+  <div *ngFor="let pr of r.pregyresp">
+      pregunta: {{pr.pregunta}} <br>
+      respuesta: {{pr.opcion}}
+  </div>
+</div>-->
+
+</ion-content>

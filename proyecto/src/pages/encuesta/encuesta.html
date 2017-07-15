@@ -1,0 +1,89 @@
+<!--
+  Generated template for the Encuesta page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar  color="{{micolor}}" hideBackButton="true">
+    <ion-buttons left>
+      <button (click)="back()" ion-button icon-left clear small>
+    <ion-icon name="arrow-back"></ion-icon>
+    </button>
+    </ion-buttons>
+    <ion-title>Encuesta: {{ encuesta.descripcion }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <div *ngIf="cargando" text-center>
+        <ion-spinner text-center></ion-spinner>
+    </div>
+
+    <ion-list *ngIf="!cargando && accion == 'ver'">
+        <ion-list-header>Preguntas</ion-list-header>
+        <button ion-item *ngFor="let pregunta of preguntas">
+            <h2>{{ pregunta.descripcion }}</h2>
+            <p>Repuesta: {{ pregunta.respuesta_opcion }}</p>
+        </button>
+    </ion-list>
+
+    <div *ngIf="!cargando && accion == 'responder'">
+        <h1>Preguntas</h1>
+        <ion-card no-padding class="animated pulse" *ngIf="pregunta_actual != null">
+            <ion-card-header>
+                {{ pregunta_actual.descripcion }}
+            </ion-card-header>
+
+            <ion-card-content  no-padding>
+
+                <ion-list *ngIf="pregunta_actual.tipo == 'radio'" [(ngModel)]="pregunta_actual.respuesta_opcion" radio-group>
+                    <ng-container *ngFor="let opcion of [1,2,3,4]">
+                        <ion-item *ngIf="pregunta_actual['opcion'+opcion]">
+                            <ion-label>{{ pregunta_actual['opcion'+opcion] }}</ion-label>
+                            <ion-radio value="{{ pregunta_actual['opcion'+opcion] }}"></ion-radio>
+                        </ion-item>
+                    </ng-container>
+                </ion-list>
+
+                <ion-list *ngIf="pregunta_actual.tipo == 'checkbox'">
+                    <ng-container *ngFor="let opcion of [1,2,3,4]; let i = index;">
+                        <ion-item *ngIf="pregunta_actual['opcion'+opcion]">
+                            <ion-label>{{ pregunta_actual['opcion'+opcion] }}</ion-label>
+                            <ion-checkbox [checked]="checkboxs_checked[i]" (ionChange)="onChecked($event, opcion, pregunta_actual)"></ion-checkbox>
+                        </ion-item>
+                    </ng-container>
+                </ion-list>
+
+                <ion-item *ngIf="pregunta_actual.tipo == 'text'">
+                    <ion-label floating>Escriba su respuesta</ion-label>
+                    <ion-input type="text" [(ngModel)]="pregunta_actual.respuesta_opcion"></ion-input>
+                </ion-item>
+
+                <ion-list *ngIf="pregunta_actual.tipo == 'select'">
+                    <ion-item>
+                        <ion-label>Seleccione una opción</ion-label>
+                        <ion-select [(ngModel)]="pregunta_actual.respuesta_opcion">
+                            <ion-option  value="">Seleccione una opción</ion-option>
+                            <ion-option *ngFor="let opcion of [1,2,3,4]">{{ pregunta_actual['opcion'+opcion] }}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-list>
+
+            </ion-card-content>
+
+            <ion-item no-padding>
+                <button (click)="siguientePregunta()" [disabled]="ocultarSiguientePregunte || estaSinResponder(pregunta_actual)" ion-button icon-right clear item-right>
+                    Siguiente pregunta
+                    <ion-icon name="ios-arrow-forward"></ion-icon>
+                </button>
+            </ion-item>
+
+        </ion-card>
+    </div>
+
+</ion-content>

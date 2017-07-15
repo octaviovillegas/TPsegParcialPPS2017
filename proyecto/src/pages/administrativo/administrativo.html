@@ -1,0 +1,20 @@
+
+  <ion-header>
+  <ion-navbar *ngIf="!cargando" color="{{micolor}}"> <!----> 
+      <button ion-button menuToggle left>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+      
+    <ion-title>Administrativo
+    
+    </ion-title>
+  </ion-navbar>
+  
+  </ion-header>
+  <ion-content  [ngStyle]="ngestilo">
+     <div *ngIf="cargando" text-center>
+        <ion-spinner text-center></ion-spinner>
+    </div>
+
+
+  </ion-content>

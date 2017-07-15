@@ -1,0 +1,79 @@
+
+
+<ion-header>
+
+    <ion-navbar  *ngIf="!cargando" color="{{micolor}}">
+        <button ion-button menuToggle left>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Mi perfil</ion-title>
+
+    </ion-navbar>
+</ion-header>
+
+
+
+<ion-content padding>
+    <br><br>
+    <div *ngIf="cargando" text-center>
+            <ion-spinner text-center></ion-spinner>
+    </div>
+
+
+    <div  *ngIf="!cargando">
+        <ion-card>
+        <img [src]="usuarioLogueado.imagen" *ngIf="usuarioLogueado.imagen" width="50" height="300">
+        <ion-card-content>
+            <ion-card-title>
+            {{usuarioLogueado.tipo_usuario}}
+            </ion-card-title>
+            {{usuarioLogueado.usuario}}
+                    
+                    <ion-list radio-group [(ngModel)]="relationship">
+                             
+                            <ion-radio value="estiloDef"></ion-radio>
+                            <ion-item>
+                                <ion-label>
+                                   Estilo pre-definido:
+                                    <ion-select  [(ngModel)]="micolor" (ionChange)="onChange($event)" [disabled]="relationship != 'estiloDef'"> 
+                                        <ion-option>estilo1</ion-option>
+                                        <ion-option>estilo2</ion-option>
+                                        <ion-option>estilo3</ion-option>
+                                        <ion-option>estilo4</ion-option> 
+                                    </ion-select>
+                                </ion-label>
+                            </ion-item>
+                     
+                            <ion-radio value="EstilosPropios"></ion-radio>   
+                            <ion-item >       
+                                <ion-label>    
+                                    Mis estilos Creados:
+                                    <ion-select  [(ngModel)]="estelg" (ionChange)="onChange(estelg)" [disabled]="relationship != 'EstilosPropios'">  
+                                    
+                                     <div *ngFor="let estilo of misEstilosCreados">
+                                        <ion-option>{{estilo.nombre}}</ion-option>
+                                     </div>
+                                    </ion-select>
+                                </ion-label>
+                            </ion-item>
+
+                            <ion-radio value="estiloNoDef"></ion-radio>
+                            <ion-item>
+                                <ion-label>
+                                <button ion-item (click)="estilopropio()" [disabled]="relationship != 'estiloNoDef'"> 
+                                    <h2>Crear estilo propio</h2>
+                                    <ion-icon name="ios-arrow-forward" item-right></ion-icon>
+                                </button>
+                           </ion-label>
+                            </ion-item>
+                            
+                      
+                    </ion-list>
+ 
+        </ion-card-content>
+
+<button ion-button color="{{micolor}}" (click)="volver()" full>Volver al menu</button>
+
+        </ion-card>
+    </div>
+</ion-content>

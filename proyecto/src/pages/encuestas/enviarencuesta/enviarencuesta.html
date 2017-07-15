@@ -1,0 +1,71 @@
+<ion-header>
+    <ion-navbar color="{{micolor}}"  *ngIf="!cargando">
+        <button ion-button menuToggle left>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Asignador de Encuestas</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+<div *ngIf="cargando" text-center>
+            <ion-spinner text-center></ion-spinner>
+  </div>
+
+<div  *ngIf="!cargando">
+    <ion-grid>
+
+        <ion-row class="animated pulse" align-items-start>
+            <ion-col text-center>
+                <p>En esta sección usted podrá asignar encuestas a un curso.</p>
+            </ion-col>
+        </ion-row>
+
+        <ion-row align-items-end>
+            <ion-col>
+
+                <ion-row *ngIf="cargando"  class="animated pulse" text-center>
+                    <ion-col>
+                        <ion-spinner text-center></ion-spinner>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row *ngIf="!cargando">
+                    <ion-col class="animated pulse">
+
+                        <ion-list>
+
+                            <ion-item>
+                                <ion-label>Encuesta</ion-label>
+                                <ion-select [(ngModel)]="encuestaSeleccionada">
+                                    <ion-option value="0">Seleccione una encuesta</ion-option>
+                                    <ion-option  *ngFor="let encuesta of listaEncuestas; let i = index; trackBy: id_encuesta" [value]="encuesta.id_encuesta">{{encuesta.descripcion}}</ion-option>
+                                </ion-select>
+                            </ion-item>
+
+                            <ion-item>
+                                <ion-label>Curso</ion-label>
+                                <ion-select [(ngModel)]="cursoSeleccionado">
+                                    <ion-option value="0">Seleccione un curso</ion-option>
+                                    <ion-option *ngFor="let curso of listaCursos; let i = index; trackBy: id_curso" [value]="curso.id_curso">{{curso.descripcion}}</ion-option>
+                                </ion-select>
+                            </ion-item>
+
+                        </ion-list>
+
+                    </ion-col>
+                </ion-row>
+
+                <ion-row  *ngIf="!cargando">
+                    <ion-col class="signup-col animated pulse">
+                        <button ion-button type="button" (click)="EnviarEncuesta()" color="{{micolor}}" full [disabled]="encuestaSeleccionada == 0 || cursoSeleccionado == 0">Asignar encuesta</button>
+                    </ion-col>
+                </ion-row>
+
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
+</div>
+</ion-content>

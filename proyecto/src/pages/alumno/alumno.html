@@ -1,0 +1,50 @@
+<!--
+  Generated template for the Alumno page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="{{micolor}}" *ngIf="!cargando">
+      <button ion-button menuToggle left>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+
+      <ion-title>Alumno</ion-title>
+
+      <ion-buttons end>
+          <button ion-button icon-only (click)="escanearEncuesta()">
+              Escanear
+              <ion-icon margin-left name="qr-scanner"></ion-icon>
+          </button>
+      </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <br> 
+ <div *ngIf="cargando" text-center>
+            <ion-spinner text-center></ion-spinner>
+    </div>
+
+    <div *ngIf="!cargando">
+    <ion-title>Ver mis encuestas:</ion-title>
+
+    <ion-list>
+        <button (click)="verEncuestas('pendiente')" ion-item padding>
+            <h2>Pendientes</h2>
+            <p>Muestra las encuestas que aún no se hicieron.</p>
+            <ion-icon name="ios-arrow-forward" item-right></ion-icon>
+        </button>
+        <button (click)="verEncuestas('completada')" ion-item padding>
+            <h2>Completadas</h2>
+            <p>Muestra las encuestas que ya se completaron.</p>
+            <ion-icon name="ios-arrow-forward" item-right></ion-icon>
+        </button>
+    </ion-list>
+    </div>
+</ion-content>

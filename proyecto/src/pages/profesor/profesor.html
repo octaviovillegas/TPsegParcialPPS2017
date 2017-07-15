@@ -1,0 +1,24 @@
+<ion-header class="header_profe">
+   <ion-navbar class="header_profe"  color="{{micolor}}"  *ngIf="!cargando">
+
+      <button ion-button menuToggle left>
+          <ion-icon name="menu" ></ion-icon>
+      </button>
+    <ion-title >Profesor</ion-title>
+  </ion-navbar>
+</ion-header >
+
+
+<ion-content  [ngStyle]="ngestilo">
+ <!--class="fondo"-->
+<br><br><br>
+ <div *ngIf="cargando" text-center>
+            <ion-spinner text-center></ion-spinner>
+  </div>
+ <div *ngIf="!cargando">
+  <div align="center">
+
+  </div>
+ </div>
+ 
+</ion-content>

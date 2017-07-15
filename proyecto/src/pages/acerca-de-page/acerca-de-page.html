@@ -1,0 +1,69 @@
+<!--
+Generated template for the AcercaDePage page.
+
+See http://ionicframework.com/docs/components/#navigation for more info on
+Ionic pages and navigation.
+-->
+<ion-header>
+ 
+    <ion-navbar color="{{micolor}}" >
+        <ion-title>Acerca de nosotros</ion-title>
+    </ion-navbar>
+  
+</ion-header>
+
+
+<ion-content padding>
+<div *ngIf="cargando" text-center>
+            <ion-spinner text-center></ion-spinner>
+</div>
+<div *ngIf="!cargando">
+
+    <p>Somos el grupo de trabajo "Los superdesarrolladores" que desarrolló la aplicación de encuestas para la materia "Práctica Prof. Supervisada" de la carrera Técnico superior en programación de la UTN.</p>
+    <p>El desarrollo se implementó utilizando: Ionic 2 con TypeScript.</p>
+    <p>Las animaciones están hechas con la librería: Animate.css (http://daneden.me/animate).</p>
+
+    <p *ngIf="device.model">Dispositivo: {{device.model}}</p>
+    <p *ngIf="device.model">Plataforma: {{device.platform}}</p>
+
+
+    <ion-list>
+        <ion-list-header>
+            <ion-title>Integrantes</ion-title>
+        </ion-list-header>
+        <ion-item>
+            <ion-avatar item-left>
+                <img src="https://avatars3.githubusercontent.com/u/13738377?v=3&s=180">
+            </ion-avatar>
+
+            <h2>Jonathan Ariel Aguirre</h2>
+            <p>@skydarkness47</p>
+        </ion-item>
+        <ion-item>
+            <ion-avatar item-left>
+                <img src="https://avatars1.githubusercontent.com/u/13757782?v=3&s=180">
+            </ion-avatar>
+
+            <h2>Aixa Casanova</h2>
+            <p>@AixaCasanova</p>
+        </ion-item>
+        <ion-item>
+            <ion-avatar item-left>
+                <img src="https://avatars0.githubusercontent.com/u/1103289?v=3&s=180">
+            </ion-avatar>
+
+            <h2>Alejo Sotelo</h2>
+            <p>@alejoasotelo</p>
+        </ion-item>
+    </ion-list>
+
+    <ion-grid class="animated pulse">
+
+        <ion-row align-items-start>
+            <ion-col text-center>
+                <img src="assets/header_login.png"/>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</div>
+</ion-content>

@@ -1,0 +1,54 @@
+ 
+  <ion-header>
+  <ion-navbar color="primary">
+      <button ion-button menuToggle left>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+    <ion-title>Hola  este es el menu de ayuda</ion-title>
+  </ion-navbar>
+  </ion-header>
+  <ion-content class="fondo">
+    <div *ngIf="usuarioLogueado.tipo_usuario =='Administrativo'" align ="center">
+       <h1 > En los menues de Cantidad de....</h1> 
+       <h4>Usted puede consultar lo indicado por el menu</h4>
+       <h4>Ejemplo si ingresa a cantidad de alumnos por curso tocando sobre cursos elije la opcion
+      del curso que quiera y le aparecera la estadistica, lo mismo con los otros submenues </h4>
+       <h1> En el menu de alta de alumno </h1> 
+       <h4>Seleccione el curso y el alumno que desee dar de alta en ese curso</h4>
+        <h1 > Para cerrar la sesion, Simplemente en el menu haga click en cerrar sesion </h1> 
+
+    </div>
+ <div *ngIf="usuarioLogueado.tipo_usuario =='Profesor'" align ="center">
+    <h1>Crear encuesta</h1>
+       <h4 >En el menu Crear encuesta, usted puede crear encuestas nuevas tocando en "+" 
+         o puede borrar y asignar preguntas a las encuestas (consultar en el mismo menu como proceder)</h4> 
+          <h1>Asignar encuesta</h1>
+       <h4 >En el menu asignar encuesta usted puede asignar encuestas a cursos tocando sobre
+         encuesta elije la encuesta y tocando sobre curso elije el curso a asignar la encuesta
+         Luego toque en asignar encuesta </h4> 
+        <h1 > Para cerrar la sesion, Simplemente en el menu haga click en cerrar sesion </h1> 
+
+    </div>
+
+    <div *ngIf="usuarioLogueado.tipo_usuario =='Alumno'" align ="center">
+    <h1>Encuestas pendientes y completadas</h1>
+       <h4> En este menu puede consultar las encuestas pendientes  simplemente tocando sobre el menu y completarlas
+         ademas puede ver sus encuentes completadas tocando sobre "Completadas"</h4>
+             <h1>Mi ubicacion usted puede consultar su ubicacion y ademas la de la facultad</h1>
+        <h1 > Para cerrar la sesion, Simplemente en el menu haga click en cerrar sesion </h1> 
+
+    </div>
+
+    
+    <div *ngIf="usuarioLogueado.tipo_usuario =='Administrador'" align ="center">
+    <h1>Menus de ABM</h1>
+       <h4>usted puede crear, borrar y modificar segun el tipo de menu de ABM
+         Por ejemplo en menu de profesores puede dar de alta a un profesor tocando sobre le boton "+"
+         y completando los datos, ademas va a tener una lista con los profesores(asi con todos los menues)
+         en la lista al tocar sobre los 3 puntos al lado de cada uno de los objetos puede eliminarlos o modificarlos
+       </h4>
+            
+        <h1 > Para cerrar la sesion, Simplemente en el menu haga click en cerrar sesion </h1> 
+
+    </div>
+  </ion-content>

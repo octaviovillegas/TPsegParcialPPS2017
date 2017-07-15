@@ -1,0 +1,97 @@
+
+<ion-header>
+   
+    <ion-navbar color="{{micolor}}"  *ngIf="!cargando">
+         <ion-buttons start left>
+            <button ion-button icon-only (tap)="dismiss()">
+                Cancelar
+            </button>
+        </ion-buttons>
+        <ion-title align="center">{{encuesta.descripcion}}</ion-title>
+
+        <ion-buttons end>
+            <button *ngIf="!cargando" ion-button icon-only (tap)="cargarPreguntas(encuesta.id_encuesta)">
+                <ion-icon name="refresh"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+ 
+</ion-header>
+
+
+<ion-content class="whitesmoke">
+    <br><br><br>
+<div *ngIf="cargando" text-center>
+            <ion-spinner text-center></ion-spinner>
+  </div>
+
+  <div *ngIf="!cargando">
+    <ion-grid>
+
+        <ion-row *ngIf="cargando"  class="animated pulse" text-center>
+            <ion-col>
+                <ion-spinner text-center></ion-spinner>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="!cargando" class="animated pulse" align-items-start>
+            <ion-col text-center>
+                <p>Aquí se listan las preguntas de la encuesta. Puede crear y eliminar las preguntas.</p>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="!cargando" align-items-end>
+            <ion-col>
+
+                <ion-list>
+
+                    <ion-card *ngFor="let pregunta of preguntas; let i = index;" no-padding class="animated pulse">
+
+                        <ion-item [class.nowraptext]="toggle[i]">
+                            <h2>{{ pregunta.descripcion }}</h2>
+                            <p *ngIf="pregunta.tipo == 'text'">Tipo: Texto</p>
+                            <p *ngIf="pregunta.tipo == 'radio'">Tipo: Una opción</p>
+                            <p *ngIf="pregunta.tipo == 'checkbox'">Tipo: Múltiples opciones</p>
+
+                            <button ion-button icon-only clear item-right (click)="toggle[i] = !toggle[i];">
+                                <ion-icon [name]="toggle[i] ? 'ios-arrow-dropup-outline' : 'ios-arrow-dropdown-outline'" color="{{micolor}}"></ion-icon>
+                            </button>
+                        </ion-item>
+
+                        <ion-card-content *ngIf="toggle[i]" class="animated fadeIn">
+
+                            <ion-list *ngIf="pregunta.tipo == 'checkbox' || pregunta.tipo == 'select' || pregunta.tipo == 'radio'">
+                                <ng-container *ngFor="let opcion of [1,2,3,4];">
+                                    <ion-item *ngIf="pregunta['opcion'+opcion]">
+                                        {{ pregunta['opcion'+opcion] }}
+                                    </ion-item>
+                                </ng-container>
+                            </ion-list>
+
+                        </ion-card-content>
+
+                        <ion-row *ngIf="toggle[i]" class="animated fadeIn">
+                            <ion-col>
+                                <button ion-button icon-left clear small color="danger" (click)="eliminarPregunta(pregunta.id_pregunta)">
+                                    <ion-icon name="trash"></ion-icon>
+                                    <div>Eliminar</div>
+                                </button>
+                            </ion-col>
+                        </ion-row>
+
+                    </ion-card>
+
+                </ion-list>
+
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+    <ion-fab *ngIf="!cargando" bottom right>
+        <button ion-fab (tap)="crearPregunta()" color="{{micolor}}">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+  </div>
+</ion-content>

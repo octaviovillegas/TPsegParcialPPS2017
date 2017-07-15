@@ -1,0 +1,61 @@
+
+<ion-header>
+    <ion-navbar color="{{micolor}}" *ngIf="!cargando">
+        <ion-buttons start left>
+            <button ion-button icon-only (tap)="Cancelar()">
+                Cancelar
+            </button>
+        </ion-buttons>
+
+        <ion-title text-center>Editar</ion-title>
+
+        <ion-buttons end>
+            <button ion-button icon-only color="primary-color-text" [disabled]="n == ''" (tap)="Modificar(id_usuario, n, u, c, t)">
+                Guardar
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+<br><br><br>
+    <div *ngIf="cargando" text-center>
+        <ion-spinner text-center></ion-spinner>
+    </div>
+
+    <div *ngIf="!cargando">
+        <ion-item>
+            <ion-label floating>Usuario</ion-label>
+            <ion-input type="text" disabled="true" [value]="u"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>Nombre</ion-label>
+            <ion-input type="text" [(ngModel)]="n"></ion-input>
+        </ion-item>
+        <ion-item>
+            <a (tap)="resetearClave(u)">Resetear password</a>
+        </ion-item>
+
+        <ion-list>
+            <ion-item>
+                <ion-label>Tipo</ion-label>
+                <ion-select [(ngModel)]="t">
+                    <ion-option value="1">Administrador</ion-option>
+                    <ion-option value="3">Alumno</ion-option>
+                    <ion-option value="4">Profesor</ion-option>
+                    <ion-option value="2">Administrativo</ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+
+        <ion-item>
+            <ion-thumbnail  item-start>
+                <img [src]="base64Image" *ngIf="base64Image">
+            </ion-thumbnail>
+            <h2>Imagen</h2>
+            <button ion-button (tap)="tomarFoto()" clear item-end>Tomar foto</button>
+        </ion-item>
+    </div>
+
+</ion-content>

@@ -1,0 +1,45 @@
+
+<ion-header>
+    <ion-navbar color="{{micolor}}"  *ngIf="!cargando">
+        <ion-buttons start left>
+            <button ion-button icon-only (tap)="Cancelar()">
+                Cancelar
+            </button>
+        </ion-buttons>
+
+        <ion-title>Modificacion de cursos</ion-title>
+
+        <ion-buttons end>
+            <button ion-button icon-only color="primary-color-text" [disabled]="d == '' || comisi == '' || profe == ''" (tap)="Modificar(d,comisi,profe)">
+                Guardar
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+<br><br><br>
+    <div *ngIf="cargando" text-center>
+        <ion-spinner text-center></ion-spinner>
+    </div>
+
+    <ion-item *ngIf="!cargando">
+        <ion-label floating>Nombre del curso:</ion-label>
+        <ion-input type="text" [(ngModel)]="d"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="!cargando">
+        <ion-label>Comision:</ion-label>
+        <ion-select [(ngModel)]="comisi">
+            <ion-option *ngFor="let c of comisiones" ng-value="comisi">{{c.descripcion}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="!cargando">
+        <ion-label>Profesor:</ion-label>
+        <ion-select [(ngModel)]="profe" >
+            <ion-option *ngFor="let p of UssP" ng-value="profe">{{p.nombre}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+</ion-content>

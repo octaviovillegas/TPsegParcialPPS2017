@@ -1,0 +1,31 @@
+
+<ion-header>
+    <ion-navbar color="{{micolor}}" *ngIf="!cargando">
+        <button ion-button menuToggle left>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Geolocalizacion UTN</ion-title>
+            <ion-buttons end>
+            <button *ngIf="!cargando" ion-button icon-only (tap)="cargar()">
+                <ion-icon name="refresh"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <br><br><br>
+<div *ngIf="cargando" text-center>
+            <ion-spinner text-center></ion-spinner>
+</div>
+<div  *ngIf="!cargando">
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="15">
+  <agm-marker [latitude]="lat" [longitude]="lng">
+    <agm-info-window ><ion-icon name="contact"></ion-icon>Usted se encuentra aqui!</agm-info-window>
+  </agm-marker>
+   <agm-marker [latitude]="latUtn" [longitude]="longUtn">
+    <agm-info-window >  <ion-icon name="home"></ion-icon>Utn Fra</agm-info-window>
+  </agm-marker>
+</agm-map>
+</div>
+</ion-content>
