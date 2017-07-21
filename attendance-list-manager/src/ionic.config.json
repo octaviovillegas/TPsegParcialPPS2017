@@ -1,0 +1,7 @@
+{
+  "name": "attendance-list-manager",
+  "app_id": "",
+  "type": "ionic-angular",
+  "typescript": true,
+"v2": true
+}

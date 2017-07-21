@@ -1,0 +1,27 @@
+<ion-header>
+<ion-navbar >
+   <ion-title>Respuesta</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="showConfirm()" >
+        <ion-icon name="color-palette" ></ion-icon>
+      </button>
+      <button ion-button icon-only color="light" (click)="logOutOnClick()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+</ion-navbar>
+
+
+</ion-header>
+<ion-content padding >
+  <ion-card>
+    <ion-card-header text-wrap text-center color="success">
+      {{question}}
+    </ion-card-header>
+    <ion-list>
+      <ion-item text-wrap text-center>
+        {{student.text}}
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</ion-content>

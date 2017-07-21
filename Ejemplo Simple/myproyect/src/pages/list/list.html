@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-navbar >
+    <button ion-button menuToggle>
+      <ion-icon name="menu"color="light"></ion-icon>
+    </button>
+   <ion-title>Ejemplo Simple</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="showConfirm()" >
+        <ion-icon name="color-palette" ></ion-icon>
+      </button>
+    
+    </ion-buttons>
+
+</ion-navbar>
+  
+  
+</ion-header>
+<ion-content>
+<h1 >
+  <ion-segment [(ngModel)]="wichComponent" color="light">
+    <ion-segment-button color="light" value="new">
+      Nuevo
+    </ion-segment-button>
+    <ion-segment-button color="light" value="delete">
+      Eliminar
+    </ion-segment-button>
+    <ion-segment-button  color="light" value="update">
+      Modificar
+    </ion-segment-button>
+  </ion-segment>
+
+</h1>
+ <ion-card>
+        <ion-card-header text-wrap>
+          Titulo
+        </ion-card-header>
+        <ion-list>
+          <ion-item>
+            <h2>Autor: Ejemplo</h2>
+            <p>Fecha de creación: dd/mm/yyyy</p>
+            <p>Fecha de finalización: dd/mm/yyyy</p>
+          </ion-item>
+         
+          <button ion-item color="danger" >
+        <ion-icon name="create" item-start></ion-icon>
+          Modificar
+        </button>
+          
+        </ion-list>
+      </ion-card>
+
+  <!--<div [ngSwitch]="wichComponent">
+    <div *ngSwitchCase="'new'">
+      <new-user-component></new-user-component>
+    </div>
+    <div *ngSwitchCase="'delete'">
+      <delete-user-component></delete-user-component>
+    </div>
+    <div *ngSwitchCase="'update'">
+      <modify-user-component></modify-user-component>
+    </div>
+  </div>-->
+</ion-content>

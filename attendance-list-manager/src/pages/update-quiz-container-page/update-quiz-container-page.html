@@ -1,0 +1,21 @@
+<ion-header>
+
+  <ion-navbar >
+     <ion-title></ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="showConfirm()" >
+        <ion-icon name="color-palette" ></ion-icon>
+      </button>
+      <button ion-button icon-only color="light" (click)="logOutOnClick()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding >
+  <update-quiz-component></update-quiz-component>
+</ion-content>

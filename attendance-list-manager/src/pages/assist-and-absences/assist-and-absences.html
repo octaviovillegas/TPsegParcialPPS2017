@@ -1,0 +1,46 @@
+<ion-header>
+<ion-navbar >
+   <ion-title>Asistencias y inasistencias</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="showConfirm()" >
+        <ion-icon name="color-palette" ></ion-icon>
+      </button>
+      <button ion-button icon-only color="light" (click)="logOutOnClick()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+
+</ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding >
+
+  <ion-card>
+    
+    <ion-card-header>
+      <ion-list>
+        <ion-item>
+          <ion-badge item-start color="success">{{assists}}</ion-badge>
+          Asistencias
+        </ion-item>
+
+        <ion-item>
+          <ion-badge item-start color="danger">{{absences}}</ion-badge>
+          Inasistencias
+        </ion-item>
+      </ion-list>
+    </ion-card-header>
+    <ion-list>
+      <ion-item>
+       <ion-card-content>
+        <canvas #barCanvas></canvas>
+      </ion-card-content>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+
+
+</ion-content>

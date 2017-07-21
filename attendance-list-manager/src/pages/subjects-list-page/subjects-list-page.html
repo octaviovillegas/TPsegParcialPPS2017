@@ -1,0 +1,37 @@
+<ion-header >
+<ion-navbar >
+     <ion-title>Materias</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="showConfirm()" >
+        <ion-icon name="color-palette" ></ion-icon>
+      </button>
+      <button ion-button icon-only color="light" (click)="logOutOnClick()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+  
+
+</ion-header>
+
+
+<ion-content padding class="subjectlist">
+  <div [hidden]="loadingPage">
+    <ion-list>
+      <button ion-item *ngFor="let subject of subjects" (click)="itemSelected(subject)">
+    {{ subject.name }}
+  </button>
+    </ion-list>
+  </div>
+
+  <!-- spinner -->
+  <div [hidden]="!loadingPage">
+    <div>
+      <ion-spinner></ion-spinner>
+    </div>
+    <div>
+      <p>Obteniendo lista de materias. Espere por favor.</p>
+    </div>
+  </div>
+</ion-content>

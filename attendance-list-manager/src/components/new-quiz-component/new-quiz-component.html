@@ -1,0 +1,115 @@
+
+<div [hidden]="!hideSpinner">
+  <ion-list>
+    <form [formGroup]="form" padding>
+      <ion-item>
+        <ion-label color="primary" stacked>Titulo:</ion-label>
+        <ion-input type="text" placeholder="" formControlName="title"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary" stacked>Pregunta:</ion-label>
+        <ion-textarea placeholder="" formControlName="text"></ion-textarea>
+      </ion-item>
+    </form>
+    <ion-item>
+      <ion-label>¿Desea agregar respuestas?</ion-label>
+      <ion-toggle [(ngModel)]="haveOptions" (ionChange)="haveOptionsOnChange()"></ion-toggle>
+    </ion-item>
+    <div [hidden]="!haveOptions">
+      <ion-item text-wrap>
+        <ion-label>¿Desea aclarar cuáles son correctas o incorrectas?</ion-label>
+        <ion-toggle [(ngModel)]="haveRightAnswer" (ionChange)="haveRightAnswerOnChange()"></ion-toggle>
+      </ion-item>
+      <ion-list *ngFor="let option of options;let i = index">
+        <ion-card>
+          <ion-card-header text-center>
+            Respuesta {{ i + 1}}
+          </ion-card-header>
+          <ion-list>
+            <ion-item>
+              <ion-textarea placeholder="Ingrese el texto" [(ngModel)]="option.text"></ion-textarea>
+            </ion-item>
+            <ion-grid>
+              <ion-row>
+                <ion-col col-9>
+                  <div [hidden]="!haveRightAnswer">
+                    <ion-item>
+                      <ion-label>Es Correcta</ion-label>
+                      <ion-checkbox [(ngModel)]="option.isRight"></ion-checkbox>
+                    </ion-item>
+                  </div>
+
+                </ion-col>
+                <ion-col col-3>
+                  <ion-item>
+                    <ion-fab left middle>
+                      <button ion-fab mini (click)="deleteOption(i)" color="danger" [disabled]="disableDeleteButton">
+                      <ion-icon ios="ios-close" md="md-close" ></ion-icon>
+                    </button>
+                    </ion-fab>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-list>
+        </ion-card>
+
+      </ion-list>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-3>
+              <ion-fab left middle>
+                <button ion-fab mini (click)="add()" color="secondary"><ion-icon name="add"></ion-icon></button>
+              </ion-fab>
+            </ion-col>
+            <ion-col col-9 text-center text-wrap>
+              Agregar otra respuesta
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-card text-wrap>
+        <ion-list>
+          <ion-item>
+            ¿Cuántas respuestas se pueden elegir?
+          </ion-item>
+          <ion-list radio-group [(ngModel)]="onlyOneAnswer">
+            <ion-item>
+              <ion-label>Sólo una</ion-label>
+              <ion-radio value="Una" checked></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Las que desee</ion-label>
+              <ion-radio value="Mas"></ion-radio>
+            </ion-item>
+          </ion-list>
+        </ion-list>
+      </ion-card>
+    </div>
+
+  </ion-list>
+
+  <ion-item>
+    <ion-label text-wrap>¿Desea agregar fecha de finalizacion?</ion-label>
+    <ion-toggle [(ngModel)]="haveEndDate" (ionChange)="haveEndDateOnChange()"></ion-toggle>
+  </ion-item>
+
+  <ion-item *ngIf="haveEndDate">
+
+    <ion-label color="primary" stacked>Fecha :</ion-label>
+    <ion-input type="date" placeholder="Año/Mes/Día" [(ngModel)]="endDate"></ion-input>
+
+  </ion-item>
+  <div class="lala" >
+  <button ion-button round full (click)="showConfirm()" [disabled]="!form.valid">Guardar Encuesta</button></div>
+</div>
+<div [hidden]="hideSpinner">
+  <div>
+    <ion-spinner></ion-spinner>
+  </div>
+  <div>
+    <p>Guardando la encuesta. Espere por favor.</p>
+  </div>
+</div>

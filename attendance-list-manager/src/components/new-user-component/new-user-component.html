@@ -1,0 +1,62 @@
+<form [formGroup]="form" padding>
+  <ion-list>
+    <ion-item-divider color="light">Ingrese los datos del nuevo usuario</ion-item-divider>
+    <ion-item>
+      <ion-input placeholder="Nombre" formControlName="firstname"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input placeholder="Apellido" formControlName="lastname"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input placeholder="Nombre de usuario" formControlName="username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="email" placeholder="E-mail" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="password" placeholder="Contraseña" formControlName="password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="number" placeholder="Legajo" formControlName="filenumber"></ion-input>
+    </ion-item>
+    <ion-item-divider color="light">Dirección</ion-item-divider>
+    <ion-item>
+      <ion-input placeholder="Calle" formControlName="street"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="number" placeholder="Altura" formControlName="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input placeholder="Localidad" formControlName="city"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input placeholder="Piso" formControlName="floor"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input placeholder="Departamento" formControlName="department"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-textarea placeholder="Aclaración" formControlName="clarification"></ion-textarea>
+    </ion-item>
+    <ion-item-divider color="light">Tipo de usuario</ion-item-divider>
+    <ion-list radio-group formControlName="rol">
+      <ion-item *ngFor="let item of roles">
+        <ion-label>{{item}}</ion-label>
+        <ion-radio [value]="item"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <div [hidden]="!hideSpinner"class="lala"
+    
+    >
+      <button ion-button full [disabled]="!form.valid" (click)="showConfirm()" color="color1">Enviar</button>
+    </div>
+    <div [hidden]="hideSpinner">
+      <div>
+        <ion-spinner></ion-spinner>
+      </div>
+      <div>
+        <p>Validando la información enviada. Espere por favor.</p>
+      </div>
+    </div>
+  </ion-list>
+</form>

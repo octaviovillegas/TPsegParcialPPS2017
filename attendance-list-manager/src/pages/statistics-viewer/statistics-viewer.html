@@ -1,0 +1,56 @@
+<ion-header>
+<ion-navbar >
+   <ion-title>Estadísticas</ion-title>
+ 
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="showConfirm()" >
+        <ion-icon name="color-palette" ></ion-icon>
+      </button>
+      <button ion-button icon-only color="light" (click)="logOutOnClick()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+
+</ion-navbar>
+  
+</ion-header>
+<ion-content padding >
+
+  <div [hidden]="!hideSpinner">
+    <div [hidden]="!noData">
+      <ion-card>
+        <ion-card-content>
+          <ion-card-title text-wrap text-center color="danger">
+            Aún no hay datos para mostrar
+          </ion-card-title>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div [hidden]="noData">
+      <ion-card>
+        <ion-card-header text-wrap text-center color="success">
+          {{question}}
+        </ion-card-header>
+        <ion-list>
+          <ion-item text-wrap>
+            <canvas #barCanvas></canvas>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+
+      <ion-list>
+        <button ion-item *ngFor="let student of users" (click)="itemSelected(student)" text-wrap>
+        {{student.lastname}} , {{student.firstname}}
+    </button>
+      </ion-list>
+    </div>
+  </div>
+  <div [hidden]="hideSpinner">
+    <div>
+      <ion-spinner></ion-spinner>
+    </div>
+    <div>
+      <p>Obteniendo Datos. Espere por favor.</p>
+    </div>
+  </div>
+</ion-content>

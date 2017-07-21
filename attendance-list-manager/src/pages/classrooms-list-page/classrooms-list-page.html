@@ -1,0 +1,37 @@
+<ion-header>
+<ion-navbar >
+   <ion-title>Aulas</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="showConfirm()" >
+        <ion-icon name="color-palette" ></ion-icon>
+      </button>
+      <button ion-button icon-only color="light" (click)="logOutOnClick()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+
+</ion-header>
+
+
+<ion-content padding class="classroom">
+  <div [hidden]="loadingPage">
+    <ion-list>
+      <button ion-item *ngFor="let classroom of classrooms" (click)="itemSelected(classroom)">
+       {{ classroom.name }}
+  </button>
+    </ion-list>
+  </div>
+
+  <!-- spinner -->
+  <div [hidden]="!loadingPage">
+    <div>
+      <ion-spinner></ion-spinner>
+    </div>
+    <div>
+      <p>Obteniendo lista de Aulas. Espere por favor.</p>
+    </div>
+  </div>
+</ion-content>
